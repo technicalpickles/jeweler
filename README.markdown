@@ -71,7 +71,7 @@ Which you use depends on how you want to organize your gem. If you have a top-le
 
 Wander to http://github.com/repositories/new and follow the instructions to get it pushed
 
-# Enable ruby generation on the repository
+# Enable Rubygem building on the repository
 
 Go to your project's edit page and check the 'RubyGem' box.
 

@@ -4,6 +4,7 @@ class Jeweler
   def self.gemspec=(gemspec)
     @@gemspec = gemspec
     require version_module_path
+    @@gemspec.version = version
   end
   
   def self.major_version
