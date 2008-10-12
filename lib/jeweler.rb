@@ -2,21 +2,18 @@ require 'date'
 
 require 'jeweler/bumping'
 require 'jeweler/versioning'
+require 'jeweler/singleton'
+require 'jeweler/gemspec'
 
 class Jeweler
-  def self.gemspec=(gemspec)
-    @@instance = new(gemspec)
-  end
-  
-  def self.instance
-    @@instance
-  end
-  
+  include Jeweler::Singleton
   include Jeweler::Bumping
   include Jeweler::Versioning
+  include Jeweler::Gemspec
   
   attr_reader :gemspec
   attr_accessor :base_dir
+  
   def initialize(gemspec, base_dir = '.')
     @gemspec = gemspec
     @base_dir = base_dir
@@ -27,38 +24,7 @@ class Jeweler
     @gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
   end
   
-  def date
-    date = DateTime.now
-    "#{date.year}-#{date.month}-#{date.day}"
-  end
-  
-  
-  def write_gemspec
-    @gemspec.date = self.date
-    File.open(gemspec_path, 'w') do |f|
-      f.write @gemspec.to_ruby
-    end
-  end
-  
-  private
-  
-  def top_level_keyword
-    main_module_or_class = constantize(main_module_name)
-    case main_module_or_class
-    when Class
-      'class'
-    when Module
-      'module'
-    else
-      raise "Uh, main_module_name should be a class or module, but was a #{main_module_or_class.class}"
-    end
-  end
-  
-  def gemspec_path
-    File.join(@base_dir, "#{@gemspec.name}.gemspec")
-  end
-  
-  
+private  
   def main_module_name
     camelize(@gemspec.name)
   end
