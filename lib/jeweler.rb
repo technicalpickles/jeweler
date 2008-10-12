@@ -1,5 +1,4 @@
 require 'date'
-require 'ruby-debug'
 
 class Jeweler
   def self.gemspec=(gemspec)
@@ -30,7 +29,14 @@ class Jeweler
   
   def self.bump_version(major, minor, patch)
     main_module_or_class = constantize(main_module_name)
-    keyword = main_module_name.class == Class ? 'class' : 'module'
+    keyword = case main_module_or_class.class
+    when Class
+      'class'
+    when Module
+      'module'
+    else
+      raise "Uh, main_module_name should be a class or module, but was a #{main_module_or_class.class}"
+    end
     
     File.open(version_module_path, 'w') do |file|
       file.write <<-END
