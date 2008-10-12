@@ -1,6 +1,7 @@
 require 'date'
 
 require 'jeweler/bumping'
+require 'jeweler/versioning'
 
 class Jeweler
   def self.gemspec=(gemspec)
@@ -12,6 +13,7 @@ class Jeweler
   end
   
   include Jeweler::Bumping
+  include Jeweler::Versioning
   
   attr_reader :gemspec
   attr_accessor :base_dir
@@ -23,22 +25,6 @@ class Jeweler
     
     @gemspec.version = version
     @gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
-  end
-  
-  def major_version
-    version_module.const_get(:MAJOR)
-  end
-  
-  def minor_version
-    version_module.const_get(:MINOR)
-  end
-  
-  def patch_version
-    version_module.const_get(:PATCH)
-  end
-  
-  def version
-    "#{major_version}.#{minor_version}.#{patch_version}"
   end
   
   def date
