@@ -1,0 +1,7 @@
+ * Support dashes in spec names
+  * ruby-debug -> Ruby::Debug
+  * safety_valve -> SafetyValve
+ * Generator for making new Jeweler projects
+ * Add output of what version was just bumped to
+ * Git tagging/branching
+ * Release task

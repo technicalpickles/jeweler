@@ -15,24 +15,13 @@
       s.homepage = "http://github.com/technicalpickles/jeweler"
       s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
       s.authors = ["Josh Nichols"]
-      s.files = FileList["[A-Z]*", "{generators,lib,test}/**/*"]
     end
-    
+
 Note, we don't include 'date', or 'version'. Jeweler takes care of that.
 
-Jeweler assumes you'll have either a class or module similar to your spec's name. This value gets camelized, so...
+If you don't specify `s.files`, it will use `s.files = FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]`
 
-Good:
-
- * safety\_valve -> SafetyValve
- * clearance -> Clearance
-
-Bad:
-
- * shoulda-generator -> Shoulda-generator (not valid!)
- * ruby-debug -> Ruby-debug (not valid!)
-
-We're opinionated and lazy.
+For now, `s.name` should be lower-cased and underscored, without hyphens. That's because Jeweler camelizes and constantizes this value internally. For example, `ruby-debug` would be camelized/constanized to `Ruby-debug`, which isn't valid.
 
 # Create a version file
 
