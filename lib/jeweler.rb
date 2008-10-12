@@ -12,7 +12,9 @@ class Jeweler
   attr_reader :gemspec
   def initialize(gemspec)
     @gemspec = gemspec
-    load version_module_path
+    
+    load_version()
+    
     @gemspec.version = version
     @gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
   end
@@ -40,14 +42,7 @@ class Jeweler
     
   def bump_version(major, minor, patch)
     main_module_or_class = constantize(main_module_name)
-    keyword = case main_module_or_class.class
-    when Class
-      'class'
-    when Module
-      'module'
-    else
-      raise "Uh, main_module_name should be a class or module, but was a #{main_module_or_class.class}"
-    end
+    keyword = top_level_keyword
     
     File.open(version_module_path, 'w') do |file|
       file.write <<-END
@@ -73,6 +68,18 @@ end
   
   private
   
+  def top_level_keyword
+    main_module_or_class = constantize(main_module_name)
+    case main_module_or_class
+    when Class
+      'class'
+    when Module
+      'module'
+    else
+      raise "Uh, main_module_name should be a class or module, but was a #{main_module_or_class.class}"
+    end
+  end
+  
   def gemspec_path
     "#{@gemspec.name}.gemspec"
   end
@@ -92,14 +99,18 @@ end
   def refresh_version
     # Remove the constants, so we can reload the version_module
     version_module.module_eval do
-      remove_const(:MAJOR)
-      remove_const(:MINOR)
-      remove_const(:PATCH)
+      remove_const(:MAJOR) if const_defined?(:MAJOR)
+      remove_const(:MINOR) if const_defined?(:MINOR)
+      remove_const(:PATCH) if const_defined?(:PATCH)
     end
+    load_version
+  end
+  
+  def load_version
     load version_module_path
   end
 end
 
 require 'jeweler/active_support' # Adds the stolen camelize and constantize
 
-require 'jeweler/tasks'
+require 'jeweler/tasks' if defined?(Rake)
