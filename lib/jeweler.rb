@@ -5,6 +5,9 @@ require 'jeweler/versioning'
 require 'jeweler/singleton'
 require 'jeweler/gemspec'
 
+require 'jeweler/tasks' if defined?(Rake)
+require 'jeweler/active_support' # Adds the stolen camelize and constantize
+
 class Jeweler
   include Jeweler::Singleton
   include Jeweler::Bumping
@@ -30,6 +33,3 @@ private
   end
 end
 
-require 'jeweler/active_support' # Adds the stolen camelize and constantize
-
-require 'jeweler/tasks' if defined?(Rake)
