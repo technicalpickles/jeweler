@@ -26,7 +26,7 @@ class Jeweler
     date = DateTime.now
     "#{date.year}-#{date.month}-#{date.day}"
   end
-  
+    
   def self.bump_version(major, minor, patch)
     main_module_or_class = constantize(main_module_name)
     keyword = case main_module_or_class.class
