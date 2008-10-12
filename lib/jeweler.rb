@@ -2,34 +2,43 @@ require 'date'
 
 class Jeweler
   def self.gemspec=(gemspec)
-    @@gemspec = gemspec
-    load version_module_path
-    @@gemspec.version = version
-    @@gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
+    @@instance = new(gemspec)
   end
   
-  def self.major_version
+  def self.instance
+    @@instance
+  end
+  
+  attr_reader :gemspec
+  def initialize(gemspec)
+    @gemspec = gemspec
+    load version_module_path
+    @gemspec.version = version
+    @gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
+  end
+  
+  def major_version
     version_module.const_get(:MAJOR)
   end
   
-  def self.minor_version
+  def minor_version
     version_module.const_get(:MINOR)
   end
   
-  def self.patch_version
+  def patch_version
     version_module.const_get(:PATCH)
   end
   
-  def self.version
+  def version
     "#{major_version}.#{minor_version}.#{patch_version}"
   end
   
-  def self.date
+  def date
     date = DateTime.now
     "#{date.year}-#{date.month}-#{date.day}"
   end
     
-  def self.bump_version(major, minor, patch)
+  def bump_version(major, minor, patch)
     main_module_or_class = constantize(main_module_name)
     keyword = case main_module_or_class.class
     when Class
@@ -51,36 +60,36 @@ class Jeweler
 end
       END
     end
-    @@gemspec.version = "#{major}.#{minor}.#{patch}"
+    @gemspec.version = "#{major}.#{minor}.#{patch}"
     refresh_version
   end
   
-  def self.write_gemspec
-    @@gemspec.date = self.date
+  def write_gemspec
+    @gemspec.date = self.date
     File.open(gemspec_path, 'w') do |f|
-      f.write @@gemspec.to_ruby
+      f.write @gemspec.to_ruby
     end
   end
   
   private
   
-  def self.gemspec_path
-    "#{@@gemspec.name}.gemspec"
+  def gemspec_path
+    "#{@gemspec.name}.gemspec"
   end
   
-  def self.version_module_path
-    "lib/#{@@gemspec.name}/version.rb"
+  def version_module_path
+    "lib/#{@gemspec.name}/version.rb"
   end
   
-  def self.version_module
+  def version_module
     constantize("#{main_module_name}::Version")
   end
   
-  def self.main_module_name
-    camelize(@@gemspec.name)
+  def main_module_name
+    camelize(@gemspec.name)
   end
   
-  def self.refresh_version
+  def refresh_version
     # Remove the constants, so we can reload the version_module
     version_module.module_eval do
       remove_const(:MAJOR)

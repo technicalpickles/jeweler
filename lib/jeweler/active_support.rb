@@ -34,5 +34,5 @@ class Jeweler
     end
   end
   
-  extend ActiveSupport
+  include ActiveSupport
 end

@@ -1,37 +1,49 @@
 desc "Generate a gemspec file for GitHub"
 task :gemspec do
-  Jeweler.write_gemspec
+  Jeweler.instance.write_gemspec
 end
 
 desc "Displays the current version"
 task :version do
-  puts Jeweler.version
+  puts Jeweler.instance.version
 end
 
 namespace :version do
   namespace :bump do
     desc "Bump the gemspec a major version."
     task :major do
-      major = Jeweler.major_version + 1
-      Jeweler.bump_version(major, 0, 0)
-      Jeweler.write_gemspec
+      jeweler = Jeweler.instance
+      
+      major = jeweler.major_version + 1
+      
+      jeweler.bump_version(major, 0, 0)
+      jeweler.write_gemspec
+      
       puts "Version bumped to #{Jeweler.version}"
     end
     
     desc "Bump the gemspec a minor version."
     task :minor do
-      minor = Jeweler.minor_version + 1
-      Jeweler.bump_version(Jeweler.major_version, minor, 0)
-      Jeweler.write_gemspec
-      puts "Version bumped to #{Jeweler.version}"
+      jeweler = Jeweler.instance
+      
+      minor = jeweler.minor_version + 1
+      
+      jeweler.bump_version(jeweler.major_version, minor, 0)
+      jeweler.write_gemspec
+      
+      puts "Version bumped to #{jeweler.version}"
     end
     
     desc "Bump the gemspec a patch version."
     task :patch do
-      patch = Jeweler.patch_version + 1
-      Jeweler.bump_version(Jeweler.major_version, Jeweler.minor_version, patch)
-      Jeweler.write_gemspec
-      puts "Version bumped to #{Jeweler.version}"
+      jeweler = Jeweler.instance
+      
+      patch = jeweler.patch_version + 1
+      
+      jeweler.bump_version(jeweler.major_version, jeweler.minor_version, patch)
+      jeweler.write_gemspec
+      
+      puts "Version bumped to #{jeweler.version}"
     end
   end
 end
