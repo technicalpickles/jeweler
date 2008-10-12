@@ -17,3 +17,12 @@ begin
 rescue LoadError
   puts "Jeweler not available. Try installing technicalpickles-jeweler."
 end
+
+Rake::TestTask.new do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = false
+end
+ 
+desc "Run the test suite"
+task :default => :test
