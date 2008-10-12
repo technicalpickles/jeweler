@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/testtask'
+require 'rake/rdoctask'
 
 $:.unshift('lib')
 
@@ -22,6 +23,15 @@ Rake::TestTask.new do |t|
   t.libs << 'lib'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = false
+end
+
+desc 'Generate documentation for the safety_valve plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'Jeweler'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README.markdown')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end
  
 desc "Run the test suite"

@@ -56,7 +56,7 @@ end
     end
   end
   
-  context 'A gem, with top level module,' do
+  context 'A jeweler (with a gemspec with top level module)' do
     setup do
       write_version_file('foo', 'module', 'Foo', 0, 1, 0)
       @spec = Gem::Specification.new do |s|
@@ -129,7 +129,7 @@ end
     
   end
   
-  context "A gem, with top level class," do
+  context "A Jeweler (with a gemspec with top level class)" do
     setup do
       write_version_file('bar', 'class', 'Bar', 1, 5, 2)
       
@@ -168,6 +168,12 @@ end
       should_eventually "still have class Bar" do
         # do some regexp of version.rb
       end
+    end
+  end
+  
+  should "raise an exception when created with a nil gemspec" do
+    assert_raises Jeweler::GemspecError do
+      @jeweler = Jeweler.new(nil, File.dirname(__FILE__))
     end
   end
   
