@@ -15,7 +15,7 @@
       s.homepage = "http://github.com/technicalpickles/jeweler"
       s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
       s.authors = ["Josh Nichols"]
-      s.files = FileList["[A-Z]*"]
+      s.files = FileList["[A-Z]*", "{generators,lib,test}/**/*"]
     end
     
 Note, we don't include 'date', or 'version'. Jeweler takes care of that.

@@ -11,5 +11,5 @@ Jeweler.gemspec = Gem::Specification.new do |s|
   s.homepage = "http://github.com/technicalpickles/jeweler"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   s.authors = ["Josh Nichols"]
-  s.files = FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+  s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
 end
