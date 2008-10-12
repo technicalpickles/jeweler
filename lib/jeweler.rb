@@ -10,8 +10,10 @@ class Jeweler
   end
   
   attr_reader :gemspec
-  def initialize(gemspec)
+  attr_accessor :base_dir
+  def initialize(gemspec, base_dir = '.')
     @gemspec = gemspec
+    @base_dir = base_dir
     
     load_version()
     
@@ -38,6 +40,27 @@ class Jeweler
   def date
     date = DateTime.now
     "#{date.year}-#{date.month}-#{date.day}"
+  end
+  
+  def bump_patch_version()
+    patch = self.patch_version + 1
+    
+    bump_version(major_version, minor_version, patch)
+    write_gemspec
+  end
+  
+  def bump_minor_version()
+    minor = minor_version + 1
+    
+    bump_version(major_version, minor, 0)
+    write_gemspec
+  end
+  
+  def bump_major_version()
+    major = major_version + 1
+    
+    bump_version(major, 0, 0)
+    write_gemspec
   end
     
   def bump_version(major, minor, patch)
@@ -81,11 +104,11 @@ end
   end
   
   def gemspec_path
-    "#{@gemspec.name}.gemspec"
+    File.join(@base_dir, "#{@gemspec.name}.gemspec")
   end
   
   def version_module_path
-    "lib/#{@gemspec.name}/version.rb"
+    File.join(@base_dir, 'lib', @gemspec.name, 'version.rb')
   end
   
   def version_module

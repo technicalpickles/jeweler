@@ -19,30 +19,20 @@ namespace :version do
       jeweler.bump_version(major, 0, 0)
       jeweler.write_gemspec
       
-      puts "Version bumped to #{Jeweler.version}"
+      puts "Version bumped to #{jeweler.version}"
     end
     
     desc "Bump the gemspec a minor version."
     task :minor do
       jeweler = Jeweler.instance
-      
-      minor = jeweler.minor_version + 1
-      
-      jeweler.bump_version(jeweler.major_version, minor, 0)
-      jeweler.write_gemspec
-      
+      jeweler.bump_minor_version
       puts "Version bumped to #{jeweler.version}"
     end
     
     desc "Bump the gemspec a patch version."
     task :patch do
       jeweler = Jeweler.instance
-      
-      patch = jeweler.patch_version + 1
-      
-      jeweler.bump_version(jeweler.major_version, jeweler.minor_version, patch)
-      jeweler.write_gemspec
-      
+      jeweler.bump_patch_version
       puts "Version bumped to #{jeweler.version}"
     end
   end
