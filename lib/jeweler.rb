@@ -3,7 +3,7 @@ require 'date'
 class Jeweler
   def self.gemspec=(gemspec)
     @@gemspec = gemspec
-    require version_module_path
+    load version_module_path
     @@gemspec.version = version
     @@gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
   end
@@ -52,6 +52,7 @@ end
       END
     end
     @@gemspec.version = "#{major}.#{minor}.#{patch}"
+    refresh_version
   end
   
   def self.write_gemspec
@@ -77,6 +78,16 @@ end
   
   def self.main_module_name
     camelize(@@gemspec.name)
+  end
+  
+  def self.refresh_version
+    # Remove the constants, so we can reload the version_module
+    version_module.module_eval do
+      remove_const(:MAJOR)
+      remove_const(:MINOR)
+      remove_const(:PATCH)
+    end
+    load version_module_path
   end
 end
 

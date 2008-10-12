@@ -15,6 +15,7 @@ namespace :version do
       major = Jeweler.major_version + 1
       Jeweler.bump_version(major, 0, 0)
       Jeweler.write_gemspec
+      puts "Version bumped to #{Jeweler.version}"
     end
     
     desc "Bump the gemspec a minor version."
@@ -22,6 +23,7 @@ namespace :version do
       minor = Jeweler.minor_version + 1
       Jeweler.bump_version(Jeweler.major_version, minor, 0)
       Jeweler.write_gemspec
+      puts "Version bumped to #{Jeweler.version}"
     end
     
     desc "Bump the gemspec a patch version."
@@ -29,6 +31,7 @@ namespace :version do
       patch = Jeweler.patch_version + 1
       Jeweler.bump_version(Jeweler.major_version, Jeweler.minor_version, patch)
       Jeweler.write_gemspec
+      puts "Version bumped to #{Jeweler.version}"
     end
   end
 end
