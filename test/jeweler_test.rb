@@ -16,6 +16,18 @@ class JewelerTest < Test::Unit::TestCase
       @jeweler = Jeweler.new(@spec)
     end
     
+    teardown do
+      @jeweler.send(:undefine_versions)
+    end
+    
+    should "have major version of 0" do
+      assert_equal 0, @jeweler.major_version
+    end
+    
+    should "have minor version of 1" do
+      assert_equal 1, @jeweler.minor_version
+    end
+    
     should 'be version 0.1.0' do
       assert_equal '0.1.0', @jeweler.version
     end
@@ -37,6 +49,10 @@ class JewelerTest < Test::Unit::TestCase
         s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
       end
       @jeweler = Jeweler.new(@spec)
+    end
+    
+    teardown do
+      @jeweler.send(:undefine_versions)
     end
 
     should "be version 1.5.2" do

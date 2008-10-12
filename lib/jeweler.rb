@@ -98,12 +98,16 @@ end
   
   def refresh_version
     # Remove the constants, so we can reload the version_module
+    undefine_versions()
+    load_version()
+  end
+  
+  def undefine_versions
     version_module.module_eval do
       remove_const(:MAJOR) if const_defined?(:MAJOR)
       remove_const(:MINOR) if const_defined?(:MINOR)
       remove_const(:PATCH) if const_defined?(:PATCH)
     end
-    load_version
   end
   
   def load_version
