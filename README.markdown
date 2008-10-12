@@ -64,6 +64,7 @@ Which you use depends on how you want to organize your gem. If you have a top-le
 
 # Commit it
 
+    $ git add .
     $ git commit -a -m "First commit yo"
     
 # Make a github repository
