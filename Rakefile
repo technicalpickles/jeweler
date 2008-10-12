@@ -16,7 +16,7 @@ begin
     s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
   end
 rescue LoadError
-  puts "Jeweler not available. Try installing technicalpickles-jeweler."
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
 Rake::TestTask.new do |t|

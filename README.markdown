@@ -58,7 +58,7 @@ Install the gem:
         s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
       end
     rescue LoadError
-      puts "Jeweler not available. Try installing technicalpickles-jeweler."
+      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
     end
 
 Note, we don't include 'date', or 'version'. Jeweler handles filing these in when it needs them.
@@ -130,3 +130,51 @@ After that, commit and push it:
 ### Play the waiting game
 
 Wander over to [Has My Gem Built Yet](http://hasmygembuiltyet.org/) to play the waiting game.
+
+## Extra stuff you might want to for your RubyGem project
+
+As was mentioned, Jeweler tries to only do versioning and gem stuff. Most projects have a few other needs:
+
+ * Testing
+ * RDoc
+ * Default task
+
+Jeweler doesn't provide these. But it's easy enough to use Rake's built in tasks:
+
+    require 'rake'
+    require 'rake/testtask'
+    require 'rake/rdoctask'
+
+    begin
+      require 'rubygems'
+      require 'jeweler'
+      Jeweler.gemspec = Gem::Specification.new do |s|
+        s.name = "jeweler"
+        s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+        s.email = "josh@technicalpickles.com"
+        s.homepage = "http://github.com/technicalpickles/jeweler"
+        s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+        s.authors = ["Josh Nichols", "Dan Croak"]
+        s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+      end
+    rescue LoadError
+      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+    end
+
+    Rake::TestTask.new do |t|
+      t.libs << 'lib'
+      t.pattern = 'test/**/*_test.rb'
+      t.verbose = false
+    end
+
+    desc 'Generate documentation for the safety_valve plugin.'
+    Rake::RDocTask.new(:rdoc) do |rdoc|
+      rdoc.rdoc_dir = 'rdoc'
+      rdoc.title    = 'Jeweler'
+      rdoc.options << '--line-numbers' << '--inline-source'
+      rdoc.rdoc_files.include('README.*')
+      rdoc.rdoc_files.include('lib/**/*.rb')
+    end
+
+    desc "Run the test suite"
+    task :default => :test
