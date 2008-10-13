@@ -1,6 +1,7 @@
  * Support dashes in spec names
   * ruby-debug -> Ruby::Debug
   * safety_valve -> SafetyValve
+ * Move away from having a version module to having version.yml in top level directory
  * Generator for making new Jeweler projects
  * Rails generator for making a plugin that's Jeweler enabled
  * Git tagging/branching
