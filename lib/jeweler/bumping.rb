@@ -36,7 +36,7 @@ class Jeweler
       minor ||= 0
       patch ||= 0
       
-      File.open(version_yaml_path, 'w') do |f|
+      File.open(version_yaml_path, 'w+') do |f|
         version_hash = {
           'major' => major,
           'minor' => minor,

@@ -20,7 +20,7 @@ end
 
 namespace :version do
   desc "Creates an initial version file"
-  task :create do
+  task :write do
     jeweler = Jeweler.instance
     jeweler.write_version(ENV['MAJOR'], ENV['MINOR'], ENV['PATCH'])
     puts "Wrote VERSION.yml: #{jeweler.version}"

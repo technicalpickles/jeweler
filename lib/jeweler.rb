@@ -24,7 +24,7 @@ class Jeweler
     @gemspec = gemspec
     @base_dir = base_dir
     
-    @gemspec.version = version
+    # @gemspec.version = version
     @gemspec.files ||= FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]
   end
   
