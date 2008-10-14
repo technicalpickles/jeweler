@@ -1,21 +1,22 @@
+require 'yaml'
 class Jeweler
   module Versioning
     # Major version, as defined by the gemspec's Version module.
     # For 1.5.3, this would return 1.
     def major_version
-      version_module.const_get(:MAJOR)
+      version_yaml['major']
     end
 
     # Minor version, as defined by the gemspec's Version module.
     # For 1.5.3, this would return 5.
     def minor_version
-      version_module.const_get(:MINOR)
+      version_yaml['minor']
     end
 
     # Patch version, as defined by the gemspec's Version module.
     # For 1.5.3, this would return 5.
     def patch_version
-      version_module.const_get(:PATCH)
+      version_yaml['patch']
     end
 
     # Human readable version, which is used in the gemspec.
@@ -24,31 +25,24 @@ class Jeweler
     end
     
   protected
-    def version_module_path
-      File.join(@base_dir, 'lib', @gemspec.name, 'version.rb')
+    def version_yaml_path
+      File.join(@base_dir, 'VERSION.yml')
     end
-  
-    def version_module
-      constantize("#{main_module_name}::Version")
+    
+    def version_yaml
+      @version_yaml ||= read_version_yaml
     end
-  
-    # 
-    def refresh_version
-      undefine_versions()
-      load_version()
-    end
-
-    # Undefines version constants, so we can +load+ the version.rb again.
-    def undefine_versions
-      version_module.module_eval do
-        remove_const(:MAJOR) if const_defined?(:MAJOR)
-        remove_const(:MINOR) if const_defined?(:MINOR)
-        remove_const(:PATCH) if const_defined?(:PATCH)
+    
+    def read_version_yaml
+      if File.exists?(version_yaml_path)
+        YAML.load_file(version_yaml_path)
+      else
+        raise VersionYmlError, "#{version_yaml_path} does not exist!"
       end
     end
-
-    def load_version
-      load(version_module_path)
+    
+    def refresh_version
+      @version_yaml = read_version_yaml
     end
   end
 end

@@ -6,7 +6,7 @@ class Jeweler
     def bump_patch_version()
       patch = self.patch_version + 1
 
-      bump_version(major_version, minor_version, patch)
+      write_version(major_version, minor_version, patch)
       write_gemspec
     end
 
@@ -16,7 +16,7 @@ class Jeweler
     def bump_minor_version()
       minor = minor_version + 1
 
-      bump_version(major_version, minor, 0)
+      write_version(major_version, minor)
       write_gemspec
     end
 
@@ -26,43 +26,27 @@ class Jeweler
     def bump_major_version()
       major = major_version + 1
 
-      bump_version(major, 0, 0)
+      write_version(major)
       write_gemspec
     end
 
     # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
-    def bump_version(major, minor, patch)
-      main_module_or_class = constantize(main_module_name)
-      keyword = top_level_keyword()
-
-      File.open(version_module_path, 'w') do |file|
-        file.write <<-END
-#{keyword} #{main_module_name}
-  module Version
-    MAJOR = #{major}
-    MINOR = #{minor}
-    PATCH = #{patch}
-  end
-end
-END
+    def write_version(major = 0, minor = 0, patch = 0)
+      major ||= 0
+      minor ||= 0
+      patch ||= 0
+      
+      File.open(version_yaml_path, 'w') do |f|
+        version_hash = {
+          'major' => major,
+          'minor' => minor,
+          'patch' => patch
+        }
+        YAML.dump(version_hash, f)
       end
-      @gemspec.version = "#{major}.#{minor}.#{patch}"
       refresh_version
-    end
-    
-  protected
-    # Tries to figure out the Ruby keyword of what is containing the Version
-    # module. This should be 'module' or 'class', and is used for rewriting the version.rb.
-    def top_level_keyword
-      main_module_or_class = constantize(main_module_name)
-      case main_module_or_class
-      when Class
-        'class'
-      when Module
-        'module'
-      else
-        raise "Uh, main_module_name should be a class or module, but was a #{main_module_or_class.class}"
-      end
+      
+      @gemspec.version = version
     end
   end
 end
