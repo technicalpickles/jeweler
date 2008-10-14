@@ -4,7 +4,7 @@ class Jeweler
     #
     # 1.5.1 -> 1.5.2
     def bump_patch_version()
-      patch = self.patch_version + 1
+      patch = self.patch_version.to_i + 1
 
       write_version(major_version, minor_version, patch)
     end
@@ -13,7 +13,7 @@ class Jeweler
     #
     # 1.5.1 -> 1.6.0
     def bump_minor_version()
-      minor = minor_version + 1
+      minor = minor_version.to_i + 1
 
       write_version(major_version, minor)
     end
@@ -22,7 +22,7 @@ class Jeweler
     #
     # 1.5.1 -> 2.0.0
     def bump_major_version()
-      major = major_version + 1
+      major = major_version.to_i + 1
 
       write_version(major)
     end
@@ -35,9 +35,9 @@ class Jeweler
       
       File.open(version_yaml_path, 'w+') do |f|
         version_hash = {
-          'major' => major,
-          'minor' => minor,
-          'patch' => patch
+          'major' => major.to_i,
+          'minor' => minor.to_i,
+          'patch' => patch.to_i
         }
         YAML.dump(version_hash, f)
       end

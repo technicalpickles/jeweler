@@ -23,7 +23,6 @@ namespace :version do
   task :write do
     jeweler = Jeweler.instance
     jeweler.write_version(ENV['MAJOR'], ENV['MINOR'], ENV['PATCH'])
-    puts "Wrote VERSION.yml: #{jeweler.version}"
   end
   
   def ensure_version_yml(&block)
@@ -37,13 +36,13 @@ namespace :version do
   desc "Displays the current version"
   task :display do
     ensure_version_yml do
-      puts Jeweler.instance.version
+      puts "Current version: #{Jeweler.instance.version}"
     end
   end
   
   namespace :bump do
     desc "Bump the gemspec by a major version."
-    task :major do
+    task :major => 'version:display' do
       ensure_version_yml do
         jeweler = Jeweler.instance
         jeweler.bump_major_version
@@ -52,7 +51,7 @@ namespace :version do
     end
     
     desc "Bump the gemspec by a minor version."
-    task :minor do
+    task :minor => 'version:display' do
       ensure_version_yml do
         jeweler = Jeweler.instance
         jeweler.bump_minor_version
@@ -61,7 +60,7 @@ namespace :version do
     end
     
     desc "Bump the gemspec by a patch version."
-    task :patch do
+    task :patch => 'version:display' do
       ensure_version_yml do
         jeweler = Jeweler.instance
         jeweler.bump_patch_version

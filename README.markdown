@@ -6,18 +6,18 @@ Trouble is when developing your Rubygems on GitHub, you generally do one of the 
 
  * Manage the gemspec by hand
   * ... why bother doing something by hand when you can automate it?
- * Write your own rake stuff to manage the gemspec, and deal with managing the version somehow
+ * Write your own Rake stuff to create the Gem::Specification and output it to a gemspec file, and deal with keeping the Rakefile and gemspec in sync
   * ... why keep reinventing the wheel?
- * use hoe or echoe for generating the gemspec
+ * Use hoe or echoe for generating the gemspec
   * ... why use utilities made for the days before GitHub existed?
   * ... why have extra stuff you aren't going to use?
  
-Jeweler was created with some simple goals:
+Jeweler was created with a few intentions:
 
  * The only configuration should be providing a Gem::Specification to Jeweler
  * Version bumping should only be one command away
- * Authoritative version information should stored in one place, a Version module in your project
- * Jeweler should only concern itself with versioning and gems (and one day, git)
+ * Authoritative version information should stored in one place
+ * Jeweler should only concern itself with versioning and gems
  * Your Rakefile should be usable when Jeweler isn't installed (you just wouldn't be able to version bump or generate a gemspec)
  * Jeweler should use Jeweler. Oh the meta!
  
@@ -63,33 +63,15 @@ Install the gem:
 
 Note, we don't include 'date', or 'version'. Jeweler handles filing these in when it needs them.
 
-If you don't specify `s.files`, it will use `s.files = FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]`.
-
-For now, `s.name` should be lower-cased and underscored, without hyphens. That's because Jeweler camelizes and constantizes this value internally. For example, `ruby-debug` would be camelized/constanized to `Ruby-debug`, which isn't a valid constant. Use `ruby_debug` instead (for now).
+If you don't specify `s.files`, it will use `s.files = FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]`.
 
 ### Create a version file
 
-Stick it in `lib/(spec_name_here)/version.rb`, and start it out at some version, like 0.0.0:
+Create an initial `VERSION.yml`. It will by default to 0.0.0, but you can specify MAJOR, MINOR, and PATCH to tweak it:
 
-    class Jeweler
-      module Version
-        MAJOR = 0
-        MINOR = 0
-        PATCH = 0
-      end
-    end
-
-OR
-
-    module Jeweler
-      module Version
-        MAJOR = 0
-        MINOR = 0
-        PATCH = 0
-      end
-    end
-
-Which you use depends on how you want to organize your gem. If you have a top-level class, like Jeweler, use the first. If you have a top level module, like ActiveRecord, use the latter.
+    $ rake version:write MAJOR=1 MINOR=5 PATCH=2
+    (in /Users/nichoj/Projects/jeweler)
+    Wrote to VERSION.yml: 1.5.2
 
 ### Generate the gemspec
 
@@ -121,6 +103,10 @@ You have a few rake tasks for doing the version bump:
     $ rake version:bump:patch # 1.5.1 -> 1.5.2
     $ rake version:bump:minor # 1.5.1 -> 1.6.0
     $ rake version:bump:major # 1.5.1 -> 2.0.0
+
+If you need to do an arbitrary bump, use the same task you used to create `VERSION.yml`:
+
+    $ rake version:write MAJOR=6 MINOR=0 PATCH=3
 
 After that, commit and push it:
 

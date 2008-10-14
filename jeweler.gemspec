@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = nil
+  s.version = "1.5.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols", "Dan Croak"]
