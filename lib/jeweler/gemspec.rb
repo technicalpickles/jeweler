@@ -1,12 +1,5 @@
 class Jeweler
   module Gemspec
-    # Generates a date for stuffing in the gemspec
-    def date
-      date = DateTime.now
-      "#{date.year}-#{date.month}-#{date.day}"
-    end
-
-
     # Writes out the gemspec
     def write_gemspec
       @gemspec.date = self.date
@@ -40,6 +33,12 @@ class Jeweler
   protected
     def gemspec_path
       File.join(@base_dir, "#{@gemspec.name}.gemspec")
+    end
+    
+    # Generates a date for stuffing in the gemspec
+    def date
+      date = DateTime.now
+      "#{date.year}-#{date.month}-#{date.day}"
     end
   end
 end
