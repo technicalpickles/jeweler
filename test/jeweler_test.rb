@@ -3,10 +3,27 @@ require File.dirname(__FILE__) + '/test_helper'
 class JewelerTest < Test::Unit::TestCase
   
   def teardown
-    FileUtils.rm_rf("#{File.dirname(__FILE__)}/lib")
-    FileUtils.rm_f("#{File.dirname(__FILE__)}/foo.gemspec")
-    FileUtils.rm_f("#{File.dirname(__FILE__)}/bar.gemspec")
-    FileUtils.rm_f("#{File.dirname(__FILE__)}/VERSION.yml")
+    FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
+  end
+  
+  def build_spec
+    Gem::Specification.new do |s|
+      s.name = "bar"
+      s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+      s.email = "josh@technicalpickles.com"
+      s.homepage = "http://github.com/technicalpickles/jeweler"
+      s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+      s.authors = ["Josh Nichols", "Dan Croak"]
+      s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+    end
+  end
+  
+  def fixture_dir
+    File.join(File.dirname(__FILE__), 'fixtures', 'bar')
+  end
+  
+  def tmp_dir
+    File.join(File.dirname(__FILE__), 'tmp')
   end
   
   class << self
@@ -35,95 +52,13 @@ class JewelerTest < Test::Unit::TestCase
     end
   end
   
-  context 'A jeweler (with a gemspec with top level module)' do
+  context "A Jeweler with an existing VERSION.yml" do
     setup do
-      spec = Gem::Specification.new do |s|
-        s.name = 'foo'
-        s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/jeweler"
-        s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.authors = ["Josh Nichols", "Dan Croak"]
-        s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
-      end
-      @jeweler = Jeweler.new(spec, File.dirname(__FILE__))
-      
-      catch_out do
-        @jeweler.write_version(0, 1, 0)
-      end
-      @jeweler = Jeweler.new(spec, File.dirname(__FILE__))
-    end
-    
-    should_have_major_version 0
-    should_have_minor_version 1
-    should_have_patch_version 0
-    should_be_version '0.1.0'
-    
-    context "bumping the patch version" do
-      setup do
-        @output = catch_out { @jeweler.bump_patch_version }
-      end
-      
-      should_have_major_version 0
-      should_have_minor_version 1
-      should_have_patch_version 1
-      should_be_version '0.1.1'
-      
-      should "still have module Foo" do
-        # do some regexp of version.rb
-      end
-    end
-    
-    context "bumping the minor version" do
-      setup do
-        @output = catch_out { @jeweler.bump_minor_version }
-      end
-      
-      should_have_major_version 0
-      should_have_minor_version 2
-      should_have_patch_version 0
-      should_be_version '0.2.0'
-      
-      should "still have module Foo" do
-        # do some regexp of version.rb
-      end
-    end
-    
-    context "bumping the major version" do
-      setup do
-        @output = catch_out { @jeweler.bump_major_version }
-      end
-      
-      should_have_major_version 1
-      should_have_minor_version 0
-      should_have_patch_version 0
-      should_be_version '1.0.0'
-      
-      should "still have module Foo" do
-        # do some regexp of version.rb
-      end
-    end
-    
-  end
-  
-  context "A Jeweler (with a gemspec with top level class)" do
-    setup do
-      spec = Gem::Specification.new do |s|
-        s.name = "bar"
-        s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/jeweler"
-        s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.authors = ["Josh Nichols", "Dan Croak"]
-        s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
-      end
-      @jeweler = Jeweler.new(spec, File.dirname(__FILE__))
-
       @now = Time.now
       Time.stubs(:now).returns(@now)
+      FileUtils.cp_r(fixture_dir, tmp_dir)
 
-      @output = catch_out { @jeweler.write_version(1, 5, 2) }
-      @jeweler = Jeweler.new(spec, File.dirname(__FILE__))
+      @jeweler = Jeweler.new(build_spec, tmp_dir)
     end  
     
     should_have_major_version 1
@@ -148,17 +83,21 @@ class JewelerTest < Test::Unit::TestCase
       end
       
       should "create bar.gemspec" do
-        assert File.exists?(File.join(File.dirname(__FILE__), 'bar.gemspec'))
+        assert File.exists?(File.join(tmp_dir, 'bar.gemspec'))
       end
 
       should "have created a valid gemspec" do
         assert @jeweler.valid_gemspec?
       end
+      
+      should "output the name of the gemspec" do
+        assert_match 'bar.gemspec', @output
+      end
     
       
       context "re-reading the gemspec" do
         setup do
-          data = File.read(File.join(File.dirname(__FILE__), 'bar.gemspec'))
+          data = File.read(File.join(tmp_dir, 'bar.gemspec'))
 
           @parsed_spec = eval("$SAFE = 3\n#{data}", binding, File.join(File.dirname(__FILE__), 'bar.gemspec'))
         end
