@@ -14,9 +14,7 @@ class Jeweler
     # it. See http://gist.github.com/16215
     def validate_gemspec
       begin
-        data = File.read(gemspec_path)
-        Thread.new { spec = parse_gemspec(data) }.join
-        
+        parse_gemspec
         puts "#{gemspec_path} is valid."
       rescue Exception => e
         puts "#{gemspec_path} is invalid. See the backtrace for more details."
@@ -26,11 +24,8 @@ class Jeweler
     
     
     def valid_gemspec?
-      # gah, so wet...
       begin
-        data = File.read(gemspec_path)
-      
-        Thread.new { spec = parse_gemspec(data) }.join
+        parse_gemspec
         true
       rescue Exception => e
         false
@@ -39,7 +34,7 @@ class Jeweler
     
     def parse_gemspec(data = nil)
       data ||= File.read(gemspec_path)
-      eval("$SAFE = 3\n#{data}", binding, gemspec_path)
+      Thread.new { eval("$SAFE = 3\n#{data}", binding, gemspec_path) }.join
     end
     
   protected
