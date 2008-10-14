@@ -27,10 +27,5 @@ class Jeweler
     # @gemspec.version = version
     @gemspec.files ||= FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]
   end
-  
-private  
-  def main_module_name
-    camelize(@gemspec.name)
-  end
 end
 
