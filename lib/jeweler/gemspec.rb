@@ -2,7 +2,8 @@ class Jeweler
   module Gemspec
     # Writes out the gemspec
     def write_gemspec
-      @gemspec.date = self.date
+      @gemspec.version = self.version
+      @gemspec.date = Time.now
       File.open(gemspec_path, 'w') do |f|
         f.write @gemspec.to_ruby
       end
@@ -13,15 +14,8 @@ class Jeweler
     # it. See http://gist.github.com/16215
     def validate_gemspec
       begin
-        # Snippet borrowed from http://gist.github.com/16215
         data = File.read(gemspec_path)
-      
-        spec = nil
-        if data !~ %r{!ruby/object:Gem::Specification}
-          Thread.new { spec = eval("$SAFE = 3\n#{data}", binding, gemspec_path) }.join
-        else
-          spec = YAML.load(data)
-        end
+        Thread.new { spec = parse_gemspec(data) }.join
         
         puts "#{gemspec_path} is valid."
       rescue Exception => e
@@ -30,17 +24,29 @@ class Jeweler
       end
     end
     
+    
+    def valid_gemspec?
+      # gah, so wet...
+      begin
+        data = File.read(gemspec_path)
+      
+        Thread.new { spec = parse_gemspec(data) }.join
+        true
+      rescue Exception => e
+        false
+      end
+    end
+    
+    def parse_gemspec(data = nil)
+      data ||= File.read(gemspec_path)
+      eval("$SAFE = 3\n#{data}", binding, gemspec_path)
+    end
+    
   protected
     def gemspec_path
       denormalized_path = File.join(@base_dir, "#{@gemspec.name}.gemspec")
       absolute_path = File.expand_path(denormalized_path)
       absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
-    end
-    
-    # Generates a date for stuffing in the gemspec
-    def date
-      date = DateTime.now
-      "#{date.year}-#{date.month}-#{date.day}"
     end
   end
 end

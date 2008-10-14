@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.5.5"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols", "Dan Croak"]
-  s.date = %q{2008-10-13}
+  s.date = %q{2008-10-14}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
   s.files = ["Rakefile", "README.markdown", "TODO", "VERSION.yml", "lib/jeweler", "lib/jeweler/active_support.rb", "lib/jeweler/bumping.rb", "lib/jeweler/errors.rb", "lib/jeweler/gemspec.rb", "lib/jeweler/singleton.rb", "lib/jeweler/tasks.rb", "lib/jeweler/versioning.rb", "lib/jeweler.rb", "test/jeweler_test.rb", "test/test_helper.rb"]
