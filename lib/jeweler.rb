@@ -27,7 +27,7 @@ class Jeweler
     load_version()
     
     @gemspec.version = version
-    @gemspec.files ||= FileList["[A-Z]*", "{generators,lib,test,spec}/**/*"]
+    @gemspec.files ||= FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]
   end
   
 private  
