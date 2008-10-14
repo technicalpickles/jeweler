@@ -6,7 +6,7 @@ class Jeweler
       File.open(gemspec_path, 'w') do |f|
         f.write @gemspec.to_ruby
       end
-      puts "Generated #{gemspec_path}."
+      puts "Generated: #{gemspec_path}"
     end
     
     # Validates the gemspec in an environment similar to how GitHub would build
@@ -32,7 +32,9 @@ class Jeweler
     
   protected
     def gemspec_path
-      File.join(@base_dir, "#{@gemspec.name}.gemspec")
+      denormalized_path = File.join(@base_dir, "#{@gemspec.name}.gemspec")
+      absolute_path = File.expand_path(denormalized_path)
+      absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
     end
     
     # Generates a date for stuffing in the gemspec

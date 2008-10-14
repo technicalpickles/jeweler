@@ -7,7 +7,6 @@ class Jeweler
       patch = self.patch_version + 1
 
       write_version(major_version, minor_version, patch)
-      write_gemspec
     end
 
     # Bumps the minor version.
@@ -17,7 +16,6 @@ class Jeweler
       minor = minor_version + 1
 
       write_version(major_version, minor)
-      write_gemspec
     end
 
     # Bumps the major version.
@@ -27,7 +25,6 @@ class Jeweler
       major = major_version + 1
 
       write_version(major)
-      write_gemspec
     end
 
     # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
@@ -47,6 +44,8 @@ class Jeweler
       refresh_version
       
       @gemspec.version = version
+      
+      puts "Wrote to #{version_yaml_path}: #{version}"
     end
   end
 end
