@@ -8,7 +8,12 @@ require 'ruby-debug'
 gem 'mocha'
 require 'mocha'
 
-gem 'mhennemeyer-output_catcher'
+# Use vendored gem because of limited gem availability on runcoderun
+# This is loosely based on 'vendor everything'.
+Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |dir| 
+  lib = "#{dir}/lib"
+  $LOAD_PATH.unshift(lib) if File.directory?(lib)
+end
 require 'output_catcher'
 
 require 'time'
