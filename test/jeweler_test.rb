@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class JewelerTest < Test::Unit::TestCase
   
+  def setup
+    @now = Time.now
+    Time.stubs(:now).returns(@now)
+  end
+  
   def teardown
     FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
   end
@@ -16,14 +21,6 @@ class JewelerTest < Test::Unit::TestCase
       s.authors = ["Josh Nichols", "Dan Croak"]
       s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
     end
-  end
-  
-  def fixture_dir
-    File.join(File.dirname(__FILE__), 'fixtures', 'bar')
-  end
-  
-  def tmp_dir
-    File.join(File.dirname(__FILE__), 'tmp')
   end
   
   class << self
@@ -50,12 +47,33 @@ class JewelerTest < Test::Unit::TestCase
         assert_equal version, @jeweler.version
       end
     end
+    
+    def should_bump_version(major, minor, patch)
+      version = "#{major}.#{minor}.#{patch}"
+      should_have_major_version major
+      should_have_minor_version minor
+      should_have_patch_version patch
+      should_be_version version
+      should "output the new version, #{version}" do
+        assert_match version, @output
+      end
+    end
   end
   
-  context "A Jeweler with an existing VERSION.yml" do
+  context "A jeweler without a VERSION.yml" do
     setup do
-      @now = Time.now
-      Time.stubs(:now).returns(@now)
+      FileUtils.mkdir_p(tmp_dir)
+      @jeweler = Jeweler.new(build_spec, tmp_dir)
+    end
+    
+    should "not have VERSION.yml" do
+      assert ! File.exists?(File.join(tmp_dir, 'bar.gemspec'))
+    end
+  end
+  
+  
+  context "A Jeweler with a VERSION.yml" do
+    setup do
       FileUtils.cp_r(fixture_dir, tmp_dir)
 
       @jeweler = Jeweler.new(build_spec, tmp_dir)
@@ -70,11 +88,23 @@ class JewelerTest < Test::Unit::TestCase
       setup do
         @output = catch_out { @jeweler.bump_patch_version }
       end
-      
-      should_have_major_version 1
-      should_have_minor_version 5
-      should_have_patch_version 3
-      should_be_version '1.5.3'
+      should_bump_version 1, 5, 3
+    end
+    
+    context "bumping the minor version" do
+      setup do
+        @output = catch_out { @jeweler.bump_minor_version }
+      end
+
+      should_bump_version 1, 6, 0
+    end
+    
+    context "bumping the major version" do
+      setup do
+        @output = catch_out { @jeweler.bump_major_version}
+      end
+
+      should_bump_version 2, 0, 0
     end
     
     context "writing the gemspec" do
@@ -97,9 +127,10 @@ class JewelerTest < Test::Unit::TestCase
       
       context "re-reading the gemspec" do
         setup do
-          data = File.read(File.join(tmp_dir, 'bar.gemspec'))
+          gemspec_path = File.join(tmp_dir, 'bar.gemspec')
+          data = File.read(gemspec_path)
 
-          @parsed_spec = eval("$SAFE = 3\n#{data}", binding, File.join(File.dirname(__FILE__), 'bar.gemspec'))
+          @parsed_spec = eval("$SAFE = 3\n#{data}", binding, gemspec_path)
         end
 
         should "have version 1.5.2" do
@@ -115,7 +146,7 @@ class JewelerTest < Test::Unit::TestCase
   
   should "raise an exception when created with a nil gemspec" do
     assert_raises Jeweler::GemspecError do
-      @jeweler = Jeweler.new(nil, File.dirname(__FILE__))
+      @jeweler = Jeweler.new(nil, tmp_dir)
     end
   end
   

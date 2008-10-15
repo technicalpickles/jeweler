@@ -35,4 +35,12 @@ class Test::Unit::TestCase
        block.call
      end
   end
+  
+  def fixture_dir
+    File.join(File.dirname(__FILE__), 'fixtures', 'bar')
+  end
+  
+  def tmp_dir
+    File.join(File.dirname(__FILE__), 'tmp')
+  end
 end
