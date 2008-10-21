@@ -1,4 +1,3 @@
-require 'ruby-debug'
 desc "Generate and validates gemspec"
 task :gemspec => ['gemspec:generate', 'gemspec:validate']
 
