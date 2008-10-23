@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'rcov/rcovtask'
 
 $:.unshift('lib')
 
@@ -25,8 +26,7 @@ Rake::TestTask.new do |t|
   t.verbose = false
 end
 
-desc 'Generate documentation for jeweler.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
+Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'Jeweler'
   rdoc.options << '--line-numbers' << '--inline-source'
@@ -34,5 +34,10 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
  
-desc "Run the test suite"
-task :default => :test
+task :default => :rcov
+
+Rcov::RcovTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList['test/*_test.rb']
+  t.verbose = true
+end
