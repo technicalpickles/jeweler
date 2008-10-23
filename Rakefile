@@ -25,7 +25,7 @@ Rake::TestTask.new do |t|
   t.verbose = false
 end
 
-desc 'Generate documentation for the safety_valve plugin.'
+desc 'Generate documentation for jeweler.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'Jeweler'
