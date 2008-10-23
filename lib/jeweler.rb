@@ -7,7 +7,6 @@ require 'jeweler/gemspec'
 require 'jeweler/errors'
 
 require 'jeweler/tasks' if defined?(Rake)
-require 'jeweler/active_support' # Adds the stolen camelize and constantize
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler

@@ -20,6 +20,7 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
+
 Rake::TestTask.new do |t|
   t.libs << 'lib'
   t.pattern = 'test/**/*_test.rb'
@@ -33,11 +34,11 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README.markdown')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
- 
-task :default => :rcov
 
 Rcov::RcovTask.new do |t|
   t.libs << "test"
   t.test_files = FileList['test/*_test.rb']
   t.verbose = true
 end
+
+task :default => :rcov
