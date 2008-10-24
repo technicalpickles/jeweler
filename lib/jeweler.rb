@@ -5,6 +5,7 @@ require 'jeweler/versioning'
 require 'jeweler/singleton'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
+require 'jeweler/generator'
 
 require 'jeweler/tasks' if defined?(Rake)
 
@@ -23,7 +24,7 @@ class Jeweler
     @gemspec = gemspec
     @base_dir = base_dir
     
-    @gemspec.files ||= FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]
+    @gemspec.files ||= FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
   end
 end
 

@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'jeweler'
+
+unless ARGV.size == 1
+  puts "jeweler takes one argument, a GitHub clone URL, like git@github.com:technicalpickles/the-perfect-gem.git"
+  exit 1
+end
+
+github_remote = ARGV.first
+generator = Jeweler::Generator.new github_remote
+generator.run
+generator.gitify
