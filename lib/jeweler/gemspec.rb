@@ -2,6 +2,7 @@ class Jeweler
   module Gemspec
     # Writes out the gemspec
     def write_gemspec
+      self.refresh_version
       @gemspec.version = self.version
       @gemspec.date = Time.now
       File.open(gemspec_path, 'w') do |f|
