@@ -71,6 +71,10 @@ class JewelerTest < Test::Unit::TestCase
       should "determine github username as technicalpickles" do
         assert_equal 'technicalpickles', @generator.github_username
       end
+      
+      should "determine github repository name" do
+        assert_equal 'the-perfect-gem', @generator.github_repo_name
+      end
     end
     
     
