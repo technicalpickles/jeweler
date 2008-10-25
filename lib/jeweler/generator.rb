@@ -9,12 +9,18 @@ class Jeweler
   
   class FileInTheWay < StandardError
   end
+  
+  class NoRemoteGiven < StandardError
+  end
     
   class Generator
     attr_accessor :target_dir, :user_name, :user_email, :github_repo_name, :github_remote, :github_url, :github_username, :lib_dir
 
     def initialize(github_remote, dir = nil)
-
+      if github_remote.nil?
+        raise NoRemoteGiven
+      end
+      
       self.github_remote = github_remote
       check_user_git_config()
       determine_github_stuff()
