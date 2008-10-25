@@ -2,6 +2,14 @@ require 'git'
 require 'erb'
 
 class Jeweler
+  class NoGitUserName < StandardError
+  end
+  class NoGitUserEmail < StandardError
+  end
+  
+  class FileInTheWay < StandardError
+  end
+    
   class Generator
     attr_accessor :target_dir, :user_name, :user_email, :github_repo_name, :github_remote, :github_url, :github_username, :lib_dir
 
@@ -16,18 +24,16 @@ class Jeweler
     end
 
     def check_user_git_config
-      lib = Git::Lib.new(nil, nil)
-      config = lib.parse_config '~/.gitconfig'
+      config = read_git_config
       unless config.has_key? 'user.name'
-        puts %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
-        exit 1
+        raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
       unless config.has_key? 'user.email'
-        puts %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
-        exit 1
+        raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
-      @user_name = config['user.name'].gsub('"', '')
-      @user_email = config['user.email'].gsub('"', '')
+
+      @user_name = config['user.name']
+      @user_email = config['user.email']
     end
 
     def determine_github_stuff
@@ -52,7 +58,6 @@ class Jeweler
       File.open(File.join(target_dir, 'LICENSE'), 'w') {|file| file.write(license.result(binding))}
 
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
-
     end
 
     def template(file)
@@ -74,6 +79,12 @@ class Jeweler
         raise
       end
       Dir.chdir(saved_pwd)
+    end
+    
+  protected
+    def read_git_config
+      lib = Git::Lib.new(nil, nil)
+      config = lib.parse_config '~/.gitconfig'
     end
   end
 end
