@@ -65,6 +65,9 @@ class Jeweler
 
       license = template('LICENSE')
       File.open(File.join(target_dir, 'LICENSE'), 'w') {|file| file.write(license.result(binding))}
+      
+      readme = template('README')
+      File.open(File.join(target_dir, 'README'), 'w') {|file| file.write(readme.result(binding))}
 
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
     end

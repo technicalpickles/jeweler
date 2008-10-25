@@ -90,6 +90,54 @@ class JewelerTest < Test::Unit::TestCase
     end
     
     
+    context "and cleaned out tmp directory" do
+      setup do
+        @tmp_dir = File.join(File.dirname(__FILE__), 'tmp')
+        FileUtils.rm_rf(@tmp_dir)
+        
+        assert ! File.exists?(@tmp_dir)
+      end
+
+      teardown do
+        FileUtils.rm_rf(@tmp_dir)
+      end
+      
+      context "for a repository 'git@github.com:technicalpickles/the-perfect-gem.git' and working directory 'tmp'" do
+        setup do
+          @generator = Jeweler::Generator.new('git@github.com:technicalpickles/the-perfect-gem.git', @tmp_dir)
+        end
+
+        should "use tmp for target directory" do
+          assert_equal @tmp_dir, @generator.target_dir
+        end
+        
+        context "running" do
+          setup do
+            @generator.run
+          end
+
+          should 'create target directory' do
+            assert File.exists?(@tmp_dir)
+          end
+          
+          should "create lib directory" do
+            assert File.exists?(File.join(@tmp_dir, 'lib'))
+            assert File.directory?(File.join(@tmp_dir, 'lib'))
+          end
+          
+          should "create README" do
+            assert File.exists?(File.join(@tmp_dir, 'README'))
+            assert File.file?(File.join(@tmp_dir, 'README'))
+          end
+          
+          should "create lib/the-perfect-gem.rb" do
+            assert File.exists?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
+            assert File.file?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
+          end
+        end
+          
+      end
+    end
   end
   
 end
