@@ -72,8 +72,20 @@ class JewelerTest < Test::Unit::TestCase
         assert_equal 'technicalpickles', @generator.github_username
       end
       
-      should "determine github repository name" do
+      should "determine github repository name as the-perfect-gem" do
         assert_equal 'the-perfect-gem', @generator.github_repo_name
+      end
+      
+      should "determine github url as http://github.com/technicalpickles/the-perfect-gem" do
+        assert_equal 'http://github.com/technicalpickles/the-perfect-gem', @generator.github_url
+      end
+      
+      should "determine target directory as the same as the github repository name" do
+        assert_equal @generator.github_repo_name, @generator.target_dir
+      end
+      
+      should "determine lib directory as being inside the target directory" do
+        assert_equal File.join(@generator.target_dir, 'lib'), @generator.lib_dir
       end
     end
     

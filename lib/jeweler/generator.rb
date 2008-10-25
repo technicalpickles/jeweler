@@ -45,7 +45,7 @@ class Jeweler
     end
 
     def determine_github_stuff
-      self.github_url = self.github_remote.gsub(/^git@github\.com:/, 'http://github.com/').gsub(/\.git$/, '/tree')
+      self.github_url = self.github_remote.gsub(/^git@github\.com:/, 'http://github.com/').gsub(/\.git$/, '')
       self.github_repo_name = self.github_remote.match(/\/(.*)\.git$/)[1]
       self.github_username = self.github_remote.match(%r{git@github\.com:(.*)/})[1]
     end
