@@ -63,6 +63,14 @@ class JewelerTest < Test::Unit::TestCase
       setup do
         @generator = Jeweler::Generator.new('git@github.com:technicalpickles/the-perfect-gem.git')
       end
+      
+      should "assign 'foo' to user's name" do
+        assert_equal 'foo', @generator.user_name
+      end
+      
+      should "assign 'foo@example.com to user's email" do
+        assert_equal 'foo@example.com', @generator.user_email
+      end
 
       should "assign github remote" do
         assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', @generator.github_remote
