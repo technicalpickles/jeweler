@@ -170,7 +170,7 @@ class JewelerTest < Test::Unit::TestCase
           should_create_file 'README'
           should_create_file 'lib/the-perfect-gem.rb'
           should_create_file 'test/test_helper.rb'
-          should_create_file 'test/the-perfect-gem_test.rb'
+          should_create_file 'test/the_perfect_gem_test.rb'
           
           context "LICENSE" do
             setup do
@@ -200,6 +200,17 @@ class JewelerTest < Test::Unit::TestCase
             end
           end
           
+          context "test/the_perfect_gem_test.rb" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'test', 'the_perfect_gem_test.rb')))
+            end
+
+            should "have class of ThePerfectGemTest" do
+              assert_match 'class ThePerfectGemTest < Test::Unit::TestCase', @content
+            end
+          end
+          
+          
           context "created git repo" do
             setup do
               @repo = Git.open(@tmp_dir)
@@ -219,7 +230,7 @@ class JewelerTest < Test::Unit::TestCase
             should_be_checked_in 'LICENSE'
             should_be_checked_in 'lib/the-perfect-gem.rb'
             should_be_checked_in 'test/test_helper.rb'
-            should_be_checked_in 'test/the-perfect-gem_test.rb'
+            should_be_checked_in 'test/the_perfect_gem_test.rb'
             
             should "have no untracked files" do
               assert_equal 0, @repo.status.untracked.size

@@ -60,7 +60,7 @@ class Jeweler
       output_template_in_target('LICENSE')
       output_template_in_target('README')
       output_template_in_target('test/test_helper.rb')
-      output_template_in_target('test/flunking_test.rb', "test/#{github_repo_name}_test.rb")
+      output_template_in_target('test/flunking_test.rb', "test/#{github_repo_name.gsub('-', '_')}_test.rb")
       
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
     end
