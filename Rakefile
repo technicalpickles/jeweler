@@ -17,6 +17,7 @@ begin
     s.authors = ["Josh Nichols", "Dan Croak"]
     s.bindir = 'bin'
     s.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*"]
+    s.add_dependency 'schacon-git'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
