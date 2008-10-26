@@ -20,7 +20,7 @@ class JewelerTest < Test::Unit::TestCase
   
   context "without git user's name set" do
     setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.email' => 'foo@example.com'})
+      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.email' => 'bar@example.com'})
     end
     
     context "instantiating new generator" do
@@ -56,7 +56,7 @@ class JewelerTest < Test::Unit::TestCase
   
   context "with valid git user configuration" do
     setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo', 'user.email' => 'foo@example.com'})
+      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo', 'user.email' => 'bar@example.com'})
     end
     
     context "for a repository 'git@github.com:technicalpickles/the-perfect-gem.git'" do
@@ -68,8 +68,8 @@ class JewelerTest < Test::Unit::TestCase
         assert_equal 'foo', @generator.user_name
       end
       
-      should "assign 'foo@example.com to user's email" do
-        assert_equal 'foo@example.com', @generator.user_email
+      should "assign 'bar@example.com to user's email" do
+        assert_equal 'bar@example.com', @generator.user_email
       end
 
       should "assign github remote" do
@@ -133,6 +133,11 @@ class JewelerTest < Test::Unit::TestCase
             assert File.directory?(File.join(@tmp_dir, 'lib'))
           end
           
+          should "create LICENSE" do
+            assert File.exists?(File.join(@tmp_dir, 'LICENSE'))
+            assert File.file?(File.join(@tmp_dir, 'LICENSE'))
+          end
+          
           should "create README" do
             assert File.exists?(File.join(@tmp_dir, 'README'))
             assert File.file?(File.join(@tmp_dir, 'README'))
@@ -142,6 +147,35 @@ class JewelerTest < Test::Unit::TestCase
             assert File.exists?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
             assert File.file?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
           end
+          
+          context "LICENSE" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
+            end
+
+            should "include copyright for this year with user's name" do
+              assert_match 'Copyright (c) 2008 foo', @content
+            end
+          end
+          
+          context "Rakefile" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
+            end
+            
+            should "include repo's name as the gem's name" do
+              assert_match 's.name = "the-perfect-gem"', @content
+            end
+            
+            should "include the user's email as the gem's email" do
+              assert_match 's.email = "bar@example.com"', @content
+            end
+            
+            should "include the github repo's url as the gem's url" do
+              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
+            end
+          end
+          
         end
           
       end
