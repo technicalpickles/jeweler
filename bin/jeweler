@@ -13,4 +13,3 @@ github_username = ARGV.first
 github_repo_name = ARGV.last
 generator = Jeweler::Generator.new github_username, github_repo_name
 generator.run
-generator.gitify

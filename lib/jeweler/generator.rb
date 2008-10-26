@@ -36,20 +36,15 @@ class Jeweler
       self.lib_dir = File.join(target_dir, 'lib')
     end
 
-    def check_user_git_config
-      config = read_git_config
-      unless config.has_key? 'user.name'
-        raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
-      end
-      unless config.has_key? 'user.email'
-        raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
-      end
 
-      self.user_name = config['user.name']
-      self.user_email = config['user.email']
-    end
 
     def run
+      create_files
+      gitify
+    end
+    
+  private
+    def create_files
       begin
         FileUtils.mkdir target_dir
       rescue Errno::EEXIST => e
@@ -65,6 +60,19 @@ class Jeweler
       
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
     end
+  
+    def check_user_git_config
+      config = read_git_config
+      unless config.has_key? 'user.name'
+        raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
+      end
+      unless config.has_key? 'user.email'
+        raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
+      end
+
+      self.user_name = config['user.name']
+      self.user_email = config['user.email']
+    end
     
     def output_template_in_target(file)
       template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', file)))
@@ -77,7 +85,7 @@ class Jeweler
       begin
         repo = Git.init()
         repo.add('.')
-        repo.commit 'First commit courtesy of jeweler.'
+        repo.commit "Initial commit to #{github_repo_name}."
         repo.add_remote('origin', github_remote)
       rescue Git::GitExecuteError => e
         puts "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"

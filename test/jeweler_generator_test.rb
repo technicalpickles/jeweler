@@ -184,6 +184,69 @@ class JewelerTest < Test::Unit::TestCase
             end
           end
           
+          context "created git repo" do
+            setup do
+              @repo = Git.open(@tmp_dir)
+            end
+
+            should 'have one commit log' do
+              assert_equal 1, @repo.log.size
+            end
+            
+            should "have one commit log an initial commit message" do
+              # TODO message seems to include leading whitespace, could probably fix that in ruby-git
+              assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
+            end
+            
+            should "have README checked in" do
+              status = @repo.status['README']
+              assert ! status.untracked
+              assert_nil status.type
+            end
+            
+            should "have Rakefile checked in" do
+              status = @repo.status['Rakefile']
+              assert ! status.untracked
+              assert_nil status.type
+            end
+            
+            should "have LICENSE checked in" do
+              status = @repo.status['LICENSE']
+              assert ! status.untracked
+              assert_nil status.type
+            end
+            
+            should "have no untracked files" do
+              assert_equal 0, @repo.status.untracked.size
+            end
+            
+            should "have no changed files" do
+              assert_equal 0, @repo.status.changed.size
+            end
+            
+            should "have no added files" do
+              assert_equal 0, @repo.status.added.size
+            end
+            
+            should "have no deleted files" do
+              assert_equal 0, @repo.status.deleted.size
+            end
+            
+            should "have lib/the-perfect-gem.rb checked in" do
+              status = @repo.status['lib/the-perfect-gem.rb']
+              assert ! status.untracked
+              assert_nil status.type
+            end
+            
+            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
+              assert_equal 1, @repo.remotes.size
+              remote = @repo.remotes.first
+              assert_equal 'origin', remote.name
+              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
+            end
+          end
+          
+          
         end
           
       end
