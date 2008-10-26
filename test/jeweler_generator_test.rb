@@ -200,8 +200,8 @@ class JewelerTest < Test::Unit::TestCase
             
             should "have README checked in" do
               status = @repo.status['README']
-              assert ! status.untracked
-              assert_nil status.type
+              assert ! status.untracked # not untracked
+              assert_nil status.type # not modified, changed, or deleted
             end
             
             should "have Rakefile checked in" do
