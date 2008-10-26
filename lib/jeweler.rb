@@ -7,7 +7,7 @@ require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
 
-require 'jeweler/tasks' if defined?(Rake)
+require 'jeweler/tasks'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler

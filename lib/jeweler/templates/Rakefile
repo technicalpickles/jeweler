@@ -5,7 +5,7 @@ require 'rcov/rcovtask'
 
 begin
   require 'jeweler'
-  Jeweler.gemspec = Gem::Specification.new do |s|
+  Jeweler::Tasks.new do |s|
     s.name = "<%= github_repo_name %>"
     s.summary = "TODO"
     s.email = "<%= user_email %>"
@@ -16,7 +16,6 @@ begin
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
-
 
 Rake::TestTask.new do |t|
   t.libs << 'lib'

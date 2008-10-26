@@ -7,20 +7,20 @@ $:.unshift('lib')
 
 begin
   require 'jeweler'
-  Jeweler.gemspec = Gem::Specification.new do |s|
-    s.name = "jeweler"
-    s.executables = "jeweler"
-    s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    s.email = "josh@technicalpickles.com"
-    s.homepage = "http://github.com/technicalpickles/jeweler"
-    s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    s.authors = ["Josh Nichols", "Dan Croak"]
-    s.bindir = 'bin'
-    s.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*"]
-    s.add_dependency 'schacon-git'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "jeweler"
+    gemspec.executables = "jeweler"
+    gemspec.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+    gemspec.email = "josh@technicalpickles.com"
+    gemspec.homepage = "http://github.com/technicalpickles/jeweler"
+    gemspec.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+    gemspec.authors = ["Josh Nichols"]
+    gemspec.bindir = 'bin'
+    gemspec.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
+    gemspec.add_dependency 'schacon-git'
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
 
@@ -32,7 +32,7 @@ end
 
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'Jeweler'
+  rdoc.title    = 'jeweler'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README.markdown')
   rdoc.rdoc_files.include('lib/**/*.rb')
