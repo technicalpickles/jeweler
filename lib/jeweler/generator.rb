@@ -6,27 +6,32 @@ class Jeweler
   end
   class NoGitUserEmail < StandardError
   end
-  
   class FileInTheWay < StandardError
   end
-  
-  class NoRemoteGiven < StandardError
+  class NoGitHubRepoNameGiven < StandardError
+  end
+  class NoGitHubUsernameGiven < StandardError
   end
     
   class Generator
     attr_accessor :target_dir, :user_name, :user_email, :github_repo_name, :github_remote, :github_url, :github_username, :lib_dir
 
-    def initialize(github_remote, dir = nil)
-      if github_remote.nil?
-        raise NoRemoteGiven
+    def initialize(github_username, github_repo_name, dir = nil)
+      if github_username.nil?
+        raise NoGitHubUsernameGiven
       end
+      self.github_username = github_username
       
-      self.github_remote = github_remote
+      if github_repo_name.nil?
+        raise NoGitHubRepoNameGiven
+      end
+      self.github_repo_name = github_repo_name
+      
+      self.github_remote = "git@github.com:#{github_username}/#{github_repo_name}.git"
+      self.github_url = "http://github.com/#{github_username}/#{github_repo_name}"
       
       check_user_git_config()
       
-      determine_github_stuff()
-
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
     end
@@ -40,14 +45,8 @@ class Jeweler
         raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
 
-      @user_name = config['user.name']
-      @user_email = config['user.email']
-    end
-
-    def determine_github_stuff
-      self.github_url = self.github_remote.gsub(/^git@github\.com:/, 'http://github.com/').gsub(/\.git$/, '')
-      self.github_repo_name = self.github_remote.match(/\/(.*)\.git$/)[1]
-      self.github_username = self.github_remote.match(%r{git@github\.com:(.*)/})[1]
+      self.user_name = config['user.name']
+      self.user_email = config['user.email']
     end
 
     def run
@@ -60,20 +59,16 @@ class Jeweler
 
       FileUtils.mkdir lib_dir
 
-      rakefile = template('Rakefile')
-      File.open(File.join(target_dir, 'Rakefile'), 'w') {|file| file.write(rakefile.result(binding))}
-
-      license = template('LICENSE')
-      File.open(File.join(target_dir, 'LICENSE'), 'w') {|file| file.write(license.result(binding))}
+      output_template_in_target('Rakefile')
+      output_template_in_target('LICENSE')
+      output_template_in_target('README')
       
-      readme = template('README')
-      File.open(File.join(target_dir, 'README'), 'w') {|file| file.write(readme.result(binding))}
-
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
     end
-
-    def template(file)
-      ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', file)))
+    
+    def output_template_in_target(file)
+      template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', file)))
+      File.open(File.join(target_dir, file), 'w') {|file| file.write(template.result(binding))}
     end
 
     def gitify
@@ -84,7 +79,6 @@ class Jeweler
         repo.add('.')
         repo.commit 'First commit courtesy of jeweler.'
         repo.add_remote('origin', github_remote)
-        repo.push('origin', 'master')
       rescue Git::GitExecuteError => e
         puts "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
         puts
