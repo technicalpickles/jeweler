@@ -16,7 +16,7 @@ class Jeweler
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
                   :github_repo_name, :github_remote, :github_url, :github_username,
-                  :lib_dir, :test_dir
+                  :lib_dir, :test_dir, :constant_name, :file_name_prefix
 
     def initialize(github_username, github_repo_name, dir = nil)
       if github_username.nil?
@@ -37,6 +37,8 @@ class Jeweler
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
       self.test_dir = File.join(target_dir, 'test')
+      self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
+      self.file_name_prefix = self.github_repo_name.gsub('-', '_')
     end
 
     def run
@@ -61,9 +63,9 @@ class Jeweler
       output_template_in_target('LICENSE')
       output_template_in_target('README')
       output_template_in_target('test/test_helper.rb')
-      output_template_in_target('test/flunking_test.rb', "test/#{github_repo_name.gsub('-', '_')}_test.rb")
+      output_template_in_target('test/flunking_test.rb', "test/#{file_name_prefix}_test.rb")
       
-      FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
+      FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
     end
   
     def check_user_git_config

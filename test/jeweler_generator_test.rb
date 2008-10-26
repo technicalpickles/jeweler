@@ -130,6 +130,14 @@ class JewelerTest < Test::Unit::TestCase
       should "determine test directory as being inside the target directory" do
         assert_equal File.join(@generator.target_dir, 'test'), @generator.test_dir
       end
+      
+      should "determine constant name as ThePerfectGem" do
+        assert_equal 'ThePerfectGem', @generator.constant_name
+      end
+      
+      should "determine file name prefix as the_perfect_gem" do
+        assert_equal 'the_perfect_gem', @generator.file_name_prefix
+      end
     end
     
     
@@ -168,7 +176,7 @@ class JewelerTest < Test::Unit::TestCase
           
           should_create_file 'LICENSE'
           should_create_file 'README'
-          should_create_file 'lib/the-perfect-gem.rb'
+          should_create_file 'lib/the_perfect_gem.rb'
           should_create_file 'test/test_helper.rb'
           should_create_file 'test/the_perfect_gem_test.rb'
           should_create_file '.gitignore'
@@ -248,7 +256,7 @@ class JewelerTest < Test::Unit::TestCase
             should_be_checked_in 'README'
             should_be_checked_in 'Rakefile'
             should_be_checked_in 'LICENSE'
-            should_be_checked_in 'lib/the-perfect-gem.rb'
+            should_be_checked_in 'lib/the_perfect_gem.rb'
             should_be_checked_in 'test/test_helper.rb'
             should_be_checked_in 'test/the_perfect_gem_test.rb'
             should_be_checked_in '.gitignore'
@@ -277,10 +285,7 @@ class JewelerTest < Test::Unit::TestCase
               assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
             end
           end
-          
-          
         end
-          
       end
     end
   end

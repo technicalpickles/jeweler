@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class <%= github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join %>Test < Test::Unit::TestCase
+class <%= constant_name %>Test < Test::Unit::TestCase
   should "probably rename this file and start testing for real" do
-    flunk "probably rename this file and start testing for real"
+    flunk "hey buddy, you should probably rename this file and start testing for real"
   end
 end
