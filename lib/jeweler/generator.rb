@@ -56,6 +56,7 @@ class Jeweler
       FileUtils.mkdir lib_dir
       FileUtils.mkdir test_dir
 
+      output_template_in_target('.gitignore')
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')

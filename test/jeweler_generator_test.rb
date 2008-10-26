@@ -171,6 +171,7 @@ class JewelerTest < Test::Unit::TestCase
           should_create_file 'lib/the-perfect-gem.rb'
           should_create_file 'test/test_helper.rb'
           should_create_file 'test/the_perfect_gem_test.rb'
+          should_create_file '.gitignore'
           
           context "LICENSE" do
             setup do
@@ -199,6 +200,25 @@ class JewelerTest < Test::Unit::TestCase
               assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
             end
           end
+          
+          context ".gitignore" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, '.gitignore')))
+            end
+
+            should "include vim swap files" do
+              assert_match '*.sw?', @content
+            end
+            
+            should "include coverage" do
+              assert_match 'coverage', @content
+            end
+            
+            should "include .DS_Store" do
+              assert_match '.DS_Store', @content
+            end
+          end
+          
           
           context "test/the_perfect_gem_test.rb" do
             setup do
@@ -231,6 +251,7 @@ class JewelerTest < Test::Unit::TestCase
             should_be_checked_in 'lib/the-perfect-gem.rb'
             should_be_checked_in 'test/test_helper.rb'
             should_be_checked_in 'test/the_perfect_gem_test.rb'
+            should_be_checked_in '.gitignore'
             
             should "have no untracked files" do
               assert_equal 0, @repo.status.untracked.size
