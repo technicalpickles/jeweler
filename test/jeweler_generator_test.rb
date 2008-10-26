@@ -2,6 +2,29 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class JewelerTest < Test::Unit::TestCase
   
+  def self.should_create_directory(directory)
+    should "create #{directory} directory" do
+      assert File.exists?(File.join(@tmp_dir, directory))
+      assert File.directory?(File.join(@tmp_dir, directory))
+    end
+  end
+  
+  def self.should_create_file(file)
+    should "create file #{file}" do
+      assert File.exists?(File.join(@tmp_dir, file))
+      assert File.file?(File.join(@tmp_dir, file))
+    end
+  end
+  
+  def self.should_be_checked_in(file)
+    should "have #{file} checked in" do
+      status = @repo.status[file]
+      assert_not_nil status, "wasn't able to get status for #{file}"
+      assert ! status.untracked, "#{file} was untracked"
+      assert_nil status.type, "#{file} had a type. it should have been nil"
+    end
+  end
+  
   context "given a nil github username" do
     setup do
       @block = lambda { Jeweler::Generator.new(nil, 'the-perfect-gem', nil) }
@@ -103,6 +126,10 @@ class JewelerTest < Test::Unit::TestCase
       should "determine lib directory as being inside the target directory" do
         assert_equal File.join(@generator.target_dir, 'lib'), @generator.lib_dir
       end
+      
+      should "determine test directory as being inside the target directory" do
+        assert_equal File.join(@generator.target_dir, 'test'), @generator.test_dir
+      end
     end
     
     
@@ -136,25 +163,14 @@ class JewelerTest < Test::Unit::TestCase
             assert File.exists?(@tmp_dir)
           end
           
-          should "create lib directory" do
-            assert File.exists?(File.join(@tmp_dir, 'lib'))
-            assert File.directory?(File.join(@tmp_dir, 'lib'))
-          end
+          should_create_directory 'lib'
+          should_create_directory 'test'
           
-          should "create LICENSE" do
-            assert File.exists?(File.join(@tmp_dir, 'LICENSE'))
-            assert File.file?(File.join(@tmp_dir, 'LICENSE'))
-          end
-          
-          should "create README" do
-            assert File.exists?(File.join(@tmp_dir, 'README'))
-            assert File.file?(File.join(@tmp_dir, 'README'))
-          end
-          
-          should "create lib/the-perfect-gem.rb" do
-            assert File.exists?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
-            assert File.file?(File.join(@tmp_dir, 'lib', 'the-perfect-gem.rb'))
-          end
+          should_create_file 'LICENSE'
+          should_create_file 'README'
+          should_create_file 'lib/the-perfect-gem.rb'
+          should_create_file 'test/test_helper.rb'
+          should_create_file 'test/the-perfect-gem_test.rb'
           
           context "LICENSE" do
             setup do
@@ -198,23 +214,12 @@ class JewelerTest < Test::Unit::TestCase
               assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
             end
             
-            should "have README checked in" do
-              status = @repo.status['README']
-              assert ! status.untracked # not untracked
-              assert_nil status.type # not modified, changed, or deleted
-            end
-            
-            should "have Rakefile checked in" do
-              status = @repo.status['Rakefile']
-              assert ! status.untracked
-              assert_nil status.type
-            end
-            
-            should "have LICENSE checked in" do
-              status = @repo.status['LICENSE']
-              assert ! status.untracked
-              assert_nil status.type
-            end
+            should_be_checked_in 'README'
+            should_be_checked_in 'Rakefile'
+            should_be_checked_in 'LICENSE'
+            should_be_checked_in 'lib/the-perfect-gem.rb'
+            should_be_checked_in 'test/test_helper.rb'
+            should_be_checked_in 'test/the-perfect-gem_test.rb'
             
             should "have no untracked files" do
               assert_equal 0, @repo.status.untracked.size
@@ -231,12 +236,7 @@ class JewelerTest < Test::Unit::TestCase
             should "have no deleted files" do
               assert_equal 0, @repo.status.deleted.size
             end
-            
-            should "have lib/the-perfect-gem.rb checked in" do
-              status = @repo.status['lib/the-perfect-gem.rb']
-              assert ! status.untracked
-              assert_nil status.type
-            end
+
             
             should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
               assert_equal 1, @repo.remotes.size

@@ -14,7 +14,9 @@ class Jeweler
   end
     
   class Generator
-    attr_accessor :target_dir, :user_name, :user_email, :github_repo_name, :github_remote, :github_url, :github_username, :lib_dir
+    attr_accessor :target_dir, :user_name, :user_email,
+                  :github_repo_name, :github_remote, :github_url, :github_username,
+                  :lib_dir, :test_dir
 
     def initialize(github_username, github_repo_name, dir = nil)
       if github_username.nil?
@@ -34,9 +36,8 @@ class Jeweler
       
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
+      self.test_dir = File.join(target_dir, 'test')
     end
-
-
 
     def run
       create_files
@@ -53,10 +54,13 @@ class Jeweler
       end
 
       FileUtils.mkdir lib_dir
+      FileUtils.mkdir test_dir
 
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')
+      output_template_in_target('test/test_helper.rb')
+      output_template_in_target('test/flunking_test.rb', "test/#{github_repo_name}_test.rb")
       
       FileUtils.touch File.join(lib_dir, "#{github_repo_name}.rb")
     end
@@ -74,9 +78,9 @@ class Jeweler
       self.user_email = config['user.email']
     end
     
-    def output_template_in_target(file)
-      template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', file)))
-      File.open(File.join(target_dir, file), 'w') {|file| file.write(template.result(binding))}
+    def output_template_in_target(source, destination = source)
+      template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', source)))
+      File.open(File.join(target_dir, destination), 'w') {|file| file.write(template.result(binding))}
     end
 
     def gitify
@@ -95,8 +99,9 @@ class Jeweler
       Dir.chdir(saved_pwd)
     end
     
-  protected
     def read_git_config
+      # we could just use Git::Base's .config, but that relies on a repo being around already
+      # ... which we don't have yet, since this is part of a sanity check
       lib = Git::Lib.new(nil, nil)
       config = lib.parse_config '~/.gitconfig'
     end
