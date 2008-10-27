@@ -13,9 +13,9 @@ class Jeweler
   private
     def ensure_version_yml(&block)
       unless File.exists? 'VERSION.yml'
-        block.call if block
+        @jeweler.write_version(ENV['MAJOR'], ENV['MINOR'], ENV['PATCH'])
       end
-      @jeweler.write_version(ENV['MAJOR'], ENV['MINOR'], ENV['PATCH'])
+      block.call if block
     end
     
     def define_tasks
