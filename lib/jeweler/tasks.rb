@@ -75,6 +75,12 @@ class Jeweler
           end
         end
       end
+      
+      desc "Release the current version. Includes updating the gemspec, pushing, and tagging the release"
+      task :release do
+        @jeweler.release
+      end
+      
     end
   end
 end

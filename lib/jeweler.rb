@@ -6,6 +6,7 @@ require 'jeweler/singleton'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
+require 'jeweler/release'
 
 require 'jeweler/tasks'
 
@@ -15,6 +16,7 @@ class Jeweler
   include Jeweler::Bumping
   include Jeweler::Versioning
   include Jeweler::Gemspec
+  include Jeweler::Release
   
   attr_reader :gemspec
   attr_accessor :base_dir
@@ -25,6 +27,10 @@ class Jeweler
     @base_dir = base_dir
     
     @gemspec.files ||= FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+    
+    if File.exists?(File.join(base_dir, '.git'))
+      @repo = Git.open(base_dir)
+    end
   end
 end
 
