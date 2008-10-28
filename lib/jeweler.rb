@@ -12,7 +12,6 @@ require 'jeweler/tasks'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
-  include Jeweler::Singleton
   include Jeweler::Bumping
   include Jeweler::Versioning
   include Jeweler::Gemspec
