@@ -1,5 +1,7 @@
- * Generator for making new Jeweler projects
- * Rails generator for making a plugin that's Jeweler enabled
- * Git tagging/branching
- * Make sure everything is pushed/committed before bumping (controlled by a Jeweler.strict perhaps)
- * Have version:bump:xxx do a commit with an appropriate message 
+ * Generators
+   * Rails generator for making a plugin that's Jeweler enabled
+   * Support rspec?
+ * Releasing
+  * Create tag based on version
+  * Push tags
+  * Open hasmygembuiltyet.org
