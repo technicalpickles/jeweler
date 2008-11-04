@@ -12,20 +12,16 @@ Trouble is when developing your Rubygems on GitHub, you generally do one of the 
   * ... why use utilities made for the days before GitHub existed?
   * ... why have extra stuff you aren't going to use?
  
-Jeweler was created with a few intentions:
+Jeweler was created with a few goals in mind:
 
- * The only configuration should be providing a Gem::Specification to Jeweler
- * Version bumping should only be one command away
- * Authoritative version information should stored in one place
- * Jeweler should only concern itself with versioning and gems
- * Your Rakefile should be usable when Jeweler isn't installed (you just wouldn't be able to version bump or generate a gemspec)
- * Jeweler should use Jeweler. Oh the meta!
- 
-## Use Jeweler in a new project
+ * Only use a Gem::Specification as configuration
+ * Be one command away from version bumping and releasing
+ * Store version information in one place
+ * Only concern itself with git, gems, and versioning
+ * Not be a requirement for using your Rakefile (you just wouldn't be able to use its tasks)
+ * Use Jeweler internally. Oh the meta!
 
-We'll use Jeweler as an example for creating a new project.
-
-### Install it
+## Installation
 
 Run the following if you haven't already:
 
@@ -35,68 +31,118 @@ Install the gem:
 
     sudo gem install technicalpickles-jeweler
 
-### Create a directory and git repo
+## Configuration for an existing project
 
-    $ mkdir jeweler
-    $ cd jeweler
-    $ git init
+Armed with the gem, we can begin diving into an example. [the-perfect-gem](http://github.com/technicalpickles/the-perfect-gem/tree) was setup as a Jeweler showcase, and a simple example:
 
-### Create a Rakefile:
-
-    require 'rake'
-    
     begin
-      require 'rubygems'
       require 'jeweler'
-      Jeweler.gemspec = Gem::Specification.new do |s|
-        s.name = "jeweler"
-        s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+      Jeweler::Tasks.new do |s|
+        s.name = "the-perfect-gem"
+        s.summary = "TODO"
         s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/jeweler"
-        s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.authors = ["Josh Nichols", "Dan Croak"]
-        s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+        s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
+        s.description = "TODO"
+        s.authors = ["Josh Nichols"]
       end
     rescue LoadError
       puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
     end
-
-Note, we don't include 'date', or 'version'. Jeweler handles filing these in when it needs them.
-
-If you don't specify `s.files`, it will use `s.files = FileList["[A-Z]*.*", "{generators,lib,test,spec}/**/*"]`.
-
-### Create a version file
-
-Create an initial `VERSION.yml`. It will by default to 0.0.0, but you can specify MAJOR, MINOR, and PATCH to tweak it:
-
-    $ rake version:write MAJOR=1 MINOR=5 PATCH=2
-    (in /Users/nichoj/Projects/jeweler)
-    Wrote to VERSION.yml: 1.5.2
-
-### Generate the gemspec
-
-    $ rake gemspec
     
-This also validates that the gemspec should work on GitHub.
+Here's a rundown of what's happening:
 
-### Commit it already
+ * Wrap everything in a begin block, and rescue from LoadError
+  * This lets us degrade gracefully if jeweler isn't installed
+ * Make a new `Jeweler::Tasks`
+   * It gets yielded a new `Gem::Specification`
+   * This is where all the configuration happens
+    * Things you definitely need to specify:
+      * `name`
+    * Things you probably want to specify:
+      * `summary`
+      * `email`
+      * `homepage`
+      * `description`
+      * `authors`
+    * Things you can specify, but have defaults
+     * `files`, defaults to `FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]`
+    * Things you shouldn't specify:
+     * `version`, because Jeweler takes care of this for you
+    * Other things of interest
+     * `executables`, if you have any scripts
+     * `add_dependency`, if you have any dependencies
+    * Keep in mind that this is a `Gem::Specification`, so you can do whatever you would need to do to get your gem in shape
+     
+## Bootstrap a new project
 
-    $ git add .
-    $ git commit -a -m "First commit, yo."
+Before proceeding, take a minute to setup your git environment, specifically your name and email address:
+
+    $ git config --global user.email johndoe@example.com
+    $ git config --global user.name 'John Doe'
     
-### Make a github repository
+Jeweler provides a generator of sorts, `jeweler`. It takes two arguments: your GitHub username and a repository name.
 
-Wander to http://github.com/repositories/new and follow the instructions to get it pushed.
+    $ jeweler technicalpickles the-perfect-gem
+    
+Basically, this does:
 
-### Enable RubyGem building on the repository
+ * Creates the the-perfect-gem directory
+ * Seeds it with some basic files:
+  * `.gitignore`, with the usual suspects predefined
+  * `Rakefile`, setup with tasks for jeweler, test, rdoc, and rcov
+  * `README`, with your project name
+  * `LICENSE`, MIT, with your name prefilled
+  * `test/test_helper`, setup with shoulda, mocha, and a re-opened `Test::Unit::TestCase`
+  * `test/the_perfect_gem.rb`, placeholder failing test
+  * `lib/the_perfect_gem.rb`, placeholder library file
+ * Makes it a git repo
+ * Sets up `git@github.com:technicalpickles/jeweler.git` as the `origin` git remote
+ * Makes an initial commit, but does not push
+ 
+At this point, you probably should create a repository by wandering to [http://github.com/repositories/new](http://github.com/repositories/new). Be sure to use the same project name you told Jeweler.
 
-Go to your project's edit page and check the 'RubyGem' box.
+With the repository firmly created, just push it:
 
-### Implement something awesome
+    $ git push origin master
+    
+You also probably should [enable RubyGem creation for you repository](http://github.com/blog/51-github-s-rubygem-server): Go to your project's edit page and check the 'RubyGem' box.
 
-I'll let you figure that out on your own.
+## Overview of Jeweler workflow
 
-### Bump the version
+Here's the general idea:
+
+ * Hack, commit, hack, commit, etc, etc
+ * Version bump
+ * Release
+ * Have a delicious scotch
+ 
+The hacking and the scotch are up to you, but Jeweler provides rake tasks for the rest.
+
+### Versioning
+
+Versioning information is stored in `VERSION.yml`. It's a plain ol' YAML file which contains three things:
+
+ * major
+ * minor
+ * patch
+ 
+Consider, for a second, `1.5.3`.
+ 
+ * major = 1
+ * minor = 5
+ * patch = 3
+
+#### Your first time
+
+When you first start using Jeweler, there won't be a `VERSION.yml`, so it'll assume 0.0.0.
+
+If you need some arbitrary version, you can do one of the following:
+
+ * `rake version:write MAJOR=6 MINOR=0 PATCH=3`
+ * Write `VERSION.yml` by hand (lame)
+
+
+#### After that
 
 You have a few rake tasks for doing the version bump:
 
@@ -108,59 +154,30 @@ If you need to do an arbitrary bump, use the same task you used to create `VERSI
 
     $ rake version:write MAJOR=6 MINOR=0 PATCH=3
 
-After that, commit and push it:
+The process of version bumping does a commit to your repo, so make sure your repo is in a clean state (ie nothing uncommitted).
 
-    $ git commit -a -m "Version bump, yo."
-    $ git push origin master
+### Release it
+
+It's pretty straight forward:
+
+    $ rake release
+    
+This takes care of:
+
+ * Generating a `.gemspec` for you project, with the version you just bumped to
+ * Commit and push the updated `.gemspec`
+ * Create a tag
+ * Push the tag
 
 ### Play the waiting game
 
-Wander over to [Has My Gem Built Yet](http://hasmygembuiltyet.org/) to play the waiting game.
+How do you know when your gem is built? [Has My Gem Built Yet](http://hasmygembuiltyet.org/) was specifically designed to answer that question.
 
-## Extra stuff you might want to for your RubyGem project
+If it happens to be down, you can also check out the GitHub Gem repo's [list](http://gems.github.com/list). Just search for youname-yourrepo.s
 
-As was mentioned, Jeweler tries to only do versioning and gem stuff. Most projects have a few other needs:
+### Putting it all together
 
- * Testing
- * RDoc
- * Default task
-
-Jeweler doesn't provide these. But it's easy enough to use Rake's built in tasks:
-
-    require 'rake'
-    require 'rake/testtask'
-    require 'rake/rdoctask'
-
-    begin
-      require 'rubygems'
-      require 'jeweler'
-      Jeweler.gemspec = Gem::Specification.new do |s|
-        s.name = "jeweler"
-        s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/jeweler"
-        s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-        s.authors = ["Josh Nichols", "Dan Croak"]
-        s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
-      end
-    rescue LoadError
-      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-    end
-
-    Rake::TestTask.new do |t|
-      t.libs << 'lib'
-      t.pattern = 'test/**/*_test.rb'
-      t.verbose = false
-    end
-
-    desc 'Generate documentation for the safety_valve plugin.'
-    Rake::RDocTask.new(:rdoc) do |rdoc|
-      rdoc.rdoc_dir = 'rdoc'
-      rdoc.title    = 'Jeweler'
-      rdoc.options << '--line-numbers' << '--inline-source'
-      rdoc.rdoc_files.include('README.*')
-      rdoc.rdoc_files.include('lib/**/*.rb')
-    end
-
-    desc "Run the test suite"
-    task :default => :test
+    <hack, hack, hack, commit>
+    $ rake version:bump:patch release
+    
+Now browse to http://gems.github.com/yourname/yourproject, and wait for it to be built.
