@@ -12,9 +12,12 @@ class Jeweler
       @repo.commit("Regenerated gemspec for version #{version}")
       @repo.push
       
-      version_tag = "v#{version}"
-      @repo.add_tag(version_tag)
-      @repo.push('origin', version_tag)
+      @repo.add_tag(release_tag)
+      @repo.push('origin', release_tag)
+    end
+
+    def release_tag
+      @release_tag ||= "v#{version}"
     end
     
   protected

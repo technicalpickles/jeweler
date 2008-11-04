@@ -41,11 +41,21 @@ class Jeweler
         }
         YAML.dump(version_hash, f)
       end
+
       refresh_version
       
       @gemspec.version = version
-      
+
       puts "Wrote to #{version_yaml_path}: #{version}"
+
+      commit_version
+    end
+
+    def commit_version
+      if @repo
+        @repo.add('VERSION.yml')
+        @repo.commit("Version bump to #{version}", 'VERSION.yml')
+      end
     end
   end
 end
