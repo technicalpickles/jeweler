@@ -12,10 +12,9 @@ class Jeweler
       @repo.commit("Regenerated gemspec for version #{version}")
       @repo.push
       
-#      require 'ruby-debug'
-#      breakpoint
-#      
-#      @repo.tag("v#{version}")
+      version_tag = "v#{version}"
+      @repo.add_tag(version_tag)
+      @repo.push('origin', version_tag)
     end
     
   protected
