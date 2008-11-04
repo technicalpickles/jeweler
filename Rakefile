@@ -15,7 +15,6 @@ begin
     gemspec.homepage = "http://github.com/technicalpickles/jeweler"
     gemspec.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gemspec.authors = ["Josh Nichols"]
-    gemspec.bindir = 'bin'
     gemspec.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
     gemspec.add_dependency 'schacon-git'
   end
