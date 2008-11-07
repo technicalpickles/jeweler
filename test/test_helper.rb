@@ -16,8 +16,8 @@ Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |di
   lib = "#{dir}/lib"
   $LOAD_PATH.unshift(lib) if File.directory?(lib)
 end
-require 'output_catcher'
 
+require 'output_catcher'
 require 'time'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
@@ -31,7 +31,6 @@ class FileList
 end
 
 class Test::Unit::TestCase
-  
   def catch_out(&block)
      OutputCatcher.catch_out do
        block.call
