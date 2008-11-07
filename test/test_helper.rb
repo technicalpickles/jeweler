@@ -8,6 +8,8 @@ require 'ruby-debug'
 gem 'mocha'
 require 'mocha'
 
+require File.dirname(__FILE__) + '/shoulda_macros/jeweler_macros'
+
 # Use vendored gem because of limited gem availability on runcoderun
 # This is loosely based on 'vendor everything'.
 Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |dir| 
