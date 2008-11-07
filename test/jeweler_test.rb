@@ -86,7 +86,6 @@ class JewelerTest < Test::Unit::TestCase
       should "output the name of the gemspec" do
         assert_match 'bar.gemspec', @output
       end
-    
       
       context "re-reading the gemspec" do
         setup do

@@ -89,7 +89,7 @@ class JewelerTest < Test::Unit::TestCase
     setup do
       Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo', 'user.email' => 'bar@example.com'})
     end
-    
+
     context "for technicalpickle's the-perfect-gem repository" do
       setup do
         @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')
@@ -151,6 +151,26 @@ class JewelerTest < Test::Unit::TestCase
 
       teardown do
         FileUtils.rm_rf(@tmp_dir)
+      end
+
+      context "with files in the way" do
+        setup do
+          FileUtils.mkdir_p(File.join(@tmp_dir, 'the-perfect-gem'))
+        end
+
+        context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
+          setup do
+            @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem', @tmp_dir)
+          end
+
+          should "raise an exception" do
+            assert_raise Jeweler::FileInTheWay do
+              @generator.run
+            end
+          end
+        end
+
+
       end
       
       context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do

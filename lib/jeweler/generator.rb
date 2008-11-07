@@ -48,11 +48,10 @@ class Jeweler
     
   private
     def create_files
-      begin
+      unless File.exists?(target_dir) || File.directory?(target_dir)
         FileUtils.mkdir target_dir
-      rescue Errno::EEXIST => e
-        puts "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
-        exit 1
+      else
+        raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
       end
 
       FileUtils.mkdir lib_dir
