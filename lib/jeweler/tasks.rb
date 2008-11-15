@@ -4,8 +4,8 @@ require 'rake/tasklib'
 class Jeweler
   class Tasks < ::Rake::TaskLib
     def initialize(gemspec = nil, &block)
-      @gemspec = Gem::Specification.new()
-      block.call(@gemspec) if block
+      @gemspec = gemspec || Gem::Specification.new()
+      yield @gemspec if block_given?
 
       @jeweler = Jeweler.new(@gemspec)
 
