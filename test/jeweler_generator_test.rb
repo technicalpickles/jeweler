@@ -25,21 +25,9 @@ class JewelerTest < Test::Unit::TestCase
     end
   end
 
-  context "given a nil github username" do
-    setup do
-      @block = lambda { Jeweler::Generator.new(nil, 'the-perfect-gem', nil) }
-    end
-
-    should "raise an error" do
-      assert_raise Jeweler::NoGitHubUsernameGiven do
-        @block.call
-      end
-    end
-  end
-
   context "given a nil github repo name" do
     setup do
-      @block = lambda { Jeweler::Generator.new('technicalpickles', nil, nil) }
+      @block = lambda { Jeweler::Generator.new(nil, nil) }
     end
 
     should "raise an error" do
@@ -56,7 +44,7 @@ class JewelerTest < Test::Unit::TestCase
 
     context "instantiating new generator" do
       setup do
-        @block = lambda { Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')}
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
       end
 
       should "raise no git user name exception" do
@@ -74,7 +62,7 @@ class JewelerTest < Test::Unit::TestCase
 
     context "instantiating new generator" do
       setup do
-        @block = lambda { Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')}
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
       end
 
       should "raise no git user name exception" do
@@ -85,14 +73,34 @@ class JewelerTest < Test::Unit::TestCase
     end
   end
 
+  context "without github username set" do
+    setup do
+      Jeweler::Generator.any_instance.stubs(:read_git_config).
+        returns({'user.email' => 'bar@example.com', 'user.name' => 'foo'})
+    end
+
+    context "instantiating new generator" do
+      setup do
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
+      end
+
+      should "raise no github user exception" do
+        assert_raise Jeweler::NoGitHubUser do
+          @block.call
+        end
+      end
+    end
+  end
+
   context "with valid git user configuration" do
     setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo', 'user.email' => 'bar@example.com'})
+      Jeweler::Generator.any_instance.stubs(:read_git_config).
+        returns({'user.name' => 'foo', 'user.email' => 'bar@example.com', 'github.user' => 'technicalpickles'})
     end
 
     context "for technicalpickle's the-perfect-gem repository" do
       setup do
-        @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')
+        @generator = Jeweler::Generator.new('the-perfect-gem')
       end
 
       should "assign 'foo' to user's name" do
@@ -155,7 +163,7 @@ class JewelerTest < Test::Unit::TestCase
 
       context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
         setup do
-          @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem', @tmp_dir)
+          @generator = Jeweler::Generator.new('the-perfect-gem', @tmp_dir)
         end
 
         should "use tmp for target directory" do
