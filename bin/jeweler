@@ -1,14 +1,37 @@
 #!/usr/bin/env ruby
 require 'rubygems'
+require 'optparse'
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'jeweler'
 
+class JewelerOpts < Hash
+  attr_reader :opts
+  def initialize(args)
+    super()
+    self[:spec] = false
+    @opts = OptionParser.new do |o|
+      o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
+      o.on('-s','--spec', 'use bacon to generate specs') do
+        self[:spec] = true
+      end
+      o.on_tail('-h', '--help', 'display this help and exit') do
+        puts o
+        exit
+      end
+    end
+    @opts.parse!(args)
+  end
+end
+
+o = JewelerOpts.new(ARGV)
+
 unless ARGV.size == 1
-  puts "jeweler takes 1 argument: The repo to be created Example: jeweler the-perfect-gem"
+  puts o.opts
   exit 1
 end
 
 github_repo_name = ARGV.first
 generator = Jeweler::Generator.new github_repo_name
+generator.spec = o[:spec]
 generator.run
