@@ -170,7 +170,7 @@ class JewelerTest < Test::Unit::TestCase
           assert_equal @tmp_dir, @generator.target_dir
         end
 
-        context "running" do
+        context "running for spec = false" do
           setup do
             @generator.run
           end
@@ -214,6 +214,18 @@ class JewelerTest < Test::Unit::TestCase
 
             should "include the github repo's url as the gem's url" do
               assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
+            end
+
+            should "include a glob to match test files in the TestTask" do
+              assert_match "t.pattern = 'test/**/*_test.rb'", @content
+            end
+
+            should "include a glob to match test files in the RcovTask" do
+              assert_match "t.test_files = FileList['test/**/*_test.rb']", @content
+            end
+
+            should "push test dir into RcovTask libs" do
+              assert_match 't.libs << "test"', @content
             end
           end
 
@@ -267,6 +279,144 @@ class JewelerTest < Test::Unit::TestCase
             should_be_checked_in 'lib/the_perfect_gem.rb'
             should_be_checked_in 'test/test_helper.rb'
             should_be_checked_in 'test/the_perfect_gem_test.rb'
+            should_be_checked_in '.gitignore'
+
+            should "have no untracked files" do
+              assert_equal 0, @repo.status.untracked.size
+            end
+
+            should "have no changed files" do
+              assert_equal 0, @repo.status.changed.size
+            end
+
+            should "have no added files" do
+              assert_equal 0, @repo.status.added.size
+            end
+
+            should "have no deleted files" do
+              assert_equal 0, @repo.status.deleted.size
+            end
+
+
+            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
+              assert_equal 1, @repo.remotes.size
+              remote = @repo.remotes.first
+              assert_equal 'origin', remote.name
+              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
+            end
+          end
+        end
+
+        context "running for spec = true" do
+          setup do
+            @generator.spec = true
+            @generator.run
+          end
+
+          should 'create target directory' do
+            assert File.exists?(@tmp_dir)
+          end
+
+          should_create_directory 'lib'
+          should_create_directory 'spec'
+
+          should_create_file 'LICENSE'
+          should_create_file 'README'
+          should_create_file 'lib/the_perfect_gem.rb'
+          should_create_file 'spec/spec_helper.rb'
+          should_create_file 'spec/the_perfect_gem_spec.rb'
+          should_create_file '.gitignore'
+
+          context "LICENSE" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
+            end
+
+            should "include copyright for this year with user's name" do
+              assert_match 'Copyright (c) 2008 foo', @content
+            end
+          end
+
+          context "Rakefile" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
+            end
+
+            should "include repo's name as the gem's name" do
+              assert_match 's.name = "the-perfect-gem"', @content
+            end
+
+            should "include the user's email as the gem's email" do
+              assert_match 's.email = "bar@example.com"', @content
+            end
+
+            should "include the github repo's url as the gem's url" do
+              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
+            end
+
+            should "include a glob to match spec files in the TestTask" do
+              assert_match "t.pattern = 'spec/**/*_spec.rb'", @content
+            end
+
+            should "include a glob to match spec files in the RcovTask" do
+              assert_match "t.test_files = FileList['spec/**/*_spec.rb']", @content
+            end
+
+            should "push spec dir into RcovTask libs" do
+              assert_match 't.libs << "spec"', @content
+            end
+          end
+
+          context ".gitignore" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, '.gitignore')))
+            end
+
+            should "include vim swap files" do
+              assert_match '*.sw?', @content
+            end
+
+            should "include coverage" do
+              assert_match 'coverage', @content
+            end
+
+            should "include .DS_Store" do
+              assert_match '.DS_Store', @content
+            end
+          end
+
+
+          context "spec/the_perfect_gem_spec.rb" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'spec', 'the_perfect_gem_spec.rb')))
+            end
+
+            should "describe ThePerfectGem" do
+              assert_match 'describe "ThePerfectGem" do', @content
+            end
+          end
+
+
+          context "created git repo" do
+            setup do
+              @repo = Git.open(@tmp_dir)
+            end
+
+            should 'have one commit log' do
+              assert_equal 1, @repo.log.size
+            end
+
+            should "have one commit log an initial commit message" do
+              # TODO message seems to include leading whitespace, could probably fix that in ruby-git
+              assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
+            end
+
+            should_be_checked_in 'README'
+            should_be_checked_in 'Rakefile'
+            should_be_checked_in 'LICENSE'
+            should_be_checked_in 'lib/the_perfect_gem.rb'
+            should_be_checked_in 'spec/spec_helper.rb'
+            should_be_checked_in 'spec/the_perfect_gem_spec.rb'
             should_be_checked_in '.gitignore'
 
             should "have no untracked files" do

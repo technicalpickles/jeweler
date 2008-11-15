@@ -16,7 +16,7 @@ class Jeweler
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
                   :github_repo_name, :github_remote, :github_url, :github_username,
-                  :lib_dir, :test_dir, :constant_name, :file_name_prefix, :config
+                  :lib_dir, :constant_name, :file_name_prefix, :config, :spec
 
     def initialize(github_repo_name, dir = nil)
       check_user_git_config()
@@ -32,7 +32,6 @@ class Jeweler
 
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
-      self.test_dir = File.join(target_dir, 'test')
       self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
       self.file_name_prefix = self.github_repo_name.gsub('-', '_')
     end
@@ -41,6 +40,19 @@ class Jeweler
       create_files
       gitify
     end
+
+    def testspec
+      if self.spec
+        'spec'
+      else
+        'test'
+      end
+    end
+
+    def test_dir
+      File.join(target_dir, testspec)
+    end
+
 
   private
     def create_files
@@ -58,8 +70,8 @@ class Jeweler
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')
-      output_template_in_target('test/test_helper.rb')
-      output_template_in_target('test/flunking_test.rb', "test/#{file_name_prefix}_test.rb")
+      output_template_in_target("#{testspec}/#{testspec}_helper.rb")
+      output_template_in_target("#{testspec}/flunking_#{testspec}.rb", "#{testspec}/#{file_name_prefix}_#{testspec}.rb")
 
       FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
     end

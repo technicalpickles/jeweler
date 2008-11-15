@@ -19,7 +19,7 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
+  t.pattern = '<%= testspec %>/**/*_<%= testspec %>.rb'
   t.verbose = false
 end
 
@@ -32,8 +32,8 @@ Rake::RDocTask.new do |rdoc|
 end
 
 Rcov::RcovTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/**/*_test.rb']
+  t.libs << "<%= testspec %>"
+  t.test_files = FileList['<%= testspec %>/**/*_<%= testspec %>.rb']
   t.verbose = true
 end
 
