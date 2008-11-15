@@ -4,12 +4,11 @@ require 'rubygems'
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'jeweler'
 
-unless ARGV.size == 2
-  puts "jeweler takes 2 arguments: GitHub username and a repo that will eventually live there. Example: jeweler technicalpickles the-perfect-gem"
+unless ARGV.size == 1
+  puts "jeweler takes 1 argument: The repo to be created Example: jeweler the-perfect-gem"
   exit 1
 end
 
-github_username = ARGV.first
-github_repo_name = ARGV.last
-generator = Jeweler::Generator.new github_username, github_repo_name
+github_repo_name = ARGV.first
+generator = Jeweler::Generator.new github_repo_name
 generator.run

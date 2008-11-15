@@ -10,19 +10,16 @@ class Jeweler
   end
   class NoGitHubRepoNameGiven < StandardError
   end
-  class NoGitHubUsernameGiven < StandardError
+  class NoGitHubUser < StandardError
   end
 
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
                   :github_repo_name, :github_remote, :github_url, :github_username,
-                  :lib_dir, :test_dir, :constant_name, :file_name_prefix
+                  :lib_dir, :test_dir, :constant_name, :file_name_prefix, :config
 
-    def initialize(github_username, github_repo_name, dir = nil)
-      if github_username.nil?
-        raise NoGitHubUsernameGiven
-      end
-      self.github_username = github_username
+    def initialize(github_repo_name, dir = nil)
+      check_user_git_config()
 
       if github_repo_name.nil?
         raise NoGitHubRepoNameGiven
@@ -32,7 +29,6 @@ class Jeweler
       self.github_remote = "git@github.com:#{github_username}/#{github_repo_name}.git"
       self.github_url = "http://github.com/#{github_username}/#{github_repo_name}"
 
-      check_user_git_config()
 
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
@@ -69,16 +65,20 @@ class Jeweler
     end
 
     def check_user_git_config
-      config = read_git_config
+      self.config = read_git_config
       unless config.has_key? 'user.name'
         raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
       unless config.has_key? 'user.email'
         raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
+      unless config.has_key? 'github.user'
+        raise NoGitHubUser, %Q{No github.user set in ~/.gitconfig. Set it with: git config --global github.user 'Your username here'}
+      end
 
       self.user_name = config['user.name']
       self.user_email = config['user.email']
+      self.github_username = config['github.user']
     end
 
     def output_template_in_target(source, destination = source)
