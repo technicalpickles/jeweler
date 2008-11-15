@@ -32,7 +32,7 @@ class Jeweler
       major ||= 0
       minor ||= 0
       patch ||= 0
-      
+
       File.open(version_yaml_path, 'w+') do |f|
         version_hash = {
           'major' => major.to_i,
@@ -43,7 +43,7 @@ class Jeweler
       end
 
       refresh_version
-      
+
       @gemspec.version = version
 
       puts "Wrote to #{version_yaml_path}: #{version}"

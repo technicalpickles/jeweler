@@ -12,7 +12,7 @@ class Jeweler
   end
   class NoGitHubUsernameGiven < StandardError
   end
-    
+
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
                   :github_repo_name, :github_remote, :github_url, :github_username,
@@ -23,17 +23,17 @@ class Jeweler
         raise NoGitHubUsernameGiven
       end
       self.github_username = github_username
-      
+
       if github_repo_name.nil?
         raise NoGitHubRepoNameGiven
       end
       self.github_repo_name = github_repo_name
-      
+
       self.github_remote = "git@github.com:#{github_username}/#{github_repo_name}.git"
       self.github_url = "http://github.com/#{github_username}/#{github_repo_name}"
-      
+
       check_user_git_config()
-      
+
       self.target_dir = dir || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
       self.test_dir = File.join(target_dir, 'test')
@@ -45,7 +45,7 @@ class Jeweler
       create_files
       gitify
     end
-    
+
   private
     def create_files
       begin
@@ -64,10 +64,10 @@ class Jeweler
       output_template_in_target('README')
       output_template_in_target('test/test_helper.rb')
       output_template_in_target('test/flunking_test.rb', "test/#{file_name_prefix}_test.rb")
-      
+
       FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
     end
-  
+
     def check_user_git_config
       config = read_git_config
       unless config.has_key? 'user.name'
@@ -80,7 +80,7 @@ class Jeweler
       self.user_name = config['user.name']
       self.user_email = config['user.email']
     end
-    
+
     def output_template_in_target(source, destination = source)
       template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', source)))
       File.open(File.join(target_dir, destination), 'w') {|file| file.write(template.result(binding))}
@@ -101,7 +101,7 @@ class Jeweler
       end
       Dir.chdir(saved_pwd)
     end
-    
+
     def read_git_config
       # we could just use Git::Base's .config, but that relies on a repo being around already
       # ... which we don't have yet, since this is part of a sanity check
