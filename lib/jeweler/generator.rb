@@ -12,6 +12,8 @@ class Jeweler
   end
   class NoGitHubUsernameGiven < StandardError
   end
+  class GitInitFailed < StandardError
+  end
     
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
@@ -69,9 +71,11 @@ class Jeweler
   
     def check_user_git_config
       config = read_git_config
+
       unless config.has_key? 'user.name'
         raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
+
       unless config.has_key? 'user.email'
         raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
       end
@@ -82,6 +86,7 @@ class Jeweler
     
     def output_template_in_target(source, destination = source)
       template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', source)))
+
       File.open(File.join(target_dir, destination), 'w') {|file| file.write(template.result(binding))}
     end
 
@@ -89,16 +94,34 @@ class Jeweler
       saved_pwd = Dir.pwd
       Dir.chdir(target_dir)
       begin
-        repo = Git.init()
-        repo.add('.')
-        repo.commit "Initial commit to #{github_repo_name}."
-        repo.add_remote('origin', github_remote)
-      rescue Git::GitExecuteError => e
-        puts "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
-        puts
-        raise
+        begin
+          repo = Git.init()
+        rescue Git::GitExecuteError => e
+          raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
+        end
+
+        begin
+          repo.add('.')
+        rescue Git::GitExecuteError => e
+          #raise GitAddFailed, "There was some problem adding this directory to the git changeset"
+          raise
+        end
+
+        begin
+          repo.commit "Initial commit to #{github_repo_name}."
+        rescue Git::GitExecuteError => e
+          raise
+        end
+
+        begin
+          repo.add_remote('origin', github_remote)
+        rescue Git::GitExecuteError => e
+          puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
+          raise
+        end
+      ensure
+        Dir.chdir(saved_pwd)
       end
-      Dir.chdir(saved_pwd)
     end
     
     def read_git_config

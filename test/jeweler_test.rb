@@ -5,6 +5,7 @@ class JewelerTest < Test::Unit::TestCase
   def setup
     @now = Time.now
     Time.stubs(:now).returns(@now)
+    FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
   end
   
   def teardown

@@ -30,7 +30,12 @@ class FileList
   end
 end
 
+TMP_DIR = File.join(File.dirname(__FILE__), 'tmp')
+FileUtils.rm_f(TMP_DIR) # GAH, dirty hax. Somewhere isn't tearing up correctly, so do some cleanup first
+
 class Test::Unit::TestCase
+
+
   def catch_out(&block)
      OutputCatcher.catch_out do
        block.call
