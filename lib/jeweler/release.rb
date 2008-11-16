@@ -22,7 +22,7 @@ class Jeweler
     
   protected
     def any_pending_changes?
-      @repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty? && @repo.status.untracked.empty?
+      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty? && @repo.status.untracked.empty?)
     end
   end
 end
