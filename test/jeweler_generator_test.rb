@@ -27,7 +27,7 @@ class JewelerTest < Test::Unit::TestCase
 
   context "given a nil github repo name" do
     setup do
-      @block = lambda { Jeweler::Generator.new(nil, nil) }
+      @block = lambda { Jeweler::Generator.new(nil) }
     end
 
     should "raise an error" do
@@ -163,7 +163,7 @@ class JewelerTest < Test::Unit::TestCase
 
       context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
         setup do
-          @generator = Jeweler::Generator.new('the-perfect-gem', @tmp_dir)
+          @generator = Jeweler::Generator.new('the-perfect-gem', :directory => @tmp_dir)
         end
 
         should "use tmp for target directory" do
@@ -307,9 +307,9 @@ class JewelerTest < Test::Unit::TestCase
           end
         end
 
-        context "running for spec = true" do
+        context "running bacon" do
           setup do
-            @generator.spec = true
+            @generator.test_style = :bacon
             @generator.run
           end
 

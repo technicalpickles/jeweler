@@ -19,11 +19,11 @@ class Jeweler
   class Generator
     attr_accessor :target_dir, :user_name, :user_email,
                   :github_repo_name, :github_remote, :github_url, :github_username,
-                  :lib_dir, :constant_name, :file_name_prefix, :config, :spec
+                  :lib_dir, :constant_name, :file_name_prefix, :config, :test_style
 
-    def initialize(github_repo_name, dir = nil)
+    def initialize(github_repo_name, options = {})
       check_user_git_config()
-
+      
       if github_repo_name.nil?
         raise NoGitHubRepoNameGiven
       end
@@ -32,8 +32,8 @@ class Jeweler
       self.github_remote = "git@github.com:#{github_username}/#{github_repo_name}.git"
       self.github_url = "http://github.com/#{github_username}/#{github_repo_name}"
 
-
-      self.target_dir = dir || self.github_repo_name
+      self.test_style = options[:test_style] || :shoulda
+      self.target_dir = options[:directory] || self.github_repo_name
       self.lib_dir = File.join(target_dir, 'lib')
       self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
       self.file_name_prefix = self.github_repo_name.gsub('-', '_')
@@ -45,10 +45,11 @@ class Jeweler
     end
 
     def testspec
-      if self.spec
-        'spec'
-      else
+      case test_style
+      when :shoulda
         'test'
+      when :bacon
+        'spec'
       end
     end
 

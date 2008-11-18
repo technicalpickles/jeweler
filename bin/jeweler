@@ -7,31 +7,40 @@ require 'jeweler'
 
 class JewelerOpts < Hash
   attr_reader :opts
+  
   def initialize(args)
     super()
-    self[:spec] = false
+    
+    self[:test_style] = :shoulda
+    
     @opts = OptionParser.new do |o|
       o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
-      o.on('-s','--spec', 'use bacon to generate specs') do
-        self[:spec] = true
+      
+      o.on('--bacon', 'generate bacon specs') do
+        self[:test_style] = :bacon
       end
+      
+      o.on('--shoulda', 'generate shoulda tests') do
+        self[:test_style] = :shoulda
+      end
+      
       o.on_tail('-h', '--help', 'display this help and exit') do
         puts o
         exit
       end
     end
+    
     @opts.parse!(args)
   end
 end
 
-o = JewelerOpts.new(ARGV)
+options = JewelerOpts.new(ARGV)
 
 unless ARGV.size == 1
-  puts o.opts
+  puts options.opts
   exit 1
 end
 
 github_repo_name = ARGV.first
-generator = Jeweler::Generator.new github_repo_name
-generator.spec = o[:spec]
+generator = Jeweler::Generator.new github_repo_name, options
 generator.run
