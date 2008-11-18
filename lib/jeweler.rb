@@ -15,17 +15,17 @@ class Jeweler
   include Jeweler::Versioning
   include Jeweler::Gemspec
   include Jeweler::Release
-  
+
   attr_reader :gemspec
   attr_accessor :base_dir
-  
+
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
     @gemspec = gemspec
     @base_dir = base_dir
-    
+
     @gemspec.files ||= FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
-    
+
     if File.exists?(File.join(base_dir, '.git'))
       @repo = Git.open(base_dir)
     end

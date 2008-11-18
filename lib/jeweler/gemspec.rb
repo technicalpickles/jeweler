@@ -10,7 +10,7 @@ class Jeweler
       end
       puts "Generated: #{gemspec_path}"
     end
-    
+
     # Validates the gemspec in an environment similar to how GitHub would build
     # it. See http://gist.github.com/16215
     def validate_gemspec
@@ -22,8 +22,8 @@ class Jeweler
         raise
       end
     end
-    
-    
+
+
     def valid_gemspec?
       begin
         parse_gemspec
@@ -32,12 +32,12 @@ class Jeweler
         false
       end
     end
-    
+
     def parse_gemspec(data = nil)
       data ||= File.read(gemspec_path)
       Thread.new { eval("$SAFE = 3\n#{data}", binding, gemspec_path) }.join
     end
-    
+
   protected
     def gemspec_path
       denormalized_path = File.join(@base_dir, "#{@gemspec.name}.gemspec")

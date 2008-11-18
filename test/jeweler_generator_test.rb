@@ -2,21 +2,20 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class JewelerTest < Test::Unit::TestCase
 
-  
   def self.should_create_directory(directory)
     should "create #{directory} directory" do
-      assert File.exists?(File.join(TMP_DIR, directory))
-      assert File.directory?(File.join(TMP_DIR, directory))
+      assert File.exists?(File.join(@tmp_dir, directory))
+      assert File.directory?(File.join(@tmp_dir, directory))
     end
   end
-  
+
   def self.should_create_file(file)
     should "create file #{file}" do
-      assert File.exists?(File.join(TMP_DIR, file))
-      assert File.file?(File.join(TMP_DIR, file))
+      assert File.exists?(File.join(@tmp_dir, file))
+      assert File.file?(File.join(@tmp_dir, file))
     end
   end
-  
+
   def self.should_be_checked_in(file)
     should "have #{file} checked in" do
       status = @repo.status[file]
@@ -26,21 +25,9 @@ class JewelerTest < Test::Unit::TestCase
     end
   end
 
-  context "given a nil github username" do
-    setup do
-      @block = lambda { Jeweler::Generator.new(nil, 'the-perfect-gem', nil) }
-    end
-
-    should "raise an error" do
-      assert_raise Jeweler::NoGitHubUsernameGiven do
-        @block.call
-      end
-    end
-  end
-  
   context "given a nil github repo name" do
     setup do
-      @block = lambda { Jeweler::Generator.new('technicalpickles', nil, nil) }
+      @block = lambda { Jeweler::Generator.new(nil, nil) }
     end
 
     should "raise an error" do
@@ -49,15 +36,15 @@ class JewelerTest < Test::Unit::TestCase
       end
     end
   end
-  
+
   context "without git user's name set" do
     setup do
       Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.email' => 'bar@example.com'})
     end
-    
+
     context "instantiating new generator" do
       setup do
-        @block = lambda { Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')}
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
       end
 
       should "raise no git user name exception" do
@@ -67,7 +54,7 @@ class JewelerTest < Test::Unit::TestCase
       end
     end
   end
-  
+
   context "without git user's email set" do
     setup do
       Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo'})
@@ -75,7 +62,7 @@ class JewelerTest < Test::Unit::TestCase
 
     context "instantiating new generator" do
       setup do
-        @block = lambda { Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')}
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
       end
 
       should "raise no git user name exception" do
@@ -85,21 +72,41 @@ class JewelerTest < Test::Unit::TestCase
       end
     end
   end
-  
+
+  context "without github username set" do
+    setup do
+      Jeweler::Generator.any_instance.stubs(:read_git_config).
+        returns({'user.email' => 'bar@example.com', 'user.name' => 'foo'})
+    end
+
+    context "instantiating new generator" do
+      setup do
+        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
+      end
+
+      should "raise no github user exception" do
+        assert_raise Jeweler::NoGitHubUser do
+          @block.call
+        end
+      end
+    end
+  end
+
   context "with valid git user configuration" do
     setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo', 'user.email' => 'bar@example.com'})
+      Jeweler::Generator.any_instance.stubs(:read_git_config).
+        returns({'user.name' => 'foo', 'user.email' => 'bar@example.com', 'github.user' => 'technicalpickles'})
     end
 
     context "for technicalpickle's the-perfect-gem repository" do
       setup do
-        @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem')
+        @generator = Jeweler::Generator.new('the-perfect-gem')
       end
-      
+
       should "assign 'foo' to user's name" do
         assert_equal 'foo', @generator.user_name
       end
-      
+
       should "assign 'bar@example.com to user's email" do
         assert_equal 'bar@example.com', @generator.user_email
       end
@@ -107,218 +114,338 @@ class JewelerTest < Test::Unit::TestCase
       should "assign github remote" do
         assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', @generator.github_remote
       end
-      
+
       should "determine github username as technicalpickles" do
         assert_equal 'technicalpickles', @generator.github_username
       end
-      
+
       should "determine github repository name as the-perfect-gem" do
         assert_equal 'the-perfect-gem', @generator.github_repo_name
       end
-      
+
       should "determine github url as http://github.com/technicalpickles/the-perfect-gem" do
         assert_equal 'http://github.com/technicalpickles/the-perfect-gem', @generator.github_url
       end
-      
+
       should "determine target directory as the same as the github repository name" do
         assert_equal @generator.github_repo_name, @generator.target_dir
       end
-      
+
       should "determine lib directory as being inside the target directory" do
         assert_equal File.join(@generator.target_dir, 'lib'), @generator.lib_dir
       end
-      
+
       should "determine test directory as being inside the target directory" do
         assert_equal File.join(@generator.target_dir, 'test'), @generator.test_dir
       end
-      
+
       should "determine constant name as ThePerfectGem" do
         assert_equal 'ThePerfectGem', @generator.constant_name
       end
-      
+
       should "determine file name prefix as the_perfect_gem" do
         assert_equal 'the_perfect_gem', @generator.file_name_prefix
       end
     end
-    
-    
+
+
     context "and cleaned out tmp directory" do
       setup do
-        FileUtils.rm_rf(TMP_DIR)
-        assert ! File.exists?(TMP_DIR)
+        @tmp_dir = File.join(File.dirname(__FILE__), 'tmp')
+        FileUtils.rm_rf(@tmp_dir)
+
+        assert ! File.exists?(@tmp_dir)
       end
 
       teardown do
-        FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
-        assert ! File.exists?(TMP_DIR)
+        FileUtils.rm_rf(@tmp_dir)
       end
 
-      context "with existing directory in the way" do
-        setup do
-          FileUtils.mkdir_p(File.join(TMP_DIR, 'the-perfect-gem'))
-        end
-
-        context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
-          setup do
-            @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem', TMP_DIR)
-          end
-
-          should "raise an exception" do
-            assert_raise Jeweler::FileInTheWay do
-              @generator.run
-            end
-          end
-        end
-      end
-      
       context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
         setup do
-          @generator = Jeweler::Generator.new('technicalpickles', 'the-perfect-gem', TMP_DIR)
+          @generator = Jeweler::Generator.new('the-perfect-gem', @tmp_dir)
         end
-        
-        context "when failing to init a git repo" do
+
+        should "use tmp for target directory" do
+          assert_equal @tmp_dir, @generator.target_dir
+        end
+
+        context "running for spec = false" do
           setup do
-            Git.stubs(:init).raises(Git::GitExecuteError)
+            @generator.run
           end
 
-          should "raise the Git exception" do
-            assert_raise Jeweler::GitInitFailed do
-              @generator.run
+          should 'create target directory' do
+            assert File.exists?(@tmp_dir)
+          end
+
+          should_create_directory 'lib'
+          should_create_directory 'test'
+
+          should_create_file 'LICENSE'
+          should_create_file 'README'
+          should_create_file 'lib/the_perfect_gem.rb'
+          should_create_file 'test/test_helper.rb'
+          should_create_file 'test/the_perfect_gem_test.rb'
+          should_create_file '.gitignore'
+
+          context "LICENSE" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
+            end
+
+            should "include copyright for this year with user's name" do
+              assert_match 'Copyright (c) 2008 foo', @content
+            end
+          end
+
+          context "Rakefile" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
+            end
+
+            should "include repo's name as the gem's name" do
+              assert_match 's.name = "the-perfect-gem"', @content
+            end
+
+            should "include the user's email as the gem's email" do
+              assert_match 's.email = "bar@example.com"', @content
+            end
+
+            should "include the github repo's url as the gem's url" do
+              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
+            end
+
+            should "include a glob to match test files in the TestTask" do
+              assert_match "t.pattern = 'test/**/*_test.rb'", @content
+            end
+
+            should "include a glob to match test files in the RcovTask" do
+              assert_match "t.test_files = FileList['test/**/*_test.rb']", @content
+            end
+
+            should "push test dir into RcovTask libs" do
+              assert_match 't.libs << "test"', @content
+            end
+          end
+
+          context ".gitignore" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, '.gitignore')))
+            end
+
+            should "include vim swap files" do
+              assert_match '*.sw?', @content
+            end
+
+            should "include coverage" do
+              assert_match 'coverage', @content
+            end
+
+            should "include .DS_Store" do
+              assert_match '.DS_Store', @content
+            end
+          end
+
+
+          context "test/the_perfect_gem_test.rb" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'test', 'the_perfect_gem_test.rb')))
+            end
+
+            should "have class of ThePerfectGemTest" do
+              assert_match 'class ThePerfectGemTest < Test::Unit::TestCase', @content
+            end
+          end
+
+
+          context "created git repo" do
+            setup do
+              @repo = Git.open(@tmp_dir)
+            end
+
+            should 'have one commit log' do
+              assert_equal 1, @repo.log.size
+            end
+
+            should "have one commit log an initial commit message" do
+              # TODO message seems to include leading whitespace, could probably fix that in ruby-git
+              assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
+            end
+
+            should_be_checked_in 'README'
+            should_be_checked_in 'Rakefile'
+            should_be_checked_in 'LICENSE'
+            should_be_checked_in 'lib/the_perfect_gem.rb'
+            should_be_checked_in 'test/test_helper.rb'
+            should_be_checked_in 'test/the_perfect_gem_test.rb'
+            should_be_checked_in '.gitignore'
+
+            should "have no untracked files" do
+              assert_equal 0, @repo.status.untracked.size
+            end
+
+            should "have no changed files" do
+              assert_equal 0, @repo.status.changed.size
+            end
+
+            should "have no added files" do
+              assert_equal 0, @repo.status.added.size
+            end
+
+            should "have no deleted files" do
+              assert_equal 0, @repo.status.deleted.size
+            end
+
+
+            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
+              assert_equal 1, @repo.remotes.size
+              remote = @repo.remotes.first
+              assert_equal 'origin', remote.name
+              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
             end
           end
         end
 
-        context "happpy path" do
-          should "use tmp for target directory" do
-            assert_equal TMP_DIR, @generator.target_dir
+        context "running for spec = true" do
+          setup do
+            @generator.spec = true
+            @generator.run
           end
-          
-          context "running" do
+
+          should 'create target directory' do
+            assert File.exists?(@tmp_dir)
+          end
+
+          should_create_directory 'lib'
+          should_create_directory 'spec'
+
+          should_create_file 'LICENSE'
+          should_create_file 'README'
+          should_create_file 'lib/the_perfect_gem.rb'
+          should_create_file 'spec/spec_helper.rb'
+          should_create_file 'spec/the_perfect_gem_spec.rb'
+          should_create_file '.gitignore'
+
+          context "LICENSE" do
             setup do
-              @generator.run
+              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
             end
 
-            should 'create target directory' do
-              assert File.exists?(TMP_DIR)
+            should "include copyright for this year with user's name" do
+              assert_match 'Copyright (c) 2008 foo', @content
             end
-            
-            should_create_directory 'lib'
-            should_create_directory 'test'
-            
-            should_create_file 'LICENSE'
-            should_create_file 'README'
-            should_create_file 'lib/the_perfect_gem.rb'
-            should_create_file 'test/test_helper.rb'
-            should_create_file 'test/the_perfect_gem_test.rb'
-            should_create_file '.gitignore'
-            
-            context "LICENSE" do
-              setup do
-                @content = File.read((File.join(TMP_DIR, 'LICENSE')))
-              end
+          end
 
-              should "include copyright for this year with user's name" do
-                assert_match 'Copyright (c) 2008 foo', @content
-              end
+          context "Rakefile" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
             end
-            
-            context "Rakefile" do
-              setup do
-                @content = File.read((File.join(TMP_DIR, 'Rakefile')))
-              end
-              
-              should "include repo's name as the gem's name" do
-                assert_match 's.name = "the-perfect-gem"', @content
-              end
-              
-              should "include the user's email as the gem's email" do
-                assert_match 's.email = "bar@example.com"', @content
-              end
-              
-              should "include the github repo's url as the gem's url" do
-                assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
-              end
+
+            should "include repo's name as the gem's name" do
+              assert_match 's.name = "the-perfect-gem"', @content
             end
-            
-            context ".gitignore" do
-              setup do
-                @content = File.read((File.join(TMP_DIR, '.gitignore')))
-              end
 
-              should "include vim swap files" do
-                assert_match '*.sw?', @content
-              end
-              
-              should "include coverage" do
-                assert_match 'coverage', @content
-              end
-              
-              should "include .DS_Store" do
-                assert_match '.DS_Store', @content
-              end
+            should "include the user's email as the gem's email" do
+              assert_match 's.email = "bar@example.com"', @content
             end
-            
-            
-            context "test/the_perfect_gem_test.rb" do
-              setup do
-                @content = File.read((File.join(TMP_DIR, 'test', 'the_perfect_gem_test.rb')))
-              end
 
-              should "have class of ThePerfectGemTest" do
-                assert_match 'class ThePerfectGemTest < Test::Unit::TestCase', @content
-              end
+            should "include the github repo's url as the gem's url" do
+              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
             end
-            
-            
-            context "created git repo" do
-              setup do
-                @repo = Git.open(TMP_DIR)
-              end
 
-              should 'have one commit log' do
-                assert_equal 1, @repo.log.size
-              end
-              
-              should "have one commit log an initial commit message" do
-                # TODO message seems to include leading whitespace, could probably fix that in ruby-git
-                assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
-              end
-              
-              should_be_checked_in 'README'
-              should_be_checked_in 'Rakefile'
-              should_be_checked_in 'LICENSE'
-              should_be_checked_in 'lib/the_perfect_gem.rb'
-              should_be_checked_in 'test/test_helper.rb'
-              should_be_checked_in 'test/the_perfect_gem_test.rb'
-              should_be_checked_in '.gitignore'
-              
-              should "have no untracked files" do
-                assert_equal 0, @repo.status.untracked.size
-              end
-              
-              should "have no changed files" do
-                assert_equal 0, @repo.status.changed.size
-              end
-              
-              should "have no added files" do
-                assert_equal 0, @repo.status.added.size
-              end
-              
-              should "have no deleted files" do
-                assert_equal 0, @repo.status.deleted.size
-              end
+            should "include a glob to match spec files in the TestTask" do
+              assert_match "t.pattern = 'spec/**/*_spec.rb'", @content
+            end
 
-              
-              should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
-                assert_equal 1, @repo.remotes.size
-                remote = @repo.remotes.first
-                assert_equal 'origin', remote.name
-                assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
-              end
+            should "include a glob to match spec files in the RcovTask" do
+              assert_match "t.test_files = FileList['spec/**/*_spec.rb']", @content
+            end
+
+            should "push spec dir into RcovTask libs" do
+              assert_match 't.libs << "spec"', @content
+            end
+          end
+
+          context ".gitignore" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, '.gitignore')))
+            end
+
+            should "include vim swap files" do
+              assert_match '*.sw?', @content
+            end
+
+            should "include coverage" do
+              assert_match 'coverage', @content
+            end
+
+            should "include .DS_Store" do
+              assert_match '.DS_Store', @content
+            end
+          end
+
+
+          context "spec/the_perfect_gem_spec.rb" do
+            setup do
+              @content = File.read((File.join(@tmp_dir, 'spec', 'the_perfect_gem_spec.rb')))
+            end
+
+            should "describe ThePerfectGem" do
+              assert_match 'describe "ThePerfectGem" do', @content
+            end
+          end
+
+
+          context "created git repo" do
+            setup do
+              @repo = Git.open(@tmp_dir)
+            end
+
+            should 'have one commit log' do
+              assert_equal 1, @repo.log.size
+            end
+
+            should "have one commit log an initial commit message" do
+              # TODO message seems to include leading whitespace, could probably fix that in ruby-git
+              assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
+            end
+
+            should_be_checked_in 'README'
+            should_be_checked_in 'Rakefile'
+            should_be_checked_in 'LICENSE'
+            should_be_checked_in 'lib/the_perfect_gem.rb'
+            should_be_checked_in 'spec/spec_helper.rb'
+            should_be_checked_in 'spec/the_perfect_gem_spec.rb'
+            should_be_checked_in '.gitignore'
+
+            should "have no untracked files" do
+              assert_equal 0, @repo.status.untracked.size
+            end
+
+            should "have no changed files" do
+              assert_equal 0, @repo.status.changed.size
+            end
+
+            should "have no added files" do
+              assert_equal 0, @repo.status.added.size
+            end
+
+            should "have no deleted files" do
+              assert_equal 0, @repo.status.deleted.size
+            end
+
+
+            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
+              assert_equal 1, @repo.remotes.size
+              remote = @repo.remotes.first
+              assert_equal 'origin', remote.name
+              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
             end
           end
         end
       end
     end
   end
+
 end

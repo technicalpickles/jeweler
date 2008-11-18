@@ -4,14 +4,14 @@ require 'rake/tasklib'
 class Jeweler
   class Tasks < ::Rake::TaskLib
     def initialize(gemspec = nil, &block)
-      @gemspec = Gem::Specification.new()
-      block.call(@gemspec) if block
+      @gemspec = gemspec || Gem::Specification.new()
+      yield @gemspec if block_given?
 
       @jeweler = Jeweler.new(@gemspec)
-      
+
       define_tasks
     end
-    
+
   private
     def ensure_version_yml(&block)
       unless File.exists? 'VERSION.yml'
@@ -19,7 +19,7 @@ class Jeweler
       end
       block.call if block
     end
-    
+
     def define_tasks
       desc "Generate and validates gemspec"
       task :gemspec => ['gemspec:generate', 'gemspec:validate']
@@ -77,12 +77,12 @@ class Jeweler
           end
         end
       end
-      
+
       desc "Release the current version. Includes updating the gemspec, pushing, and tagging the release"
       task :release do
         @jeweler.release
       end
-      
+
     end
   end
 end

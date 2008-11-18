@@ -11,7 +11,7 @@ Trouble is when developing your Rubygems on GitHub, you generally do one of the 
  * Use hoe or echoe for generating the gemspec
   * ... why use utilities made for the days before GitHub existed?
   * ... why have extra stuff you aren't going to use?
- 
+
 Jeweler was created with a few goals in mind:
 
  * Only use a Gem::Specification as configuration
@@ -48,7 +48,7 @@ Armed with the gem, we can begin diving into an example. [the-perfect-gem](http:
     rescue LoadError
       puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
     end
-    
+
 Here's a rundown of what's happening:
 
  * Wrap everything in a begin block, and rescue from LoadError
@@ -72,18 +72,18 @@ Here's a rundown of what's happening:
      * `executables`, if you have any scripts
      * `add_dependency`, if you have any dependencies
     * Keep in mind that this is a `Gem::Specification`, so you can do whatever you would need to do to get your gem in shape
-     
+
 ## Bootstrap a new project
 
 Before proceeding, take a minute to setup your git environment, specifically your name and email address:
 
     $ git config --global user.email johndoe@example.com
     $ git config --global user.name 'John Doe'
-    
+
 Jeweler provides a generator of sorts, `jeweler`. It takes two arguments: your GitHub username and a repository name.
 
     $ jeweler technicalpickles the-perfect-gem
-    
+
 Basically, this does:
 
  * Creates the the-perfect-gem directory
@@ -98,13 +98,13 @@ Basically, this does:
  * Makes it a git repo
  * Sets up `git@github.com:technicalpickles/jeweler.git` as the `origin` git remote
  * Makes an initial commit, but does not push
- 
+
 At this point, you probably should create a repository by wandering to [http://github.com/repositories/new](http://github.com/repositories/new). Be sure to use the same project name you told Jeweler.
 
 With the repository firmly created, just push it:
 
     $ git push origin master
-    
+
 You also probably should [enable RubyGem creation for you repository](http://github.com/blog/51-github-s-rubygem-server): Go to your project's edit page and check the 'RubyGem' box.
 
 ## Overview of Jeweler workflow
@@ -115,7 +115,7 @@ Here's the general idea:
  * Version bump
  * Release
  * Have a delicious scotch
- 
+
 The hacking and the scotch are up to you, but Jeweler provides rake tasks for the rest.
 
 ### Versioning
@@ -125,9 +125,9 @@ Versioning information is stored in `VERSION.yml`. It's a plain ol' YAML file wh
  * major
  * minor
  * patch
- 
+
 Consider, for a second, `1.5.3`.
- 
+
  * major = 1
  * minor = 5
  * patch = 3
@@ -161,7 +161,7 @@ The process of version bumping does a commit to your repo, so make sure your rep
 It's pretty straight forward:
 
     $ rake release
-    
+
 This takes care of:
 
  * Generating a `.gemspec` for you project, with the version you just bumped to
@@ -179,5 +179,5 @@ If it happens to be down, you can also check out the GitHub Gem repo's [list](ht
 
     <hack, hack, hack, commit>
     $ rake version:bump:patch release
-    
+
 Now browse to http://gems.github.com/yourname/yourproject, and wait for it to be built.
