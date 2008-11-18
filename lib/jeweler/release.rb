@@ -25,7 +25,7 @@ class Jeweler
       unless ENV['JEWELER_DEBUG'].nil? || ENV['JEWELER_DEBUG'].squeeze == ''
         require 'ruby-debug'; breakpoint
       end
-      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty? && @repo.status.untracked.empty?)
+      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
     end
   end
 end
