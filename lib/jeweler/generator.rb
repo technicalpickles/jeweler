@@ -18,8 +18,7 @@ class Jeweler
   class NoGitHubToken < StandardError
   end
   class GitInitFailed < StandardError
-  end
-    
+  end    
 
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email,
@@ -51,12 +50,7 @@ class Jeweler
       gitify
       puts "Jeweler has prepared your gem in #{github_repo_name}"
       if should_create_repo
-        res = Net::HTTP.post_form URI.parse('http://github.com/repositories'),
-                                  'login' => github_username,
-                                  'token' => github_token,
-                                  'repository[name]' => github_repo_name
-        sleep 2
-        @repo.push('origin')
+
         puts "Jeweler has pushed your repo to #{github_url}"
       end
       
@@ -92,8 +86,8 @@ class Jeweler
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')
-      output_template_in_target("#{testspec}/#{testspec}_helper.rb")
-      output_template_in_target("#{testspec}/flunking_#{testspec}.rb", "#{testspec}/#{file_name_prefix}_#{testspec}.rb")
+      output_template_in_target("#{test_style}/#{testspec}_helper.rb", "#{testspec}/#{testspec}_helper.rb")
+      output_template_in_target("#{test_style}/flunking_#{testspec}.rb", "#{testspec}/#{file_name_prefix}_#{testspec}.rb")
 
       FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
     end
@@ -161,6 +155,15 @@ class Jeweler
       ensure
         Dir.chdir(saved_pwd)
       end
+    end
+    
+    def create_and_push_repo
+      Net::HTTP.post_form URI.parse('http://github.com/repositories'),
+                                'login' => github_username,
+                                'token' => github_token,
+                                'repository[name]' => github_repo_name
+      sleep 2
+      @repo.push('origin')
     end
 
     def read_git_config

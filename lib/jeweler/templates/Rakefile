@@ -32,7 +32,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 Rcov::RcovTask.new do |t|
-  t.libs << "<%= testspec %>"
+  t.libs << '<%= testspec %>'
   t.test_files = FileList['<%= testspec %>/**/*_<%= testspec %>.rb']
   t.verbose = true
 end

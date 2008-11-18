@@ -24,72 +24,70 @@ class JewelerTest < Test::Unit::TestCase
       assert_nil status.type, "#{file} had a type. it should have been nil"
     end
   end
+  
+  def self.should_have_sane_license
+    context "LICENSE" do
+      setup do
+        @content = File.read((File.join(@tmp_dir, 'LICENSE')))
+      end
 
-  context "given a nil github repo name" do
-    setup do
-      @block = lambda { Jeweler::Generator.new(nil) }
-    end
-
-    should "raise an error" do
-      assert_raise Jeweler::NoGitHubRepoNameGiven do
-        @block.call
+      should "include copyright for this year with user's name" do
+        assert_match 'Copyright (c) 2008 foo', @content
       end
     end
   end
-
-  context "without git user's name set" do
-    setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.email' => 'bar@example.com'})
-    end
-
-    context "instantiating new generator" do
+  
+  def self.should_have_sane_gitignore
+    context ".gitignore" do
       setup do
-        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
+        @content = File.read((File.join(@tmp_dir, '.gitignore')))
       end
 
-      should "raise no git user name exception" do
-        assert_raise Jeweler::NoGitUserName do
-          @block.call
-        end
+      should "include vim swap files" do
+        assert_match '*.sw?', @content
+      end
+
+      should "include coverage" do
+        assert_match 'coverage', @content
+      end
+
+      should "include .DS_Store" do
+        assert_match '.DS_Store', @content
       end
     end
   end
-
-  context "without git user's email set" do
-    setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).returns({'user.name' => 'foo'})
-    end
-
-    context "instantiating new generator" do
+  
+  def self.should_have_sane_rakefile(options)
+    context "Rakefile" do
       setup do
-        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
+        @content = File.read((File.join(@tmp_dir, 'Rakefile')))
       end
 
-      should "raise no git user name exception" do
-        assert_raise Jeweler::NoGitUserEmail do
-          @block.call
-        end
+      should "include repo's name as the gem's name" do
+        assert_match 's.name = "the-perfect-gem"', @content
+      end
+
+      should "include the user's email as the gem's email" do
+        assert_match 's.email = "bar@example.com"', @content
+      end
+
+      should "include the github repo's url as the gem's url" do
+        assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
+      end
+
+      should "include #{options[:pattern]} in the TestTask" do
+        assert_match "t.pattern = '#{options[:pattern]}'", @content
+      end
+
+      should "include #{options[:pattern]} in the RcovTask" do
+        assert_match "t.test_files = FileList['#{options[:pattern]}']", @content
+      end
+
+      should "push #{options[:libs]} dir into RcovTask libs" do
+        assert_match "t.libs << '#{options[:libs]}'", @content
       end
     end
-  end
-
-  context "without github username set" do
-    setup do
-      Jeweler::Generator.any_instance.stubs(:read_git_config).
-        returns({'user.email' => 'bar@example.com', 'user.name' => 'foo'})
-    end
-
-    context "instantiating new generator" do
-      setup do
-        @block = lambda { Jeweler::Generator.new('the-perfect-gem')}
-      end
-
-      should "raise no github user exception" do
-        assert_raise Jeweler::NoGitHubUser do
-          @block.call
-        end
-      end
-    end
+    
   end
 
   context "with valid git user configuration" do
@@ -97,57 +95,6 @@ class JewelerTest < Test::Unit::TestCase
       Jeweler::Generator.any_instance.stubs(:read_git_config).
         returns({'user.name' => 'foo', 'user.email' => 'bar@example.com', 'github.user' => 'technicalpickles', 'github.token' => 'zomgtoken'})
     end
-
-    context "for technicalpickle's the-perfect-gem repository" do
-      setup do
-        @generator = Jeweler::Generator.new('the-perfect-gem')
-      end
-
-      should "assign 'foo' to user's name" do
-        assert_equal 'foo', @generator.user_name
-      end
-
-      should "assign 'bar@example.com to user's email" do
-        assert_equal 'bar@example.com', @generator.user_email
-      end
-
-      should "assign github remote" do
-        assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', @generator.github_remote
-      end
-
-      should "determine github username as technicalpickles" do
-        assert_equal 'technicalpickles', @generator.github_username
-      end
-
-      should "determine github repository name as the-perfect-gem" do
-        assert_equal 'the-perfect-gem', @generator.github_repo_name
-      end
-
-      should "determine github url as http://github.com/technicalpickles/the-perfect-gem" do
-        assert_equal 'http://github.com/technicalpickles/the-perfect-gem', @generator.github_url
-      end
-
-      should "determine target directory as the same as the github repository name" do
-        assert_equal @generator.github_repo_name, @generator.target_dir
-      end
-
-      should "determine lib directory as being inside the target directory" do
-        assert_equal File.join(@generator.target_dir, 'lib'), @generator.lib_dir
-      end
-
-      should "determine test directory as being inside the target directory" do
-        assert_equal File.join(@generator.target_dir, 'test'), @generator.test_dir
-      end
-
-      should "determine constant name as ThePerfectGem" do
-        assert_equal 'ThePerfectGem', @generator.constant_name
-      end
-
-      should "determine file name prefix as the_perfect_gem" do
-        assert_equal 'the_perfect_gem', @generator.file_name_prefix
-      end
-    end
-
 
     context "and cleaned out tmp directory" do
       setup do
@@ -170,9 +117,9 @@ class JewelerTest < Test::Unit::TestCase
           assert_equal @tmp_dir, @generator.target_dir
         end
 
-        context "running for spec = false" do
+        context "running with default test style" do
           setup do
-            @generator.run
+            @output = catch_out { @generator.run }
           end
 
           should 'create target directory' do
@@ -189,63 +136,9 @@ class JewelerTest < Test::Unit::TestCase
           should_create_file 'test/the_perfect_gem_test.rb'
           should_create_file '.gitignore'
 
-          context "LICENSE" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
-            end
-
-            should "include copyright for this year with user's name" do
-              assert_match 'Copyright (c) 2008 foo', @content
-            end
-          end
-
-          context "Rakefile" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
-            end
-
-            should "include repo's name as the gem's name" do
-              assert_match 's.name = "the-perfect-gem"', @content
-            end
-
-            should "include the user's email as the gem's email" do
-              assert_match 's.email = "bar@example.com"', @content
-            end
-
-            should "include the github repo's url as the gem's url" do
-              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
-            end
-
-            should "include a glob to match test files in the TestTask" do
-              assert_match "t.pattern = 'test/**/*_test.rb'", @content
-            end
-
-            should "include a glob to match test files in the RcovTask" do
-              assert_match "t.test_files = FileList['test/**/*_test.rb']", @content
-            end
-
-            should "push test dir into RcovTask libs" do
-              assert_match 't.libs << "test"', @content
-            end
-          end
-
-          context ".gitignore" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, '.gitignore')))
-            end
-
-            should "include vim swap files" do
-              assert_match '*.sw?', @content
-            end
-
-            should "include coverage" do
-              assert_match 'coverage', @content
-            end
-
-            should "include .DS_Store" do
-              assert_match '.DS_Store', @content
-            end
-          end
+          should_have_sane_rakefile :libs => 'test', :pattern => 'test/**/*_test.rb'
+          should_have_sane_license
+          should_have_sane_gitignore
 
 
           context "test/the_perfect_gem_test.rb" do
@@ -307,10 +200,12 @@ class JewelerTest < Test::Unit::TestCase
           end
         end
 
-        context "running bacon" do
+        context "running with bacon test style" do
           setup do
             @generator.test_style = :bacon
-            @generator.run
+            @output = catch_out {
+              @generator.run
+            }
           end
 
           should 'create target directory' do
@@ -327,63 +222,9 @@ class JewelerTest < Test::Unit::TestCase
           should_create_file 'spec/the_perfect_gem_spec.rb'
           should_create_file '.gitignore'
 
-          context "LICENSE" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, 'LICENSE')))
-            end
-
-            should "include copyright for this year with user's name" do
-              assert_match 'Copyright (c) 2008 foo', @content
-            end
-          end
-
-          context "Rakefile" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, 'Rakefile')))
-            end
-
-            should "include repo's name as the gem's name" do
-              assert_match 's.name = "the-perfect-gem"', @content
-            end
-
-            should "include the user's email as the gem's email" do
-              assert_match 's.email = "bar@example.com"', @content
-            end
-
-            should "include the github repo's url as the gem's url" do
-              assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
-            end
-
-            should "include a glob to match spec files in the TestTask" do
-              assert_match "t.pattern = 'spec/**/*_spec.rb'", @content
-            end
-
-            should "include a glob to match spec files in the RcovTask" do
-              assert_match "t.test_files = FileList['spec/**/*_spec.rb']", @content
-            end
-
-            should "push spec dir into RcovTask libs" do
-              assert_match 't.libs << "spec"', @content
-            end
-          end
-
-          context ".gitignore" do
-            setup do
-              @content = File.read((File.join(@tmp_dir, '.gitignore')))
-            end
-
-            should "include vim swap files" do
-              assert_match '*.sw?', @content
-            end
-
-            should "include coverage" do
-              assert_match 'coverage', @content
-            end
-
-            should "include .DS_Store" do
-              assert_match '.DS_Store', @content
-            end
-          end
+          should_have_sane_rakefile :libs => 'spec', :pattern => 'spec/**/*_spec.rb'
+          should_have_sane_license
+          should_have_sane_gitignore
 
 
           context "spec/the_perfect_gem_spec.rb" do
