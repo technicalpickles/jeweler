@@ -50,7 +50,7 @@ class Jeweler
       gitify
       puts "Jeweler has prepared your gem in #{github_repo_name}"
       if should_create_repo
-
+        create_and_push_repo
         puts "Jeweler has pushed your repo to #{github_url}"
       end
       
