@@ -75,14 +75,15 @@ Here's a rundown of what's happening:
 
 ## Bootstrap a new project
 
-Before proceeding, take a minute to setup your git environment, specifically your name and email address:
+Before proceeding, take a minute to setup your git environment, specifically your name, email address, and GitHub username
 
     $ git config --global user.email johndoe@example.com
     $ git config --global user.name 'John Doe'
+    $ git config --global github.user johndoe
 
-Jeweler provides a generator of sorts, `jeweler`. It takes two arguments: your GitHub username and a repository name.
+Jeweler provides a generator of sorts, `jeweler`. It requires only argument, the name of a repo you want to create. It also takes a few options: --[shoulda](http://github.com/thoughtbot/shoulda) and --[bacon](http://github.com/chneukirchen/bacon/tree/master). These control what type of tests are created, with the default being shoulda.
 
-    $ jeweler technicalpickles the-perfect-gem
+    $ jeweler the-perfect-gem
 
 Basically, this does:
 
@@ -96,7 +97,7 @@ Basically, this does:
   * `test/the_perfect_gem.rb`, placeholder failing test
   * `lib/the_perfect_gem.rb`, placeholder library file
  * Makes it a git repo
- * Sets up `git@github.com:technicalpickles/jeweler.git` as the `origin` git remote
+ * Sets up `git@github.com:johndoe/jeweler.git` as the `origin` git remote
  * Makes an initial commit, but does not push
 
 At this point, you probably should create a repository by wandering to [http://github.com/repositories/new](http://github.com/repositories/new). Be sure to use the same project name you told Jeweler.
