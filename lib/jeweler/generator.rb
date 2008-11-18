@@ -1,6 +1,9 @@
 require 'git'
 require 'erb'
 
+require 'net/http'
+require 'uri'
+
 class Jeweler
   class NoGitUserName < StandardError
   end
@@ -12,14 +15,17 @@ class Jeweler
   end
   class NoGitHubUser < StandardError
   end
+  class NoGitHubToken < StandardError
+  end
   class GitInitFailed < StandardError
   end
     
 
-  class Generator
+  class Generator    
     attr_accessor :target_dir, :user_name, :user_email,
-                  :github_repo_name, :github_remote, :github_url, :github_username,
-                  :lib_dir, :constant_name, :file_name_prefix, :config, :test_style
+                  :github_repo_name, :github_remote, :github_url, :github_username, :github_token,
+                  :lib_dir, :constant_name, :file_name_prefix, :config, :test_style,
+                  :repo, :should_create_repo
 
     def initialize(github_repo_name, options = {})
       check_user_git_config()
@@ -37,11 +43,24 @@ class Jeweler
       self.lib_dir = File.join(target_dir, 'lib')
       self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
       self.file_name_prefix = self.github_repo_name.gsub('-', '_')
+      self.should_create_repo = options[:create_repo]
     end
 
     def run
       create_files
       gitify
+      puts "Jeweler has prepared your gem in #{github_repo_name}"
+      if should_create_repo
+        res = Net::HTTP.post_form URI.parse('http://github.com/repositories'),
+                                  'login' => github_username,
+                                  'token' => github_token,
+                                  'repository[name]' => github_repo_name
+        sleep 2
+        @repo.push('origin')
+        puts "Jeweler has pushed your repo to #{github_url}"
+      end
+      
+
     end
 
     def testspec
@@ -93,10 +112,15 @@ class Jeweler
       unless config.has_key? 'github.user'
         raise NoGitHubUser, %Q{No github.user set in ~/.gitconfig. Set it with: git config --global github.user 'Your username here'}
       end
+      
+      unless config.has_key? 'github.token'
+        raise NoGitHubToken, %Q{No github.token set in ~/.gitconfig. Set it with: git config --global github.token 'Your token here'}
+      end
 
       self.user_name = config['user.name']
       self.user_email = config['user.email']
       self.github_username = config['github.user']
+      self.github_token = config['github.token']
     end
 
     def output_template_in_target(source, destination = source)
@@ -110,26 +134,26 @@ class Jeweler
       Dir.chdir(target_dir)
       begin
         begin
-          repo = Git.init()
+          @repo = Git.init()
         rescue Git::GitExecuteError => e
           raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
         end
 
         begin
-          repo.add('.')
+          @repo.add('.')
         rescue Git::GitExecuteError => e
           #raise GitAddFailed, "There was some problem adding this directory to the git changeset"
           raise
         end
 
         begin
-          repo.commit "Initial commit to #{github_repo_name}."
+          @repo.commit "Initial commit to #{github_repo_name}."
         rescue Git::GitExecuteError => e
           raise
         end
 
         begin
-          repo.add_remote('origin', github_remote)
+          @repo.add_remote('origin', github_remote)
         rescue Git::GitExecuteError => e
           puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
           raise

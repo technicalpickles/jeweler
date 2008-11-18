@@ -95,7 +95,7 @@ class JewelerTest < Test::Unit::TestCase
   context "with valid git user configuration" do
     setup do
       Jeweler::Generator.any_instance.stubs(:read_git_config).
-        returns({'user.name' => 'foo', 'user.email' => 'bar@example.com', 'github.user' => 'technicalpickles'})
+        returns({'user.name' => 'foo', 'user.email' => 'bar@example.com', 'github.user' => 'technicalpickles', 'github.token' => 'zomgtoken'})
     end
 
     context "for technicalpickle's the-perfect-gem repository" do

@@ -24,6 +24,10 @@ class JewelerOpts < Hash
         self[:test_style] = :shoulda
       end
       
+      o.on('--create-repo', 'create the repository on GitHub') do
+        self[:create_repo] = true
+      end
+      
       o.on_tail('-h', '--help', 'display this help and exit') do
         puts o
         exit
