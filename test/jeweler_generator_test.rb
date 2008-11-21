@@ -9,19 +9,23 @@ class JewelerTest < Test::Unit::TestCase
     end
   end
 
-  def self.should_create_file(file)
-    should "create file #{file}" do
-      assert File.exists?(File.join(@tmp_dir, file))
-      assert File.file?(File.join(@tmp_dir, file))
+  def self.should_create_files(*files)
+    should "create #{files.join ', '}" do
+      files.each do |file|
+        assert File.exists?(File.join(@tmp_dir, file))
+        assert File.file?(File.join(@tmp_dir, file))        
+      end
     end
   end
 
-  def self.should_be_checked_in(file)
-    should "have #{file} checked in" do
-      status = @repo.status[file]
-      assert_not_nil status, "wasn't able to get status for #{file}"
-      assert ! status.untracked, "#{file} was untracked"
-      assert_nil status.type, "#{file} had a type. it should have been nil"
+  def self.should_be_checked_in(*files)
+    should "have #{files.join ', '} checked in" do
+      files.each do |file|        
+        status = @repo.status[file]
+        assert_not_nil status, "wasn't able to get status for #{file}"
+        assert ! status.untracked, "#{file} was untracked"
+        assert_nil status.type, "#{file} had a type. it should have been nil"
+      end
     end
   end
   
@@ -87,7 +91,15 @@ class JewelerTest < Test::Unit::TestCase
         assert_match "t.libs << '#{options[:libs]}'", @content
       end
     end
-    
+  end
+  
+  def self.should_have_sane_origin_remote
+    should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
+      assert_equal 1, @repo.remotes.size
+      remote = @repo.remotes.first
+      assert_equal 'origin', remote.name
+      assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
+    end
   end
 
   context "with valid git user configuration" do
@@ -108,7 +120,7 @@ class JewelerTest < Test::Unit::TestCase
         FileUtils.rm_rf(@tmp_dir)
       end
 
-      context "for technicalpickles's the-perfect-gem repo and working directory 'tmp'" do
+      context "for generating technicalpickles's the-perfect-gem repo in 'tmp'" do
         setup do
           @generator = Jeweler::Generator.new('the-perfect-gem', :directory => @tmp_dir)
         end
@@ -129,12 +141,7 @@ class JewelerTest < Test::Unit::TestCase
           should_create_directory 'lib'
           should_create_directory 'test'
 
-          should_create_file 'LICENSE'
-          should_create_file 'README'
-          should_create_file 'lib/the_perfect_gem.rb'
-          should_create_file 'test/test_helper.rb'
-          should_create_file 'test/the_perfect_gem_test.rb'
-          should_create_file '.gitignore'
+          should_create_files 'LICENSE', 'README', 'lib/the_perfect_gem.rb', 'test/test_helper.rb', 'test/the_perfect_gem_test.rb', '.gitignore'
 
           should_have_sane_rakefile :libs => 'test', :pattern => 'test/**/*_test.rb'
           should_have_sane_license
@@ -157,22 +164,13 @@ class JewelerTest < Test::Unit::TestCase
               @repo = Git.open(@tmp_dir)
             end
 
-            should 'have one commit log' do
-              assert_equal 1, @repo.log.size
-            end
-
             should "have one commit log an initial commit message" do
+              assert_equal 1, @repo.log.size
               # TODO message seems to include leading whitespace, could probably fix that in ruby-git
               assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
             end
 
-            should_be_checked_in 'README'
-            should_be_checked_in 'Rakefile'
-            should_be_checked_in 'LICENSE'
-            should_be_checked_in 'lib/the_perfect_gem.rb'
-            should_be_checked_in 'test/test_helper.rb'
-            should_be_checked_in 'test/the_perfect_gem_test.rb'
-            should_be_checked_in '.gitignore'
+            should_be_checked_in 'README', 'Rakefile', 'LICENSE', 'lib/the_perfect_gem.rb', 'test/test_helper.rb', 'test/the_perfect_gem_test.rb', '.gitignore'
 
             should "have no untracked files" do
               assert_equal 0, @repo.status.untracked.size
@@ -190,13 +188,7 @@ class JewelerTest < Test::Unit::TestCase
               assert_equal 0, @repo.status.deleted.size
             end
 
-
-            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
-              assert_equal 1, @repo.remotes.size
-              remote = @repo.remotes.first
-              assert_equal 'origin', remote.name
-              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
-            end
+            should_have_sane_origin_remote
           end
         end
 
@@ -215,12 +207,7 @@ class JewelerTest < Test::Unit::TestCase
           should_create_directory 'lib'
           should_create_directory 'spec'
 
-          should_create_file 'LICENSE'
-          should_create_file 'README'
-          should_create_file 'lib/the_perfect_gem.rb'
-          should_create_file 'spec/spec_helper.rb'
-          should_create_file 'spec/the_perfect_gem_spec.rb'
-          should_create_file '.gitignore'
+          should_create_files 'LICENSE', 'README', 'lib/the_perfect_gem.rb', 'spec/spec_helper.rb', 'spec/the_perfect_gem_spec.rb', '.gitignore'
 
           should_have_sane_rakefile :libs => 'spec', :pattern => 'spec/**/*_spec.rb'
           should_have_sane_license
@@ -252,13 +239,7 @@ class JewelerTest < Test::Unit::TestCase
               assert_match 'Initial commit to the-perfect-gem.', @repo.log.first.message
             end
 
-            should_be_checked_in 'README'
-            should_be_checked_in 'Rakefile'
-            should_be_checked_in 'LICENSE'
-            should_be_checked_in 'lib/the_perfect_gem.rb'
-            should_be_checked_in 'spec/spec_helper.rb'
-            should_be_checked_in 'spec/the_perfect_gem_spec.rb'
-            should_be_checked_in '.gitignore'
+            should_be_checked_in 'README', 'Rakefile', 'LICENSE', 'lib/the_perfect_gem.rb', 'spec/spec_helper.rb', 'spec/the_perfect_gem_spec.rb', '.gitignore'
 
             should "have no untracked files" do
               assert_equal 0, @repo.status.untracked.size
@@ -276,17 +257,10 @@ class JewelerTest < Test::Unit::TestCase
               assert_equal 0, @repo.status.deleted.size
             end
 
-
-            should "have git@github.com:technicalpickles/the-perfect-gem.git as origin remote" do
-              assert_equal 1, @repo.remotes.size
-              remote = @repo.remotes.first
-              assert_equal 'origin', remote.name
-              assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
-            end
+            should_have_sane_origin_remote
           end
         end
       end
     end
   end
-
 end
