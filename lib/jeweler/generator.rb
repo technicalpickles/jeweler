@@ -53,8 +53,6 @@ class Jeweler
         create_and_push_repo
         puts "Jeweler has pushed your repo to #{github_url}"
       end
-      
-
     end
 
     def testspec
