@@ -80,10 +80,11 @@ Before proceeding, take a minute to setup your git environment, specifically you
     $ git config --global user.email johndoe@example.com
     $ git config --global user.name 'John Doe'
     $ git config --global github.user johndoe
+    $ git config --global github.token 55555555555555
 
 Jeweler provides a generator of sorts, `jeweler`. It requires only argument, the name of a repo you want to create. It also takes a few options: --[shoulda](http://github.com/thoughtbot/shoulda) and --[bacon](http://github.com/chneukirchen/bacon/tree/master). These control what type of tests are created, with the default being shoulda.
 
-    $ jeweler the-perfect-gem
+    $ jeweler --create-repo the-perfect-gem
 
 Basically, this does:
 
@@ -98,13 +99,8 @@ Basically, this does:
   * `lib/the_perfect_gem.rb`, placeholder library file
  * Makes it a git repo
  * Sets up `git@github.com:johndoe/jeweler.git` as the `origin` git remote
- * Makes an initial commit, but does not push
-
-At this point, you probably should create a repository by wandering to [http://github.com/repositories/new](http://github.com/repositories/new). Be sure to use the same project name you told Jeweler.
-
-With the repository firmly created, just push it:
-
-    $ git push origin master
+ * Makes an initial commit
+ * Sets up a new repository on GitHub and pushes to it (omit --create-repo to skip this)
 
 You also probably should [enable RubyGem creation for you repository](http://github.com/blog/51-github-s-rubygem-server): Go to your project's edit page and check the 'RubyGem' box.
 
