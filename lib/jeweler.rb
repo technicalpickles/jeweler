@@ -24,6 +24,7 @@ class Jeweler
     @gemspec = gemspec
     @base_dir = base_dir
 
+    breakpoint
     @gemspec.files ||= FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
 
     if File.exists?(File.join(base_dir, '.git'))
