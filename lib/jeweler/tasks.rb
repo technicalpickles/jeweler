@@ -3,13 +3,15 @@ require 'rake/tasklib'
 
 class Jeweler
   class Tasks < ::Rake::TaskLib
+    attr_accessor :gemspec, :jeweler
+
     def initialize(gemspec = nil, &block)
       @gemspec = gemspec || Gem::Specification.new()
       yield @gemspec if block_given?
 
       @jeweler = Jeweler.new(@gemspec)
 
-      define_tasks
+      define
     end
 
   private
@@ -20,7 +22,7 @@ class Jeweler
       block.call if block
     end
 
-    def define_tasks
+    def define
       desc "Generate and validates gemspec"
       task :gemspec => ['gemspec:generate', 'gemspec:validate']
 
