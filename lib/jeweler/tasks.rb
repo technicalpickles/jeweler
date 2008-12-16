@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
+require 'rubygems/builder'
 
 class Jeweler
   class Tasks < ::Rake::TaskLib
@@ -23,6 +24,12 @@ class Jeweler
     end
 
     def define
+      desc "Generate a gem"
+      task :gem => :'gemspec:validate' do
+        gemspec = @jeweler.unsafe_parse_gemspec
+        Gem::Builder.new(gemspec).build
+      end
+
       desc "Generate and validates gemspec"
       task :gemspec => ['gemspec:generate', 'gemspec:validate']
 

@@ -38,6 +38,11 @@ class Jeweler
       Thread.new { eval("$SAFE = 3\n#{data}", binding, gemspec_path) }.join
     end
 
+    def unsafe_parse_gemspec(data = nil)
+      data ||= File.read(gemspec_path)
+      eval(data, binding, gemspec_path)
+    end
+
   protected
     def gemspec_path
       denormalized_path = File.join(@base_dir, "#{@gemspec.name}.gemspec")
