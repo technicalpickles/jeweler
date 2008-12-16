@@ -47,4 +47,16 @@ class Test::Unit::TestCase
   def tmp_dir
     File.join(File.dirname(__FILE__), 'tmp')
   end
+
+  def build_spec
+    Gem::Specification.new do |s|
+      s.name = "bar"
+      s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+      s.email = "josh@technicalpickles.com"
+      s.homepage = "http://github.com/technicalpickles/jeweler"
+      s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+      s.authors = ["Josh Nichols", "Dan Croak"]
+      s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+    end
+  end
 end
