@@ -19,10 +19,5 @@ class Jeweler
     def release_tag
       @release_tag ||= "v#{version}"
     end
-
-  protected
-    def any_pending_changes?
-      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
-    end
   end
 end

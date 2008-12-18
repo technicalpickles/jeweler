@@ -30,5 +30,10 @@ class Jeweler
       @repo = Git.open(base_dir)
     end
   end
+
+  protected
+    def any_pending_changes?
+      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
+    end
 end
 
