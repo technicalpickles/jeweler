@@ -1,0 +1,409 @@
+/* -----------------------------------------------------------------------
+
+   BlueTrip CSS Framework
+   
+   Mike Crittenden
+   mike@capsizedesigns.com
+   Copyright 2008 Mike Crittenden
+   
+   License - MIT or GPL (whichever suits you better)
+
+----------------------------------------------------------------------- */
+
+/* MEYER RESET v1.0*/
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+/* BASIC TYPOGRAPHY */
+
+html { font-size: 62.5%; font-family: "Liberation Sans", Helvetica, Arial, sans-serif; }
+strong, th, thead td, h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+cite, em, dfn { font-style: italic; }
+code, kbd, samp, pre, tt, var, input[type='text'], input[type='password'], textarea { font-size: 92%; font-family: monaco, "Lucida Console", courier, monospace; }
+del { text-decoration: line-through; color: #666; }
+ins, dfn { border-bottom: 1px solid #ccc; }
+small, sup, sub { font-size: 85%; }
+abbr, acronym { text-transform: uppercase; font-size: 85%; letter-spacing: .1em; }
+a abbr, a acronym { border: none; }
+abbr[title], acronym[title], dfn[title] { cursor: help; border-bottom: 1px solid #ccc; }
+sup { vertical-align: super; }
+sub { vertical-align: sub; }
+
+/* QUOTES */
+
+blockquote { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; color: #666; }
+blockquote *:first-child:before { content: "\201C"; }
+blockquote *:first-child:after { content: "\201D"; }
+
+/* FORMS */
+
+fieldset { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc; }
+legend { font-weight: bold; font-size:1.2em; }
+label { font-weight: bold; }
+textarea, input[type='text'], input[type='password'], select { border: 1px solid #ccc; background: #fff; }
+textarea:hover, input[type='text']:hover, input[type='password']:hover, select:hover { border-color: #aaa; }
+textarea:focus, input[type='text']:focus, input[type='password']:focus, select:focus { border-color: #888; outline: 2px solid #ffffaa; }
+input, select { cursor: pointer; }
+input[type='text'],input[type='password'] { cursor: text; }
+
+/* BASE SIZES */
+
+.container { font-size: 1.2em; line-height: 1.6em; }
+.container h1 { font-size: 1.9em; }
+.container h2 { font-size: 1.7em; }
+.container h3 { font-size: 1.5em; }
+.container h4 { font-size: 1.3em; }
+.container h5 { font-size: 1.2em; }
+.container h6 { font-size: 1em; }
+
+/* LISTS */
+
+.container ul li { margin-left: .85em; }
+.container ul { list-style-type: disc; }
+.container ul ul { list-style-type: square; }
+.container ul ul ul { list-style-type: circle; }
+.container ol { list-style-position: outside; list-style-type: decimal; }
+.container dt { font-weight: bold; }
+
+/* TABLES */
+
+.container table { border-top: 1px solid #ccc;  border-left: 1px solid #ccc; }
+.container th, .container td { border-bottom: 1px solid #ddd; border-right: 1px solid #ccc; }
+
+/* MARGINS & PADDINGS */
+
+.container blockquote *:first-child { margin: .8em 0; }
+.container hr, .container p, .container ul, .container ol, .container dl, .container pre, .container blockquote, .container address, .container table, .container form { margin-bottom: 1.6em; }
+/* NOTE: Calulate header margins: TOP: 1.6em/size, BOTTOM: 1.6em/size/2 */
+.container h1 { margin: 1em 0 .5em;  }
+.container h2 { margin: 1.07em 0 .535em; }
+.container h3 { margin: 1.14em 0 .57em; }
+.container h4 { margin: 1.23em 0 .615em; }
+.container h5 { margin: 1.33em 0 .67em; }
+.container h6 { margin: 1.6em 0 .8em; }
+.container th, .container td { padding: .8em; }
+.container caption { padding-bottom: .8em; } /* padding instead of margin for IE */
+.container blockquote { padding: 0 1em; margin: 1.6em 0; }
+.container fieldset { padding: 0 1em 1em 1em; margin: 1.6em 0; } /* padding-top is margin-top for fieldsets in Opera */
+.container legend { padding-left: .8em; padding-right: .8em; }
+.container legend+* { margin-top: 1em; } /* compensates for the opera margin bug */
+.container textarea, .container input { padding: .3em .4em .15em .4em; }
+.container select { padding: .1em .2em 0 .2em; }
+.container option { padding: 0 .4em; }
+.container a { position: relative; padding: 0.3em 0 .1em 0; } /* for larger click-area */
+.container dt { margin-top: .8em; margin-bottom: .4em; }
+.container ul { margin-left: 1.5em; }
+.container ol { margin-left: 2.35em; }
+.container ol ol, .container ul ol { margin-left: 2.5em; }
+.container form div { margin-bottom: .8em; }
+
+/* COLORS */
+
+.container a:link { text-decoration: underline; color: #36c; }
+.container a:visited { text-decoration: underline; color: #99c; }
+.container a:hover { text-decoration: underline; color: #c33; }
+.container a:active, .container a:focus { text-decoration: underline; color: #000; }
+.container code, .container pre { color: #c33; } /* very optional, but still useful. W3C uses about the same colors for codes */
+
+/* 24 COLUMN GRID */
+
+.container {width:950px;margin:0 auto;}
+.showgrid {background:url(../img/grid.png);}
+body {margin:1.5em 0;}
+div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span-7, div.span-8, div.span-9, div.span-10, div.span-11, div.span-12, div.span-13, div.span-14, div.span-15, div.span-16, div.span-17, div.span-18, div.span-19, div.span-20, div.span-21, div.span-22, div.span-23 {float:left;margin-right:10px;}
+div.span-24 {float:left;}
+div.last {margin-right:0;}
+.span-1 {width:30px;}
+.span-2 {width:70px;}
+.span-3 {width:110px;}
+.span-4 {width:150px;}
+.span-5 {width:190px;}
+.span-6 {width:230px;}
+.span-7 {width:270px;}
+.span-8 {width:310px;}
+.span-9 {width:350px;}
+.span-10 {width:390px;}
+.span-11 {width:430px;}
+.span-12 {width:470px;}
+.span-13 {width:510px;}
+.span-14 {width:550px;}
+.span-15 {width:590px;}
+.span-16 {width:630px;}
+.span-17 {width:670px;}
+.span-18 {width:710px;}
+.span-19 {width:750px;}
+.span-20 {width:790px;}
+.span-21 {width:830px;}
+.span-22 {width:870px;}
+.span-23 {width:910px;}
+.span-24, div.span-24 {width:950px;}
+.suffix-1 {padding-right:40px;}
+.suffix-2 {padding-right:80px;}
+.suffix-3 {padding-right:120px;}
+.suffix-4 {padding-right:160px;}
+.suffix-5 {padding-right:200px;}
+.suffix-6 {padding-right:240px;}
+.suffix-7 {padding-right:280px;}
+.suffix-8 {padding-right:320px;}
+.suffix-9 {padding-right:360px;}
+.suffix-10 {padding-right:400px;}
+.suffix-11 {padding-right:440px;}
+.suffix-12 {padding-right:480px;}
+.suffix-13 {padding-right:520px;}
+.suffix-14 {padding-right:560px;}
+.suffix-15 {padding-right:600px;}
+.suffix-16 {padding-right:640px;}
+.suffix-17 {padding-right:680px;}
+.suffix-18 {padding-right:720px;}
+.suffix-19 {padding-right:760px;}
+.suffix-20 {padding-right:800px;}
+.suffix-21 {padding-right:840px;}
+.suffix-22 {padding-right:880px;}
+.suffix-23 {padding-right:920px;}
+.prefix-1 {padding-left:40px;}
+.prefix-2 {padding-left:80px;}
+.prefix-3 {padding-left:120px;}
+.prefix-4 {padding-left:160px;}
+.prefix-5 {padding-left:200px;}
+.prefix-6 {padding-left:240px;}
+.prefix-7 {padding-left:280px;}
+.prefix-8 {padding-left:320px;}
+.prefix-9 {padding-left:360px;}
+.prefix-10 {padding-left:400px;}
+.prefix-11 {padding-left:440px;}
+.prefix-12 {padding-left:480px;}
+.prefix-13 {padding-left:520px;}
+.prefix-14 {padding-left:560px;}
+.prefix-15 {padding-left:600px;}
+.prefix-16 {padding-left:640px;}
+.prefix-17 {padding-left:680px;}
+.prefix-18 {padding-left:720px;}
+.prefix-19 {padding-left:760px;}
+.prefix-20 {padding-left:800px;}
+.prefix-21 {padding-left:840px;}
+.prefix-22 {padding-left:880px;}
+.prefix-23 {padding-left:920px;}
+div.border {padding-right:4px;margin-right:5px;border-right:1px solid #eee;}
+div.colborder {padding-right:24px;margin-right:25px;border-right:1px solid #eee;}
+.pull-1 {margin-left:-40px;}
+.pull-2 {margin-left:-80px;}
+.pull-3 {margin-left:-120px;}
+.pull-4 {margin-left:-160px;}
+.pull-5 {margin-left:-200px;}
+.pull-6 {margin-left:-240px;}
+.pull-7 {margin-left:-280px;}
+.pull-8 {margin-left:-320px;}
+.pull-9 {margin-left:-360px;}
+.pull-10 {margin-left:-400px;}
+.pull-11 {margin-left:-440px;}
+.pull-12 {margin-left:-480px;}
+.pull-13 {margin-left:-520px;}
+.pull-14 {margin-left:-560px;}
+.pull-15 {margin-left:-600px;}
+.pull-16 {margin-left:-640px;}
+.pull-17 {margin-left:-680px;}
+.pull-18 {margin-left:-720px;}
+.pull-19 {margin-left:-760px;}
+.pull-20 {margin-left:-800px;}
+.pull-21 {margin-left:-840px;}
+.pull-22 {margin-left:-880px;}
+.pull-23 {margin-left:-920px;}
+.pull-24 {margin-left:-960px;}
+.pull-1, .pull-2, .pull-3, .pull-4, .pull-5, .pull-6, .pull-7, .pull-8, .pull-9, .pull-10, .pull-11, .pull-12, .pull-13, .pull-14, .pull-15, .pull-16, .pull-17, .pull-18, .pull-19, .pull-20, .pull-21, .pull-22, .pull-23, .pull-24 {float:left;position:relative;}
+.push-1 {margin:0 -40px 1.5em 40px;}
+.push-2 {margin:0 -80px 1.5em 80px;}
+.push-3 {margin:0 -120px 1.5em 120px;}
+.push-4 {margin:0 -160px 1.5em 160px;}
+.push-5 {margin:0 -200px 1.5em 200px;}
+.push-6 {margin:0 -240px 1.5em 240px;}
+.push-7 {margin:0 -280px 1.5em 280px;}
+.push-8 {margin:0 -320px 1.5em 320px;}
+.push-9 {margin:0 -360px 1.5em 360px;}
+.push-10 {margin:0 -400px 1.5em 400px;}
+.push-11 {margin:0 -440px 1.5em 440px;}
+.push-12 {margin:0 -480px 1.5em 480px;}
+.push-13 {margin:0 -520px 1.5em 520px;}
+.push-14 {margin:0 -560px 1.5em 560px;}
+.push-15 {margin:0 -600px 1.5em 600px;}
+.push-16 {margin:0 -640px 1.5em 640px;}
+.push-17 {margin:0 -680px 1.5em 680px;}
+.push-18 {margin:0 -720px 1.5em 720px;}
+.push-19 {margin:0 -760px 1.5em 760px;}
+.push-20 {margin:0 -800px 1.5em 800px;}
+.push-21 {margin:0 -840px 1.5em 840px;}
+.push-22 {margin:0 -880px 1.5em 880px;}
+.push-23 {margin:0 -920px 1.5em 920px;}
+.push-24 {margin:0 -960px 1.5em 960px;}
+.push-1, .push-2, .push-3, .push-4, .push-5, .push-6, .push-7, .push-8, .push-9, .push-10, .push-11, .push-12, .push-13, .push-14, .push-15, .push-16, .push-17, .push-18, .push-19, .push-20, .push-21, .push-22, .push-23, .push-24 {float:right;position:relative;}
+hr {background:#ddd;color:#ddd;clear:both;float:none;width:100%;height:.1em;margin:0 0 1.45em;border:none;}
+hr.space {background:#fff;color:#fff;}
+.clearfix:after, .container:after {content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix, .container {display:inline-block;}
+* html .clearfix, * html .container {height:1%;}
+.clearfix, .container {display:block;}
+.clear {clear:both;}
+
+/* to create serif italic dramatic text, use this class */
+.fancy { 
+  color: #666; 
+  font-family: "Warnock Pro", "Goudy Old Style","Palatino","Book Antiqua", Georgia, serif; 
+  font-style: italic;
+  font-weight: normal;
+}  
+
+/* creates small caps */
+.caps { 
+  font-variant: small-caps; 
+  letter-spacing: 1px; 
+  text-transform: lowercase; 
+  font-size:1.2em;
+  font-weight:bold;
+  padding:0 2px;
+}
+
+/* Use this class if a link gets an icon when it shouldn't. */
+body a.noicon { background:none; padding:0; margin:0; }
+
+/* Make sure the icons are not cut */
+a[href^="http:"], a[href^="mailto:"], a[href^="http:"]:visited, 
+a[href$=".pdf"], a[href$=".doc"], a[href$=".xls"], a[href$=".rss"], 
+a[href$=".rdf"], a[href^="aim:"] {
+  padding:2px 22px 2px 0;
+  margin:-2px 0;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+/* External links */
+a[href^="http:"]          { background-image: url(../img/icons/external.png); padding-right: 14px; } 
+a[href^="mailto:"]        { background-image: url(../img/icons/email.png); }
+a[href^="http:"]:visited  { background-image: url(../img/icons/visited.png); }
+
+/* Files */
+a[href$=".pdf"]   { background-image: url(../img/icons/pdf.png); }  
+a[href$=".doc"]   { background-image: url(../img/icons/doc.png); }  
+a[href$=".xls"]   { background-image: url(../img/icons/xls.png); }  
+ 
+/* Misc */
+a[href$=".rss"], 
+a[href$=".rdf"]   { background-image: url(../img/icons/feed.png); }
+a[href^="aim:"]   { background-image: url(../img/icons/im.png); }
+a[href^="http://yourwebsite.com"] { background:none; padding:0; margin:0; }
+
+/* TEXT CLASSES */
+
+.container .small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
+.container .large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
+.container .hide {display:none;}
+.container .quiet {color:#666;}
+.container .loud {color:#000;}
+.container .highlight {background:#ff0;}
+.container .top {margin-top:0;padding-top:0;}
+.container .bottom {margin-bottom:0;padding-bottom:0;}
+.container .thin {font-weight: lighter;}
+.container .error, .container .notice, .container .success {padding:.8em;margin-bottom:1.6em;border:2px solid #ddd;}
+.container .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+.container .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.container .success {background:#E6EFC2;color:#264409;border-color:#C6D880;}
+.container .error a {color:#8a1f11; background:none; padding:0; margin:0; }
+.container .notice a {color:#514721; background:none; padding:0; margin:0; }
+.container .success a {color:#264409; background:none; padding:0; margin:0; }
+.container .center {text-align: center;}
+
+/*---------STYLES FOR BUTTONS----------*/
+/* Demo: particletree.com/features/rediscovering-the-button-element */
+/*
+	<button type="submit" class="button positive">
+	  <img src="css/blueprint/plugins/buttons/icons/tick.png" alt=""/> Save
+	</button>
+
+	<a class="button" href="/password/reset/">
+	  <img src="css/blueprint/plugins/buttons/icons/key.png" alt=""/> Change Password
+	</a>
+
+	<a href="#" class="button negative">
+	  <img src="css/blueprint/plugins/buttons/icons/cross.png" alt=""/> Cancel
+	</a>
+*/
+
+.container a.button, .container button {
+  display: inline-block;
+  float: left;
+  margin:0 0.583em 0.667em 0;
+  padding:5px 10px 5px 7px;   /* Links */
+  border:1px solid #dedede;
+  border-top:1px solid #eee;
+  border-left:1px solid #eee;
+  background-color:#f5f5f5;
+  font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+  font-size:100%;
+  line-height:130%;
+  text-decoration:none;
+  font-weight:bold;
+  color:#565656;
+  cursor:pointer;
+}
+.container button {
+  width:auto;
+  overflow:visible;
+  padding:4px 10px 3px 7px;   /* IE6 */
+}
+.container button[type] {
+  padding:4px 10px 4px 7px;   /* Firefox */
+  line-height:17px;           /* Safari */
+}
+
+*:first-child+html .container button[type] {
+  padding:4px 10px 3px 7px;   /* IE7 */
+}
+
+.container button img, .container a.button img{
+  margin:0 3px -3px 0 !important;
+  padding:0;
+  border:none;
+  width:16px;
+  height:16px;
+  float:none;
+}
+
+/* Standard Buttons */
+button:hover, a.button:hover{
+  background-color:#dff4ff;
+  border:1px solid #c2e1ef;
+  color:#336699;
+}
+a.button:active, button:active{
+  background-color:#6299c5;
+  border:1px solid #6299c5;
+  color:#fff;
+}
+
+/* Positive */
+body .positive {
+  color:#529214;
+}
+a.positive:hover, button.positive:hover {
+  background-color:#E6EFC2;
+  border:1px solid #C6D880;
+  color:#529214;
+}
+a.positive:active, button.positive:active {
+  background-color:#529214;
+  border:1px solid #529214;
+  color:#fff;
+}
+
+/* Negative */
+body .negative {
+  color:#d12f19;
+}
+a.negative:hover, button.negative:hover {
+  background:#fbe3e4;
+  border:1px solid #fbc2c4;
+  color:#d12f19;
+}
+a.negative:active, button.negative:active {
+  background-color:#d12f19;
+  border:1px solid #d12f19;
+  color:#fff;
+}
