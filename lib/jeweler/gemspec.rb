@@ -1,11 +1,13 @@
 class Jeweler
-  class GemSpec
+  class GemSpecHelper
 
     attr_accessor :spec, :base_dir
 
     def initialize(spec, base_dir = nil)
       self.spec = spec
       self.base_dir = base_dir || ''
+
+      yield spec if block_given?
     end
 
     def valid?
@@ -40,19 +42,22 @@ class Jeweler
     # Writes out the gemspec
     def write_gemspec
       self.refresh_version
-      @gemspec.version = self.version
-      @gemspec.date = Time.now
 
-      GemSpec.new(@gemspec, @base_dir).write
+      helper = gemspec_helper do |s|
+        s.version = self.version
+        s.date = Time.now
+      end
+      
+      helper.write
 
-      puts "Generated: #{gemspec_path}"
+      puts "Generated: #{helper.path}"
     end
 
     # Validates the gemspec in an environment similar to how GitHub would build
     # it. See http://gist.github.com/16215
     def validate_gemspec
       begin
-        GemSpec.new(@gemspec, @base_dir).parse
+        gemspec_helper.parse
         puts "#{gemspec_path} is valid."
       rescue Exception => e
         puts "#{gemspec_path} is invalid. See the backtrace for more details."
@@ -62,12 +67,7 @@ class Jeweler
 
 
     def valid_gemspec?
-      GemSpec.new(@gemspec, @base_dir).valid?
-    end
-
-    def parse_gemspec(data = nil)
-      data ||= File.read(gemspec_path)
-      Thread.new { eval("$SAFE = 3\n#{data}", binding, gemspec_path) }.join
+      gemspec_helper.valid?
     end
 
     def unsafe_parse_gemspec(data = nil)
@@ -76,10 +76,12 @@ class Jeweler
     end
 
   protected
+    def gemspec_helper(&block)
+      GemSpecHelper.new(@gemspec, @base_dir, &block)
+    end
+
     def gemspec_path
-      denormalized_path = File.join(@base_dir, "#{@gemspec.name}.gemspec")
-      absolute_path = File.expand_path(denormalized_path)
-      absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
+      gemspec_helper.path
     end
   end
 end
