@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.markdown</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.markdown</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.markdown
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Thu Dec 18 03:16:05 -0500 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+# <a href="../classes/Jeweler.html">Jeweler</a>: Let us craft you the
+perfect gem
+</p>
+<p>
+Rubygems are the awesome way of distributing your code to others. GitHub is
+the awesome way of managing the source code of your project. GitHub can
+even generate a Rubygem if you include a gemspec.
+</p>
+<p>
+Trouble is when developing your Rubygems on GitHub, you generally do one of
+the following:
+</p>
+<pre>
+ * Manage the gemspec by hand
+  * ... why bother doing something by hand when you can automate it?
+ * Write your own Rake stuff to create the Gem::Specification and output it to a gemspec file, and deal with keeping the Rakefile and gemspec in sync
+  * ... why keep reinventing the wheel?
+ * Use hoe or echoe for generating the gemspec
+  * ... why use utilities made for the days before GitHub existed?
+  * ... why have extra stuff you aren't going to use?
+</pre>
+<p>
+<a href="../classes/Jeweler.html">Jeweler</a> was created with a few goals
+in mind:
+</p>
+<pre>
+ * Only use a Gem::Specification as configuration
+ * Be one command away from version bumping and releasing
+ * Store version information in one place
+ * Only concern itself with git, gems, and versioning
+ * Not be a requirement for using your Rakefile (you just wouldn't be able to use its tasks)
+ * Use Jeweler internally. Oh the meta!
+</pre>
+<p>
+## Installation
+</p>
+<p>
+Run the following if you haven&#8216;t already:
+</p>
+<pre>
+    gem sources -a http://gems.github.com
+</pre>
+<p>
+Install the gem:
+</p>
+<pre>
+    sudo gem install technicalpickles-jeweler
+</pre>
+<p>
+## Configuration for an existing project
+</p>
+<p>
+Armed with the gem, we can begin diving into an example.
+[the-perfect-gem](<a
+href="http://github.com/technicalpickles/the-perfect-gem/tree">github.com/technicalpickles/the-perfect-gem/tree</a>)
+was setup as a <a href="../classes/Jeweler.html">Jeweler</a> showcase, and
+a simple example:
+</p>
+<pre>
+    begin
+      require 'jeweler'
+      Jeweler::Tasks.new do |s|
+        s.name = &quot;the-perfect-gem&quot;
+        s.summary = &quot;TODO&quot;
+        s.email = &quot;josh@technicalpickles.com&quot;
+        s.homepage = &quot;http://github.com/technicalpickles/the-perfect-gem&quot;
+        s.description = &quot;TODO&quot;
+        s.authors = [&quot;Josh Nichols&quot;]
+      end
+    rescue LoadError
+      puts &quot;Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com&quot;
+    end
+</pre>
+<p>
+Here&#8216;s a rundown of what&#8216;s happening:
+</p>
+<pre>
+ * Wrap everything in a begin block, and rescue from LoadError
+  * This lets us degrade gracefully if jeweler isn't installed
+ * Make a new `Jeweler::Tasks`
+   * It gets yielded a new `Gem::Specification`
+   * This is where all the configuration happens
+    * Things you definitely need to specify:
+      * `name`
+    * Things you probably want to specify:
+      * `summary`
+      * `email`
+      * `homepage`
+      * `description`
+      * `authors`
+    * Things you can specify, but have defaults
+     * `files`, defaults to `FileList[&quot;[A-Z]*.*&quot;, &quot;{bin,generators,lib,test,spec}/**/*&quot;]`
+    * Things you shouldn't specify:
+     * `version`, because Jeweler takes care of this for you
+    * Other things of interest
+     * `executables`, if you have any scripts
+     * `add_dependency`, if you have any dependencies
+    * Keep in mind that this is a `Gem::Specification`, so you can do whatever you would need to do to get your gem in shape
+</pre>
+<p>
+## Bootstrap a new project
+</p>
+<p>
+Before proceeding, take a minute to setup your git environment,
+specifically your name, email address, and GitHub username
+</p>
+<pre>
+    $ git config --global user.email johndoe@example.com
+    $ git config --global user.name 'John Doe'
+    $ git config --global github.user johndoe
+    $ git config --global github.token 55555555555555
+</pre>
+<p>
+<a href="../classes/Jeweler.html">Jeweler</a> provides a generator of
+sorts, `jeweler`. It requires only argument, the name of a repo you want to
+create. It also takes a few options: &#8212;[shoulda](<a
+href="http://github.com/thoughtbot/shoulda">github.com/thoughtbot/shoulda</a>)
+and &#8212;[bacon](<a
+href="http://github.com/chneukirchen/bacon/tree/master">github.com/chneukirchen/bacon/tree/master</a>).
+These control what type of tests are created, with the default being
+shoulda.
+</p>
+<pre>
+    $ jeweler --create-repo the-perfect-gem
+</pre>
+<p>
+Basically, this does:
+</p>
+<pre>
+ * Creates the the-perfect-gem directory
+ * Seeds it with some basic files:
+  * `.gitignore`, with the usual suspects predefined
+  * `Rakefile`, setup with tasks for jeweler, test, rdoc, and rcov
+  * `README`, with your project name
+  * `LICENSE`, MIT, with your name prefilled
+  * `test/test_helper`, setup with shoulda, mocha, and a re-opened `Test::Unit::TestCase`
+  * `test/the_perfect_gem.rb`, placeholder failing test
+  * `lib/the_perfect_gem.rb`, placeholder library file
+ * Makes it a git repo
+ * Sets up `git@github.com:johndoe/jeweler.git` as the `origin` git remote
+ * Makes an initial commit
+ * Sets up a new repository on GitHub and pushes to it (omit --create-repo to skip this)
+</pre>
+<p>
+You also probably should [enable RubyGem creation for you repository](<a
+href="http://github.com/blog/51-github-s-rubygem-server">github.com/blog/51-github-s-rubygem-server</a>):
+Go to your project&#8216;s edit page and check the &#8216;RubyGem&#8217;
+box.
+</p>
+<p>
+## Overview of <a href="../classes/Jeweler.html">Jeweler</a> workflow
+</p>
+<p>
+Here&#8216;s the general idea:
+</p>
+<pre>
+ * Hack, commit, hack, commit, etc, etc
+ * Version bump
+ * Release
+ * Have a delicious scotch
+</pre>
+<p>
+The hacking and the scotch are up to you, but <a
+href="../classes/Jeweler.html">Jeweler</a> provides rake tasks for the
+rest.
+</p>
+<p>
+### Versioning
+</p>
+<p>
+Versioning information is stored in `VERSION.yml`. It&#8216;s a plain
+ol&#8217; YAML file which contains three things:
+</p>
+<pre>
+ * major
+ * minor
+ * patch
+</pre>
+<p>
+Consider, for a second, `1.5.3`.
+</p>
+<pre>
+ * major = 1
+ * minor = 5
+ * patch = 3
+</pre>
+<p>
+#### Your first time
+</p>
+<p>
+When you first start using <a href="../classes/Jeweler.html">Jeweler</a>,
+there won&#8216;t be a `VERSION.yml`, so it&#8216;ll assume 0.0.0.
+</p>
+<p>
+If you need some arbitrary version, you can do one of the following:
+</p>
+<pre>
+ * `rake version:write MAJOR=6 MINOR=0 PATCH=3`
+ * Write `VERSION.yml` by hand (lame)
+</pre>
+<p>
+#### After that
+</p>
+<p>
+You have a few rake tasks for doing the version bump:
+</p>
+<pre>
+    $ rake version:bump:patch # 1.5.1 -&gt; 1.5.2
+    $ rake version:bump:minor # 1.5.1 -&gt; 1.6.0
+    $ rake version:bump:major # 1.5.1 -&gt; 2.0.0
+</pre>
+<p>
+If you need to do an arbitrary bump, use the same task you used to create
+`VERSION.yml`:
+</p>
+<pre>
+    $ rake version:write MAJOR=6 MINOR=0 PATCH=3
+</pre>
+<p>
+The process of version bumping does a commit to your repo, so make sure
+your repo is in a clean state (ie nothing uncommitted).
+</p>
+<p>
+### Release it
+</p>
+<p>
+It&#8216;s pretty straight forward:
+</p>
+<pre>
+    $ rake release
+</pre>
+<p>
+This takes care of:
+</p>
+<pre>
+ * Generating a `.gemspec` for you project, with the version you just bumped to
+ * Commit and push the updated `.gemspec`
+ * Create a tag
+ * Push the tag
+</pre>
+<p>
+### Play the waiting game
+</p>
+<p>
+How do you know when your gem is built? [Has My Gem Built Yet](<a
+href="http://hasmygembuiltyet.org">hasmygembuiltyet.org</a>/) was
+specifically designed to answer that question.
+</p>
+<p>
+If it happens to be down, you can also check out the GitHub Gem
+repo&#8216;s [list](<a
+href="http://gems.github.com/list">gems.github.com/list</a>). Just search
+for youname-yourrepo.s
+</p>
+<p>
+### Putting it all together
+</p>
+<pre>
+    &lt;hack, hack, hack, commit&gt;
+    $ rake version:bump:patch release
+</pre>
+<p>
+Now browse to <a
+href="http://gems.github.com/yourname/yourproject">gems.github.com/yourname/yourproject</a>,
+and wait for it to be built.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
