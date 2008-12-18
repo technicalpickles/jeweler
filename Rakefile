@@ -1,6 +1,11 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+begin
+  require 'hanna/rdoctask'
+rescue LoadError
+  require 'rake/rdoctask'
+end
+
 require 'rcov/rcovtask'
 
 $:.unshift('lib')
