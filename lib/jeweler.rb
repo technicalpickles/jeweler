@@ -24,7 +24,7 @@ class Jeweler
     @gemspec = gemspec
     @base_dir = base_dir
     
-    if @gemspec.files.empty?
+    if @gemspec.files.nil? || @gemspec.files.empty?
       @gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     end
 
