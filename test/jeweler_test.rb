@@ -80,7 +80,7 @@ class JewelerTest < Test::Unit::TestCase
         @alt_jeweler = Jeweler.new(build_spec("[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"), tmp_dir)
       end
       
-      should "have the same files as whenp.set no 'files' specified" do
+      should "have the same files as when no 'files' are specified" do
         assert_equal @jeweler.gemspec.files, @alt_jeweler.gemspec.files
       end
     end
