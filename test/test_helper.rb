@@ -27,6 +27,7 @@ require 'jeweler'
 # Fake out FileList from Rake
 class FileList
   def self.[](*args)
+    TMP_DIR.entries - ['.','..','.DS_STORE']
   end
 end
 
