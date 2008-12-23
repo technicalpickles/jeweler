@@ -2,6 +2,7 @@ require 'date'
 
 require 'jeweler/bumping'
 require 'jeweler/versioning'
+require 'jeweler/version'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
