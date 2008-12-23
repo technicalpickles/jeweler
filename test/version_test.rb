@@ -39,8 +39,8 @@ class VersionTest < Test::Unit::TestCase
       FileUtils.mkdir_p VERSION_TMP_DIR
     end
 
-    should "raise an error if the VERSION.yml doesn't exist" do
-      assert_raise Jeweler::VersionYmlError do
+    should "not raise error if the VERSION.yml doesn't exist" do
+      assert_nothing_raised Jeweler::VersionYmlError do
         Jeweler::Version.new(VERSION_TMP_DIR)
       end
     end

@@ -29,6 +29,8 @@ class Jeweler
     if File.exists?(File.join(base_dir, '.git'))
       @repo = Git.open(base_dir)
     end
+
+    @version = Jeweler::Version.new(@base_dir)
   end
 
   # Writes out the gemspec
