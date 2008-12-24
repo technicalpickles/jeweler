@@ -11,6 +11,12 @@ class Jeweler
       end
     end
 
+    def bump_major
+      @major += 1
+      @minor = 0
+      @patch = 0
+    end
+
     def to_s
       "#{major}.#{minor}.#{patch}"
     end
@@ -29,9 +35,9 @@ class Jeweler
 
     def parse_yaml
       yaml = read_yaml
-      @major = yaml['major']
-      @minor = yaml['minor']
-      @patch = yaml['patch']
+      @major = yaml['major'].to_i
+      @minor = yaml['minor'].to_i
+      @patch = yaml['patch'].to_i
     end
 
     def read_yaml

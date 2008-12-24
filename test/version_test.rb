@@ -18,7 +18,6 @@ class VersionTest < Test::Unit::TestCase
       assert_equal 3, @version.major
     end
 
-
     should "have minor version 5" do
       assert_equal 5, @version.minor
     end
@@ -29,6 +28,29 @@ class VersionTest < Test::Unit::TestCase
 
     should "render 3.5.4 as string" do
       assert_equal '3.5.4', @version.to_s
+    end
+
+    context "bumping major version" do
+      setup do
+        @version.bump_major
+      end
+
+      should "have major version 4" do
+        assert_equal 4, @version.major
+      end
+
+      should "have minor version 0" do
+        assert_equal 0, @version.minor
+      end
+
+      should "have patch version 0" do
+        assert_equal 0, @version.patch
+      end
+
+      should "render 3.5.4 as string" do
+        assert_equal '4.0.0', @version.to_s
+      end
+
     end
 
   end
