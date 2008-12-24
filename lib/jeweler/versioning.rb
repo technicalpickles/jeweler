@@ -25,12 +25,6 @@ class Jeweler
     end
 
   protected
-    def version_yaml_path
-      denormalized_path = File.join(@base_dir, 'VERSION.yml')
-      absolute_path = File.expand_path(denormalized_path)
-      absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
-    end
-
     def refresh_version
       @version.refresh
     end
