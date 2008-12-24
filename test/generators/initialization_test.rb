@@ -68,7 +68,7 @@ class JewelerGeneratorInitializerTest < Test::Unit::TestCase
     end
   end
   
-  context "without github username set" do
+  context "without github token set" do
     setup do
       Jeweler::Generator.any_instance.stubs(:read_git_config).
         returns({'user.email' => 'bar@example.com', 'user.name' => 'foo', 'github.user' => 'technicalpickles'})
