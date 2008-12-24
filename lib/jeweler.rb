@@ -1,6 +1,5 @@
 require 'date'
 
-require 'jeweler/versioning'
 require 'jeweler/version'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
@@ -11,7 +10,6 @@ require 'jeweler/tasks'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
-  include Jeweler::Versioning
   include Jeweler::Release
 
   attr_reader :gemspec
@@ -29,6 +27,29 @@ class Jeweler
     end
 
     @version = Jeweler::Version.new(@base_dir)
+  end
+
+  # Major version, as defined by the gemspec's Version module.
+  # For 1.5.3, this would return 1.
+  def major_version
+    @version.major
+  end
+
+  # Minor version, as defined by the gemspec's Version module.
+  # For 1.5.3, this would return 5.
+  def minor_version
+    @version.minor
+  end
+
+  # Patch version, as defined by the gemspec's Version module.
+  # For 1.5.3, this would return 5.
+  def patch_version
+    @version.patch
+  end
+
+  # Human readable version, which is used in the gemspec.
+  def version
+    @version.to_s
   end
 
   # Writes out the gemspec
@@ -68,7 +89,7 @@ class Jeweler
     data ||= File.read(gemspec_path)
     eval(data, binding, gemspec_path)
   end
- 
+
   # Bumps the patch version.
   #
   # 1.5.1 -> 1.5.2
@@ -125,6 +146,10 @@ class Jeweler
   end
 
   protected
+
+  def refresh_version
+    @version.refresh
+  end
 
   def gemspec_helper(&block)
     GemSpecHelper.new(@gemspec, @base_dir, &block)
