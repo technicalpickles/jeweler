@@ -32,8 +32,22 @@ class Jeweler
       @patch = patch
     end
 
+    def write
+      File.open(yaml_path, 'w+') do |f|
+        YAML.dump(self.to_hash, f)
+      end
+    end
+
     def to_s
       "#{major}.#{minor}.#{patch}"
+    end
+
+    def to_hash
+      {
+        :major => major,
+        :minor => minor,
+        :patch => patch
+      }
     end
 
     def refresh
@@ -50,9 +64,9 @@ class Jeweler
 
     def parse_yaml
       yaml = read_yaml
-      @major = yaml['major'].to_i
-      @minor = yaml['minor'].to_i
-      @patch = yaml['patch'].to_i
+      @major = yaml['major'] || yaml[:major]
+      @minor = yaml['minor'] || yaml[:minor]
+      @patch = yaml['patch'] || yaml[:patch]
     end
 
     def read_yaml

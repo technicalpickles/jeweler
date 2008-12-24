@@ -19,8 +19,13 @@ class VersionTest < Test::Unit::TestCase
     end
 
     version_s = "#{major}.#{minor}.#{patch}"
-    should "render #{version_s} as string" do
+    should "render string as #{version_s.inspect}" do
       assert_equal version_s, @version.to_s
+    end
+
+    version_hash = {:major => major, :minor => minor, :patch => patch}
+    should "render hash as #{version_hash.inspect}" do
+      assert_equal version_hash, @version.to_hash
     end
     
   end
@@ -74,6 +79,24 @@ class VersionTest < Test::Unit::TestCase
       should_have_version 0, 0, 1
       should "not create VERSION.yml" do
         assert ! File.exists?(File.join(VERSION_TMP_DIR, 'VERSION.yml'))
+      end
+
+      context "outputting" do
+        setup do
+          @version.write
+        end
+
+        should "create VERSION.yml" do
+          assert File.exists?(File.join(VERSION_TMP_DIR, 'VERSION.yml'))
+        end
+
+        context "re-reading VERSION.yml" do
+          setup do
+            @version = Jeweler::Version.new(VERSION_TMP_DIR)
+          end
+
+          should_have_version 0, 0, 1
+        end
       end
     end
   end
