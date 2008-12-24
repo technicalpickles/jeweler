@@ -17,6 +17,15 @@ class Jeweler
       @patch = 0
     end
 
+    def bump_minor
+      @minor += 1
+      @patch = 0
+    end
+
+    def bump_patch
+      @patch += 1
+    end
+
     def to_s
       "#{major}.#{minor}.#{patch}"
     end

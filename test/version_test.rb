@@ -4,6 +4,27 @@ class VersionTest < Test::Unit::TestCase
 
   VERSION_TMP_DIR = File.dirname(__FILE__) + '/version_tmp'
 
+
+  def self.should_have_version(major, minor, patch)
+    should "have major version #{major}" do
+      assert_equal major, @version.major
+    end
+
+    should "have minor version #{minor}" do
+      assert_equal minor, @version.minor
+    end
+
+    should "have patch version #{patch}" do
+      assert_equal patch, @version.patch
+    end
+
+    version_s = "#{major}.#{minor}.#{patch}"
+    should "render #{version_s} as string" do
+      assert_equal version_s, @version.to_s
+    end
+    
+  end
+
   context "VERSION.yml with 3.5.4" do
     setup do
       FileUtils.rm_rf VERSION_TMP_DIR
@@ -14,45 +35,22 @@ class VersionTest < Test::Unit::TestCase
       @version = Jeweler::Version.new VERSION_TMP_DIR
     end
 
-    should "have major version 3" do
-      assert_equal 3, @version.major
-    end
-
-    should "have minor version 5" do
-      assert_equal 5, @version.minor
-    end
-
-    should "have patch version 4" do
-      assert_equal 4, @version.patch
-    end
-
-    should "render 3.5.4 as string" do
-      assert_equal '3.5.4', @version.to_s
-    end
+    should_have_version 3, 5, 4
 
     context "bumping major version" do
-      setup do
-        @version.bump_major
-      end
-
-      should "have major version 4" do
-        assert_equal 4, @version.major
-      end
-
-      should "have minor version 0" do
-        assert_equal 0, @version.minor
-      end
-
-      should "have patch version 0" do
-        assert_equal 0, @version.patch
-      end
-
-      should "render 3.5.4 as string" do
-        assert_equal '4.0.0', @version.to_s
-      end
-
+      setup { @version.bump_major }
+      should_have_version 4, 0, 0
     end
 
+    context "bumping the minor version" do
+      setup { @version.bump_minor }
+      should_have_version 3, 6, 0
+    end
+
+    context "bumping the patch version" do
+      setup { @version.bump_patch }
+      should_have_version 3, 5, 5
+    end
   end
 
   context "Non-existant VERSION.yml" do
