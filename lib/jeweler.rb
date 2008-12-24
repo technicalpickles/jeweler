@@ -4,13 +4,11 @@ require 'jeweler/version'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
-require 'jeweler/release'
 
 require 'jeweler/tasks'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
-  include Jeweler::Release
 
   attr_reader :gemspec
   attr_accessor :base_dir
@@ -145,6 +143,27 @@ class Jeweler
     end
   end
 
+  def release
+    @repo.checkout('master')
+
+    raise "Hey buddy, try committing them files first" if any_pending_changes?
+
+    write_gemspec()
+
+    @repo.add(gemspec_path)
+    @repo.commit("Regenerated gemspec for version #{version}")
+    @repo.push
+
+    @repo.add_tag(release_tag)
+    @repo.push('origin', release_tag)
+  end
+
+  def release_tag
+    @release_tag ||= "v#{version}"
+  end
+
+  protected
+
   protected
 
   def refresh_version
@@ -157,6 +176,13 @@ class Jeweler
 
   def gemspec_path
     gemspec_helper.path
+  end
+
+  def any_pending_changes?
+    unless ENV['JEWELER_DEBUG'].nil? || ENV['JEWELER_DEBUG'].squeeze == ''
+      require 'ruby-debug'; breakpoint
+    end
+    !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
   end
 end
 
