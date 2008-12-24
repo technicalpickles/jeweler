@@ -64,6 +64,18 @@ class VersionTest < Test::Unit::TestCase
         Jeweler::Version.new(VERSION_TMP_DIR)
       end
     end
+
+    context "setting an initial version" do
+      setup do
+        @version = Jeweler::Version.new(VERSION_TMP_DIR)
+        @version.update_to 0, 0, 1
+      end
+
+      should_have_version 0, 0, 1
+      should "not create VERSION.yml" do
+        assert ! File.exists?(File.join(VERSION_TMP_DIR, 'VERSION.yml'))
+      end
+    end
   end
 
   def build_version_yml(base_dir, major, minor, patch)

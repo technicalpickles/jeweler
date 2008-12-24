@@ -26,6 +26,12 @@ class Jeweler
       @patch += 1
     end
 
+    def update_to(major, minor, patch)
+      @major = major
+      @minor = minor
+      @patch = patch
+    end
+
     def to_s
       "#{major}.#{minor}.#{patch}"
     end
