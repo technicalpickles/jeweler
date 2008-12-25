@@ -64,9 +64,9 @@ class Jeweler
 
     def parse_yaml
       yaml = read_yaml
-      @major = yaml['major'] || yaml[:major]
-      @minor = yaml['minor'] || yaml[:minor]
-      @patch = yaml['patch'] || yaml[:patch]
+      @major = (yaml['major'] || yaml[:major]).to_i
+      @minor = (yaml['minor'] || yaml[:minor]).to_i
+      @patch = (yaml['patch'] || yaml[:patch]).to_i
     end
 
     def read_yaml

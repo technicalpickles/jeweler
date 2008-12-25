@@ -1,4 +1,5 @@
 require 'date'
+require 'rubygems/builder'
 
 require 'jeweler/version'
 require 'jeweler/gemspec'
@@ -88,52 +89,81 @@ class Jeweler
     eval(data, binding, gemspec_path)
   end
 
+  def build_gem
+    parsed_gemspec = unsafe_parse_gemspec()
+    Gem::Builder.new(parsed_gemspec).build
+
+    pkg_dir = File.join(@base_dir, 'pkg')
+    FileUtils.mkdir_p pkg_dir
+
+    gem_filename = File.join(@base_dir, parsed_gemspec.file_name)
+    FileUtils.mv gem_filename, pkg_dir
+  end
+
+  def install_gem
+    command = "sudo gem install #{gem_path}"
+    $stdout.puts "Executing #{command.inspect}:"
+    sh command
+  end
+
   # Bumps the patch version.
   #
   # 1.5.1 -> 1.5.2
-  def bump_patch_version()
+  def bump_patch_version(options = {})
+    options = version_writing_options(options)
+
     @version.bump_patch
     @version.write
 
-    announce_version
-    commit_version
+    announce_version if options[:announce]
+    commit_version if options[:commit]
   end
 
   # Bumps the minor version.
   #
   # 1.5.1 -> 1.6.0
-  def bump_minor_version()
+  def bump_minor_version(options = {})
+    options = version_writing_options(options)
+
     @version.bump_minor
     @version.write
 
-    announce_version
-    commit_version
+    announce_version if options[:announce]
+    commit_version if options[:commit]
   end
 
   # Bumps the major version.
   #
   # 1.5.1 -> 2.0.0
-  def bump_major_version()
+  def bump_major_version(options = {})
+    options = version_writing_options(options)
+
     @version.bump_major
     @version.write
 
-    announce_version
-    commit_version
+    announce_version if options[:announce]
+    commit_version if options[:commit]
   end
 
   # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
-  def write_version(major = 0, minor = 0, patch = 0)
+  def write_version(major, minor, patch, options = {})
+    options = version_writing_options(options)
+
     @version.update_to major, minor, patch
     @version.write
 
     @gemspec.version = @version.to_s
 
-    announce_version
-    commit_version
+    announce_version if options[:announce]
+    commit_version if options[:commit]
+  end
+
+  def version_writing_options(options)
+    {:announce => true, :commit => true}.merge(options)
   end
 
   def announce_version
-    puts "Wrote to #{@version.yaml_path}: #{@version.to_s}"
+    puts "Updated version: #{@version.to_s}"
   end
 
   def commit_version
@@ -151,10 +181,16 @@ class Jeweler
     write_gemspec()
 
     @repo.add(gemspec_path)
+    $stdout.puts "Committing #{gemspec_path}"
     @repo.commit("Regenerated gemspec for version #{version}")
+
+    $stdout.puts "Pushing master to origin"
     @repo.push
 
+    $stdout.puts "Tagging #{release_tag}"
     @repo.add_tag(release_tag)
+
+    $stdout.puts "Pushing #{release_tag} to origin"
     @repo.push('origin', release_tag)
   end
 
@@ -176,6 +212,11 @@ class Jeweler
 
   def gemspec_path
     gemspec_helper.path
+  end
+
+  def gem_path
+    parsed_gemspec = unsafe_parse_gemspec()
+    File.join(@base_dir, 'pkg', parsed_gemspec.file_name)
   end
 
   def any_pending_changes?

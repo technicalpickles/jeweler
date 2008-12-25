@@ -1,1 +1,5 @@
 coverage
+test/tmp
+test/version_tmp
+tags
+pkg
