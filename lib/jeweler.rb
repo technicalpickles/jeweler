@@ -115,7 +115,6 @@ class Jeweler
     @version.bump_patch
     @version.write
 
-    announce_version if options[:announce]
     commit_version if options[:commit]
   end
 
@@ -128,7 +127,6 @@ class Jeweler
     @version.bump_minor
     @version.write
 
-    announce_version if options[:announce]
     commit_version if options[:commit]
   end
 
@@ -141,7 +139,6 @@ class Jeweler
     @version.bump_major
     @version.write
 
-    announce_version if options[:announce]
     commit_version if options[:commit]
   end
 
@@ -154,24 +151,9 @@ class Jeweler
 
     @gemspec.version = @version.to_s
 
-    announce_version if options[:announce]
     commit_version if options[:commit]
   end
 
-  def version_writing_options(options)
-    {:announce => true, :commit => true}.merge(options)
-  end
-
-  def announce_version
-    puts "Updated version: #{@version.to_s}"
-  end
-
-  def commit_version
-    if @repo
-      @repo.add('VERSION.yml')
-      @repo.commit("Version bump to #{version}", 'VERSION.yml')
-    end
-  end
 
   def release
     @repo.checkout('master')
@@ -200,7 +182,20 @@ class Jeweler
 
   protected
 
-  protected
+  def version_writing_options(options)
+    {:commit => true}.merge(options)
+  end
+
+  def announce_version
+    puts "Updated version: #{@version.to_s}"
+  end
+
+  def commit_version
+    if @repo
+      @repo.add('VERSION.yml')
+      @repo.commit("Version bump to #{version}", 'VERSION.yml')
+    end
+  end
 
   def refresh_version
     @version.refresh

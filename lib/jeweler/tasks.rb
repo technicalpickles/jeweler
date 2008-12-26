@@ -18,7 +18,7 @@ class Jeweler
     def define
       desc "Setup initial version of 0.0.0"
       file "VERSION.yml" do
-        @jeweler.write_version 0, 0, 0, :commit => false, :announce => false
+        @jeweler.write_version 0, 0, 0, :commit => false
         $stdout.puts "Created VERSION.yml: 0.0.0"
       end
 
@@ -47,7 +47,7 @@ class Jeweler
           @jeweler.validate_gemspec
         end
 
-        desc "Generates the gemspec"
+        desc "Generates the gemspec, using version from VERSION.yml"
         task :generate => 'VERSION.yml' do
           @jeweler.write_gemspec
         end
@@ -57,7 +57,7 @@ class Jeweler
       task :version => 'version:display'
 
       namespace :version do
-        desc "Sets up an initial version to 0.0.0"
+        desc "Setup initial version of 0.0.0"
         task :setup => "VERSION.yml"
 
         desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH"
@@ -69,23 +69,26 @@ class Jeweler
 
         desc "Displays the current version"
         task :display => :setup do
-          puts "Current version: #{@jeweler.version}"
+          $stdout.puts "Current version: #{@jeweler.version}"
         end
 
         namespace :bump do
           desc "Bump the gemspec by a major version."
           task :major => ['VERSION.yml', :display] do
             @jeweler.bump_major_version
+            $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a minor version."
           task :minor => ['VERSION.yml', 'version:display'] do
             @jeweler.bump_minor_version
+            $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a patch version."
           task :patch => ['VERSION.yml', 'version:display'] do
             @jeweler.bump_patch_version
+            $stdout.puts "Updated version: #{@jeweler.version}"
           end
         end
       end
