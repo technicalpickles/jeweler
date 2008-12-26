@@ -186,10 +186,6 @@ class Jeweler
     {:commit => true}.merge(options)
   end
 
-  def announce_version
-    puts "Updated version: #{@version.to_s}"
-  end
-
   def commit_version
     if @repo
       @repo.add('VERSION.yml')
