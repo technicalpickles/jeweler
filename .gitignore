@@ -1,5 +1,6 @@
 coverage
+pkg
+rdoc
+tags
 test/tmp
 test/version_tmp
-tags
-pkg

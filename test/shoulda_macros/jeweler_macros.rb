@@ -30,9 +30,6 @@ class Test::Unit::TestCase
       should_have_minor_version minor
       should_have_patch_version patch
       should_be_version version
-      should "output the new version, #{version}" do
-        assert_match version, @output
-      end
     end
   end
 end

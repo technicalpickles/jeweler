@@ -27,6 +27,7 @@ require 'jeweler'
 # Fake out FileList from Rake
 class FileList
   def self.[](*args)
+    TMP_DIR.entries - ['.','..','.DS_STORE']
   end
 end
 
@@ -48,7 +49,7 @@ class Test::Unit::TestCase
     File.join(File.dirname(__FILE__), 'tmp')
   end
 
-  def build_spec
+  def build_spec(*files)
     Gem::Specification.new do |s|
       s.name = "bar"
       s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
@@ -56,7 +57,7 @@ class Test::Unit::TestCase
       s.homepage = "http://github.com/technicalpickles/jeweler"
       s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
       s.authors = ["Josh Nichols", "Dan Croak"]
-      s.files =  FileList["[A-Z]*", "{generators,lib,test}/**/*"]
+      s.files = FileList[*files] unless files.empty?
     end
   end
 end

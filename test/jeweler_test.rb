@@ -12,7 +12,6 @@ class JewelerTest < Test::Unit::TestCase
     FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
   end
 
-
   context "A jeweler without a VERSION.yml" do
     setup do
       FileUtils.mkdir_p(tmp_dir)
@@ -20,7 +19,7 @@ class JewelerTest < Test::Unit::TestCase
     end
 
     should "not have VERSION.yml" do
-      assert ! File.exists?(File.join(tmp_dir, 'bar.gemspec'))
+      assert ! File.exists?(File.join(tmp_dir, 'VERSION.yml'))
     end
   end
 
@@ -28,7 +27,7 @@ class JewelerTest < Test::Unit::TestCase
   context "A Jeweler with a VERSION.yml" do
     setup do
       FileUtils.cp_r(fixture_dir, tmp_dir)
-
+      
       @jeweler = Jeweler.new(build_spec, tmp_dir)
     end
 
@@ -59,6 +58,21 @@ class JewelerTest < Test::Unit::TestCase
 
       should_bump_version 2, 0, 0
     end
+
+    should "should find files" do
+      assert ! @jeweler.gemspec.files.empty?
+    end
+
+    context "with standard 'files' specified" do
+      setup do
+        @alt_jeweler = Jeweler.new(build_spec("[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"), tmp_dir)
+      end
+      
+      should "have the same files as when no 'files' are specified" do
+        assert_equal @jeweler.gemspec.files, @alt_jeweler.gemspec.files
+      end
+    end
+
 
     context "writing the gemspec" do
       setup do

@@ -18,8 +18,10 @@ class Jeweler
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
     @gemspec = gemspec
     @base_dir = base_dir
-
-    @gemspec.files ||= FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+    
+    if @gemspec.files.nil? || @gemspec.files.empty?
+      @gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+    end
 
     if File.exists?(File.join(base_dir, '.git'))
       @repo = Git.open(base_dir)
@@ -216,5 +218,10 @@ class Jeweler
     end
     !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
   end
+
+  protected
+    def any_pending_changes?
+      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
+    end
 end
 
