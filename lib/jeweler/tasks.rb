@@ -22,9 +22,14 @@ class Jeweler
         $stdout.puts "Created VERSION.yml: 0.0.0"
       end
 
+      desc "Build gem"
+      task :build => :'gem:build'
 
       desc "Build gem"
       task :gem => :'gem:build'
+
+      desc "Install gem using sudo"
+      task :install => :'gem:install'
 
       namespace :gem do
         desc "Install gem using sudo"

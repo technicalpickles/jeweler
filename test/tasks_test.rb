@@ -22,6 +22,8 @@ class TasksTest < Test::Unit::TestCase
     end
 
     should 'define tasks' do
+      assert Task.task_defined?(:build)
+      assert Task.task_defined?(:install)
       assert Task.task_defined?(:gemspec)
       assert Task.task_defined?(:'gemspec:validate')
       assert Task.task_defined?(:'gemspec:generate')
