@@ -1,7 +1,10 @@
+ * Add gem build and install to top level
+ * Auto-enable rubygem generation
  * Generators
    * Rails generator for making a plugin that's Jeweler enabled
    * Support rspec?
+   * Support test/unit
+   * Change generated test filename (test_foo not foo_test)
  * Releasing
   * Create tag based on version
-  * Push tags
   * Open hasmygembuiltyet.org
