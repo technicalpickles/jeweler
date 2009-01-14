@@ -23,6 +23,10 @@ class Jeweler
       @gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     end
 
+    @gemspec.has_rdoc = true
+    @gemspec.rdoc_options << '--inline-source' << '--charset=UTF-8'
+    @gemspec.extra_rdoc_files ||=  FileList["[A-Z]*.*"]
+
     if File.exists?(File.join(base_dir, '.git'))
       @repo = Git.open(base_dir)
     end

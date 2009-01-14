@@ -2,6 +2,7 @@
  * jeweler --delete-repo 
  * enable rdoc in gemspec by default
  * output gemspec as yaml
+ * add LICENSE
  * move interactions with github into separate class
  * use Net::HTTP.post_form instead of `` for enabling gem creation
  * Generators
@@ -12,3 +13,4 @@
  * better error handling during generation
  * Releasing
   * Open hasmygembuiltyet.org
+ * enable runcoderun by default

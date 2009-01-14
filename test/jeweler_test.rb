@@ -73,6 +73,20 @@ class JewelerTest < Test::Unit::TestCase
       end
     end
 
+    context "gemsepc's rdoc" do
+      should 'have be enabled' do
+        assert @jeweler.gemspec.has_rdoc
+      end
+
+      should 'do inline source' do
+        assert @jeweler.gemspec.rdoc_options.include?('--inline-source')
+      end
+
+      should 'be utf-8' do
+        assert @jeweler.gemspec.rdoc_options.include?('--charset=UTF-8')
+      end
+
+    end
 
     context "writing the gemspec" do
       setup do
