@@ -52,6 +52,8 @@ class Jeweler
       if should_create_repo
         create_and_push_repo
         puts "Jeweler has pushed your repo to #{github_url}"
+        enable_gem_for_repo
+        puts "Jeweler has enabled gem building for your repo"
       end
     end
 
@@ -162,6 +164,17 @@ class Jeweler
                                 'repository[name]' => github_repo_name
       sleep 2
       @repo.push('origin')
+    end
+
+    def enable_gem_for_repo
+      url = "https://github.com/#{github_username}/#{github_repo_name}/update"
+      `curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
+      # FIXME use NET::HTTP instead of curl
+      #Net::HTTP.post_form URI.parse(url),
+                                #'login' => github_username,
+                                #'token' => github_token,
+                                #'field' => 'repository_rubygem',
+                                #'value' => '1'
     end
 
     def read_git_config
