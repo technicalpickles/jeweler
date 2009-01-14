@@ -1,8 +1,6 @@
  * use some sort of logger instead of stdout and stderr
  * jeweler --delete-repo 
- * enable rdoc in gemspec by default
  * output gemspec as yaml
- * add LICENSE
  * move interactions with github into separate class
  * use Net::HTTP.post_form instead of `` for enabling gem creation
  * Generators
