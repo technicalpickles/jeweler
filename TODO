@@ -1,10 +1,9 @@
  * use some sort of logger instead of stdout and stderr
  * jeweler --delete-repo 
- * enable rdoc in gemspec by defaul
+ * enable rdoc in gemspec by default
  * output gemspec as yaml
  * move interactions with github into separate class
  * use Net::HTTP.post_form instead of `` for enabling gem creation
- * Auto-enable rubygem generation
  * Generators
    * Rails generator for making a plugin that's Jeweler enabled
    * Support rspec?
@@ -12,5 +11,4 @@
    * Change generated test filename (test_foo not foo_test)
  * better error handling during generation
  * Releasing
-  * Create tag based on version
   * Open hasmygembuiltyet.org
