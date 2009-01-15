@@ -1,0 +1,11 @@
+.container a,
+.container a:link,
+.container a:hover,
+.container a:visited {
+	color: #4183C4;
+	text-decoration: none;
+}
+
+.container a:hover {
+	text-decoration: underline;
+}
