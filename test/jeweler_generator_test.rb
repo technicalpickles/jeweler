@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class JewelerTest < Test::Unit::TestCase
-
+class JewelerGeneratorTest < Test::Unit::TestCase
   def self.should_create_directory(directory)
     should "create #{directory} directory" do
       assert File.exists?(File.join(@tmp_dir, directory))
@@ -75,6 +74,10 @@ class JewelerTest < Test::Unit::TestCase
         assert_match 's.email = "bar@example.com"', @content
       end
 
+      should "include the summary in the gem" do
+        assert_match %Q{s.summary = %Q{zomg, so good}}, @content
+      end
+
       should "include the github repo's url as the gem's url" do
         assert_match 's.homepage = "http://github.com/technicalpickles/the-perfect-gem"', @content
       end
@@ -122,7 +125,7 @@ class JewelerTest < Test::Unit::TestCase
 
       context "for generating technicalpickles's the-perfect-gem repo in 'tmp'" do
         setup do
-          @generator = Jeweler::Generator.new('the-perfect-gem', :directory => @tmp_dir)
+          @generator = Jeweler::Generator.new('the-perfect-gem', :directory => @tmp_dir, :summary => 'zomg, so good')
         end
 
         should "use tmp for target directory" do

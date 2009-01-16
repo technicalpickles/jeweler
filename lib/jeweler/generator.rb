@@ -21,8 +21,9 @@ class Jeweler
   end    
 
   class Generator    
-    attr_accessor :target_dir, :user_name, :user_email,
-                  :github_repo_name, :github_remote, :github_url, :github_username, :github_token,
+    attr_accessor :target_dir, :user_name, :user_email, :summary,
+                  :github_repo_name, :github_remote, :github_url, 
+                  :github_username, :github_token,
                   :lib_dir, :constant_name, :file_name_prefix, :config, :test_style,
                   :repo, :should_create_repo
 
@@ -43,6 +44,7 @@ class Jeweler
       self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
       self.file_name_prefix = self.github_repo_name.gsub('-', '_')
       self.should_create_repo = options[:create_repo]
+      self.summary = options[:summary] || 'TODO'
     end
 
     def run

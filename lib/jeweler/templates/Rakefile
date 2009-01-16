@@ -7,7 +7,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "<%= github_repo_name %>"
-    s.summary = "TODO"
+    s.summary = %Q{<%= summary %>}
     s.email = "<%= user_email %>"
     s.homepage = "<%= github_url %>"
     s.description = "TODO"

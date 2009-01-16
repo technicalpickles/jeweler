@@ -27,6 +27,10 @@ class JewelerOpts < Hash
       o.on('--create-repo', 'create the repository on GitHub') do
         self[:create_repo] = true
       end
+
+      o.on('--summary [SUMMARY]', 'specify the summary of the project') do |summary|
+        self[:summary] = summary
+      end
       
       o.on_tail('-h', '--help', 'display this help and exit') do
         puts o
