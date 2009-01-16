@@ -8,10 +8,6 @@
    * Support rspec?
    * Support test/unit
    * Change generated test filename (test_foo not foo_test)
- * better error handling during generation
-   * directory existing
-   * no github.token configured
-   * no github.username configured
  * Releasing
   * Open hasmygembuiltyet.org
  * enable runcoderun by default
