@@ -96,19 +96,19 @@ class Jeweler
       self.config = read_git_config
       
       unless config.has_key? 'user.name'
-        raise NoGitUserName, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
+        raise NoGitUserName
       end
       
       unless config.has_key? 'user.email'
-        raise NoGitUserEmail, %Q{No user.name set in ~/.gitconfig. Set it with: git config --global user.name 'Your Name Here'}
+        raise NoGitUserEmail
       end
       
       unless config.has_key? 'github.user'
-        raise NoGitHubUser, %Q{No github.user set in ~/.gitconfig. Set it with: git config --global github.user 'Your username here'}
+        raise NoGitHubUser
       end
       
       unless config.has_key? 'github.token'
-        raise NoGitHubToken, %Q{No github.token set in ~/.gitconfig. Set it with: git config --global github.token 'Your token here'}
+        raise NoGitHubToken
       end
 
       self.user_name = config['user.name']
