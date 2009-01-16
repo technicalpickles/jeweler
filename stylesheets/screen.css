@@ -9,3 +9,8 @@
 .container a:hover {
 	text-decoration: underline;
 }
+
+.container pre {
+  margin-left: 10px;
+  overflow: auto; 
+}

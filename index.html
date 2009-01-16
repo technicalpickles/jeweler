@@ -1,75 +1,18 @@
-<html>
-	<head>
-		<title>Jeweler : Craft the perfect RubyGem</title>
-		<link rel="stylesheet" href="/stylesheets/bluetrip/screen.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="/stylesheets/bluetrip/print.css" type="text/css" media="print">
-		<!--[if IE]>
-		<link rel="stylesheet" href="/stylesheets/bluetrip/ie.css" type="text/css" media="screen, projection">
-		<![endif]-->
-		<link rel="stylesheet" href="/stylesheets/bluetrip/style.css" type="text/css" media="screen, projection">
+---
+layout: default
+---
+<h1>Jeweler: Craft the perfect RubyGem</h1>
 
-		<link rel="stylesheet" href="/stylesheets/screen.css" type="text/css" media="screen">
-
-
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
-		<script type="text/javascript" src="/javascripts/dates.js"></script>
-		<script type="text/javascript" src="/javascripts/jquery.relatize_date.js"></script>
-		<script type="text/javascript" src="/javascripts/github-commit-badge.js"></script>
-
-	</head>
-	<body>
-		<div class="container">
-			<div id="heading">
-				<h1><a href="http://github.com/technicalpickles/jeweler">Jeweler</a></h1>
-			</div>
-
-			<div id="content" class="span-15">
-<p>Rubygems are the awesome way of distributing your code to others. GitHub is the awesome way of managing the source code of your project. GitHub can even generate a Rubygem if you include a gemspec.</p>
-
-<p>Trouble is when developing your Rubygems on GitHub, you generally do one of the following:</p>
+<p>Jeweler provides two things:</p>
 
 <ul>
-<li>Manage the gemspec by hand
-<ul>
-<li>... why bother doing something by hand when you can automate it?</li>
-</ul></li>
-<li>Write your own Rake stuff to create the Gem::Specification and output it to a gemspec file, and deal with keeping the Rakefile and gemspec in sync
-<ul>
-<li>... why keep reinventing the wheel?</li>
-</ul></li>
-<li>Use hoe or echoe for generating the gemspec
-<ul>
-<li>... why use utilities made for the days before GitHub existed?</li>
-<li>... why have extra stuff you aren't going to use?</li>
-</ul></li>
+<li>Rake tasks for managing gems and versioning of a <a href="http://github.com">GitHub</a> project</li>
+<li>A generator for creating kickstarting a new project</li>
 </ul>
 
-<p>Jeweler was created with a few goals in mind:</p>
+<h2>Setting up in an existing project</h2>
 
-<ul>
-<li>Only use a Gem::Specification as configuration</li>
-<li>Be one command away from version bumping and releasing</li>
-<li>Store version information in one place</li>
-<li>Only concern itself with git, gems, and versioning</li>
-<li>Not be a requirement for using your Rakefile (you just wouldn't be able to use its tasks)</li>
-<li>Use Jeweler internally. Oh the meta!</li>
-</ul>
-
-<h2>Installation</h2>
-
-<p>Run the following if you haven't already:</p>
-
-<pre><code>gem sources -a http://gems.github.com
-</code></pre>
-
-<p>Install the gem:</p>
-
-<pre><code>sudo gem install technicalpickles-jeweler
-</code></pre>
-
-<h2>Configuration for an existing project</h2>
-
-<p>Armed with the gem, we can begin diving into an example. <a href="http://github.com/technicalpickles/the-perfect-gem/tree">the-perfect-gem</a> was setup as a Jeweler showcase, and a simple example:</p>
+<p>It's easy to get up and running. Update your instantiate a <code>Jeweler::Tasks</code>, and give it a block with details about your project.</p>
 
 <pre><code>begin
   require 'jeweler'
@@ -86,188 +29,71 @@ rescue LoadError
 end
 </code></pre>
 
-<p>Here's a rundown of what's happening:</p>
+<p>In this example, <code>s</code> is a Gem::Specification object. See the documentation for what possible values you can set on it. </p>
 
-<ul>
-<li>Wrap everything in a begin block, and rescue from LoadError
-<ul>
-<li>This lets us degrade gracefully if jeweler isn't installed</li>
-</ul></li>
-<li>Make a new <code>Jeweler::Tasks</code>
-<ul>
-<li>It gets yielded a new <code>Gem::Specification</code></li>
-<li>This is where all the configuration happens</li>
-<li>Things you definitely need to specify:
-<ul>
-<li><code>name</code></li>
-</ul></li>
-<li>Things you probably want to specify:
-<ul>
-<li><code>summary</code></li>
-<li><code>email</code></li>
-<li><code>homepage</code></li>
-<li><code>description</code></li>
-<li><code>authors</code></li>
-</ul></li>
-<li>Things you can specify, but have defaults
-<ul>
-<li><code>files</code>, defaults to <code>FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]</code></li>
-</ul></li>
-<li>Things you shouldn't specify:
-<ul>
-<li><code>version</code>, because Jeweler takes care of this for you</li>
-</ul></li>
-<li>Other things of interest
-<ul>
-<li><code>executables</code>, if you have any scripts</li>
-<li><code>add_dependency</code>, if you have any dependencies</li>
-</ul></li>
-<li>Keep in mind that this is a <code>Gem::Specification</code>, so you can do whatever you would need to do to get your gem in shape</li>
-</ul></li>
-</ul>
+<h2>Kicking off a new project</h2>
 
-<h2>Bootstrap a new project</h2>
+<p>Jeweler provides a generator:</p>
 
-<p>Before proceeding, take a minute to setup your git environment, specifically your name, email address, and GitHub username</p>
-
-<pre><code>$ git config --global user.email johndoe@example.com
-$ git config --global user.name 'John Doe'
-$ git config --global github.user johndoe
-$ git config --global github.token 55555555555555
+<pre><code>jeweler the-perfect-gem
 </code></pre>
 
-<p>Jeweler provides a generator of sorts, <code>jeweler</code>. It requires only argument, the name of a repo you want to create. It also takes a few options: --<a href="http://github.com/thoughtbot/shoulda">shoulda</a> and --<a href="http://github.com/chneukirchen/bacon/tree/master">bacon</a>. These control what type of tests are created, with the default being shoulda.</p>
+<p>This will prepare a project in the 'the-perfect-gem' directory, setup to use Jeweler.</p>
 
-<pre><code>$ jeweler --create-repo the-perfect-gem
+<p>It supports a number of options:</p>
+
+<ul>
+<li>--create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation</li>
+<li>--shoulda: generate test_helper.rb and empty test ready for shoulda (this is the default)</li>
+<li>--bacon: generate spec_helper.rb and empty spec ready for bacon</li>
+</ul>
+
+<h2>Gemspec</h2>
+
+<p>Jeweler handles generating a gemspec file for your project:</p>
+
+<pre><code>rake gemspec
 </code></pre>
 
-<p>Basically, this does:</p>
+<p>This creates a gemspec for your project. It's based on the info you give <code>Jeweler::Tasks</code>, the current version of your project, and some defaults that Jeweler provides.</p>
 
-<ul>
-<li>Creates the the-perfect-gem directory</li>
-<li>Seeds it with some basic files:
-<ul>
-<li><code>.gitignore</code>, with the usual suspects predefined</li>
-<li><code>Rakefile</code>, setup with tasks for jeweler, test, rdoc, and rcov</li>
-<li><code>README</code>, with your project name</li>
-<li><code>LICENSE</code>, MIT, with your name prefilled</li>
-<li><code>test/test_helper</code>, setup with shoulda, mocha, and a re-opened <code>Test::Unit::TestCase</code></li>
-<li><code>test/the_perfect_gem.rb</code>, placeholder failing test</li>
-<li><code>lib/the_perfect_gem.rb</code>, placeholder library file</li>
-</ul></li>
-<li>Makes it a git repo</li>
-<li>Sets up <code>git@github.com:johndoe/jeweler.git</code> as the <code>origin</code> git remote</li>
-<li>Makes an initial commit</li>
-<li>Sets up a new repository on GitHub and pushes to it (omit --create-repo to skip this)</li>
-</ul>
+<h2>Gem</h2>
 
-<p>You also probably should <a href="http://github.com/blog/51-github-s-rubygem-server">enable RubyGem creation for you repository</a>: Go to your project's edit page and check the 'RubyGem' box.</p>
+<p>Jeweler gives you tasks for building and installing your gem:</p>
 
-<h2>Overview of Jeweler workflow</h2>
-
-<p>Here's the general idea:</p>
-
-<ul>
-<li>Hack, commit, hack, commit, etc, etc</li>
-<li>Version bump</li>
-<li>Release</li>
-<li>Have a delicious scotch</li>
-</ul>
-
-<p>The hacking and the scotch are up to you, but Jeweler provides rake tasks for the rest.</p>
-
-<h3>Versioning</h3>
-
-<p>Versioning information is stored in <code>VERSION.yml</code>. It's a plain ol' YAML file which contains three things:</p>
-
-<ul>
-<li>major</li>
-<li>minor</li>
-<li>patch</li>
-</ul>
-
-<p>Consider, for a second, <code>1.5.3</code>.</p>
-
-<ul>
-<li>major = 1</li>
-<li>minor = 5</li>
-<li>patch = 3</li>
-</ul>
-
-<h4>Your first time</h4>
-
-<p>When you first start using Jeweler, there won't be a <code>VERSION.yml</code>, so it'll assume 0.0.0.</p>
-
-<p>If you need some arbitrary version, you can do one of the following:</p>
-
-<ul>
-<li><code>rake version:write MAJOR=6 MINOR=0 PATCH=3</code></li>
-<li>Write <code>VERSION.yml</code> by hand (lame)</li>
-</ul>
-
-<h4>After that</h4>
-
-<p>You have a few rake tasks for doing the version bump:</p>
-
-<pre><code>$ rake version:bump:patch # 1.5.1 -&gt; 1.5.2
-$ rake version:bump:minor # 1.5.1 -&gt; 1.6.0
-$ rake version:bump:major # 1.5.1 -&gt; 2.0.0
+<pre><code>rake build
+rake install
 </code></pre>
 
-<p>If you need to do an arbitrary bump, use the same task you used to create <code>VERSION.yml</code>:</p>
+<h2>Versioning</h2>
 
-<pre><code>$ rake version:write MAJOR=6 MINOR=0 PATCH=3
+<p>Jeweler tracks the version of your project. It assumes you will be using a version in the format <code>x.y.z</code>. <code>x</code> is the 'major' version, <code>y</code> is the 'minor' version, and <code>z</code> is the patch version.</p>
+
+<p>Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bumping the version:</p>
+
+<pre><code>rake version:bump:major
+rake version:bump:minor
+rake version:bump:patch
 </code></pre>
 
-<p>The process of version bumping does a commit to your repo, so make sure your repo is in a clean state (ie nothing uncommitted).</p>
+<h2>Releasing</h2>
 
-<h3>Release it</h3>
+<p>Jeweler handles releasing your gem into the wild:</p>
 
-<p>It's pretty straight forward:</p>
-
-<pre><code>$ rake release
+<pre><code>rake release
 </code></pre>
 
-<p>This takes care of:</p>
+<p>It does the following for you:</p>
 
 <ul>
-<li>Generating a <code>.gemspec</code> for you project, with the version you just bumped to</li>
-<li>Commit and push the updated <code>.gemspec</code></li>
-<li>Create a tag</li>
-<li>Push the tag</li>
+<li>Regenerate the gemspec to the latest version of your project</li>
+<li>Push to GitHub (which results in a gem being build)</li>
+<li>Tag the version and push to GitHub</li>
 </ul>
 
-<h3>Play the waiting game</h3>
+<h2>Links</h2>
 
-<p>How do you know when your gem is built? <a href="http://hasmygembuiltyet.org/">Has My Gem Built Yet</a> was specifically designed to answer that question.</p>
-
-<p>If it happens to be down, you can also check out the GitHub Gem repo's <a href="http://gems.github.com/list">list</a>. Just search for youname-yourrepo.s</p>
-
-<h3>Putting it all together</h3>
-
-<pre><code>&lt;hack, hack, hack, commit&gt;
-$ rake version:bump:patch release
-</code></pre>
-
-<p>Now browse to http://gems.github.com/yourname/yourproject, and wait for it to be built.</p>
-
-			</div>
-
-			<div id="sidebar" class="span-8 last">
-				<h2>Links</h2>
-				<ul>
-					<li><a href="http://github.com/technicalpickles/jeweler">Source</a></li>
-					<li><a href="http://technicalpickles.lighthouseapp.com/projects/23560-jeweler">Bugs</a></li>
-				</ul>
-
-				<a href='http://www.pledgie.com/campaigns/2604'><img alt='Click here to lend your support to: jeweler and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/2604.png?skin_name=chrome' border='0' /></a>
-				<h2>Recent Commits</h2>
-				<ul class="github-commits">
-				</ul>
-			</div>
-
-			<div id="footer">
-			</div>
-		</div>
-	</body>
-</html>
+<ul>
+<li><a href="http://technicalpickles.lighthouseapp.com/projects/23560-jeweler/overview">Bugs</a></li>
+<li><a href="http://pledgie.org/campaigns/2604">Donate</a></li>
+</ul>
