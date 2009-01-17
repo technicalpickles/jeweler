@@ -163,6 +163,7 @@ class Jeweler
       Net::HTTP.post_form URI.parse('http://github.com/repositories'),
                                 'login' => github_username,
                                 'token' => github_token,
+                                'repository[description]' => summary,
                                 'repository[name]' => github_repo_name
       sleep 2
       @repo.push('origin')
