@@ -77,6 +77,13 @@ It does the following for you:
  * Push to GitHub (which results in a gem being build)
  * Tag the version and push to GitHub
 
+## Workflow
+
+ * Hack, commit, hack, commit, etc, etc
+ * `rake version:bump:patch release` to do the actual version bump and release
+ * Have a delicious scotch
+ * Go to [Has My Gem Built Yet](http://hasmygembuiltyet.org) and wait for your gem to be built
+
 ## Links
 
  * [Bugs](http://technicalpickles.lighthouseapp.com/projects/23560-jeweler/overview)
