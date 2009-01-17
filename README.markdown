@@ -28,7 +28,7 @@ In this example, `s` is a Gem::Specification object. See the documentation for w
 
 ## Kicking off a new project
 
-Jeweler provides a generator. It depends on you setting up [local github configuration](http://github.com/blog/180-local-github-config).
+Jeweler provides a generator. It requires you to [setup your name and email for git](http://github.com/guides/tell-git-your-user-name-and-email-address) and [your username and token for GitHub](http://github.com/guides/local-github-config).
 
     jeweler the-perfect-gem
 
