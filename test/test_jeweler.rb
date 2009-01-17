@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class JewelerTest < Test::Unit::TestCase
+class TestJeweler < Test::Unit::TestCase
 
   def setup
     @now = Time.now

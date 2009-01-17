@@ -28,11 +28,7 @@ rescue LoadError
 end
 
 
-Rake::TestTask.new do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/*_test.rb'
-  t.verbose = false
-end
+Rake::TestTask.new 
 
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -42,10 +38,6 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rcov::RcovTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/**/*_test.rb']
-  t.verbose = true
-end
+Rcov::RcovTask.new 
 
 task :default => :rcov
