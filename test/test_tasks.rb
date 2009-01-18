@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper'
 
 require 'rake'
-class TasksTest < Test::Unit::TestCase
+class TestTasks < Test::Unit::TestCase
   include Rake
 
   context 'instantiating Jeweler::Tasks' do

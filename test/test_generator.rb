@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class JewelerGeneratorTest < Test::Unit::TestCase
+class TestGenerator < Test::Unit::TestCase
   def self.should_create_directory(directory)
     should "create #{directory} directory" do
       assert File.exists?(File.join(@tmp_dir, directory))

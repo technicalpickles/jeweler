@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class GemspecTest < Test::Unit::TestCase
+class TestGemspec < Test::Unit::TestCase
   context "A Jeweler::GemSpec, given a gemspec" do
     setup do
       @spec = build_spec

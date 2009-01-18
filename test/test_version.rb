@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class VersionTest < Test::Unit::TestCase
+class TestVersion < Test::Unit::TestCase
 
   VERSION_TMP_DIR = File.dirname(__FILE__) + '/version_tmp'
-
 
   def self.should_have_version(major, minor, patch)
     should "have major version #{major}" do
