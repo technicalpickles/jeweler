@@ -1,4 +1,6 @@
+# jeweler 0.6.6
 
+ * Added support to generator for specifying a description
  * Condensed README.markdown to be less novel-like
  * RDoc is now included in your gemspec
  * Rescue errors that raise in the generator, and display better error message, and exit with a non-zero exit status
