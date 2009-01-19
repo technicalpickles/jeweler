@@ -2,16 +2,16 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "0.6.5"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-01-14}
+  s.date = %q{2009-01-19}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
   s.executables = ["jeweler"]
-  s.files = ["ChangeLog.markdown", "Rakefile", "README.markdown", "TODO", "VERSION.yml", "bin/jeweler", "lib/jeweler", "lib/jeweler/errors.rb", "lib/jeweler/gemspec.rb", "lib/jeweler/generator.rb", "lib/jeweler/tasks.rb", "lib/jeweler/templates", "lib/jeweler/templates/bacon", "lib/jeweler/templates/bacon/flunking_spec.rb", "lib/jeweler/templates/bacon/spec_helper.rb", "lib/jeweler/templates/LICENSE", "lib/jeweler/templates/Rakefile", "lib/jeweler/templates/README", "lib/jeweler/templates/shoulda", "lib/jeweler/templates/shoulda/flunking_test.rb", "lib/jeweler/templates/shoulda/test_helper.rb", "lib/jeweler/version.rb", "lib/jeweler.rb", "test/fixtures", "test/fixtures/bar", "test/fixtures/bar/VERSION.yml", "test/gemspec_test.rb", "test/generators", "test/generators/initialization_test.rb", "test/jeweler_generator_test.rb", "test/jeweler_test.rb", "test/shoulda_macros", "test/shoulda_macros/jeweler_macros.rb", "test/tasks_test.rb", "test/test_helper.rb", "test/version_test.rb", "test/version_tmp", "test/version_tmp/VERSION.yml", "lib/jeweler/templates/.gitignore"]
+  s.files = ["ChangeLog.markdown", "LICENSE", "Rakefile", "README.markdown", "TODO", "VERSION.yml", "bin/jeweler", "lib/jeweler", "lib/jeweler/errors.rb", "lib/jeweler/gemspec.rb", "lib/jeweler/generator.rb", "lib/jeweler/tasks.rb", "lib/jeweler/templates", "lib/jeweler/templates/bacon", "lib/jeweler/templates/bacon/flunking_spec.rb", "lib/jeweler/templates/bacon/spec_helper.rb", "lib/jeweler/templates/LICENSE", "lib/jeweler/templates/Rakefile", "lib/jeweler/templates/README", "lib/jeweler/templates/shoulda", "lib/jeweler/templates/shoulda/flunking_test.rb", "lib/jeweler/templates/shoulda/test_helper.rb", "lib/jeweler/version.rb", "lib/jeweler.rb", "test/fixtures", "test/fixtures/bar", "test/fixtures/bar/VERSION.yml", "test/generators", "test/generators/initialization_test.rb", "test/jeweler", "test/shoulda_macros", "test/shoulda_macros/jeweler_macros.rb", "test/test_gemspec.rb", "test/test_generator.rb", "test/test_helper.rb", "test/test_jeweler.rb", "test/test_tasks.rb", "test/test_version.rb", "test/version_tmp", "test/version_tmp/VERSION.yml", "lib/jeweler/templates/.gitignore"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
