@@ -1,4 +1,4 @@
-# jeweler 0.6.6
+# jeweler 0.7.0
 
  * Added support to generator for specifying a description
  * Condensed README.markdown to be less novel-like
