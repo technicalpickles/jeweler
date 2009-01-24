@@ -23,6 +23,11 @@ class Jeweler
       @gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     end
 
+    if @gemspec.executables.nil? || @gemspec.executables.empty?
+      @gemspec.executables = []
+      Dir["bin/*"].each {|f| @gemspec.executables.push(File.basename(f))}
+    end
+
     @gemspec.has_rdoc = true
     @gemspec.rdoc_options << '--inline-source' << '--charset=UTF-8'
     @gemspec.extra_rdoc_files ||=  FileList["[A-Z]*.*"]
