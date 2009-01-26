@@ -1,7 +1,13 @@
+ * use some sort of logger instead of stdout and stderr
+ * jeweler --delete-repo 
+ * output gemspec as yaml
+ * move interactions with github into separate class
+ * use Net::HTTP.post_form instead of `` for enabling gem creation
  * Generators
    * Rails generator for making a plugin that's Jeweler enabled
    * Support rspec?
+   * Support test/unit
+   * Change generated test filename (test_foo not foo_test)
  * Releasing
-  * Create tag based on version
-  * Push tags
   * Open hasmygembuiltyet.org
+ * enable runcoderun by default
