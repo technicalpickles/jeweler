@@ -42,6 +42,8 @@ class Jeweler
       task :version => 'version:display'
 
       namespace :version do
+        task :bump => "bump:patch"
+        
         desc "Creates an initial version file. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH"
         task :write do
           @jeweler.write_version(ENV['MAJOR'], ENV['MINOR'], ENV['PATCH'])
