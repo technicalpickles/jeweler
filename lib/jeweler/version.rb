@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Jeweler
   class Version
     attr_accessor :base_dir
