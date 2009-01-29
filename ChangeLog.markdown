@@ -1,5 +1,6 @@
-# development
+# jeweler 0.7.2
 
+ * Added rake task 'version:bump' which is shorthand for 'version:bump:patch'
  * Generated projects no longer assume RCov is installed.
 
 # jeweler 0.7.1
