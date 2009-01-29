@@ -1,7 +1,6 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'rcov/rcovtask'
 
 begin
   require 'jeweler'
@@ -31,10 +30,14 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rcov::RcovTask.new do |t|
-  t.libs << '<%= testspec %>'
-  t.test_files = FileList['<%= testspec %>/**/*_<%= testspec %>.rb']
-  t.verbose = true
+begin
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new do |t|
+    t.libs << '<%= testspec %>'
+    t.test_files = FileList['<%= testspec %>/**/*_<%= testspec %>.rb']
+    t.verbose = true
+  end
+rescue LoadError
 end
 
-task :default => :rcov
+task :default => :test
