@@ -62,6 +62,7 @@ class Jeweler
       task :version => 'version:display'
 
       namespace :version do
+        task :bump => "bump:patch"
         desc "Setup initial version of 0.0.0"
         task :setup => "VERSION.yml"
 
