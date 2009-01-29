@@ -30,6 +30,7 @@ class TestTasks < Test::Unit::TestCase
       assert Task.task_defined?(:version)
       assert Task.task_defined?(:'version:write')
       assert Task.task_defined?(:'version:display')
+      assert Task.task_defined?(:'version:bump')
       assert Task.task_defined?(:'version:bump:major')
       assert Task.task_defined?(:'version:bump:minor')
       assert Task.task_defined?(:'version:bump:patch')

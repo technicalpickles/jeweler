@@ -62,7 +62,9 @@ class Jeweler
       task :version => 'version:display'
 
       namespace :version do
+        desc "Bump the gemspec by a patch version."
         task :bump => "bump:patch"
+
         desc "Setup initial version of 0.0.0"
         task :setup => "VERSION.yml"
 
