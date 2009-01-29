@@ -1,3 +1,11 @@
+# development
+
+ * Generated projects no longer assume RCov is installed.
+
+# jeweler 0.7.1
+
+ * Fixed yaml not being required
+
 # jeweler 0.7.0
 
  * Added support to generator for specifying a description
