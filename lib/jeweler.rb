@@ -24,8 +24,9 @@ class Jeweler
     end
 
     if @gemspec.executables.nil? || @gemspec.executables.empty?
-      @gemspec.executables = []
-      Dir["bin/*"].each {|f| @gemspec.executables.push(File.basename(f))}
+      @gemspec.executables = Dir["#{@base_dir}/bin/*"].map do |f|
+        File.basename(f)
+      end
     end
 
     @gemspec.has_rdoc = true

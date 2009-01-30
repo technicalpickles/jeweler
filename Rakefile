@@ -14,7 +14,6 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "jeweler"
-    s.executables = "jeweler"
     s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     s.email = "josh@technicalpickles.com"
     s.homepage = "http://github.com/technicalpickles/jeweler"
