@@ -28,6 +28,10 @@ class JewelerOpts < Hash
         self[:test_style] = :testunit
       end
       
+      o.on('--miniunit', 'generate mini/unit tests') do
+        self[:test_style] = :miniunit
+      end
+      
       o.on('--create-repo', 'create the repository on GitHub') do
         self[:create_repo] = true
       end

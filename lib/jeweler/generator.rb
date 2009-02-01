@@ -61,7 +61,7 @@ class Jeweler
 
     def testspec
       case test_style.to_sym
-      when :shoulda, :testunit
+      when :shoulda, :testunit, :miniunit
         'test'
       when :bacon
         'spec'

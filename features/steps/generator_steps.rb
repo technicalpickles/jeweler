@@ -149,6 +149,12 @@ Then /^'(.*)' requires '(.*)'$/ do |file, lib|
   assert_match /require ['"]#{lib}['"]/, content
 end
 
+Then /^'test\/test_helper\.rb' should autorun tests$/ do
+  content = File.read(File.join(@working_dir, @name, 'test/test_helper.rb'))
+
+  assert_match "Mini::Test.autorun", content
+end
+
 
 Then /^git repository has '(.*)' remote$/ do |remote|
   remote = @repo.remotes.first
