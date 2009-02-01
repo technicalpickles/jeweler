@@ -39,4 +39,13 @@ end
 
 Rcov::RcovTask.new 
 
+begin
+  require 'cucumber/rake/task'
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format pretty" 
+  end
+rescue LoadError
+end
+
+
 task :default => :rcov
