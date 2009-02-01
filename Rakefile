@@ -6,7 +6,6 @@ rescue LoadError
   require 'rake/rdoctask'
 end
 
-require 'rcov/rcovtask'
 
 $:.unshift('lib')
 
@@ -37,14 +36,17 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rcov::RcovTask.new 
+begin
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new 
+rescue LoadError
+end
 
 begin
   require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features) do |t|
-    t.cucumber_opts = "--format pretty" 
-  end
+  Cucumber::Rake::Task.new(:features)
 rescue LoadError
+  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
 end
 
 
