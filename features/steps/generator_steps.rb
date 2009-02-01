@@ -51,6 +51,8 @@ When /^I generate a project$/ do
   @stdout = OutputCatcher.catch_out do
     @generator.run
   end
+
+  @repo = Git.open(File.join(@working_dir, @name))
 end
 
 Then /^a directory named '(.*)' is created$/ do |directory|
@@ -128,6 +130,39 @@ Then /^LICENSE has the copyright as being in (\d{4})$/ do |year|
   assert_match year, @license_content
 end
 
+Then /^'(.*)' should define '(.*)' as a subclass of '(.*)'$/ do |file, class_name, superclass_name|
+  @test_content = File.read((File.join(@working_dir, @name, file)))
+
+  assert_match "class #{class_name} < #{superclass_name}", @test_content
+end
+
+Then /^git repository has '(.*)' remote$/ do |remote|
+  remote = @repo.remotes.first
+
+  assert_equal 'origin', remote.name
+end
+
+Then /^git repository '(.*)' remote should be '(.*)'/ do |remote, remote_url|
+  remote = @repo.remotes.first
+
+  assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
+end
+
+Then /^a commit with the message '(.*)' is made$/ do |message|
+  assert_match message, @repo.log.first.message
+end
+
+Then /^'(.*)' was checked in$/ do |file|
+  status = @repo.status[file]
+
+  assert_not_nil status, "wasn't able to get status for #{file}"
+  assert ! status.untracked, "#{file} was untracked"
+  assert_nil status.type, "#{file} had a type. it should have been nil"
+end
+
+Then /^no files are (\w+)$/ do |type|
+  assert_equal 0, @repo.status.send(type).size
+end
 
 After do
   FileUtils.rm_rf @working_dir if @working_dir
