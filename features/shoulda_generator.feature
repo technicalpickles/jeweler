@@ -43,6 +43,11 @@ Feature: shoulda generator
 
     And 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
 
+    And 'test/test_helper.rb' requires 'test/unit'
+    And 'test/test_helper.rb' requires 'shoulda'
+    And 'test/test_helper.rb' requires 'mocha'
+    And 'test/test_helper.rb' requires 'the_perfect_gem'
+
     And git repository has 'origin' remote
     And git repository 'origin' remote should be 'git@github.com:technicalpickles/the-perfect-gem.git'
 

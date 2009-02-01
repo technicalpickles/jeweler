@@ -61,10 +61,12 @@ class Jeweler
 
     def testspec
       case test_style.to_sym
-      when :shoulda
+      when :shoulda, :testunit
         'test'
       when :bacon
         'spec'
+      else
+        raise "Unknown test style: #{test_style}"
       end
     end
 

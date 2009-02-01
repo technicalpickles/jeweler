@@ -24,6 +24,10 @@ class JewelerOpts < Hash
         self[:test_style] = :shoulda
       end
       
+      o.on('--testunit', 'generate test/unit tests') do
+        self[:test_style] = :testunit
+      end
+      
       o.on('--create-repo', 'create the repository on GitHub') do
         self[:create_repo] = true
       end

@@ -141,7 +141,12 @@ Then /^'(.*)' should describe '(.*)'$/ do |file, describe_name|
   @spec_content ||= File.read((File.join(@working_dir, @name, file)))
 
   assert_match %Q{describe "#{describe_name}" do}, @spec_content
+end
 
+Then /^'(.*)' requires '(.*)'$/ do |file, lib|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_match /require ['"]#{lib}['"]/, content
 end
 
 
