@@ -48,4 +48,4 @@ rescue LoadError
 end
 
 
-task :default => :rcov
+task :default => [:test, :features]

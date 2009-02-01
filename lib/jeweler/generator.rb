@@ -60,7 +60,7 @@ class Jeweler
     end
 
     def testspec
-      case test_style
+      case test_style.to_sym
       when :shoulda
         'test'
       when :bacon

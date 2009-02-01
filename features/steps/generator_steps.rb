@@ -4,8 +4,8 @@ Given 'a working directory' do
   FileUtils.mkdir_p @working_dir
 end
 
-Given /^intentions to make a gem being tested by (\w+)$/ do |testing_framework|
-  @testing_framework = testing_framework
+Given /^intentions to make a gem being tested by (\w+)$/ do |test_style|
+  @test_style = test_style.to_sym
 end
 
 Given /^I decide to call the project '((?:\w|-|_)+)'$/ do |name|
@@ -46,7 +46,8 @@ When /^I generate a project$/ do
 
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",
-                                      :summary => @summary)
+                                      :summary => @summary,
+                                      :test_style => @test_style)
 
   @stdout = OutputCatcher.catch_out do
     @generator.run
@@ -135,6 +136,14 @@ Then /^'(.*)' should define '(.*)' as a subclass of '(.*)'$/ do |file, class_nam
 
   assert_match "class #{class_name} < #{superclass_name}", @test_content
 end
+
+Then /^'(.*)' should describe '(.*)'$/ do |file, describe_name|
+  @spec_content ||= File.read((File.join(@working_dir, @name, file)))
+
+  assert_match %Q{describe "#{describe_name}" do}, @spec_content
+
+end
+
 
 Then /^git repository has '(.*)' remote$/ do |remote|
   remote = @repo.remotes.first
