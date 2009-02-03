@@ -162,23 +162,28 @@ class Jeweler
         raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
       end
 
-      mkdir_in_target lib_dir
-      mkdir_in_target test_dir
-      mkdir_in_target features_dir
-      mkdir_in_target features_support_dir
-      mkdir_in_target features_steps_dir
 
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
       output_template_in_target 'LICENSE'
       output_template_in_target 'README'
+
+      mkdir_in_target           lib_dir
+      touch_in_target           File.join(lib_dir, "#{file_name_prefix}.rb")
+
+      mkdir_in_target           test_dir
       output_template_in_target File.join(testing_framework.to_s, 'helper.rb'), File.join(test_dir, test_helper_filename)
       output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'), File.join(test_dir, test_filename)
-      output_template_in_target File.join(%w(features support env.rb))
-      output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
-      output_template_in_target File.join(%w(features steps default_steps.rb)), File.join('features', 'steps', steps_filename)
 
-      touch_in_target File.join(lib_dir, "#{file_name_prefix}.rb")
+      mkdir_in_target           features_dir
+      output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
+
+      mkdir_in_target           features_support_dir
+      output_template_in_target File.join(features_support_dir, 'env.rb')
+
+      mkdir_in_target           features_steps_dir
+      output_template_in_target File.join(features_steps_dir, 'default_steps.rb'), File.join('features', 'steps', steps_filename)
+
     end
 
     def use_user_git_config
