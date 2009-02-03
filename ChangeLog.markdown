@@ -1,3 +1,7 @@
+# jeweler 0.8.1
+
+ * Fixed minitest generator
+
 # jeweler 0.8.0
 
  * Generator:

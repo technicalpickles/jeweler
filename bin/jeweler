@@ -29,7 +29,7 @@ class JewelerOpts < Hash
       end
       
       o.on('--minitest', 'generate minitest tests') do
-        self[:testing_framework] = :miniunit
+        self[:testing_framework] = :minitest
       end
 
       o.on('--rspec', 'generate rspec tests') do
