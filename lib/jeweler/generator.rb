@@ -24,16 +24,16 @@ class Jeweler
     attr_accessor :target_dir, :user_name, :user_email, :summary,
                   :github_repo_name, :github_remote, :github_url, 
                   :github_username, :github_token,
-                  :lib_dir, :constant_name, :file_name_prefix, :config, :test_style,
-                  :features_dir, :features_support_dir, :features_steps_dir,
+                  :git_config, :test_style,
                   :repo, :should_create_repo
 
     def initialize(github_repo_name, options = {})
-      check_user_git_config()
-      
       if github_repo_name.nil?
         raise NoGitHubRepoNameGiven
       end
+
+      use_user_git_config
+      
       self.github_repo_name     = github_repo_name
 
       self.github_remote        = "git@github.com:#{github_username}/#{github_repo_name}.git"
@@ -42,13 +42,6 @@ class Jeweler
       self.test_style           = options[:test_style] || :shoulda
       self.target_dir           = options[:directory] || self.github_repo_name
 
-      self.lib_dir              = File.join(target_dir, 'lib')
-      self.features_dir         = File.join(target_dir, 'features')
-      self.features_support_dir = File.join(self.features_dir, 'support')
-      self.features_steps_dir   = File.join(self.features_dir, 'steps')
-
-      self.constant_name        = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
-      self.file_name_prefix     = self.github_repo_name.gsub('-', '_')
       self.should_create_repo   = options[:create_repo]
       self.summary              = options[:summary] || 'TODO'
     end
@@ -101,7 +94,30 @@ class Jeweler
         raise "Don't know what to extend for #{test_style}"
       end
     end
+    
+    def constant_name
+      self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
+    end
 
+    def file_name_prefix
+      self.github_repo_name.gsub('-', '_')
+    end
+
+    def lib_dir
+      File.join(target_dir, 'lib')
+    end
+
+    def features_dir
+      File.join(target_dir, 'features')
+    end
+
+    def features_support_dir
+      File.join(self.features_dir, 'support')
+    end
+
+    def features_steps_dir
+      File.join(self.features_dir, 'steps')
+    end
 
   private
     def create_files
@@ -130,29 +146,29 @@ class Jeweler
       touch_in_target File.join(lib_dir, "#{file_name_prefix}.rb")
     end
 
-    def check_user_git_config
-      self.config = read_git_config
-      
-      unless config.has_key? 'user.name'
+    def use_user_git_config
+      git_config = self.read_git_config
+
+      unless git_config.has_key? 'user.name'
         raise NoGitUserName
       end
       
-      unless config.has_key? 'user.email'
+      unless git_config.has_key? 'user.email'
         raise NoGitUserEmail
       end
       
-      unless config.has_key? 'github.user'
+      unless git_config.has_key? 'github.user'
         raise NoGitHubUser
       end
       
-      unless config.has_key? 'github.token'
+      unless git_config.has_key? 'github.token'
         raise NoGitHubToken
       end
 
-      self.user_name = config['user.name']
-      self.user_email = config['user.email']
-      self.github_username = config['github.user']
-      self.github_token = config['github.token']
+      self.user_name       = git_config['user.name']
+      self.user_email      = git_config['user.email']
+      self.github_username = git_config['github.user']
+      self.github_token    = git_config['github.token']
     end
 
     def output_template_in_target(source, destination = source)
@@ -229,6 +245,7 @@ class Jeweler
                                 #'value' => '1'
     end
 
+    # This is in a separate method so we can stub it out during testing
     def read_git_config
       # we could just use Git::Base's .config, but that relies on a repo being around already
       # ... which we don't have yet, since this is part of a sanity check
