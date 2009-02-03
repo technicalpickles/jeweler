@@ -5,9 +5,7 @@
  * use Net::HTTP.post_form instead of `` for enabling gem creation
  * Generators
    * Rails generator for making a plugin that's Jeweler enabled
-   * Support rspec?
-   * Support test/unit
    * Change generated test filename (test_foo not foo_test)
  * Releasing
   * Open hasmygembuiltyet.org
- * enable runcoderun by default
+ * Enable runcoderun by default

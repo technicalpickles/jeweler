@@ -1,3 +1,14 @@
+# jeweler 0.8.0
+
+ * Generator:
+  * Supports these new testing frameworks:
+   * test/unit
+   * minitest
+   * rspec
+  * Added support for cucumber
+  * Creating a new gem is now more verbose, and will show files/directories created
+ * Binaries will now be automatically detected in 'bin'
+  
 # jeweler 0.7.2
 
  * Added rake task 'version:bump' which is shorthand for 'version:bump:patch'

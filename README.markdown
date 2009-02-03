@@ -37,8 +37,11 @@ This will prepare a project in the 'the-perfect-gem' directory, setup to use Jew
 It supports a number of options:
 
  * --create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation
- * --shoulda: generate test_helper.rb and empty test ready for shoulda (this is the default)
- * --bacon: generate spec_helper.rb and empty spec ready for bacon
+ * --testunit: generate test_helper.rb and test ready for test/unit
+ * --minitest: generate test_helper.rb and test ready for minitest 
+ * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
+ * --rspec: generate spec_helper.rb and spec ready for rspec
+ * --bacon: generate spec_helper.rb and spec ready for bacon
 
 ## Gemspec
 
