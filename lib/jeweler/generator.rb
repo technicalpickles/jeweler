@@ -21,10 +21,9 @@ class Jeweler
   end    
 
   class Generator    
-    attr_accessor :target_dir, :user_name, :user_email, :summary,
+    attr_accessor :target_dir, :user_name, :user_email, :summary, :test_style,
                   :github_repo_name, :github_remote, :github_url, 
                   :github_username, :github_token,
-                  :git_config, :test_style,
                   :repo, :should_create_repo
 
     def initialize(github_repo_name, options = {})
@@ -117,6 +116,16 @@ class Jeweler
 
     def features_steps_dir
       File.join(self.features_dir, 'steps')
+    end
+
+  protected
+
+    # This is in a separate method so we can stub it out during testing
+    def read_git_config
+      # we could just use Git::Base's .config, but that relies on a repo being around already
+      # ... which we don't have yet, since this is part of a sanity check
+      lib = Git::Lib.new(nil, nil)
+      config = lib.parse_config '~/.gitconfig'
     end
 
   private
@@ -245,12 +254,5 @@ class Jeweler
                                 #'value' => '1'
     end
 
-    # This is in a separate method so we can stub it out during testing
-    def read_git_config
-      # we could just use Git::Base's .config, but that relies on a repo being around already
-      # ... which we don't have yet, since this is part of a sanity check
-      lib = Git::Lib.new(nil, nil)
-      config = lib.parse_config '~/.gitconfig'
-    end
   end
 end
