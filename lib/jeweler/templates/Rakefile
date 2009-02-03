@@ -18,7 +18,7 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << 'lib'
-  t.pattern = '<%= testspec %>/**/*_<%= testspec %>.rb'
+  t.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
   t.verbose = false
 end
 
@@ -33,8 +33,8 @@ end
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|
-    t.libs << '<%= testspec %>'
-    t.test_files = FileList['<%= testspec %>/**/*_<%= testspec %>.rb']
+    t.libs << '<%= test_or_spec %>'
+    t.test_files = FileList['<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb']
     t.verbose = true
   end
 rescue LoadError

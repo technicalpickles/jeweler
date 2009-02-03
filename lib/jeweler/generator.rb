@@ -65,7 +65,7 @@ class Jeweler
       end
     end
 
-    def testspec
+    def test_or_spec
       case test_style.to_sym
       when :shoulda, :testunit, :minitest
         'test'
@@ -77,7 +77,7 @@ class Jeweler
     end
 
     def test_dir
-      File.join(target_dir, testspec)
+      File.join(target_dir, test_or_spec)
     end
 
     def feature_support_require
@@ -121,8 +121,8 @@ class Jeweler
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')
-      output_template_in_target("#{test_style}/#{testspec}_helper.rb", "#{testspec}/#{testspec}_helper.rb")
-      output_template_in_target("#{test_style}/flunking_#{testspec}.rb", "#{testspec}/#{file_name_prefix}_#{testspec}.rb")
+      output_template_in_target("#{test_style}/#{test_or_spec}_helper.rb", "#{test_or_spec}/#{test_or_spec}_helper.rb")
+      output_template_in_target("#{test_style}/flunking_#{test_or_spec}.rb", "#{test_or_spec}/#{file_name_prefix}_#{test_or_spec}.rb")
       output_template_in_target("features/support/env.rb")
       output_template_in_target("features/default.feature", "features/#{file_name_prefix}.feature")
       output_template_in_target("features/steps/default_steps.rb", "features/steps/#{file_name_prefix}_steps.rb")
