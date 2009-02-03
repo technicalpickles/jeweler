@@ -4,8 +4,8 @@ Given 'a working directory' do
   FileUtils.mkdir_p @working_dir
 end
 
-Given /^intentions to make a gem being tested by (\w+)$/ do |test_style|
-  @test_style = test_style.to_sym
+Given /^intentions to make a gem being tested by (\w+)$/ do |testing_framework|
+  @testing_framework = testing_framework.to_sym
 end
 
 Given /^I decide to call the project '((?:\w|-|_)+)'$/ do |name|
@@ -47,7 +47,7 @@ When /^I generate a project$/ do
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",
                                       :summary => @summary,
-                                      :test_style => @test_style)
+                                      :testing_framework => @testing_framework)
 
   @stdout = OutputCatcher.catch_out do
     @generator.run

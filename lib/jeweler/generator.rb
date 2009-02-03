@@ -21,7 +21,7 @@ class Jeweler
   end    
 
   class Generator    
-    attr_accessor :target_dir, :user_name, :user_email, :summary, :test_style,
+    attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
                   :github_repo_name, :github_username, :github_token,
                   :repo, :should_create_repo
 
@@ -32,13 +32,13 @@ class Jeweler
 
       use_user_git_config
       
-      self.github_repo_name     = github_repo_name
+      self.github_repo_name   = github_repo_name
 
-      self.test_style           = options[:test_style] || :shoulda
-      self.target_dir           = options[:directory] || self.github_repo_name
+      self.testing_framework  = options[:testing_framework] || :shoulda
+      self.target_dir         = options[:directory] || self.github_repo_name
 
-      self.should_create_repo   = options[:create_repo]
-      self.summary              = options[:summary] || 'TODO'
+      self.should_create_repo = options[:create_repo]
+      self.summary            = options[:summary] || 'TODO'
     end
 
     def run
@@ -54,13 +54,13 @@ class Jeweler
     end
 
     def test_or_spec
-      case test_style.to_sym
+      case testing_framework.to_sym
       when :shoulda, :testunit, :minitest
         'test'
       when :bacon
         'spec'
       else
-        raise "Unknown test style: #{test_style}"
+        raise "Unknown test style: #{testing_framework}"
       end
     end
 
@@ -69,24 +69,24 @@ class Jeweler
     end
 
     def feature_support_require
-      case test_style.to_sym
+      case testing_framework.to_sym
       when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
         'test/unit/assertions'
       when :minitest
         'mini/test'
       else
-        raise "Don't know what to require for #{test_style}"
+        raise "Don't know what to require for #{testing_framework}"
       end
     end
 
     def feature_support_extend
-      case test_style.to_sym
+      case testing_framework.to_sym
       when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
         'Test::Unit::Assertions'
       when :minitest
         'Mini::Test::Assertions'
       else
-        raise "Don't know what to extend for #{test_style}"
+        raise "Don't know what to extend for #{testing_framework}"
       end
     end
 
@@ -151,8 +151,8 @@ class Jeweler
       output_template_in_target('Rakefile')
       output_template_in_target('LICENSE')
       output_template_in_target('README')
-      output_template_in_target("#{test_style}/#{test_or_spec}_helper.rb", "#{test_or_spec}/#{test_or_spec}_helper.rb")
-      output_template_in_target("#{test_style}/flunking_#{test_or_spec}.rb", "#{test_or_spec}/#{file_name_prefix}_#{test_or_spec}.rb")
+      output_template_in_target("#{testing_framework}/#{test_or_spec}_helper.rb", "#{test_or_spec}/#{test_or_spec}_helper.rb")
+      output_template_in_target("#{testing_framework}/flunking_#{test_or_spec}.rb", "#{test_or_spec}/#{file_name_prefix}_#{test_or_spec}.rb")
       output_template_in_target("features/support/env.rb")
       output_template_in_target("features/default.feature", "features/#{file_name_prefix}.feature")
       output_template_in_target("features/steps/default_steps.rb", "features/steps/#{file_name_prefix}_steps.rb")
@@ -252,7 +252,7 @@ class Jeweler
                                 'token' => github_token,
                                 'repository[description]' => summary,
                                 'repository[name]' => github_repo_name
-      sleep 2
+      # TODO do a HEAD request to see when it's ready
       @repo.push('origin')
     end
 

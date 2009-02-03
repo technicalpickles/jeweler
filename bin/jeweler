@@ -11,25 +11,25 @@ class JewelerOpts < Hash
   def initialize(args)
     super()
     
-    self[:test_style] = :shoulda
+    self[:testing_framework] = :shoulda
     
     @opts = OptionParser.new do |o|
       o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
       
       o.on('--bacon', 'generate bacon specs') do
-        self[:test_style] = :bacon
+        self[:testing_framework] = :bacon
       end
       
       o.on('--shoulda', 'generate shoulda tests') do
-        self[:test_style] = :shoulda
+        self[:testing_framework] = :shoulda
       end
       
       o.on('--testunit', 'generate test/unit tests') do
-        self[:test_style] = :testunit
+        self[:testing_framework] = :testunit
       end
       
       o.on('--miniunit', 'generate mini/unit tests') do
-        self[:test_style] = :miniunit
+        self[:testing_framework] = :miniunit
       end
       
       o.on('--create-repo', 'create the repository on GitHub') do
