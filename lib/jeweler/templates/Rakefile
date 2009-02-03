@@ -26,13 +26,13 @@ end
 <% if testing_framework.to_sym == :rspec %>
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts = ['--colour --format progress --loadby mtime --reverse']
+  t.libs << 'lib' << 'spec'
   t.spec_files = FileList['spec/**/*_spec.rb']
 end
 <% else %>
 require 'rake/testtask'
 Rake::TestTask.new(:<%= test_or_spec %>) do |t|
-  t.libs << 'lib'
+  t.libs << 'lib' << '<%= test_or_spec %>'
   t.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
   t.verbose = false
 end
@@ -40,7 +40,7 @@ end
 
 <% if testing_framework.to_sym == :rspec %>
 Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.spec_opts = ['--colour --format progress --loadby mtime --reverse']
+  t.libs << 'lib' << 'spec'
   t.spec_files = FileList['spec/**/*_spec.rb']
   t.rcov = true
 end
@@ -64,4 +64,8 @@ rescue LoadError
   puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
 end
 
+<% if testing_framework.to_sym == :rspec %>
+task :default => :spec
+<% else %>
 task :default => :test
+<% end %>
