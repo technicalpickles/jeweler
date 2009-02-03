@@ -28,7 +28,7 @@ class JewelerOpts < Hash
         self[:testing_framework] = :testunit
       end
       
-      o.on('--miniunit', 'generate mini/unit tests') do
+      o.on('--minitest', 'generate minitest tests') do
         self[:testing_framework] = :miniunit
       end
 

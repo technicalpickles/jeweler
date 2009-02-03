@@ -24,7 +24,7 @@ It's easy to get up and running. Update your instantiate a `Jeweler::Tasks`, and
       puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
     end
 
-In this example, `s` is a Gem::Specification object. See the documentation for what possible values you can set on it. 
+In this example, `s` is a Gem::Specification object. See the [GemSpec reference](http://www.rubygems.org/read/chapter/20) for values of interest.
 
 ## Kicking off a new project
 
