@@ -53,19 +53,9 @@ class Jeweler
       end
     end
 
-    def test_or_spec
-      case testing_framework.to_sym
-      when :shoulda, :testunit, :minitest
-        'test'
-      when :bacon
-        'spec'
-      else
-        raise "Unknown test style: #{testing_framework}"
-      end
-    end
 
     def test_dir
-      File.join(target_dir, test_or_spec)
+      test_or_spec
     end
 
     def feature_support_require
@@ -108,19 +98,39 @@ class Jeweler
     end
 
     def lib_dir
-      File.join(target_dir, 'lib')
+      'lib'
+    end
+
+    def test_dir
+      test_or_spec
+    end
+
+    def test_filename
+      "#{file_name_prefix}_#{test_or_spec}.rb"
+    end
+
+    def test_helper_filename
+      "#{test_or_spec}_helper.rb"
+    end
+
+    def feature_filename
+      "#{file_name_prefix}.feature"
+    end
+
+    def steps_filename
+      "#{file_name_prefix}_steps.rb"
     end
 
     def features_dir
-      File.join(target_dir, 'features')
+      'features'
     end
 
     def features_support_dir
-      File.join(self.features_dir, 'support')
+      File.join(features_dir, 'support')
     end
 
     def features_steps_dir
-      File.join(self.features_dir, 'steps')
+      File.join(features_dir, 'steps')
     end
 
   protected
@@ -131,6 +141,17 @@ class Jeweler
       # ... which we don't have yet, since this is part of a sanity check
       lib = Git::Lib.new(nil, nil)
       config = lib.parse_config '~/.gitconfig'
+    end
+
+    def test_or_spec
+      case testing_framework.to_sym
+      when :shoulda, :testunit, :minitest
+        'test'
+      when :bacon
+        'spec'
+      else
+        raise "Unknown test style: #{testing_framework}"
+      end
     end
 
   private
@@ -147,15 +168,15 @@ class Jeweler
       mkdir_in_target features_support_dir
       mkdir_in_target features_steps_dir
 
-      output_template_in_target('.gitignore')
-      output_template_in_target('Rakefile')
-      output_template_in_target('LICENSE')
-      output_template_in_target('README')
-      output_template_in_target("#{testing_framework}/helper.rb", "#{test_or_spec}/#{test_or_spec}_helper.rb")
-      output_template_in_target("#{testing_framework}/flunking.rb", "#{test_or_spec}/#{file_name_prefix}_#{test_or_spec}.rb")
-      output_template_in_target("features/support/env.rb")
-      output_template_in_target("features/default.feature", "features/#{file_name_prefix}.feature")
-      output_template_in_target("features/steps/default_steps.rb", "features/steps/#{file_name_prefix}_steps.rb")
+      output_template_in_target '.gitignore'
+      output_template_in_target 'Rakefile'
+      output_template_in_target 'LICENSE'
+      output_template_in_target 'README'
+      output_template_in_target File.join(testing_framework.to_s, 'helper.rb'), File.join(test_dir, test_helper_filename)
+      output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'), File.join(test_dir, test_filename)
+      output_template_in_target File.join(%w(features support env.rb))
+      output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
+      output_template_in_target File.join(%w(features steps default_steps.rb)), File.join('features', 'steps', steps_filename)
 
       touch_in_target File.join(lib_dir, "#{file_name_prefix}.rb")
     end
@@ -195,7 +216,7 @@ class Jeweler
 
       File.open(final_destination, 'w') {|file| file.write(template_result)}
 
-      $stdout.puts "\tcreate\t#{final_destination}"
+      $stdout.puts "\tcreate\t#{destination}"
     end
 
     def template_dir
@@ -203,12 +224,16 @@ class Jeweler
     end
 
     def mkdir_in_target(directory)
-      FileUtils.mkdir directory
+      final_destination = File.join(target_dir, directory)
+
+      FileUtils.mkdir final_destination
+
       $stdout.puts "\tcreate\t#{directory}"
     end
 
     def touch_in_target(destination)
-      FileUtils.touch  destination
+      final_destination = File.join(target_dir, destination)
+      FileUtils.touch  final_destination
       $stdout.puts "\tcreate\t#{destination}"
     end
 
