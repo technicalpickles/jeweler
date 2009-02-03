@@ -18,6 +18,9 @@ Feature: shoulda generator
     Then a directory named 'the-perfect-gem' is created
     And a directory named 'the-perfect-gem/lib' is created
     And a directory named 'the-perfect-gem/spec' is created
+    And a directory named 'the-perfect-gem/features' is created
+    And a directory named 'the-perfect-gem/features/support' is created
+    And a directory named 'the-perfect-gem/features/steps' is created
 
     And a file named 'the-perfect-gem/LICENSE' is created
     And a file named 'the-perfect-gem/README' is created
@@ -25,6 +28,10 @@ Feature: shoulda generator
     And a file named 'the-perfect-gem/spec/spec_helper.rb' is created
     And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
     And a file named 'the-perfect-gem/.gitignore' is created
+
+    And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
+    And a file named 'the-perfect-gem/features/support/env.rb' is created
+    And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
 
     And 'coverage' is ignored by git
     And '*.sw?' is ignored by git
@@ -45,6 +52,10 @@ Feature: shoulda generator
 
     And 'spec/spec_helper.rb' requires 'bacon'
     And 'spec/spec_helper.rb' requires 'the_perfect_gem'
+    
+    And 'features/support/env.rb' requires 'the_perfect_gem'
+    And 'features/support/env.rb' requires 'test/unit/assertions'
+    And 'features/support/env.rb' sets up features to use test/unit assertions
 
     And git repository has 'origin' remote
     And git repository 'origin' remote should be 'git@github.com:technicalpickles/the-perfect-gem.git'

@@ -25,6 +25,7 @@ class Jeweler
                   :github_repo_name, :github_remote, :github_url, 
                   :github_username, :github_token,
                   :lib_dir, :constant_name, :file_name_prefix, :config, :test_style,
+                  :features_dir, :features_support_dir, :features_steps_dir,
                   :repo, :should_create_repo
 
     def initialize(github_repo_name, options = {})
@@ -33,18 +34,23 @@ class Jeweler
       if github_repo_name.nil?
         raise NoGitHubRepoNameGiven
       end
-      self.github_repo_name = github_repo_name
+      self.github_repo_name     = github_repo_name
 
-      self.github_remote = "git@github.com:#{github_username}/#{github_repo_name}.git"
-      self.github_url = "http://github.com/#{github_username}/#{github_repo_name}"
+      self.github_remote        = "git@github.com:#{github_username}/#{github_repo_name}.git"
+      self.github_url           = "http://github.com/#{github_username}/#{github_repo_name}"
 
-      self.test_style = options[:test_style] || :shoulda
-      self.target_dir = options[:directory] || self.github_repo_name
-      self.lib_dir = File.join(target_dir, 'lib')
-      self.constant_name = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
-      self.file_name_prefix = self.github_repo_name.gsub('-', '_')
-      self.should_create_repo = options[:create_repo]
-      self.summary = options[:summary] || 'TODO'
+      self.test_style           = options[:test_style] || :shoulda
+      self.target_dir           = options[:directory] || self.github_repo_name
+
+      self.lib_dir              = File.join(target_dir, 'lib')
+      self.features_dir         = File.join(target_dir, 'features')
+      self.features_support_dir = File.join(self.features_dir, 'support')
+      self.features_steps_dir   = File.join(self.features_dir, 'steps')
+
+      self.constant_name        = self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
+      self.file_name_prefix     = self.github_repo_name.gsub('-', '_')
+      self.should_create_repo   = options[:create_repo]
+      self.summary              = options[:summary] || 'TODO'
     end
 
     def run
@@ -61,7 +67,7 @@ class Jeweler
 
     def testspec
       case test_style.to_sym
-      when :shoulda, :testunit, :miniunit
+      when :shoulda, :testunit, :minitest
         'test'
       when :bacon
         'spec'
@@ -72,6 +78,28 @@ class Jeweler
 
     def test_dir
       File.join(target_dir, testspec)
+    end
+
+    def feature_support_require
+      case test_style.to_sym
+      when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
+        'test/unit/assertions'
+      when :minitest
+        'mini/test'
+      else
+        raise "Don't know what to require for #{test_style}"
+      end
+    end
+
+    def feature_support_extend
+      case test_style.to_sym
+      when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
+        'Test::Unit::Assertions'
+      when :minitest
+        'Mini::Test::Assertions'
+      else
+        raise "Don't know what to extend for #{test_style}"
+      end
     end
 
 
@@ -85,6 +113,9 @@ class Jeweler
 
       FileUtils.mkdir lib_dir
       FileUtils.mkdir test_dir
+      FileUtils.mkdir features_dir
+      FileUtils.mkdir features_support_dir
+      FileUtils.mkdir features_steps_dir
 
       output_template_in_target('.gitignore')
       output_template_in_target('Rakefile')
@@ -92,6 +123,9 @@ class Jeweler
       output_template_in_target('README')
       output_template_in_target("#{test_style}/#{testspec}_helper.rb", "#{testspec}/#{testspec}_helper.rb")
       output_template_in_target("#{test_style}/flunking_#{testspec}.rb", "#{testspec}/#{file_name_prefix}_#{testspec}.rb")
+      output_template_in_target("features/support/env.rb")
+      output_template_in_target("features/default.feature", "features/#{file_name_prefix}.feature")
+      output_template_in_target("features/steps/default_steps.rb", "features/steps/#{file_name_prefix}_steps.rb")
 
       FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
     end

@@ -155,6 +155,19 @@ Then /^'test\/test_helper\.rb' should autorun tests$/ do
   assert_match "Mini::Test.autorun", content
 end
 
+Then /^'features\/support\/env\.rb' sets up features to use test\/unit assertions$/ do
+  content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
+
+  assert_match "world.extend(Test::Unit::Assertions)", content
+end
+
+Then /^'features\/support\/env\.rb' sets up features to use minitest assertions$/ do
+  content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
+
+  assert_match "world.extend(Mini::Test::Assertions)", content
+end
+
+
 
 Then /^git repository has '(.*)' remote$/ do |remote|
   remote = @repo.remotes.first
