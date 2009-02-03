@@ -22,8 +22,7 @@ class Jeweler
 
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email, :summary, :test_style,
-                  :github_repo_name, :github_remote, :github_url, 
-                  :github_username, :github_token,
+                  :github_repo_name, :github_username, :github_token,
                   :repo, :should_create_repo
 
     def initialize(github_repo_name, options = {})
@@ -34,9 +33,6 @@ class Jeweler
       use_user_git_config
       
       self.github_repo_name     = github_repo_name
-
-      self.github_remote        = "git@github.com:#{github_username}/#{github_repo_name}.git"
-      self.github_url           = "http://github.com/#{github_username}/#{github_repo_name}"
 
       self.test_style           = options[:test_style] || :shoulda
       self.target_dir           = options[:directory] || self.github_repo_name
@@ -93,6 +89,15 @@ class Jeweler
         raise "Don't know what to extend for #{test_style}"
       end
     end
+
+    def github_remote
+      "git@github.com:#{github_username}/#{github_repo_name}.git"
+    end
+
+    def github_url
+      "http://github.com/#{github_username}/#{github_repo_name}"
+    end
+
     
     def constant_name
       self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
@@ -181,12 +186,20 @@ class Jeweler
     end
 
     def output_template_in_target(source, destination = source)
-      template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', source)))
-
       final_destination = File.join(target_dir, destination)
-      File.open(final_destination, 'w') {|file| file.write(template.result(binding))}
+
+      template_contents = File.read(File.join(template_dir, source))
+      template = ERB.new(template_contents)
+
+      template_result = template.result(binding)
+
+      File.open(final_destination, 'w') {|file| file.write(template_result)}
 
       $stdout.puts "\tcreate\t#{final_destination}"
+    end
+
+    def template_dir
+      File.join(File.dirname(__FILE__), 'templates')
     end
 
     def mkdir_in_target(directory)
