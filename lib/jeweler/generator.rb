@@ -56,12 +56,12 @@ class Jeweler
     def run
       create_files
       gitify
-      puts "Jeweler has prepared your gem in #{github_repo_name}"
+      $stdout.puts "Jeweler has prepared your gem in #{github_repo_name}"
       if should_create_repo
         create_and_push_repo
-        puts "Jeweler has pushed your repo to #{github_url}"
+        $stdout.puts "Jeweler has pushed your repo to #{github_url}"
         enable_gem_for_repo
-        puts "Jeweler has enabled gem building for your repo"
+        $stdout.puts "Jeweler has enabled gem building for your repo"
       end
     end
 
@@ -111,11 +111,11 @@ class Jeweler
         raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
       end
 
-      FileUtils.mkdir lib_dir
-      FileUtils.mkdir test_dir
-      FileUtils.mkdir features_dir
-      FileUtils.mkdir features_support_dir
-      FileUtils.mkdir features_steps_dir
+      mkdir_in_target lib_dir
+      mkdir_in_target test_dir
+      mkdir_in_target features_dir
+      mkdir_in_target features_support_dir
+      mkdir_in_target features_steps_dir
 
       output_template_in_target('.gitignore')
       output_template_in_target('Rakefile')
@@ -127,7 +127,7 @@ class Jeweler
       output_template_in_target("features/default.feature", "features/#{file_name_prefix}.feature")
       output_template_in_target("features/steps/default_steps.rb", "features/steps/#{file_name_prefix}_steps.rb")
 
-      FileUtils.touch File.join(lib_dir, "#{file_name_prefix}.rb")
+      touch_in_target File.join(lib_dir, "#{file_name_prefix}.rb")
     end
 
     def check_user_git_config
@@ -158,7 +158,20 @@ class Jeweler
     def output_template_in_target(source, destination = source)
       template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates', source)))
 
-      File.open(File.join(target_dir, destination), 'w') {|file| file.write(template.result(binding))}
+      final_destination = File.join(target_dir, destination)
+      File.open(final_destination, 'w') {|file| file.write(template.result(binding))}
+
+      $stdout.puts "\tcreate\t#{final_destination}"
+    end
+
+    def mkdir_in_target(directory)
+      FileUtils.mkdir directory
+      $stdout.puts "\tcreate\t#{directory}"
+    end
+
+    def touch_in_target(destination)
+      FileUtils.touch  destination
+      $stdout.puts "\tcreate\t#{destination}"
     end
 
     def gitify
