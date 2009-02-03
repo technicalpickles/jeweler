@@ -31,6 +31,10 @@ class JewelerOpts < Hash
       o.on('--miniunit', 'generate mini/unit tests') do
         self[:testing_framework] = :miniunit
       end
+
+      o.on('--rspec', 'generate rspec tests') do
+        self[:testing_framework] = :rspec
+      end
       
       o.on('--create-repo', 'create the repository on GitHub') do
         self[:create_repo] = true

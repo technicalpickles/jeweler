@@ -103,6 +103,13 @@ Then /^Rakefile has '(.*)' in the Rake::TestTask pattern$/ do |pattern|
   assert_match %Q{t.pattern = '#{pattern}'}, @rakefile_content
 end
 
+Then /^Rakefile has '(.*)' in the Spec::Rake::SpecTask pattern$/ do |pattern|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+
+  assert_match %Q{t.spec_files = FileList['#{pattern}']}, @rakefile_content
+end
+
+
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask test_pattern$/ do |test_pattern|
 
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
@@ -166,8 +173,6 @@ Then /^'features\/support\/env\.rb' sets up features to use minitest assertions$
 
   assert_match "world.extend(Mini::Test::Assertions)", content
 end
-
-
 
 Then /^git repository has '(.*)' remote$/ do |remote|
   remote = @repo.remotes.first

@@ -1,9 +1,9 @@
-Feature: bacon generator
+Feature: rspec generator
   In order to start a new gem
   A user should be able to
-  generate a project setup for bacon
+  generate a project setup for rspec
 
-  Scenario: generating a gem with bacon tests
+  Scenario: generating a gem with rspec tests
     Given a working directory
     And I configure my email address as 'bar@example.com'
     And I configure my name as 'foo'
@@ -11,7 +11,7 @@ Feature: bacon generator
     And I configure my github token as 'zomgtoken'
     And I decide to call the project 'the-perfect-gem'
     And I decide to summarize the project as 'zomg, so good'
-    And intentions to make a gem being tested by bacon
+    And intentions to make a gem being tested by rspec
 
     When I generate a project
 
@@ -41,21 +41,18 @@ Feature: bacon generator
     And Rakefile has 'bar@example.com' as the gem email
     And Rakefile has 'zomg, so good' as the gem summary
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' as the gem homepage
-    And Rakefile has 'spec/**/*_spec.rb' in the Rake::TestTask pattern
-    And Rakefile has 'spec/**/*_spec.rb' in the Rcov::RcovTask test_pattern
-    And Rakefile has 'spec' in the Rcov::RcovTask libs
+    And Rakefile has 'spec/**/*_spec.rb' in the Spec::Rake::SpecTask pattern
 
     And LICENSE has the copyright as belonging to 'foo'
     And LICENSE has the copyright as being in 2008
 
     And 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 
-    And 'spec/spec_helper.rb' requires 'bacon'
+    And 'spec/spec_helper.rb' requires 'spec'
     And 'spec/spec_helper.rb' requires 'the_perfect_gem'
     
     And 'features/support/env.rb' requires 'the_perfect_gem'
-    And 'features/support/env.rb' requires 'test/unit/assertions'
-    And 'features/support/env.rb' sets up features to use test/unit assertions
+    And 'features/support/env.rb' requires 'spec/expectations'
 
     And git repository has 'origin' remote
     And git repository 'origin' remote should be 'git@github.com:technicalpickles/the-perfect-gem.git'
@@ -72,5 +69,3 @@ Feature: bacon generator
     And no files are changed
     And no files are added
     And no files are deleted
-    
-

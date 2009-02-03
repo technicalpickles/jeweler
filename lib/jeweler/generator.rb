@@ -64,6 +64,8 @@ class Jeweler
         'test/unit/assertions'
       when :minitest
         'mini/test'
+      when :rspec
+        'spec/expectations'
       else
         raise "Don't know what to require for #{testing_framework}"
       end
@@ -75,6 +77,8 @@ class Jeweler
         'Test::Unit::Assertions'
       when :minitest
         'Mini::Test::Assertions'
+      when :rspec
+        nil
       else
         raise "Don't know what to extend for #{testing_framework}"
       end
@@ -147,7 +151,7 @@ class Jeweler
       case testing_framework.to_sym
       when :shoulda, :testunit, :minitest
         'test'
-      when :bacon
+      when :bacon, :rspec
         'spec'
       else
         raise "Unknown test style: #{testing_framework}"
@@ -215,7 +219,7 @@ class Jeweler
       final_destination = File.join(target_dir, destination)
 
       template_contents = File.read(File.join(template_dir, source))
-      template = ERB.new(template_contents)
+      template = ERB.new(template_contents, nil, '<>')
 
       template_result = template.result(binding)
 
