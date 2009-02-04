@@ -32,7 +32,7 @@ class JewelerOpts < Hash
         self[:testing_framework] = :minitest
       end
 
-      o.on('--rspec', 'generate rspec tests') do
+      o.on('--rspec', 'generate rspec code examples') do
         self[:testing_framework] = :rspec
       end
       
