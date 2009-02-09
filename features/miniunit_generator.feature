@@ -36,6 +36,8 @@ Feature: minitest generator
     And 'coverage' is ignored by git
     And '*.sw?' is ignored by git
     And '.DS_Store' is ignored by git
+    And 'rdoc' is ignored by git
+    And 'pkg' is ignored by git
 
     And Rakefile has 'the-perfect-gem' as the gem name
     And Rakefile has 'bar@example.com' as the gem email
