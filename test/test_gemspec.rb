@@ -15,10 +15,14 @@ class TestGemspec < Test::Unit::TestCase
   context "Jeweler::GemSpec#write" do
     setup do
       @spec = build_spec
-      @helper = Jeweler::GemSpecHelper.new(@spec)
+      @helper = Jeweler::GemSpecHelper.new(@spec, File.dirname(__FILE__))
       FileUtils.rm_f(@helper.path)
 
       @helper.write
+    end
+
+    teardown do
+      FileUtils.rm_f(@helper.path)
     end
 
     should "create gemspec file" do

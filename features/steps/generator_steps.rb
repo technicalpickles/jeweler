@@ -111,19 +111,15 @@ end
 
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask test_pattern$/ do |test_pattern|
-
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
 
   assert_match "t.test_files = FileList['#{test_pattern}']", @rakefile_content
-
 end
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
-
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
 
   assert_match "t.libs << '#{libs}'", @rakefile_content
-
 end
 
 Then /^LICENSE has the copyright as belonging to '(.*)'$/ do |copyright_holder|
