@@ -14,7 +14,6 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/README' is created
     And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
 
-
   Scenario: bacon
     Given a working directory
     And I have configured git sanely
@@ -22,6 +21,7 @@ Feature: generated directory layout
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/spec' is created
+
     And a file named 'the-perfect-gem/spec/spec_helper.rb' is created
     And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
 
@@ -54,6 +54,7 @@ Feature: generated directory layout
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/test' is created
+
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
 

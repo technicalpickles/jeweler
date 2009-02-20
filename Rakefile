@@ -50,7 +50,6 @@ end
 
 if ENV["RUN_CODE_RUN"] == "true"
   task :default => [:test, :features]
-
 else
   task :default => :test
 end
