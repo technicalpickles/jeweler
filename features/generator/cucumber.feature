@@ -3,7 +3,7 @@ Feature: generating cucumber stories
   A user should be able to
   generate a project setup for their testing framework of choice
 
-  Scenario: baseline cucumber generation
+  Scenario: basic cucumber setup
     Given a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
