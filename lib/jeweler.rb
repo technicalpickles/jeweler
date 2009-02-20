@@ -5,6 +5,8 @@ require 'jeweler/version'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
+require 'jeweler/generator/options'
+require 'jeweler/generator/application'
 
 require 'jeweler/tasks'
 
