@@ -92,8 +92,9 @@ end
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, 'Rcov::RcovTask')
 
-  assert_match "t.libs << '#{libs}'", @rakefile_content
+  assert_match "#{block_variable}.libs << '#{libs}'", @rakefile_content
 end
 
 Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|

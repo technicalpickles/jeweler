@@ -31,10 +31,10 @@ Spec::Rake::SpecTask.new(:spec) do |t|
 end
 <% else %>
 require 'rake/testtask'
-Rake::TestTask.new(:<%= test_or_spec %>) do |t|
-  t.libs << 'lib' << '<%= test_or_spec %>'
-  t.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
-  t.verbose = false
+Rake::TestTask.new(:<%= test_or_spec %>) do |<%= test_or_spec %>|
+  <%= test_or_spec %>.libs << 'lib' << '<%= test_or_spec %>'
+  <%= test_or_spec %>.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
+  <%= test_or_spec %>.verbose = false
 end
 <% end %>
 
@@ -47,10 +47,10 @@ end
 <% else %>
 begin
   require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |t|
-    t.libs << '<%= test_or_spec %>'
-    t.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
-    t.verbose = true
+  Rcov::RcovTask.new do |<%= test_or_spec %>|
+    <%= test_or_spec %>.libs << '<%= test_or_spec %>'
+    <%= test_or_spec %>.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
+    <%= test_or_spec %>.verbose = true
   end
 rescue LoadError
   puts "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
