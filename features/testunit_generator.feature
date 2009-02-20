@@ -6,8 +6,7 @@ Feature: shoulda generator
   Scenario: generating a gem with testunit tests
     Given a working directory
     And I have configured git sanely
-    And I decide to call the project 'the-perfect-gem'
-    And I decide to summarize the project as 'zomg, so good'
+    And I decide to call the project 'the-perfect-gem' that is 'zomg, so good'
     And I intend to test with testunit
 
     When I generate a project

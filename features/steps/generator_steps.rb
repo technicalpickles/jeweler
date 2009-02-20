@@ -8,11 +8,8 @@ Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
 end
 
-Given /^I decide to call the project '((?:\w|-|_)+)'$/ do |name|
+Given /^I decide to call the project '((?:\w|-|_)+)' that is '(.*)'$/ do |name, summary|
   @name = name
-end
-
-Given /I decide to summarize the project as '(.*)'/ do |summary|
   @summary = summary
 end
 
