@@ -38,8 +38,7 @@ Feature: git support
   Scenario: bacon
     Given a working directory
     And I have configured git sanely
-    And I intend to test with bacon
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'spec/spec_helper.rb' was checked in
     And 'spec/the_perfect_gem_spec.rb' was checked in
@@ -47,8 +46,7 @@ Feature: git support
   Scenario: minitest
     Given a working directory
     And I have configured git sanely
-    And I intend to test with minitest
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
     And 'test/the_perfect_gem_test.rb' was checked in
@@ -56,8 +54,7 @@ Feature: git support
   Scenario: rspec
     Given a working directory
     And I have configured git sanely
-    And I intend to test with rspec
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'spec/spec_helper.rb' was checked in
     And 'spec/the_perfect_gem_spec.rb' was checked in
@@ -65,8 +62,7 @@ Feature: git support
   Scenario: shoulda
     Given a working directory
     And I have configured git sanely
-    And I intend to test with shoulda
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
     And 'test/the_perfect_gem_test.rb' was checked in
@@ -74,8 +70,7 @@ Feature: git support
   Scenario: testunit
     Given a working directory
     And I have configured git sanely
-    And I intend to test with testunit
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
     And 'test/the_perfect_gem_test.rb' was checked in

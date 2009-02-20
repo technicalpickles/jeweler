@@ -19,8 +19,7 @@ Feature: generating cucumber stories
   Scenario: cucumber setup for bacon
     Given a working directory
     And I have configured git sanely
-    And I intend to test with bacon
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'test/unit/assertions'
     And 'features/support/env.rb' sets up features to use test/unit assertions
@@ -28,8 +27,7 @@ Feature: generating cucumber stories
   Scenario: cucumber setup for minitest
     Given a working directory
     And I have configured git sanely
-    And I intend to test with minitest
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'mini/test'
     And 'features/support/env.rb' sets up features to use minitest assertions
@@ -37,8 +35,7 @@ Feature: generating cucumber stories
   Scenario: cucumber setup for rspec
     Given a working directory
     And I have configured git sanely
-    And I intend to test with rspec
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'the_perfect_gem'
     And 'features/support/env.rb' requires 'spec/expectations'

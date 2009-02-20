@@ -24,9 +24,15 @@ end
 
 
 
-When /^I generate a project named '((?:\w|-|_)+)' that is '(.*)'$/ do |name, summary|
+When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testing_framework, name, summary|
   @name = name
   @summary = summary
+
+  testing_framework = testing_framework.squeeze.strip
+  unless testing_framework.blank?
+    @testing_framework = testing_framework.to_sym
+  end
+
 
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",

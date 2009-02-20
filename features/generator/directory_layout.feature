@@ -17,8 +17,7 @@ Feature: generated directory layout
   Scenario: bacon
     Given a working directory
     And I have configured git sanely
-    And I intend to test with bacon
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/spec' is created
 
@@ -28,8 +27,7 @@ Feature: generated directory layout
   Scenario: minitest
     Given a working directory
     And I have configured git sanely
-    And I intend to test with minitest
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/test' is created
 
@@ -39,8 +37,7 @@ Feature: generated directory layout
   Scenario: rspec
     Given a working directory
     And I have configured git sanely
-    And I intend to test with rspec
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/spec' is created
 
@@ -50,8 +47,7 @@ Feature: generated directory layout
   Scenario: shoulda
     Given a working directory
     And I have configured git sanely
-    And I intend to test with shoulda
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/test' is created
 
@@ -61,8 +57,7 @@ Feature: generated directory layout
   Scenario: testunit
     Given a working directory
     And I have configured git sanely
-    And I intend to test with testunit
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a directory named 'the-perfect-gem/test' is created
 

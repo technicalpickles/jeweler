@@ -6,22 +6,19 @@ Feature: generated test or spec
   Scenario: bacon
     Given a working directory
     And I have configured git sanely
-    And I intend to test with bacon
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 
   Scenario: minitest
     Given a working directory
     And I have configured git sanely
-    And I intend to test with minitest
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Mini::Test::TestCase'
 
   Scenario: rspec
     Given a working directory
     And I have configured git sanely
-    And I intend to test with rspec
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 
   Scenario: shoulda
@@ -34,7 +31,5 @@ Feature: generated test or spec
   Scenario: testunit
     Given a working directory
     And I have configured git sanely
-    And I intend to test with testunit
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
-
