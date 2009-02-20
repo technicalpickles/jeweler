@@ -16,34 +16,23 @@ Given /I decide to summarize the project as '(.*)'/ do |summary|
   @summary = summary
 end
 
-Given /^I configure my email address as '(.*)'$/ do |user_email|
-  @user_email = user_email
-end
+Given /^I have configured git sanely$/ do
+  @user_email = 'bar@example.com'
+  @user_name = 'foo'
+  @github_user = 'technicalpickles'
+  @github_token = 'zomgtoken'
 
-Given /^I configure my name as '(.*)'$/ do |user_name|
-  @user_name = user_name
-end
-
-Given /^I configure my github username as '(.*)'$/ do |github_user|
-  @github_user = github_user
-end
-
-Given /^I configure my github token as '(.*)'$/ do |github_token|
-  @github_token = github_token
-end
-
-
-Given /^working git configuration$/ do
-end
-
-When /^I generate a project$/ do
   Jeweler::Generator.any_instance.stubs(:read_git_config).
         returns({
           'user.name' => @user_name,
           'user.email' => @user_email,
           'github.user' => @github_user,
           'github.token' => @github_token})
+end
 
+
+
+When /^I generate a project$/ do
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",
                                       :summary => @summary,

@@ -5,10 +5,7 @@ Feature: minitest generator
 
   Scenario: generating a gem with minitest tests
     Given a working directory
-    And I configure my email address as 'bar@example.com'
-    And I configure my name as 'foo'
-    And I configure my github username as 'technicalpickles'
-    And I configure my github token as 'zomgtoken'
+    And I have configured git sanely
     And I decide to call the project 'the-perfect-gem'
     And I decide to summarize the project as 'zomg, so good'
     And intentions to make a gem being tested by minitest
