@@ -6,7 +6,6 @@ Feature: generating cucumber stories
   Scenario: baseline cucumber generation
     Given a working directory
     And I have configured git sanely
-
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then cucumber directories are created
@@ -21,7 +20,6 @@ Feature: generating cucumber stories
     Given a working directory
     And I have configured git sanely
     And I intend to test with bacon
-
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'test/unit/assertions'
@@ -31,18 +29,15 @@ Feature: generating cucumber stories
     Given a working directory
     And I have configured git sanely
     And I intend to test with minitest
-
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'mini/test'
     And 'features/support/env.rb' sets up features to use minitest assertions
 
-
   Scenario: cucumber setup for rspec
     Given a working directory
     And I have configured git sanely
     And I intend to test with rspec
-
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'the_perfect_gem'
