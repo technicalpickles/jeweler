@@ -8,11 +8,6 @@ Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
 end
 
-Given /^I decide to call the project '((?:\w|-|_)+)' that is '(.*)'$/ do |name, summary|
-  @name = name
-  @summary = summary
-end
-
 Given /^I have configured git sanely$/ do
   @user_email = 'bar@example.com'
   @user_name = 'foo'
@@ -29,7 +24,10 @@ end
 
 
 
-When /^I generate a project$/ do
+When /^I generate a project named '((?:\w|-|_)+)' that is '(.*)'$/ do |name, summary|
+  @name = name
+  @summary = summary
+
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",
                                       :summary => @summary,

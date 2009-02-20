@@ -6,10 +6,9 @@ Feature: minitest generator
   Scenario: generating a gem with minitest tests
     Given a working directory
     And I have configured git sanely
-    And I decide to call the project 'the-perfect-gem' that is 'zomg, so good'
     And I intend to test with minitest
 
-    When I generate a project
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     And a directory named 'the-perfect-gem/test' is created
     And cucumber directories are created
