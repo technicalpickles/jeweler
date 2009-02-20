@@ -42,8 +42,7 @@ Feature: bacon generator
     And Rakefile has 'spec/**/*_spec.rb' in the Rcov::RcovTask test_pattern
     And Rakefile has 'spec' in the Rcov::RcovTask libs
 
-    And LICENSE has the copyright as belonging to 'foo'
-    And LICENSE has the copyright as being in 2008
+    And LICENSE has the copyright as belonging to 'foo' in '2008'
 
     And 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 

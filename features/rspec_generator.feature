@@ -40,8 +40,7 @@ Feature: rspec generator
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' as the gem homepage
     And Rakefile has 'spec/**/*_spec.rb' in the Spec::Rake::SpecTask pattern
 
-    And LICENSE has the copyright as belonging to 'foo'
-    And LICENSE has the copyright as being in 2008
+    And LICENSE has the copyright as belonging to 'foo' in '2008'
 
     And 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 

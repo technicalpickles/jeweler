@@ -42,8 +42,7 @@ Feature: shoulda generator
     And Rakefile has 'test/**/*_test.rb' in the Rcov::RcovTask test_pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
 
-    And LICENSE has the copyright as belonging to 'foo'
-    And LICENSE has the copyright as being in 2008
+    And LICENSE has the copyright as belonging to 'foo' in '2008'
 
     And 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
 

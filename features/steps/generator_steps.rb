@@ -118,14 +118,10 @@ Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   assert_match "t.libs << '#{libs}'", @rakefile_content
 end
 
-Then /^LICENSE has the copyright as belonging to '(.*)'$/ do |copyright_holder|
+Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
   @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
 
   assert_match copyright_holder, @license_content
-end
-
-Then /^LICENSE has the copyright as being in (\d{4})$/ do |year|
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
 
   assert_match year, @license_content
 end
