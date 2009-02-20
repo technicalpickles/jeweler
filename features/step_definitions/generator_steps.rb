@@ -97,6 +97,18 @@ Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   assert_match "#{block_variable}.libs << '#{libs}'", @rakefile_content
 end
 
+
+Then /^'(.*)' contains '(.*)'$/ do |file, expected_string|
+  contents = File.read(File.join(@working_dir, @name, file))
+  assert_match expected_string, contents
+end
+
+Then /^'(.*)' mentions copyright belonging to me in (\d{4})$/ do |file, year|
+  contents = File.read(File.join(@working_dir, @name, file))
+  assert_match "Copyright (c) #{year} #{@user_name}", contents
+end
+
+
 Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
   Then "a file named 'the-perfect-gem/LICENSE' is created"
 

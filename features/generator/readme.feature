@@ -8,4 +8,5 @@ Feature: generated license
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then LICENSE has the copyright as belonging to 'foo' in '2008'
+    Then 'README.rdoc' contains '= the-perfect-gem'
+    And 'README.rdoc' mentions copyright belonging to me in 2008 

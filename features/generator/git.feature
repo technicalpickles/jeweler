@@ -24,7 +24,7 @@ Feature: git support
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a commit with the message 'Initial commit to the-perfect-gem.' is made
-    And 'README' was checked in
+    And 'README.rdoc' was checked in
     And 'Rakefile' was checked in
     And 'LICENSE' was checked in
     And 'lib/the_perfect_gem.rb' was checked in

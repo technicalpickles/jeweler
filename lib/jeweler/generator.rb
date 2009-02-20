@@ -170,7 +170,7 @@ class Jeweler
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
       output_template_in_target 'LICENSE'
-      output_template_in_target 'README'
+      output_template_in_target 'README.rdoc'
 
       mkdir_in_target           lib_dir
       touch_in_target           File.join(lib_dir, "#{file_name_prefix}.rb")
