@@ -11,14 +11,9 @@ Feature: rspec generator
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     And a directory named 'the-perfect-gem/spec' is created
-    And cucumber directories are created
 
     And a file named 'the-perfect-gem/spec/spec_helper.rb' is created
     And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
-
-    And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
-    And a file named 'the-perfect-gem/features/support/env.rb' is created
-    And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
 
     And Rakefile has 'spec/**/*_spec.rb' in the Spec::Rake::SpecTask pattern
 
@@ -26,6 +21,3 @@ Feature: rspec generator
 
     And 'spec/spec_helper.rb' requires 'spec'
     And 'spec/spec_helper.rb' requires 'the_perfect_gem'
-    
-    And 'features/support/env.rb' requires 'the_perfect_gem'
-    And 'features/support/env.rb' requires 'spec/expectations'
