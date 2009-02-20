@@ -56,7 +56,6 @@ Feature: rspec generator
     And a commit with the message 'Initial commit to the-perfect-gem.' is made
     And 'README' was checked in
     And 'Rakefile' was checked in
-    And 'LICENSE' was checked in
     And 'lib/the_perfect_gem.rb' was checked in
     And 'spec/spec_helper.rb' was checked in
     And 'spec/the_perfect_gem_spec.rb' was checked in

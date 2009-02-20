@@ -119,6 +119,8 @@ Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
 end
 
 Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
+  Then "a file named 'the-perfect-gem/LICENSE' is created"
+
   @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
 
   assert_match copyright_holder, @license_content

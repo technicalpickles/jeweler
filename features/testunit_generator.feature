@@ -17,7 +17,6 @@ Feature: shoulda generator
     And a directory named 'the-perfect-gem/test' is created
     And cucumber directories are created
 
-    And a file named 'the-perfect-gem/LICENSE' is created
     And a file named 'the-perfect-gem/README' is created
     And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
