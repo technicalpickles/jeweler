@@ -85,27 +85,9 @@ end
 Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
   block_variable, task_block = yank_task_info(@rakefile_content, task_class)
+  #raise "Found in #{task_class}: #{block_variable.inspect}: #{task_block.inspect}"
 
   assert_match /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/, task_block
-end
-
-Then /^Rakefile has '(.*)' in the Rake::TestTask pattern$/ do |pattern|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
-
-  assert_match %Q{t.pattern = '#{pattern}'}, @rakefile_content
-end
-
-Then /^Rakefile has '(.*)' in the Spec::Rake::SpecTask pattern$/ do |pattern|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
-
-  assert_match %Q{t.spec_files = FileList['#{pattern}']}, @rakefile_content
-end
-
-
-Then /^Rakefile has '(.*)' in the Rcov::RcovTask test_pattern$/ do |test_pattern|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
-
-  assert_match "t.test_files = FileList['#{test_pattern}']", @rakefile_content
 end
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
@@ -191,4 +173,3 @@ end
 After do
   FileUtils.rm_rf @working_dir if @working_dir
 end
-

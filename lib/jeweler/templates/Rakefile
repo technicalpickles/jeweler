@@ -41,7 +41,7 @@ end
 <% if testing_framework.to_sym == :rspec %>
 Spec::Rake::SpecTask.new(:rcov) do |t|
   t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.pattern = 'spec/**/*_spec.rb'
   t.rcov = true
 end
 <% else %>
@@ -49,7 +49,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|
     t.libs << '<%= test_or_spec %>'
-    t.test_files = FileList['<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb']
+    t.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
     t.verbose = true
   end
 rescue LoadError

@@ -16,11 +16,10 @@ Feature: generated Rakefile
   Scenario: bacon
     Given a working directory
     And I have configured git sanely
-    And I intend to test with bacon
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'spec/**/*_spec.rb' in the Rake::TestTask pattern
-    And Rakefile has 'spec/**/*_spec.rb' in the Rcov::RcovTask test_pattern
+    Then Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
+    And Rakefile has 'spec/**/*_spec.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'spec' in the Rcov::RcovTask libs
 
   Scenario: minitest
@@ -28,8 +27,8 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'test/**/*_test.rb' in the Rake::TestTask pattern
-    And Rakefile has 'test/**/*_test.rb' in the Rcov::RcovTask test_pattern
+    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
+    And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
 
   Scenario: rspec
@@ -37,15 +36,15 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'spec/**/*_spec.rb' in the Spec::Rake::SpecTask pattern
+    Then Rakefile has 'spec/**/*_spec.rb' for the Spec::Rake::SpecTask pattern
 
   Scenario: shoulda
     Given a working directory
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'test/**/*_test.rb' in the Rake::TestTask pattern
-    And Rakefile has 'test/**/*_test.rb' in the Rcov::RcovTask test_pattern
+    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
+    And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
 
   Scenario: testunit
@@ -53,6 +52,6 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'test/**/*_test.rb' in the Rake::TestTask pattern
-    And Rakefile has 'test/**/*_test.rb' in the Rcov::RcovTask test_pattern
+    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
+    And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
