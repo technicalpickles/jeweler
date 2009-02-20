@@ -20,17 +20,12 @@ Feature: minitest generator
     And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
-    And a file named 'the-perfect-gem/.gitignore' is created
 
     And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
     And a file named 'the-perfect-gem/features/support/env.rb' is created
     And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
 
-    And 'coverage' is ignored by git
-    And '*.sw?' is ignored by git
-    And '.DS_Store' is ignored by git
-    And 'rdoc' is ignored by git
-    And 'pkg' is ignored by git
+    And a sane '.gitignore' is created
 
     And Rakefile has 'the-perfect-gem' as the gem name
     And Rakefile has 'bar@example.com' as the gem email

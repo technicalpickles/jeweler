@@ -63,6 +63,15 @@ Then /^a file named '(.*)' is created$/ do |file|
   assert File.file?(file), "#{file} is not a file"
 end
 
+Then /^a sane '.gitignore' is created$/ do
+  Then "a file named 'the-perfect-gem/.gitignore' is created"
+  Then "'coverage' is ignored by git"
+  Then "'*.sw?' is ignored by git"
+  Then "'.DS_Store' is ignored by git"
+  Then "'rdoc' is ignored by git"
+  Then "'pkg' is ignored by git"
+end
+
 Then /^'(.*)' is ignored by git$/ do |git_ignore|
   @gitignore_content ||= File.read(File.join(@working_dir, @name, '.gitignore'))
 
