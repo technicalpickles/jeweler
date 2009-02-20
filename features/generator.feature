@@ -16,10 +16,6 @@ Feature: shoulda generator
     And a file named 'the-perfect-gem/README' is created
     And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
 
-    And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
-    And a file named 'the-perfect-gem/features/support/env.rb' is created
-    And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
-
     And a sane '.gitignore' is created
 
     And Rakefile has 'the-perfect-gem' as the gem name

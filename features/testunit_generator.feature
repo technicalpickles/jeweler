@@ -11,13 +11,9 @@ Feature: shoulda generator
 
     When I generate a project
 
-    Then a directory named 'the-perfect-gem' is created
-    And a directory named 'the-perfect-gem/lib' is created
     And a directory named 'the-perfect-gem/test' is created
     And cucumber directories are created
 
-    And a file named 'the-perfect-gem/README' is created
-    And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
 
@@ -25,17 +21,9 @@ Feature: shoulda generator
     And a file named 'the-perfect-gem/features/support/env.rb' is created
     And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
 
-    And a sane '.gitignore' is created
-
-    And Rakefile has 'the-perfect-gem' as the gem name
-    And Rakefile has 'bar@example.com' as the gem email
-    And Rakefile has 'zomg, so good' as the gem summary
-    And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' as the gem homepage
     And Rakefile has 'test/**/*_test.rb' in the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' in the Rcov::RcovTask test_pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
-
-    And LICENSE has the copyright as belonging to 'foo' in '2008'
 
     And 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
 
@@ -47,21 +35,5 @@ Feature: shoulda generator
     And 'features/support/env.rb' requires 'test/unit/assertions'
     And 'features/support/env.rb' sets up features to use test/unit assertions
 
-
-    And git repository has 'origin' remote
-    And git repository 'origin' remote should be 'git@github.com:technicalpickles/the-perfect-gem.git'
-
-    And a commit with the message 'Initial commit to the-perfect-gem.' is made
-    And 'README' was checked in
-    And 'Rakefile' was checked in
-    And 'LICENSE' was checked in
-    And 'lib/the_perfect_gem.rb' was checked in
     And 'test/test_helper.rb' was checked in
     And 'test/the_perfect_gem_test.rb' was checked in
-    And '.gitignore' was checked in
-    And no files are untracked
-    And no files are changed
-    And no files are added
-    And no files are deleted
-    
-
