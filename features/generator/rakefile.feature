@@ -8,10 +8,10 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'the-perfect-gem' as the gem name
-    And Rakefile has 'bar@example.com' as the gem email
-    And Rakefile has 'zomg, so good' as the gem summary
-    And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' as the gem homepage
+    Then Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
+    And Rakefile has 'bar@example.com' for the Jeweler::Tasks email
+    And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
+    And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
 
   Scenario: bacon
     Given a working directory

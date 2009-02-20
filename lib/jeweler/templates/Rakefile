@@ -2,13 +2,13 @@ require 'rake'
 
 begin
   require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "<%= github_repo_name %>"
-    s.summary = %Q{<%= summary %>}
-    s.email = "<%= user_email %>"
-    s.homepage = "<%= github_url %>"
-    s.description = "TODO"
-    s.authors = ["<%= user_name %>"]
+  Jeweler::Tasks.new do |gem|
+    gem.name = "<%= github_repo_name %>"
+    gem.summary = %Q{<%= summary %>}
+    gem.email = "<%= user_email %>"
+    gem.homepage = "<%= github_url %>"
+    gem.description = "TODO"
+    gem.authors = ["<%= user_name %>"]
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

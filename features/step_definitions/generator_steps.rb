@@ -82,15 +82,17 @@ Then /^'(.*)' is ignored by git$/ do |git_ignore|
   assert_match git_ignore, @gitignore_content
 end
 
-Then /^Rakefile has '(.*)' as the gem name$/ do |name|
+Then /^Rakefile has '(.*)' for the Jeweler::Tasks (.*)$/ do |value, field|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_body = yank_task_info(@rakefile_content, 'Jeweler::Tasks')
 
-  assert_match %Q{s.name = "#{name}"}, @rakefile_content
+  assert_match /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/, task_body
 end
 
 Then /^Rakefile has '(.*)' as the gem email$/ do |email|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
-  assert_match %Q{s.email = "#{email}"}, @rakefile_content
+  var, task_body = yank_task_info(@rakefile_content, 'Jeweler::Tasks')
+  assert_match %Q{s.email = "#{email}"}, task_body
 end
 
 Then /^Rakefile has '(.*)' as the gem summary$/ do |summary|

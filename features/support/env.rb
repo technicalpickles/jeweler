@@ -11,3 +11,8 @@ World do |world|
   world
 end
 
+def yank_task_info(content, task)
+  if content =~ /#{task}.new do \|(.*?)\|(.*?)end/m
+    [$1, $2]
+  end
+end
