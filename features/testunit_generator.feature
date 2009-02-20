@@ -8,16 +8,14 @@ Feature: shoulda generator
     And I have configured git sanely
     And I decide to call the project 'the-perfect-gem'
     And I decide to summarize the project as 'zomg, so good'
-    And intentions to make a gem being tested by testunit
+    And I intend to test with testunit
 
     When I generate a project
 
     Then a directory named 'the-perfect-gem' is created
     And a directory named 'the-perfect-gem/lib' is created
     And a directory named 'the-perfect-gem/test' is created
-    And a directory named 'the-perfect-gem/features' is created
-    And a directory named 'the-perfect-gem/features/support' is created
-    And a directory named 'the-perfect-gem/features/steps' is created
+    And cucumber directories are created
 
     And a file named 'the-perfect-gem/LICENSE' is created
     And a file named 'the-perfect-gem/README' is created

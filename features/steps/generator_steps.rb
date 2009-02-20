@@ -4,7 +4,7 @@ Given 'a working directory' do
   FileUtils.mkdir_p @working_dir
 end
 
-Given /^intentions to make a gem being tested by (\w+)$/ do |testing_framework|
+Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
 end
 
@@ -51,6 +51,13 @@ Then /^a directory named '(.*)' is created$/ do |directory|
   assert File.exists?(directory), "#{directory} did not exist"
   assert File.directory?(directory), "#{directory} is not a directory"
 end
+
+Then "cucumber directories are created" do
+  Then "a directory named 'the-perfect-gem/features' is created"
+  Then "a directory named 'the-perfect-gem/features/support' is created"
+  Then "a directory named 'the-perfect-gem/features/steps' is created"
+end
+
 
 Then /^a file named '(.*)' is created$/ do |file|
   file = File.join(@working_dir, file)
