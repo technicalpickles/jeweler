@@ -5,10 +5,16 @@ Jeweler provides two things:
  * Rake tasks for managing gems and versioning of a <a href="http://github.com">GitHub</a> project
  * A generator for creating kickstarting a new project
 
+## Installing
+
+    # Run the following if you haven't done so before:
+    gem sources -a http://gems.github.com
+    # Install the gem:
+    sudo gem install technicalpickles-jeweler
+    
 ## Setting up in an existing project
 
 It's easy to get up and running. Update your instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
-
 
     begin
       require 'jeweler'
