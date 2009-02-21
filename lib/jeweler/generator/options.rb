@@ -40,8 +40,7 @@ class Jeweler
           end
 
           o.on_tail('-h', '--help', 'display this help and exit') do
-            puts o
-            exit
+            self[:show_help] = true
           end
         end
 

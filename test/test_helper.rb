@@ -40,6 +40,11 @@ class Test::Unit::TestCase
        block.call
      end
   end
+  def catch_err(&block)
+     OutputCatcher.catch_err do
+       block.call
+     end
+  end
 
   def fixture_dir
     File.join(File.dirname(__FILE__), 'fixtures', 'bar')

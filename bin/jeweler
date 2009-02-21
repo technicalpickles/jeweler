@@ -5,4 +5,4 @@ require 'optparse'
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'jeweler'
 
-Jeweler::Generator::Application.run!(ARGV)
+Jeweler::Generator::Application.run!(*ARGV)
