@@ -31,12 +31,20 @@ class Jeweler
             self[:testing_framework] = :rspec
           end
 
+          o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do
+            self[:use_cucumber] = true
+          end
+
           o.on('--create-repo', 'create the repository on GitHub') do
             self[:create_repo] = true
           end
 
           o.on('--summary [SUMMARY]', 'specify the summary of the project') do |summary|
             self[:summary] = summary
+          end
+
+          o.on('--directory [DIRECTORY]', 'specify the directory to generate into') do |directory|
+            self[:directory] = directory
           end
 
           o.on_tail('-h', '--help', 'display this help and exit') do

@@ -78,6 +78,7 @@ Feature: git support
   Scenario: cucumber
     Given a working directory
     And I have configured git sanely
+    And I want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/the_perfect_gem.feature' was checked in
