@@ -5,8 +5,8 @@ gem 'thoughtbot-shoulda'
 require 'shoulda'
 gem 'ruby-debug'
 require 'ruby-debug'
-gem 'mocha'
-require 'mocha'
+gem 'rr'
+require 'rr'
 
 require File.dirname(__FILE__) + '/shoulda_macros/jeweler_macros'
 
@@ -35,6 +35,8 @@ TMP_DIR = File.join(File.dirname(__FILE__), 'tmp')
 FileUtils.rm_f(TMP_DIR) # GAH, dirty hax. Somewhere isn't tearing up correctly, so do some cleanup first
 
 class Test::Unit::TestCase
+  include RR::Adapters::TestUnit
+
   def catch_out(&block)
      OutputCatcher.catch_out do
        block.call

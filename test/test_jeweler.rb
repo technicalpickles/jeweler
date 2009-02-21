@@ -4,7 +4,8 @@ class TestJeweler < Test::Unit::TestCase
 
   def setup
     @now = Time.now
-    Time.stubs(:now).returns(@now)
+    stub(Time).now { @now }
+
     FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
   end
 

@@ -47,9 +47,16 @@ class TestApplication < Test::Unit::TestCase
     end
   end
 
+  def build_generator(name = 'zomg', options = {:testing_framework => :shoulda})
+    Jeweler::Generator.new(name, options)
+  end
+
   context "called with -h" do
     setup do
-      Jeweler::Generator.any_instance.stubs(:run).raises StandardError
+      @generator = build_generator
+      stub(@generator).run
+      stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
+
       assert_nothing_raised do
         @result = run_application("-h")
       end
@@ -69,9 +76,10 @@ class TestApplication < Test::Unit::TestCase
   context "when called with repo name" do
     setup do
       @options = {:testing_framework => :shoulda}
-      @generator = Jeweler::Generator.new('zomg', @options)
-      @generator.stubs(:run)
-      Jeweler::Generator.stubs(:new).with('zomg', @options).returns(@generator)
+      @generator = build_generator('zomg', @options)
+
+      stub(@generator).run
+      stub(Jeweler::Generator).new { @generator }
     end
 
     should 'return exit code 0' do
@@ -80,15 +88,17 @@ class TestApplication < Test::Unit::TestCase
     end
     
     should 'create generator with repo name and no options' do
-      Jeweler::Generator.expects(:new).with('zomg', @options).returns(@generator)
-
       run_application("zomg")
+
+      assert_received Jeweler::Generator do |subject|
+        subject.new('zomg', @options)
+      end
     end
 
     should 'run generator' do
-      @generator.expects(:run)
-
       run_application("zomg")
+
+      assert_received(@generator) {|subject| subject.run }
     end
 
     should 'not display usage on stderr' do
