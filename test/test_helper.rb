@@ -20,16 +20,6 @@ Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |di
   $LOAD_PATH.unshift(lib) if File.directory?(lib)
 end
 
-# Fake out FileList from Rake
-class FileList
-  def self.[](*args)
-    TMP_DIR.entries - ['.','..','.DS_STORE']
-  end
-end
-
-TMP_DIR = File.join(File.dirname(__FILE__), 'tmp') unless defined?(TMP_DIR)
-FileUtils.rm_f(TMP_DIR) # GAH, dirty hax. Somewhere isn't tearing up correctly, so do some cleanup first
-
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
 
