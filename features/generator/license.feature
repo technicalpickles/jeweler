@@ -8,4 +8,4 @@ Feature: generated license
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then LICENSE has the copyright as belonging to 'foo' in '2008'
+    Then LICENSE has the copyright as belonging to 'foo' in '2009'
