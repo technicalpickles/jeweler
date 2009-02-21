@@ -55,3 +55,19 @@ Feature: generated Rakefile
     Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
+
+  Scenario: no cucumber
+    Given a working directory
+    And I have configured git sanely
+    And I do not want cucumber stories
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile does not require 'cucumber/rake/task' 
+    And Rakefile does not instantiate a Cucumber::Rake::Task
+
+  Scenario: cucumber
+    Given a working directory
+    And I have configured git sanely
+    And I want cucumber stories
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile requires 'cucumber/rake/task' 
+    And Rakefile instantiates a Cucumber::Rake::Task

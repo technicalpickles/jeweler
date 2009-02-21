@@ -59,6 +59,7 @@ rescue LoadError
 end
 <% end %>
 
+<% if should_use_cucumber %>
 begin
   require 'cucumber/rake/task'
   Cucumber::Rake::Task.new(:features)
@@ -68,6 +69,7 @@ rescue LoadError
   end
 end
 
+<% end %>
 <% if testing_framework.to_sym == :rspec %>
 task :default => :spec
 <% else %>

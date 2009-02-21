@@ -144,8 +144,35 @@ end
 Then /^'(.*)' requires '(.*)'$/ do |file, lib|
   content = File.read(File.join(@working_dir, @name, file))
 
-  assert_match /require ['"]#{lib}['"]/, content
+  assert_match /require ['"]#{Regexp.escape(lib)}['"]/, content
 end
+
+Then /^'(.*)' does not require '(.*)'$/ do |file, lib|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_no_match /require ['"]#{Regexp.escape(lib)}['"]/, content
+end
+
+Then /^Rakefile does not require 'cucumber\/rake\/task'$/ do
+  Then "'Rakefile' does not require 'cucumber/rake/task'"
+end
+
+Then /^Rakefile requires 'cucumber\/rake\/task'$/ do
+  Then "'Rakefile' requires 'cucumber/rake/task'"
+end
+
+Then /^Rakefile does not instantiate a Cucumber::Rake::Task$/ do
+  content = File.read(File.join(@working_dir, @name, 'Rakefile'))
+  assert_no_match /Cucumber::Rake::Task.new/, content
+end
+
+Then /^Rakefile instantiates a Cucumber::Rake::Task$/ do
+  content = File.read(File.join(@working_dir, @name, 'Rakefile'))
+  assert_match /Cucumber::Rake::Task.new/, content
+end
+
+
+
 
 Then /^'test\/test_helper\.rb' should autorun tests$/ do
   content = File.read(File.join(@working_dir, @name, 'test/test_helper.rb'))
