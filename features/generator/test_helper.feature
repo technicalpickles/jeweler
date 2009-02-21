@@ -31,7 +31,6 @@ Feature: generated test or spec
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/test_helper.rb' requires 'test/unit'
     And 'test/test_helper.rb' requires 'shoulda'
-    And 'test/test_helper.rb' requires 'mocha'
     And 'test/test_helper.rb' requires 'the_perfect_gem'
 
   Scenario: testunit
