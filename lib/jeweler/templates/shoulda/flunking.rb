@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 class <%= constant_name %>Test < Test::Unit::TestCase
   should "probably rename this file and start testing for real" do
