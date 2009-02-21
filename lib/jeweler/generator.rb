@@ -23,7 +23,7 @@ class Jeweler
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
                   :github_repo_name, :github_username, :github_token,
-                  :repo, :should_create_repo
+                  :repo, :should_create_repo, :should_use_cucumber
 
     def initialize(github_repo_name, options = {})
       if github_repo_name.nil?
@@ -39,6 +39,7 @@ class Jeweler
 
       self.should_create_repo = options[:create_repo]
       self.summary            = options[:summary] || 'TODO'
+      self.should_use_cucumber= options[:use_cucumber]
     end
 
     def run
@@ -179,14 +180,16 @@ class Jeweler
       output_template_in_target File.join(testing_framework.to_s, 'helper.rb'), File.join(test_dir, test_helper_filename)
       output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'), File.join(test_dir, test_filename)
 
-      mkdir_in_target           features_dir
-      output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
+      if should_use_cucumber
+        mkdir_in_target           features_dir
+        output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
 
-      mkdir_in_target           features_support_dir
-      output_template_in_target File.join(features_support_dir, 'env.rb')
+        mkdir_in_target           features_support_dir
+        output_template_in_target File.join(features_support_dir, 'env.rb')
 
-      mkdir_in_target           features_steps_dir
-      output_template_in_target File.join(features_steps_dir, 'default_steps.rb'), File.join('features', 'steps', steps_filename)
+        mkdir_in_target           features_steps_dir
+        output_template_in_target File.join(features_steps_dir, 'default_steps.rb'), File.join('features', 'steps', steps_filename)
+      end
 
     end
 

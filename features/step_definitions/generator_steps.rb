@@ -4,6 +4,14 @@ Given 'a working directory' do
   FileUtils.mkdir_p @working_dir
 end
 
+Given /^I do not want cucumber stories$/ do
+  @use_cucumber = false
+end
+
+Given /^I want cucumber stories$/ do
+  @use_cucumber = true
+end
+
 Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
 end
@@ -37,7 +45,8 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testi
   @generator = Jeweler::Generator.new(@name, 
                                       :directory => "#{@working_dir}/#{@name}",
                                       :summary => @summary,
-                                      :testing_framework => @testing_framework)
+                                      :testing_framework => @testing_framework,
+                                      :use_cucumber => @use_cucumber)
 
   @stdout = OutputCatcher.catch_out do
     @generator.run
@@ -63,8 +72,14 @@ end
 Then /^a file named '(.*)' is created$/ do |file|
   file = File.join(@working_dir, file)
 
-  assert File.exists?(file), "#{file} did not exist"
-  assert File.file?(file), "#{file} is not a file"
+  assert File.exists?(file), "#{file} expected to exist, but did not"
+  assert File.file?(file), "#{file} expected to be a file, but is not"
+end
+
+Then /^a file named '(.*)' is not created$/ do |file|
+  file = File.join(@working_dir, file)
+
+  assert ! File.exists?(file), "#{file} expected to not exist, but did"
 end
 
 Then /^a sane '.gitignore' is created$/ do

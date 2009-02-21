@@ -9,7 +9,6 @@ class TestTasks < Test::Unit::TestCase
       Task.clear
 
       @jt = Jeweler::Tasks.new do |s|
-
       end
     end
 
@@ -25,12 +24,12 @@ class TestTasks < Test::Unit::TestCase
       assert Task.task_defined?(:build)
       assert Task.task_defined?(:install)
       assert Task.task_defined?(:gemspec)
+      assert Task.task_defined?(:build)
+      assert Task.task_defined?(:install)
       assert Task.task_defined?(:'gemspec:validate')
       assert Task.task_defined?(:'gemspec:generate')
       assert Task.task_defined?(:version)
       assert Task.task_defined?(:'version:write')
-      assert Task.task_defined?(:'version:display')
-      assert Task.task_defined?(:'version:bump')
       assert Task.task_defined?(:'version:bump:major')
       assert Task.task_defined?(:'version:bump:minor')
       assert Task.task_defined?(:'version:bump:patch')
