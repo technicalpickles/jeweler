@@ -11,7 +11,7 @@ class Jeweler
         @opts = OptionParser.new do |o|
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
 
-          o.on('--bacon', 'generate bacon specs') do
+          o.on('--bacon', 'generate bacon specifications') do
             self[:testing_framework] = :bacon
           end
 
@@ -27,7 +27,7 @@ class Jeweler
             self[:testing_framework] = :minitest
           end
 
-          o.on('--rspec', 'generate rspec tests') do
+          o.on('--rspec', 'generate rspec code examples') do
             self[:testing_framework] = :rspec
           end
 
