@@ -19,7 +19,9 @@ rescue LoadError
 end
 
 require 'rake/testtask'
-Rake::TestTask.new 
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'test'
+end
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|

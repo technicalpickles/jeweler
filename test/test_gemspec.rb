@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 class TestGemspec < Test::Unit::TestCase
   context "A Jeweler::GemSpec, given a gemspec" do
