@@ -42,14 +42,9 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testi
   end
 
 
-  @generator = Jeweler::Generator.new(@name, 
-                                      :directory => "#{@working_dir}/#{@name}",
-                                      :summary => @summary,
-                                      :testing_framework => @testing_framework,
-                                      :use_cucumber => @use_cucumber)
-
+  arguments = ['--directory', "#{@working_dir}/#{@name}", '--summary', @summary, @use_cucumber ? '--cucumber' : nil, "--#{@testing_framework}", @name].compact
   @stdout = OutputCatcher.catch_out do
-    @generator.run
+    Jeweler::Generator::Application.run! *arguments
   end
 
   @repo = Git.open(File.join(@working_dir, @name))
