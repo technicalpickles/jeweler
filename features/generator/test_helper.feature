@@ -38,5 +38,4 @@ Feature: generated test or spec
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/test_helper.rb' requires 'test/unit'
-    And 'test/test_helper.rb' requires 'mocha'
     And 'test/test_helper.rb' requires 'the_perfect_gem'
