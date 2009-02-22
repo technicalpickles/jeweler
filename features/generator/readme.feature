@@ -9,4 +9,4 @@ Feature: generated license
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'README.rdoc' contains '= the-perfect-gem'
-    And 'README.rdoc' mentions copyright belonging to me in 2009 
+    And 'README.rdoc' mentions copyright belonging to me in the current year

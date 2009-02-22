@@ -118,6 +118,11 @@ Then /^'(.*)' mentions copyright belonging to me in (\d{4})$/ do |file, year|
   assert_match "Copyright (c) #{year} #{@user_name}", contents
 end
 
+Then /^'(.*)' mentions copyright belonging to me in the current year$/ do |file|
+  current_year = Time.now.year
+  Then "'#{file}' mentions copyright belonging to me in #{current_year}"
+end
+
 
 Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
   Then "a file named 'the-perfect-gem/LICENSE' is created"
