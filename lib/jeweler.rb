@@ -1,5 +1,6 @@
 require 'date'
 require 'rubygems/builder'
+require 'rubyforge'
 
 require 'jeweler/version'
 require 'jeweler/gemspec'
@@ -189,7 +190,21 @@ class Jeweler
     $stdout.puts "Pushing #{release_tag} to origin"
     @repo.push('origin', release_tag)
   end
-
+  
+  def release_gem_to_rubyforge
+    rf = RubyForge.new
+    rf.configure rescue nil
+    $stdout.puts 'Logging in'
+    rf.login
+  
+    c = rf.userconfig
+    c['release_notes'] = @gemspec.description if @gemspec.description
+    c['preformatted'] = true
+  
+    puts "Releasing #{@gemspec.name} v. #{@version} as #{@gemspec.rubyforge_project}"
+    rf.add_release(@gemspec.rubyforge_project, @gemspec.name, @version.to_s, gem_path)
+  end
+  
   def release_tag
     @release_tag ||= "v#{version}"
   end
