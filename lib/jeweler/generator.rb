@@ -25,21 +25,28 @@ class Jeweler
                   :github_repo_name, :github_username, :github_token,
                   :repo, :should_create_repo, :should_use_cucumber
 
+    SUPPORTED_TESTING_FRAMEWORKS = [:shoulda, :testunit, :bacon, :rspec, :micronaut, :minitest]
+
     def initialize(github_repo_name, options = {})
       if github_repo_name.nil? || github_repo_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
 
-      use_user_git_config
-      
       self.github_repo_name   = github_repo_name
 
-      self.testing_framework  = options[:testing_framework] || :shoulda
+      self.testing_framework  = (options[:testing_framework] || :shoulda).to_sym
+      unless SUPPORTED_TESTING_FRAMEWORKS.include? self.testing_framework
+        raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
+      end
+
       self.target_dir         = options[:directory] || self.github_repo_name
 
       self.should_create_repo = options[:create_repo]
       self.summary            = options[:summary] || 'TODO'
       self.should_use_cucumber= options[:use_cucumber]
+
+      use_user_git_config
+      
     end
 
     def run
@@ -69,7 +76,7 @@ class Jeweler
       when :micronaut
         'examples'
       else
-        raise ArgumentError, "Unknown framework: #{testing_framework.inspect}"
+        raise ArgumentError, "Don't know default task for #{testing_framework}"
       end
     end
 
@@ -129,7 +136,7 @@ class Jeweler
       when :micronaut
         'examples'
       else
-        raise ArgumentError, "Unknown framework: #{testing_framework.inspect}"
+        raise ArgumentError, "Don't know test dir for #{testing_framework.inspect}"
       end
     end
 

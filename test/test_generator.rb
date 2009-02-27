@@ -31,6 +31,19 @@ class TestGenerator < Test::Unit::TestCase
       assert_equal "TODO", build_generator.summary
     end
 
+    should "not create repo by default" do
+      assert ! build_generator.should_create_repo
+    end
+
+    should "not use cucumber by default" do
+      assert ! build_generator.should_use_cucumber
+    end
+
+    should "raise error for invalid testing frameworks" do
+      assert_raise ArgumentError do
+        build_generator(:zomg_invalid)
+      end
+    end
   end
 
   context "test_or_spec" do
@@ -56,12 +69,6 @@ class TestGenerator < Test::Unit::TestCase
 
     should "be example for micronaut" do
       assert_equal 'example', build_generator(:micronaut).test_or_spec
-    end
-
-    should "be example for unknown testing framework" do
-      assert_raise ArgumentError do
-        build_generator(:zomg).test_or_spec
-      end
     end
   end
 
