@@ -63,3 +63,13 @@ Feature: generated directory layout
 
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
+
+  Scenario: micronaut
+    Given a working directory
+    And I have configured git sanely
+    When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then a directory named 'the-perfect-gem/examples' is created
+
+    And a file named 'the-perfect-gem/examples/example_helper.rb' is created
+    And a file named 'the-perfect-gem/examples/the_perfect_gem_example.rb' is created

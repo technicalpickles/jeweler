@@ -33,3 +33,9 @@ Feature: generated test or spec
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
+
+  Scenario: micronaut
+    Given a working directory
+    And I have configured git sanely
+    When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
+    Then 'examples/the_perfect_gem_example.rb' should describe 'ThePerfectGem'

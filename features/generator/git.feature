@@ -75,6 +75,14 @@ Feature: git support
     Then 'test/test_helper.rb' was checked in
     And 'test/the_perfect_gem_test.rb' was checked in
 
+  Scenario: micronaut
+    Given a working directory
+    And I have configured git sanely
+    When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then 'examples/example_helper.rb' was checked in
+    And 'examples/the_perfect_gem_example.rb' was checked in
+
   Scenario: cucumber
     Given a working directory
     And I have configured git sanely

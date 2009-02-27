@@ -36,7 +36,7 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'spec/**/*_spec.rb' for the Spec::Rake::SpecTask pattern
+    Then Rakefile has 'examples/**/*_example.rb' for the Micronaut::RakeTask pattern
 
   Scenario: shoulda
     Given a working directory
