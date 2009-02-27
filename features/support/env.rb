@@ -11,3 +11,8 @@ World do |world|
   world
 end
 
+def yank_task_info(content, task)
+  if content =~ /#{Regexp.escape(task)}.new(\(.*\))? do \|(.*?)\|(.*?)end/m
+    [$2, $3]
+  end
+end

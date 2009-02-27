@@ -1,9 +1,0 @@
-<%= github_repo_name %>
-<%= '=' * github_repo_name.length %>
-
-Description goes here.
-
-COPYRIGHT
-=========
-
-Copyright (c) 2008 <%= user_name %>. See LICENSE for details.

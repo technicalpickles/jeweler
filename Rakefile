@@ -1,33 +1,29 @@
 require 'rake'
-require 'rake/testtask'
-begin
-  require 'hanna/rdoctask'
-rescue LoadError
-  require 'rake/rdoctask'
-end
 
-
-$:.unshift('lib')
+$LOAD_PATH.unshift('lib')
 
 begin
   require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "jeweler"
-    s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    s.email = "josh@technicalpickles.com"
-    s.homepage = "http://github.com/technicalpickles/jeweler"
-    s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    s.authors = ["Josh Nichols"]
-    s.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
-    s.add_dependency 'schacon-git'
+  Jeweler::Tasks.new do |gem|
+    gem.name = "jeweler"
+    gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+    gem.email = "josh@technicalpickles.com"
+    gem.homepage = "http://github.com/technicalpickles/jeweler"
+    gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+    gem.authors = ["Josh Nichols"]
+    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
+    gem.add_dependency 'schacon-git'
   end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'test'
+end
 
-Rake::TestTask.new 
-
+require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'jeweler'
@@ -40,15 +36,22 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new 
 rescue LoadError
-  puts "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+  task :rcov do
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+  end
 end
 
 begin
   require 'cucumber/rake/task'
   Cucumber::Rake::Task.new(:features)
 rescue LoadError
-  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+  task :features do
+    abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+  end
 end
 
-
-task :default => [:test, :features]
+if ENV["RUN_CODE_RUN"] == "true"
+  task :default => [:test, :features]
+else
+  task :default => :test
+end

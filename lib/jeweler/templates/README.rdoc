@@ -1,0 +1,7 @@
+= <%= github_repo_name %>
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) <%= Time.now.year %> <%= user_name %>. See LICENSE for details.

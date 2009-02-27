@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 class <%= constant_name %>Test < Mini::Test::TestCase
   def test_something_for_real
