@@ -138,6 +138,20 @@ class Jeweler
       File.join(features_dir, 'step_definitions')
     end
 
+    def test_or_spec
+      case testing_framework.to_sym
+      when :shoulda, :testunit, :minitest
+        'test'
+      when :bacon, :rspec
+        'spec'
+      when :micronaut
+        'example'
+      else
+        raise ArgumentError, "Unknown test style: #{testing_framework}"
+      end
+    end
+
+
   protected
 
     # This is in a separate method so we can stub it out during testing
@@ -146,17 +160,6 @@ class Jeweler
       # ... which we don't have yet, since this is part of a sanity check
       lib = Git::Lib.new(nil, nil)
       config = lib.parse_config '~/.gitconfig'
-    end
-
-    def test_or_spec
-      case testing_framework.to_sym
-      when :shoulda, :testunit, :minitest
-        'test'
-      when :bacon, :rspec
-        'spec'
-      else
-        raise "Unknown test style: #{testing_framework}"
-      end
     end
 
   private
