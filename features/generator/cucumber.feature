@@ -23,7 +23,7 @@ Feature: generating cucumber stories
 
     And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
     And a file named 'the-perfect-gem/features/support/env.rb' is created
-    And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is created
+    And a file named 'the-perfect-gem/features/step_definitions/the_perfect_gem_steps.rb' is created
 
     And 'features/support/env.rb' requires 'the_perfect_gem'
 

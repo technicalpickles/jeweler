@@ -83,4 +83,4 @@ Feature: git support
 
     Then 'features/the_perfect_gem.feature' was checked in
     And 'features/support/env.rb' was checked in
-    And 'features/steps/the_perfect_gem_steps.rb' was checked in
+    And 'features/step_definitions/the_perfect_gem_steps.rb' was checked in
