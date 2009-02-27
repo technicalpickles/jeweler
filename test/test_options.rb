@@ -47,6 +47,10 @@ class TestOptions < Test::Unit::TestCase
     should_have_testing_framework :rspec
   end
 
+  for_options '--micronaut' do
+    should_have_testing_framework :micronaut
+  end
+
   for_options '--cucumber' do
     should 'enable cucumber' do
       assert_equal true, @options[:use_cucumber]

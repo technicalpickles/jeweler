@@ -31,6 +31,10 @@ class Jeweler
             self[:testing_framework] = :rspec
           end
 
+          o.on('--micronaut', 'generate micronaut examples') do
+            self[:testing_framework] = :micronaut
+          end
+
           o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do
             self[:use_cucumber] = true
           end
