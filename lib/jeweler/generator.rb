@@ -26,7 +26,7 @@ class Jeweler
                   :repo, :should_create_repo, :should_use_cucumber
 
     def initialize(github_repo_name, options = {})
-      if github_repo_name.nil?
+      if github_repo_name.nil? || github_repo_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
 

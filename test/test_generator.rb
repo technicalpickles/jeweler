@@ -6,6 +6,33 @@ class TestGenerator < Test::Unit::TestCase
     Jeweler::Generator.new('the-perfect-gem', options)
   end
 
+  context "initialize" do
+    should "raise error if nil repo name given" do
+      assert_raise Jeweler::NoGitHubRepoNameGiven do
+        Jeweler::Generator.new(nil)
+      end
+    end
+
+    should "raise error if blank repo name given" do
+      assert_raise Jeweler::NoGitHubRepoNameGiven do
+        Jeweler::Generator.new("")
+      end
+    end
+
+    should "have shoulda as default framework" do
+      assert_equal :shoulda, build_generator.testing_framework
+    end
+
+    should "have repository name as default target dir" do
+      assert_equal 'the-perfect-gem', build_generator.target_dir
+    end
+
+    should "have TODO as default summary" do
+      assert_equal "TODO", build_generator.summary
+    end
+
+  end
+
   context "test_or_spec" do
     should "be test for shoulda" do
       assert_equal 'test', build_generator(:shoulda).test_or_spec
