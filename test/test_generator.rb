@@ -7,8 +7,6 @@ class TestGenerator < Test::Unit::TestCase
   end
 
   context "test_or_spec" do
-    setup do
-    end
     should "be test for shoulda" do
       assert_equal 'test', build_generator(:shoulda).test_or_spec
     end
@@ -37,6 +35,32 @@ class TestGenerator < Test::Unit::TestCase
       assert_raise ArgumentError do
         build_generator(:zomg).test_or_spec
       end
+    end
+  end
+
+  context "test_dir" do
+    should "be test for shoulda" do
+      assert_equal 'test', build_generator(:shoulda).test_dir
+    end
+
+    should "be test for testunit" do
+      assert_equal 'test', build_generator(:testunit).test_dir
+    end
+
+    should "be test for minitest" do
+      assert_equal 'test', build_generator(:minitest).test_dir
+    end
+
+    should "be spec for bacon" do
+      assert_equal 'spec', build_generator(:bacon).test_dir
+    end
+
+    should "be spec for rspec" do
+      assert_equal 'spec', build_generator(:rspec).test_dir
+    end
+
+    should "be examples for micronaut" do
+      assert_equal 'examples', build_generator(:micronaut).test_dir
     end
   end
 

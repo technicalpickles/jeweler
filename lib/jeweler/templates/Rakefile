@@ -24,11 +24,18 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-<% if testing_framework.to_sym == :rspec %>
+<% case testing_framework.to_sym %>
+<% when :rspec %>
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
   spec.spec_files = FileList['spec/**/*_spec.rb']
+end
+<% when :micronaut %>
+require 'micronaut/rake_task'
+Micronaut::RakeTask.new(:examples) do |examples|
+  examples.pattern = 'examples/**/*_example.rb'
+  examples.ruby_opts << '-Ilib -Iexamples'
 end
 <% else %>
 require 'rake/testtask'

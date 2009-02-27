@@ -107,7 +107,16 @@ class Jeweler
     end
 
     def test_dir
-      test_or_spec
+      case testing_framework.to_sym
+      when :shoulda, :testunit, :minitest
+        'test'
+      when :bacon, :rspec
+        'spec'
+      when :micronaut
+        'examples'
+      else
+        raise ArgumentError, "Unknown framework: #{testing_framework.inspect}"
+      end
     end
 
     def test_filename
