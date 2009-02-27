@@ -8,7 +8,10 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
+    Then 'Rakefile' requires 'rubygems'
+    And 'Rakefile' requires 'rake'
+    And 'Rakefile' requires 'rake/rdoctask'
+    And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
     And Rakefile has 'bar@example.com' for the Jeweler::Tasks email
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
@@ -18,7 +21,9 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
+    
+    Then 'Rakefile' requires 'rcov/rcovtask'
+    And Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
     And Rakefile has 'spec/**/*_spec.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'spec' in the Rcov::RcovTask libs
     And Rakefile has "spec" as the default task
@@ -28,7 +33,8 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
+    Then 'Rakefile' requires 'rcov/rcovtask'
+    And Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
     And Rakefile has "test" as the default task
@@ -38,7 +44,8 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'spec/**/*_spec.rb' for the Spec::Rake::SpecTask pattern
+    Then 'Rakefile' requires 'spec/rake/spectask'
+    And Rakefile has 'spec/**/*_spec.rb' for the Spec::Rake::SpecTask pattern
     And Rakefile has "spec" as the default task
 
   Scenario: shoulda
@@ -46,7 +53,8 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
+    Then 'Rakefile' requires 'rcov/rcovtask'
+    And Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
     And Rakefile has "test" as the default task
@@ -65,6 +73,7 @@ Feature: generated Rakefile
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
+    Then 'Rakefile' requires 'rcov/rcovtask'
     Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
