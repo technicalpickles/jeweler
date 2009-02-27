@@ -185,10 +185,14 @@ Then /^'test\/test_helper\.rb' should autorun tests$/ do
   assert_match "Mini::Test.autorun", content
 end
 
-Then /^'features\/support\/env\.rb' sets up features to use test\/unit assertions$/ do
+Then /^cucumber world extends "(.*)"$/ do |module_to_extend|
   content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
+  assert_match "world.extend(#{module_to_extend})", content
+end
 
-  assert_match "world.extend(Test::Unit::Assertions)", content
+
+Then /^'features\/support\/env\.rb' sets up features to use test\/unit assertions$/ do
+
 end
 
 Then /^'features\/support\/env\.rb' sets up features to use minitest assertions$/ do

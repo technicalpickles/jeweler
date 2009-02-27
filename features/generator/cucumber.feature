@@ -34,7 +34,25 @@ Feature: generating cucumber stories
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'test/unit/assertions'
-    And 'features/support/env.rb' sets up features to use test/unit assertions
+    And cucumber world extends "Test::Unit::Assertions"
+
+  Scenario: cucumber setup for shoulda
+    Given a working directory
+    And I have configured git sanely
+    And I want cucumber stories
+    When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then 'features/support/env.rb' requires 'test/unit/assertions'
+    And cucumber world extends "Test::Unit::Assertions"
+
+  Scenario: cucumber setup for testunit
+    Given a working directory
+    And I have configured git sanely
+    And I want cucumber stories
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then 'features/support/env.rb' requires 'test/unit/assertions'
+    And cucumber world extends "Test::Unit::Assertions"
 
   Scenario: cucumber setup for minitest
     Given a working directory
@@ -43,7 +61,7 @@ Feature: generating cucumber stories
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'mini/test'
-    And 'features/support/env.rb' sets up features to use minitest assertions
+    And cucumber world extends "Mini::Test::Assertions"
 
   Scenario: cucumber setup for rspec
     Given a working directory
@@ -53,3 +71,13 @@ Feature: generating cucumber stories
 
     Then 'features/support/env.rb' requires 'the_perfect_gem'
     And 'features/support/env.rb' requires 'spec/expectations'
+
+  Scenario: cucumber setup for mirconaut
+    Given a working directory
+    And I have configured git sanely
+    And I want cucumber stories
+    When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then 'features/support/env.rb' requires 'the_perfect_gem'
+    And 'features/support/env.rb' requires 'micronaut/expectations'
+    And cucumber world extends "Micronaut::Matchers"

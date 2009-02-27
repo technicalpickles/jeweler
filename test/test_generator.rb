@@ -124,4 +124,56 @@ class TestGenerator < Test::Unit::TestCase
     end
   end
 
+  context "feature_support_require" do
+    should "be test/unit/assertions for shoulda" do
+      assert_equal 'test/unit/assertions', build_generator(:shoulda).feature_support_require
+    end
+
+    should "be test/unit/assertions for testunit" do
+      assert_equal 'test/unit/assertions', build_generator(:testunit).feature_support_require
+    end
+
+    should "be mini/test for minitest" do
+      assert_equal 'mini/test', build_generator(:minitest).feature_support_require
+    end
+
+    should "be test/unit/assertions for bacon" do
+      assert_equal 'test/unit/assertions', build_generator(:bacon).feature_support_require
+    end
+
+    should "be spec/expectations for rspec" do
+      assert_equal 'spec/expectations', build_generator(:rspec).feature_support_require
+    end
+
+    should "be micronaut/expectations for micronaut" do
+      assert_equal 'micronaut/expectations', build_generator(:micronaut).feature_support_require
+    end
+  end
+
+  context "feature_support_extend" do
+    should "be Test::Unit::Assertions for shoulda" do
+      assert_equal 'Test::Unit::Assertions', build_generator(:shoulda).feature_support_extend
+    end
+
+    should "be Test::Unit::Assertions for testunit" do
+      assert_equal 'Test::Unit::Assertions', build_generator(:testunit).feature_support_extend
+    end
+
+    should "be Mini::Test::Assertions for minitest" do
+      assert_equal 'Mini::Test::Assertions', build_generator(:minitest).feature_support_extend
+    end
+
+    should "be Test::Unit::Assertions for bacon" do
+      assert_equal 'Test::Unit::Assertions', build_generator(:bacon).feature_support_extend
+    end
+
+    should "be nil for rspec" do
+      assert_equal nil, build_generator(:rspec).feature_support_extend
+    end
+
+    should "be Micronaut::Matchers for micronaut" do
+      assert_equal 'Micronaut::Matchers', build_generator(:micronaut).feature_support_extend
+    end
+  end
+
 end

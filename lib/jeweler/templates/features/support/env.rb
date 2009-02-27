@@ -3,8 +3,6 @@ require '<%= file_name_prefix %>'
 
 require '<%= feature_support_require %>'
 
-require 'test/unit/assertions'
-
 World do |world|
   <% if feature_support_extend %>
   world.extend(<%= feature_support_extend %>)

@@ -88,6 +88,8 @@ class Jeweler
         'mini/test'
       when :rspec
         'spec/expectations'
+      when :micronaut
+        'micronaut/expectations'
       else
         raise "Don't know what to require for #{testing_framework}"
       end
@@ -101,6 +103,8 @@ class Jeweler
         'Mini::Test::Assertions'
       when :rspec
         nil
+      when :micronaut
+        'Micronaut::Matchers'
       else
         raise "Don't know what to extend for #{testing_framework}"
       end
