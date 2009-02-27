@@ -78,8 +78,5 @@ rescue LoadError
 end
 
 <% end %>
-<% if testing_framework.to_sym == :rspec %>
-task :default => :spec
-<% else %>
-task :default => :test
-<% end %>
+
+task :default => :<%= default_task %>

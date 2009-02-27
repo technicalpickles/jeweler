@@ -64,4 +64,30 @@ class TestGenerator < Test::Unit::TestCase
     end
   end
 
+  context "default_task" do
+    should "be test for shoulda" do
+      assert_equal 'test', build_generator(:shoulda).default_task
+    end
+
+    should "be test for testunit" do
+      assert_equal 'test', build_generator(:testunit).default_task
+    end
+
+    should "be test for minitest" do
+      assert_equal 'test', build_generator(:minitest).default_task
+    end
+
+    should "be spec for bacon" do
+      assert_equal 'spec', build_generator(:bacon).default_task
+    end
+
+    should "be spec for rspec" do
+      assert_equal 'spec', build_generator(:rspec).default_task
+    end
+
+    should "be examples for micronaut" do
+      assert_equal 'examples', build_generator(:micronaut).default_task
+    end
+  end
+
 end

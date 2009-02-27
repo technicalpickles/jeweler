@@ -225,6 +225,12 @@ Then /^no files are (\w+)$/ do |type|
   assert_equal 0, @repo.status.send(type).size
 end
 
+Then /^Rakefile has "(.*)" as the default task$/ do |task|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  assert_match "task :default => :#{task}", @rakefile_content
+end
+
+
 After do
   FileUtils.rm_rf @working_dir if @working_dir
 end

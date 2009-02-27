@@ -21,6 +21,7 @@ Feature: generated Rakefile
     Then Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
     And Rakefile has 'spec/**/*_spec.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'spec' in the Rcov::RcovTask libs
+    And Rakefile has "spec" as the default task
 
   Scenario: minitest
     Given a working directory
@@ -30,6 +31,7 @@ Feature: generated Rakefile
     Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
+    And Rakefile has "test" as the default task
 
   Scenario: rspec
     Given a working directory
@@ -37,6 +39,7 @@ Feature: generated Rakefile
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then Rakefile has 'spec/**/*_spec.rb' for the Spec::Rake::SpecTask pattern
+    And Rakefile has "spec" as the default task
 
   Scenario: shoulda
     Given a working directory
@@ -46,6 +49,7 @@ Feature: generated Rakefile
     Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
+    And Rakefile has "test" as the default task
 
   Scenario: micronaut
     Given a working directory
@@ -54,6 +58,7 @@ Feature: generated Rakefile
 
     Then 'Rakefile' requires 'micronaut/rake_task'
     And Rakefile has 'examples/**/*_example.rb' for the Micronaut::RakeTask pattern
+    And Rakefile has "examples" as the default task
 
   Scenario: testunit
     Given a working directory
@@ -63,6 +68,7 @@ Feature: generated Rakefile
     Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
+    And Rakefile has "test" as the default task
 
   Scenario: no cucumber
     Given a working directory

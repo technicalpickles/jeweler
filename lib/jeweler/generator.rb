@@ -54,9 +54,23 @@ class Jeweler
       end
     end
 
-
+    # Directory where 'tests' live
     def test_dir
       test_or_spec
+    end
+
+    # Default rake task to use
+    def default_task
+      case testing_framework.to_sym
+      when :shoulda, :testunit, :minitest
+        'test'
+      when :bacon, :rspec
+        'spec'
+      when :micronaut
+        'examples'
+      else
+        raise ArgumentError, "Unknown framework: #{testing_framework.inspect}"
+      end
     end
 
     def feature_support_require
