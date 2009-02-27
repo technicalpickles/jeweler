@@ -60,7 +60,7 @@ end
 Then "cucumber directories are created" do
   Then "a directory named 'the-perfect-gem/features' is created"
   Then "a directory named 'the-perfect-gem/features/support' is created"
-  Then "a directory named 'the-perfect-gem/features/steps' is created"
+  Then "a directory named 'the-perfect-gem/features/step_definitions' is created"
 end
 
 

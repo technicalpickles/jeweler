@@ -135,7 +135,7 @@ class Jeweler
     end
 
     def features_steps_dir
-      File.join(features_dir, 'steps')
+      File.join(features_dir, 'step_definitions')
     end
 
   protected
@@ -188,7 +188,7 @@ class Jeweler
         output_template_in_target File.join(features_support_dir, 'env.rb')
 
         mkdir_in_target           features_steps_dir
-        output_template_in_target File.join(features_steps_dir, 'default_steps.rb'), File.join('features', 'steps', steps_filename)
+        output_template_in_target File.join(features_steps_dir, 'default_steps.rb'), File.join('features', features_steps_dir, steps_filename)
       end
 
     end
