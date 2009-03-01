@@ -2,7 +2,7 @@ require 'test/unit'
 
 require 'rubygems'
 require 'shoulda'
-require 'ruby-debug'
+#require 'ruby-debug'
 require 'rr'
 require 'output_catcher'
 require 'time'
