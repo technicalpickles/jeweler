@@ -45,6 +45,7 @@ class Jeweler
           @command.repo           = @repo
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
+          @command.base_dir       = '.'
         end
 
         should 'raise error' do
@@ -139,7 +140,6 @@ class Jeweler
           assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
         end
       end
-
     end
   end
 end

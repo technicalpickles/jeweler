@@ -1,7 +1,7 @@
 class Jeweler
   module Commands
     class Release
-      attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper
+      attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
 
       def initialize
         self.output = $stdout
