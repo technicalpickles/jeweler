@@ -52,16 +52,14 @@ class Jeweler
 
   # Writes out the gemspec
   def write_gemspec
-    self.refresh_version
+    @version.refresh
 
-    helper = gemspec_helper do |s|
-      s.version = self.version
-      s.date = Time.now
-    end
+    command = Jeweler::Commands::WriteGemspec.new
+    command.base_dir = @base_dir
+    command.gemspec = @gemspec
+    command.version = @version.to_s
 
-    helper.write
-
-    puts "Generated: #{helper.path}"
+    command.run
   end
 
   # Validates the project's gemspec from disk in an environment similar to how 
