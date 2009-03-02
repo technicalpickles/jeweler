@@ -18,30 +18,11 @@ class Jeweler
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
-    @gemspec = gemspec
+
     @base_dir = base_dir
-    
-    if @gemspec.files.nil? || @gemspec.files.empty?
-      @gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
-    end
-
-    if @gemspec.executables.nil? || @gemspec.executables.empty?
-      @gemspec.executables = Dir["#{@base_dir}/bin/*"].map do |f|
-        File.basename(f)
-      end
-    end
-
-    @gemspec.has_rdoc = true
-    @gemspec.rdoc_options << '--inline-source' << '--charset=UTF-8'
-    if @gemspec.extra_rdoc_files.nil? || @gemspec.extra_rdoc_files.empty?
-      @gemspec.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
-    end
-
-    if File.exists?(File.join(base_dir, '.git'))
-      @repo = Git.open(base_dir)
-    end
-
-    @version = Jeweler::Version.new(@base_dir)
+    @gemspec  = fill_in_gemspec_defaults(gemspec)
+    @repo     = Git.open(base_dir) if in_git_repo?
+    @version  = Jeweler::Version.new(@base_dir)
   end
 
   # Major version, as defined by the gemspec's Version module.
@@ -227,15 +208,32 @@ class Jeweler
   end
 
   def any_pending_changes?
-    unless ENV['JEWELER_DEBUG'].nil? || ENV['JEWELER_DEBUG'].squeeze == ''
-      require 'ruby-debug'; breakpoint
-    end
     !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
   end
 
-  protected
-    def any_pending_changes?
-      !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
+  def in_git_repo?
+    File.exists?(File.join(self.base_dir, '.git'))
+  end
+
+  def fill_in_gemspec_defaults(gemspec)
+    if gemspec.files.nil? || gemspec.files.empty?
+      gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     end
+
+    if gemspec.executables.nil? || gemspec.executables.empty?
+      gemspec.executables = Dir["#{@base_dir}/bin/*"].map do |f|
+        File.basename(f)
+      end
+    end
+
+    gemspec.has_rdoc = true
+    gemspec.rdoc_options << '--inline-source' << '--charset=UTF-8'
+
+    if gemspec.extra_rdoc_files.nil? || gemspec.extra_rdoc_files.empty?
+      gemspec.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
+    end
+
+    gemspec
+  end
 end
 

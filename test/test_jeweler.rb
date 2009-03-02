@@ -13,13 +13,13 @@ class TestJeweler < Test::Unit::TestCase
     FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
   end
 
-  context "A jeweler without a VERSION.yml" do
+  context "Initializing jewewler in a blank directory" do
     setup do
       FileUtils.mkdir_p(tmp_dir)
       @jeweler = Jeweler.new(build_spec, tmp_dir)
     end
 
-    should "not have VERSION.yml" do
+    should "not create a VERSION.yml" do
       assert ! File.exists?(File.join(tmp_dir, 'VERSION.yml'))
     end
   end
@@ -60,7 +60,7 @@ class TestJeweler < Test::Unit::TestCase
       should_bump_version 2, 0, 0
     end
 
-    should "should find files" do
+    should "should populate gemspec's files" do
       assert ! @jeweler.gemspec.files.empty?
     end
 
