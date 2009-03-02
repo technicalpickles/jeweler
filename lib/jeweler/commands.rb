@@ -1,0 +1,6 @@
+require 'jeweler/commands/release'
+require 'jeweler/commands/write_gemspec'
+require 'jeweler/commands/version/base'
+require 'jeweler/commands/version/bump_major'
+require 'jeweler/commands/version/bump_minor'
+require 'jeweler/commands/version/bump_patch'

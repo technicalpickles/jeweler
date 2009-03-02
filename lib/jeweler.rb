@@ -8,6 +8,8 @@ require 'jeweler/generator'
 require 'jeweler/generator/options'
 require 'jeweler/generator/application'
 
+require 'jeweler/commands'
+
 require 'jeweler/tasks'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
