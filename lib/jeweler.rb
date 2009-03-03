@@ -104,32 +104,21 @@ class Jeweler
   #
   # 1.5.1 -> 1.5.2
   def bump_patch_version(options = {})
-    command = build_command(Jeweler::Commands::Version::BumpPatch)
-    command.run
+    build_command(Jeweler::Commands::Version::BumpPatch).run
   end
 
   # Bumps the minor version.
   #
   # 1.5.1 -> 1.6.0
   def bump_minor_version(options = {})
-    options = version_writing_options(options)
-
-    @version.bump_minor
-    @version.write
-
-    commit_version if options[:commit]
+    build_command(Jeweler::Commands::Version::BumpMinor).run
   end
 
   # Bumps the major version.
   #
   # 1.5.1 -> 2.0.0
   def bump_major_version(options = {})
-    options = version_writing_options(options)
-
-    @version.bump_major
-    @version.write
-
-    commit_version if options[:commit]
+    build_command(Jeweler::Commands::Version::BumpMajor).run
   end
 
   # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
@@ -177,10 +166,6 @@ class Jeweler
       @repo.add('VERSION.yml')
       @repo.commit("Version bump to #{version}", 'VERSION.yml')
     end
-  end
-
-  def refresh_version
-    @version.refresh
   end
 
   def gemspec_helper(&block)
