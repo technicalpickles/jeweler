@@ -59,15 +59,8 @@ class Jeweler
   # Validates the project's gemspec from disk in an environment similar to how 
   # GitHub would build from it. See http://gist.github.com/16215
   def validate_gemspec
-    begin
-      gemspec_helper.parse
-      output.puts "#{gemspec_path} is valid."
-    rescue Exception => e
-      output.puts "#{gemspec_path} is invalid. See the backtrace for more details."
-      raise
-    end
+    build_command(Jeweler::Commands::ValidateGemspec).run
   end
-
 
   # is the project's gemspec from disk valid?
   def valid_gemspec?

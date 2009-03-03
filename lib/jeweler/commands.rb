@@ -1,6 +1,7 @@
 require 'jeweler/commands/build_gem'
 require 'jeweler/commands/install_gem'
 require 'jeweler/commands/release'
+require 'jeweler/commands/validate_gemspec'
 require 'jeweler/commands/write_gemspec'
 require 'jeweler/commands/version/base'
 require 'jeweler/commands/version/bump_major'
