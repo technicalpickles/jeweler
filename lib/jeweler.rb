@@ -146,24 +146,7 @@ class Jeweler
 
 
   def release
-    @repo.checkout('master')
-
-    raise "Hey buddy, try committing them files first" if any_pending_changes?
-
-    write_gemspec()
-
-    @repo.add(gemspec_path)
-    output.puts "Committing #{gemspec_path}"
-    @repo.commit("Regenerated gemspec for version #{version}")
-
-    output.puts "Pushing master to origin"
-    @repo.push
-
-    output.puts "Tagging #{release_tag}"
-    @repo.add_tag(release_tag)
-
-    output.puts "Pushing #{release_tag} to origin"
-    @repo.push('origin', release_tag)
+    build_command(Jeweler::Commands::Release).run
   end
 
   def release_tag
@@ -211,10 +194,6 @@ class Jeweler
   def gem_path
     parsed_gemspec = unsafe_parse_gemspec()
     File.join(@base_dir, 'pkg', parsed_gemspec.file_name)
-  end
-
-  def any_pending_changes?
-    !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
   end
 
   def in_git_repo?
