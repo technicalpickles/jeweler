@@ -1,3 +1,4 @@
+require 'jeweler/commands/build_gem'
 require 'jeweler/commands/release'
 require 'jeweler/commands/write_gemspec'
 require 'jeweler/commands/version/base'
