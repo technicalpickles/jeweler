@@ -36,6 +36,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new(:rcov) do |rcov|
     rcov.libs << 'test'
+    rcov.pattern = 'test/**/test_*.rb'
   end
 rescue LoadError
   task :rcov do
