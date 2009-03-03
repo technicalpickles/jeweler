@@ -34,7 +34,9 @@ end
 
 begin
   require 'rcov/rcovtask'
-  Rcov::RcovTask.new 
+  Rcov::RcovTask.new(:rcov) do |rcov|
+    rcov.libs << 'test'
+  end
 rescue LoadError
   task :rcov do
     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
