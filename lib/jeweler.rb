@@ -107,12 +107,13 @@ class Jeweler
   #
   # 1.5.1 -> 1.5.2
   def bump_patch_version(options = {})
-    options = version_writing_options(options)
+    command = Jeweler::Commands::Version::BumpPatch.new
+    command.repo = @repo
+    command.version_helper = @version
+    command.gemspec = @gemspec
+    command.commit = true
 
-    @version.bump_patch
-    @version.write
-
-    commit_version if options[:commit]
+    command.run
   end
 
   # Bumps the minor version.

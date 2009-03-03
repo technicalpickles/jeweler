@@ -65,19 +65,19 @@ class Jeweler
 
         namespace :bump do
           desc "Bump the gemspec by a major version."
-          task :major => ['VERSION.yml', :display] do
+          task :major => ['VERSION.yml', :version] do
             @jeweler.bump_major_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a minor version."
-          task :minor => ['VERSION.yml', 'version:display'] do
+          task :minor => ['VERSION.yml', :version] do
             @jeweler.bump_minor_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a patch version."
-          task :patch => ['VERSION.yml', 'version:display'] do
+          task :patch => ['VERSION.yml', :version] do
             @jeweler.bump_patch_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end
