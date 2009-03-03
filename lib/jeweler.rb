@@ -81,14 +81,7 @@ class Jeweler
   end
 
   def build_gem
-    parsed_gemspec = unsafe_parse_gemspec()
-    Gem::Builder.new(parsed_gemspec).build
-
-    pkg_dir = File.join(@base_dir, 'pkg')
-    FileUtils.mkdir_p pkg_dir
-
-    gem_filename = File.join(@base_dir, parsed_gemspec.file_name)
-    FileUtils.mv gem_filename, pkg_dir
+    build_command(Jeweler::Commands::BuildGem).run
   end
 
   def install_gem
@@ -144,6 +137,7 @@ class Jeweler
     command.version = @version.to_s if command.respond_to?(:version=)
     command.output = output if command.respond_to?(:output=)
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
+    command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
 
     command
   end

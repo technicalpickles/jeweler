@@ -34,7 +34,9 @@ class Jeweler
 
     def parse
       data = File.read(path)
-      Thread.new { eval("$SAFE = 3\n#{data}", binding, path) }.join 
+      parsed_gemspec = nil
+      Thread.new { parsed_gemspec = eval("$SAFE = 3\n#{data}", binding, path) }.join 
+      parsed_gemspec
     end
 
   end
