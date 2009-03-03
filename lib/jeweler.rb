@@ -179,7 +179,8 @@ class Jeweler
     command.gemspec = @gemspec if command.respond_to?(:gemspec=)
     command.commit = true if command.respond_to?(:commit=)
     command.version = @version.to_s if command.respond_to?(:version=)
-    command.output = output
+    command.output = output if command.respond_to?(:output=)
+    command.base_dir = @base_dir if command.respond_to?(:base_dir=)
 
     command
   end
