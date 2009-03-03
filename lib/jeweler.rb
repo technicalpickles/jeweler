@@ -54,11 +54,7 @@ class Jeweler
   def write_gemspec
     @version.refresh
 
-    command = Jeweler::Commands::WriteGemspec.new
-    command.base_dir = @base_dir
-    command.gemspec = @gemspec
-    command.version = @version.to_s
-
+    command = build_command(Jeweler::Commands::WriteGemspec)
     command.run
   end
 
@@ -107,12 +103,7 @@ class Jeweler
   #
   # 1.5.1 -> 1.5.2
   def bump_patch_version(options = {})
-    command = Jeweler::Commands::Version::BumpPatch.new
-    command.repo = @repo
-    command.version_helper = @version
-    command.gemspec = @gemspec
-    command.commit = true
-
+    command = build_command(Jeweler::Commands::Version::BumpPatch)
     command.run
   end
 
@@ -179,6 +170,17 @@ class Jeweler
   end
 
   protected
+
+  def build_command(command_class)
+    command = command_class.new
+    command.repo = @repo if command.respond_to?(:repo=)
+    command.version_helper = @version if command.respond_to?(:version_helper=)
+    command.gemspec = @gemspec if command.respond_to?(:gemspec=)
+    command.commit = true if command.respond_to?(:commit=)
+    command.version = @version.to_s if command.respond_to?(:version=)
+
+    command
+  end
 
   def version_writing_options(options)
     {:commit => true}.merge(options)
