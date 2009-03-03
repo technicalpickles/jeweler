@@ -85,9 +85,7 @@ class Jeweler
   end
 
   def install_gem
-    command = "sudo gem install #{gem_path}"
-    output.puts "Executing #{command.inspect}:"
-    sh command
+    build_command(Jeweler::Commands::InstallGem).run
   end
 
   # Bumps the patch version.

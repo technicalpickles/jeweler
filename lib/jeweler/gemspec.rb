@@ -39,5 +39,9 @@ class Jeweler
       parsed_gemspec
     end
 
+    def gem_path
+      File.join(@base_dir, 'pkg', parse.file_name)
+    end
+
   end
 end
