@@ -123,14 +123,12 @@ class Jeweler
 
   # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
   def write_version(major, minor, patch, options = {})
-    options = version_writing_options(options)
+    command = build_command(Jeweler::Commands::Version::Write)
+    command.major = major
+    command.minor = minor
+    command.patch = patch
 
-    @version.update_to major, minor, patch
-    @version.write
-
-    @gemspec.version = @version.to_s
-
-    commit_version if options[:commit]
+    command.run
   end
 
 
