@@ -1,14 +1,15 @@
 class Jeweler
   module Commands
     class WriteGemspec
-      attr_accessor :base_dir, :gemspec, :version, :output, :gemspec_helper
+      attr_accessor :base_dir, :gemspec, :version, :output, :gemspec_helper, :version_helper
 
       def initialize
         self.output = $stdout
       end
 
       def run
-        gemspec_helper.spec.version = self.version
+        version_helper.refresh
+        gemspec_helper.spec.version = version_helper.to_s
         gemspec_helper.spec.date    = Time.now
 
         gemspec_helper.write

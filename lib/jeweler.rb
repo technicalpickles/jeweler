@@ -53,10 +53,7 @@ class Jeweler
 
   # Writes out the gemspec
   def write_gemspec
-    @version.refresh
-
-    command = build_command(Jeweler::Commands::WriteGemspec)
-    command.run
+    build_command(Jeweler::Commands::WriteGemspec).run
   end
 
   # Validates the project's gemspec from disk in an environment similar to how 

@@ -14,9 +14,13 @@ class Jeweler
 
           @output = StringIO.new
 
+          @version_helper = Object.new
+          stub(@version_helper).to_s  { '1.2.3' }
+          stub(@version_helper).refresh
+
           @command = Jeweler::Commands::WriteGemspec.new
           @command.base_dir = 'tmp'
-          @command.version = '1.2.3'
+          @command.version_helper = @version_helper
           @command.gemspec = @gemspec
           @command.output = @output
           @command.gemspec_helper = @gemspec_helper
@@ -25,6 +29,10 @@ class Jeweler
           stub(Time.now).now { @now }
 
           @command.run
+        end
+
+        should "refresh version" do
+          assert_received(@version_helper) {|version_helper| version_helper.refresh }
         end
 
         should "update gemspec version" do
