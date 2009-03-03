@@ -30,6 +30,7 @@ class TestJeweler < Test::Unit::TestCase
       FileUtils.cp_r(fixture_dir, tmp_dir)
       
       @jeweler = Jeweler.new(build_spec, tmp_dir)
+      @jeweler.output = StringIO.new
     end
 
     should_have_major_version 1
@@ -39,14 +40,14 @@ class TestJeweler < Test::Unit::TestCase
 
     context "bumping the patch version" do
       setup do
-        @output = catch_out { @jeweler.bump_patch_version }
+        @jeweler.bump_patch_version 
       end
       should_bump_version 1, 5, 3
     end
 
     context "bumping the minor version" do
       setup do
-        @output = catch_out { @jeweler.bump_minor_version }
+        @jeweler.bump_minor_version
       end
 
       should_bump_version 1, 6, 0
@@ -54,7 +55,7 @@ class TestJeweler < Test::Unit::TestCase
 
     context "bumping the major version" do
       setup do
-        @output = catch_out { @jeweler.bump_major_version}
+        @jeweler.bump_major_version
       end
 
       should_bump_version 2, 0, 0
@@ -91,7 +92,8 @@ class TestJeweler < Test::Unit::TestCase
 
     context "writing the gemspec" do
       setup do
-        @output = catch_out { @jeweler.write_gemspec }
+        @jeweler.write_gemspec
+        @output = @jeweler.output.string
       end
 
       should "create bar.gemspec" do

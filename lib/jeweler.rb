@@ -16,7 +16,7 @@ require 'jeweler/tasks'
 class Jeweler
 
   attr_reader :gemspec
-  attr_accessor :base_dir
+  attr_accessor :base_dir, :output
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
@@ -25,6 +25,7 @@ class Jeweler
     @gemspec  = fill_in_gemspec_defaults(gemspec)
     @repo     = Git.open(base_dir) if in_git_repo?
     @version  = Jeweler::Version.new(@base_dir)
+    @output   = $stdout
   end
 
   # Major version, as defined by the gemspec's Version module.
@@ -63,9 +64,9 @@ class Jeweler
   def validate_gemspec
     begin
       gemspec_helper.parse
-      puts "#{gemspec_path} is valid."
+      output.puts "#{gemspec_path} is valid."
     rescue Exception => e
-      puts "#{gemspec_path} is invalid. See the backtrace for more details."
+      output.puts "#{gemspec_path} is invalid. See the backtrace for more details."
       raise
     end
   end
@@ -95,7 +96,7 @@ class Jeweler
 
   def install_gem
     command = "sudo gem install #{gem_path}"
-    $stdout.puts "Executing #{command.inspect}:"
+    output.puts "Executing #{command.inspect}:"
     sh command
   end
 
@@ -152,16 +153,16 @@ class Jeweler
     write_gemspec()
 
     @repo.add(gemspec_path)
-    $stdout.puts "Committing #{gemspec_path}"
+    output.puts "Committing #{gemspec_path}"
     @repo.commit("Regenerated gemspec for version #{version}")
 
-    $stdout.puts "Pushing master to origin"
+    output.puts "Pushing master to origin"
     @repo.push
 
-    $stdout.puts "Tagging #{release_tag}"
+    output.puts "Tagging #{release_tag}"
     @repo.add_tag(release_tag)
 
-    $stdout.puts "Pushing #{release_tag} to origin"
+    output.puts "Pushing #{release_tag} to origin"
     @repo.push('origin', release_tag)
   end
 
@@ -178,6 +179,7 @@ class Jeweler
     command.gemspec = @gemspec if command.respond_to?(:gemspec=)
     command.commit = true if command.respond_to?(:commit=)
     command.version = @version.to_s if command.respond_to?(:version=)
+    command.output = output
 
     command
   end
