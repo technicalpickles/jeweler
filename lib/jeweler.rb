@@ -15,17 +15,18 @@ require 'jeweler/tasks'
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
 
-  attr_reader :gemspec
+  attr_reader :gemspec, :gemspec_helper
   attr_accessor :base_dir, :output
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
 
-    @base_dir = base_dir
-    @gemspec  = fill_in_gemspec_defaults(gemspec)
-    @repo     = Git.open(base_dir) if in_git_repo?
-    @version  = Jeweler::Version.new(@base_dir)
-    @output   = $stdout
+    @base_dir       = base_dir
+    @gemspec        = fill_in_gemspec_defaults(gemspec)
+    @repo           = Git.open(base_dir) if in_git_repo?
+    @version        = Jeweler::Version.new(@base_dir)
+    @output         = $stdout
+    @gemspec_helper = GemSpecHelper.new(@gemspec,base_dir)
   end
 
   # Major version, as defined by the gemspec's Version module.
@@ -65,12 +66,6 @@ class Jeweler
   # is the project's gemspec from disk valid?
   def valid_gemspec?
     gemspec_helper.valid?
-  end
-
-  # parses the project's gemspec from disk without extra sanity checks
-  def unsafe_parse_gemspec(data = nil)
-    data ||= File.read(gemspec_path)
-    eval(data, binding, gemspec_path)
   end
 
   def build_gem
@@ -131,19 +126,6 @@ class Jeweler
     command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
 
     command
-  end
-
-  def gemspec_helper(&block)
-    GemSpecHelper.new(@gemspec, @base_dir, &block)
-  end
-
-  def gemspec_path
-    gemspec_helper.path
-  end
-
-  def gem_path
-    parsed_gemspec = unsafe_parse_gemspec()
-    File.join(@base_dir, 'pkg', parsed_gemspec.file_name)
   end
 
   def in_git_repo?
