@@ -136,10 +136,6 @@ class Jeweler
     build_command(Jeweler::Commands::Release).run
   end
 
-  def release_tag
-    @release_tag ||= "v#{version}"
-  end
-
   protected
 
   def build_command(command_class)
@@ -153,17 +149,6 @@ class Jeweler
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
 
     command
-  end
-
-  def version_writing_options(options)
-    {:commit => true}.merge(options)
-  end
-
-  def commit_version
-    if @repo
-      @repo.add('VERSION.yml')
-      @repo.commit("Version bump to #{version}", 'VERSION.yml')
-    end
   end
 
   def gemspec_helper(&block)
