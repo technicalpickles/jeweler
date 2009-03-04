@@ -1,7 +1,7 @@
 require 'yaml'
 
 class Jeweler
-  class Version
+  class VersionHelper
     attr_accessor :base_dir
     attr_reader :major, :minor, :patch
 

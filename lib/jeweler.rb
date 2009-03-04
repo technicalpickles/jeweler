@@ -1,7 +1,7 @@
 require 'date'
 require 'rubygems/builder'
 
-require 'jeweler/version'
+require 'jeweler/version_helper'
 require 'jeweler/gemspec'
 require 'jeweler/errors'
 require 'jeweler/generator'
@@ -24,7 +24,7 @@ class Jeweler
     @base_dir       = base_dir
     @gemspec        = fill_in_gemspec_defaults(gemspec)
     @repo           = Git.open(base_dir) if in_git_repo?
-    @version        = Jeweler::Version.new(@base_dir)
+    @version_helper        = Jeweler::VersionHelper.new(@base_dir)
     @output         = $stdout
     @gemspec_helper = GemSpecHelper.new(@gemspec,base_dir)
   end
@@ -32,24 +32,24 @@ class Jeweler
   # Major version, as defined by the gemspec's Version module.
   # For 1.5.3, this would return 1.
   def major_version
-    @version.major
+    @version_helper.major
   end
 
   # Minor version, as defined by the gemspec's Version module.
   # For 1.5.3, this would return 5.
   def minor_version
-    @version.minor
+    @version_helper.minor
   end
 
   # Patch version, as defined by the gemspec's Version module.
   # For 1.5.3, this would return 5.
   def patch_version
-    @version.patch
+    @version_helper.patch
   end
 
   # Human readable version, which is used in the gemspec.
   def version
-    @version.to_s
+    @version_helper.to_s
   end
 
   # Writes out the gemspec
@@ -116,10 +116,10 @@ class Jeweler
   def build_command(command_class)
     command = command_class.new
     command.repo = @repo if command.respond_to?(:repo=)
-    command.version_helper = @version if command.respond_to?(:version_helper=)
+    command.version_helper = @version_helper if command.respond_to?(:version_helper=)
     command.gemspec = @gemspec if command.respond_to?(:gemspec=)
     command.commit = true if command.respond_to?(:commit=)
-    command.version = @version.to_s if command.respond_to?(:version=)
+    command.version = self.version if command.respond_to?(:version=)
     command.output = output if command.respond_to?(:output=)
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
     command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
