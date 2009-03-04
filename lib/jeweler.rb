@@ -107,7 +107,6 @@ class Jeweler
     command.run
   end
 
-
   def release
     build_command(Jeweler::Commands::Release).run
   end
