@@ -2,7 +2,7 @@ require 'date'
 require 'rubygems/builder'
 
 require 'jeweler/version_helper'
-require 'jeweler/gemspec'
+require 'jeweler/gemspec_helper'
 require 'jeweler/errors'
 require 'jeweler/generator'
 require 'jeweler/generator/options'

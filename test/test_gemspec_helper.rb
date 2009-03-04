@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class TestGemspec < Test::Unit::TestCase
-  context "A Jeweler::GemSpec, given a gemspec" do
+class TestGemspecHelper < Test::Unit::TestCase
+  context "given a gemspec" do
     setup do
       @spec = build_spec
       @helper = Jeweler::GemSpecHelper.new(@spec, File.dirname(__FILE__))
@@ -12,7 +12,7 @@ class TestGemspec < Test::Unit::TestCase
     end
   end
 
-  context "Jeweler::GemSpec#write" do
+  context "#write" do
     setup do
       @spec = build_spec
       @helper = Jeweler::GemSpecHelper.new(@spec, File.dirname(__FILE__))
