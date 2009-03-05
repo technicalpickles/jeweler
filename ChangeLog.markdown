@@ -1,4 +1,8 @@
 # jeweler x.y.z
+ 
+ * Ruby 1.9 support, thanks to rsanheim
+
+# jeweler 0.9.1
 
  * Tasks:
   * Fixed populating default spec's extra_rdoc_files
