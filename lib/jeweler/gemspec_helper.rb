@@ -43,5 +43,9 @@ class Jeweler
       File.join(@base_dir, 'pkg', parse.file_name)
     end
 
+    def update_version(version)
+      @spec.version = version.to_s
+    end
+
   end
 end

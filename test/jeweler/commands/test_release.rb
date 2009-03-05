@@ -93,6 +93,7 @@ class Jeweler
           @gemspec_helper = Object.new
           stub(@gemspec_helper).write
           stub(@gemspec_helper).path {'zomg.gemspec'}
+          stub(@gemspec_helper).update_version('1.2.3')
 
           status = Object.new
           stub(status).added { [] }
@@ -113,6 +114,10 @@ class Jeweler
 
         should "checkout master" do
           assert_received(@repo) {|repo| repo.checkout('master') }
+        end
+
+        should "refresh gemspec version" do
+          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.update_version('1.2.3') }
         end
 
         should "write gemspec" do

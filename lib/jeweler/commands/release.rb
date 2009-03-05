@@ -12,6 +12,7 @@ class Jeweler
 
         raise "Hey buddy, try committing them files first" if any_pending_changes?
 
+        gemspec_helper.update_version(version)
         gemspec_helper.write
 
         repo.add(gemspec_helper.path)
