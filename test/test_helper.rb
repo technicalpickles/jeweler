@@ -1,4 +1,3 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../vendor/gems/mhennemeyer-output_catcher-1.0.1/lib')
 require 'test/unit'
 
 require 'rubygems'
@@ -8,7 +7,6 @@ begin
 rescue LoadError
 end
 require 'rr'
-require 'output_catcher'
 require 'time'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
@@ -26,12 +24,6 @@ end
 
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
-
-  def catch_out(&block)
-     OutputCatcher.catch_out do
-       block.call
-     end
-  end
 
   def fixture_dir
     File.join(File.dirname(__FILE__), 'fixtures', 'bar')
