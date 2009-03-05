@@ -1,4 +1,5 @@
 require 'date'
+require 'rubygems/user_interaction'
 require 'rubygems/builder'
 
 require 'jeweler/version_helper'

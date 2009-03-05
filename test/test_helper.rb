@@ -1,8 +1,12 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../vendor/gems/mhennemeyer-output_catcher-1.0.1/lib')
 require 'test/unit'
 
 require 'rubygems'
 require 'shoulda'
-require 'ruby-debug'
+begin
+  require 'ruby-debug' 
+rescue LoadError
+end
 require 'rr'
 require 'output_catcher'
 require 'time'
