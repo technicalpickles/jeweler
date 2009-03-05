@@ -1,13 +1,21 @@
 # jeweler x.y.z
 
- * Cucumber is now optional. Generate stories using --cucumber
- * Avoid puts'ing in Rakefile when LoadError occurs. Instead, define a task
- that aborts with instructions to install.
- * Rakefile uses more readable block variable names
- * .gitignore now includes pkg and coverage directories
- * Updated year to 2009
- * shoulda and test/unit test_helpers no longers require mocha 
- * Refactored how the generator is invoked, to make it easier to test
+ * Tasks:
+  * Fixed populating default spec's extra_rdoc_files
+  * Removed redudant gem building/installing tasks. Use rake build and rake install
+ * Generator:
+  * Added support for micronaut
+  * Generate nicer block variable names in Rakefile
+  * Cucumber generation now places steps in features/step_features, to follow cucumber standards
+
+  * shoulda and test/unit test_helpers no longers require mocha 
+  * Rakefile uses more readable block variable names
+  * .gitignore now includes pkg and coverage directories
+  * Avoid puts'ing in Rakefile when LoadError occurs. Instead, define a task that aborts with instructions to install.
+  * Cucumber is now optional. Generate stories using --cucumber
+  * Bacon's 'test' task is now 'spec'
+  * Generate README.rdoc instead of just a plain text README 
+  * Updated year in README.rdoc and COPYRIGHT to be based on the current year instead of hardcoded
 
 # jeweler 0.8.1 2009-02-03
 

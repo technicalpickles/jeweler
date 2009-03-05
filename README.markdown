@@ -12,7 +12,7 @@ Jeweler provides two things:
     # Install the gem:
     sudo gem install technicalpickles-jeweler
     
-## Setting up in an existing project
+## Using in an existing project
 
 It's easy to get up and running. Update your instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
 
@@ -32,7 +32,7 @@ It's easy to get up and running. Update your instantiate a `Jeweler::Tasks`, and
 
 In this example, `s` is a Gem::Specification object. See the [GemSpec reference](http://www.rubygems.org/read/chapter/20) for values of interest.
 
-## Kicking off a new project
+## Using to start a new project
 
 Jeweler provides a generator. It requires you to [setup your name and email for git](http://github.com/guides/tell-git-your-user-name-and-email-address) and [your username and token for GitHub](http://github.com/guides/local-github-config).
 
