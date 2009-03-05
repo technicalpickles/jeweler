@@ -12,7 +12,7 @@ begin
     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gem.authors = ["Josh Nichols"]
     gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
-    gem.add_dependency 'schacon-git'
+    gem.add_dependency 'peterwald-git'
   end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
