@@ -10,9 +10,9 @@ end
 
 class Jeweler
   module Commands
-    class TestRelease < Test::Unit::TestCase
+    class TestReleaseToRubyforge < Test::Unit::TestCase
 
-      context "after running without pending changes" do
+      context "after running when rubyforge_project is defined" do
         setup do
           @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
@@ -28,12 +28,6 @@ class Jeweler
           stub(@gemspec_helper).write
           stub(@gemspec_helper).gem_path {'pkg/zomg-1.2.3.gem'}
           stub(@gemspec_helper).update_version('1.2.3')
-
-          status = Object.new
-          stub(status).added { [] }
-          stub(status).deleted { [] }
-          stub(status).changed { [] }
-          stub(@repo).status { status }
 
           @output = StringIO.new
 
@@ -69,6 +63,79 @@ class Jeweler
         end
         
       end
+      
+      context "after running when rubyforge_project is not defined in Jeweler::Tasks block in Rakefile" do
+        setup do
+          @rubyforge = RubyForgeStub.new
+          stub(@rubyforge).configure
+          stub(@rubyforge).login
+          stub(@rubyforge).add_release(nil, "zomg", "1.2.3", "pkg/zomg-1.2.3.gem")
+
+          @gempsec = Object.new
+          stub(@gemspec).description {"The zomg gem rocks."}
+          stub(@gemspec).rubyforge_project { nil }
+          stub(@gemspec).name {"zomg"}
+          
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper).write
+          stub(@gemspec_helper).gem_path {'pkg/zomg-1.2.3.gem'}
+          stub(@gemspec_helper).update_version('1.2.3')
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::ReleaseToRubyforge.new
+          @command.output         = @output
+          @command.repo           = @repo
+          @command.gemspec        = @gemspec
+          @command.gemspec_helper = @gemspec_helper
+          @command.version        = '1.2.3'
+          @command.ruby_forge     = @rubyforge
+        end
+        
+        should "raise error" do
+          assert_raises RuntimeError, /not configured/i do
+            @command.run
+          end
+        end
+      end
+      
+      context "after running when rubyforge_project is not defined in ~/.rubyforge/auto_config.yml" do
+        setup do
+          @rubyforge = RubyForgeStub.new
+          stub(@rubyforge).configure
+          stub(@rubyforge).login
+          stub(@rubyforge).add_release("some_project_that_doesnt_exist", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem") do
+            raise RuntimeError, "no <group_id> configured for <some_project_that_doesnt_exist>"
+          end
+
+          @gempsec = Object.new
+          stub(@gemspec).description {"The zomg gem rocks."}
+          stub(@gemspec).rubyforge_project { "some_project_that_doesnt_exist" }
+          stub(@gemspec).name {"zomg"}
+          
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper).write
+          stub(@gemspec_helper).gem_path {'pkg/zomg-1.2.3.gem'}
+          stub(@gemspec_helper).update_version('1.2.3')
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::ReleaseToRubyforge.new
+          @command.output         = @output
+          @command.repo           = @repo
+          @command.gemspec        = @gemspec
+          @command.gemspec_helper = @gemspec_helper
+          @command.version        = '1.2.3'
+          @command.ruby_forge     = @rubyforge
+        end
+        
+        should "raise error" do
+          assert_raises RuntimeError, /no <group_id> configured/i do
+            @command.run
+          end
+        end
+      end
+      
     end
   end
 end
