@@ -1,6 +1,7 @@
 require 'date'
 require 'rubygems/user_interaction'
 require 'rubygems/builder'
+require 'rubyforge'
 
 require 'jeweler/version_helper'
 require 'jeweler/gemspec_helper'
@@ -111,6 +112,10 @@ class Jeweler
   def release
     build_command(Jeweler::Commands::Release).run
   end
+  
+  def release_gem_to_rubyforge
+    build_command(Jeweler::Commands::ReleaseToRubyforge).run
+  end
 
   protected
 
@@ -124,7 +129,8 @@ class Jeweler
     command.output = output if command.respond_to?(:output=)
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
     command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
-
+    command.ruby_forge = RubyForge.new if command.respond_to?(:ruby_forge=)
+    
     command
   end
 

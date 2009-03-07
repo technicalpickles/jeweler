@@ -86,6 +86,10 @@ It does the following for you:
  * Push to GitHub (which results in a gem being build)
  * Tag the version and push to GitHub
 
+Jeweler also handles releasing your gem to RubyForge.  Assuming you've configured ~/.ruby_forge properly and included :rubyforge_project in your Jeweler::Tasks block, the following will release your gem to RubyForge:
+
+    rake rubyforge:release:gem
+
 ## Workflow
 
  * Hack, commit, hack, commit, etc, etc
