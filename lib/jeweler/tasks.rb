@@ -28,7 +28,7 @@ class Jeweler
       end
 
       desc "Install gem using sudo"
-      task :install do
+      task :install => :build do
         @jeweler.install_gem
       end
 
