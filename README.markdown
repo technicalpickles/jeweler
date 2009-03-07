@@ -88,7 +88,7 @@ It does the following for you:
 
 Jeweler also handles releasing your gem to RubyForge.  Assuming you've configured ~/.ruby_forge properly and included :rubyforge_project in your Jeweler::Tasks block, the following will release your gem to RubyForge:
 
-    rake rubyforge:release_to_rubyforge
+    rake rubyforge:release:gem
 
 ## Workflow
 
