@@ -3,7 +3,7 @@ require 'test/unit'
 require 'rubygems'
 require 'shoulda'
 begin
-  require 'ruby-debug' 
+  require 'ruby-debug'
 rescue LoadError
 end
 require 'rr'
@@ -24,12 +24,14 @@ end
 
 class RubyForgeStub
   attr_accessor :userconfig, :autoconfig
-  
+
   def initialize
     @userconfig = {}
     @autoconfig = {}
   end
 end
+
+require 'output_catcher'
 
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
