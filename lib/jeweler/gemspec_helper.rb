@@ -19,7 +19,7 @@ class Jeweler
         false
       end
     end
-    
+
     def write
       quoted_files = @spec.files.map {|file| %Q{"#{file}"}}
       nastily_formated_files = quoted_files.join(", ")
@@ -38,7 +38,7 @@ class Jeweler
     def parse
       data = File.read(path)
       parsed_gemspec = nil
-      Thread.new { parsed_gemspec = eval("$SAFE = 3\n#{data}", binding, path) }.join 
+      Thread.new { parsed_gemspec = eval("$SAFE = 3\n#{data}", binding, path) }.join
       parsed_gemspec
     end
 

@@ -22,9 +22,11 @@ require 'jeweler'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'shoulda_macros/jeweler_macros'
 
+TMP_DIR = File.expand_path('../tmp', __FILE__)
+FIXTURE_DIR = File.expand_path('../fixtures', __FILE__)
+
 class RubyForgeStub
   attr_accessor :userconfig, :autoconfig
-
   def initialize
     @userconfig = {}
     @autoconfig = {}
@@ -36,12 +38,20 @@ require 'output_catcher'
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
 
-  def fixture_dir
-    File.join(File.dirname(__FILE__), 'fixtures', 'bar')
+  def tmp_dir
+    TMP_DIR
   end
 
-  def tmp_dir
-    File.join(File.dirname(__FILE__), 'tmp')
+  def fixture_dir
+    File.join(FIXTURE_DIR, 'bar')
+  end
+
+  def remove_tmpdir!
+    FileUtils.rm_rf(tmp_dir)
+  end
+
+  def create_tmpdir!
+    FileUtils.mkdir_p(tmp_dir)
   end
 
   def build_spec(*files)

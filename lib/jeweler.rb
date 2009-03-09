@@ -25,13 +25,16 @@ class Jeweler
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
 
+    @gemspec = gemspec
+    @gemspec.extend(Specification)
+    @gemspec.set_jeweler_defaults(base_dir)
+
     @base_dir       = base_dir
-    @gemspec        = fill_in_gemspec_defaults(gemspec)
     @repo           = Git.open(base_dir) if in_git_repo?
-    @version_helper = Jeweler::VersionHelper.new(@base_dir)
+    @version_helper = Jeweler::VersionHelper.new(base_dir)
     @output         = $stdout
     @commit         = true
-    @gemspec_helper = GemSpecHelper.new(@gemspec, base_dir)
+    @gemspec_helper = GemSpecHelper.new(gemspec, base_dir)
     @rubyforge      = RubyForge.new
 
     clean_up_gemspec_files
@@ -130,29 +133,6 @@ class Jeweler
 
   def in_git_repo?
     File.exists?(File.join(self.base_dir, '.git'))
-  end
-
-  protected
-
-  def fill_in_gemspec_defaults(gemspec)
-    if gemspec.files.nil? || gemspec.files.empty?
-      gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,rails,spec,test}/**/*"]
-    end
-
-    if gemspec.executables.nil? || gemspec.executables.empty?
-      gemspec.executables = Dir["#{@base_dir}/bin/*"].map do |f|
-        File.basename(f)
-      end
-    end
-
-    gemspec.has_rdoc = true
-    gemspec.rdoc_options << '--inline-source' << '--charset=UTF-8'
-
-    if gemspec.extra_rdoc_files.nil? || gemspec.extra_rdoc_files.empty?
-      gemspec.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
-    end
-
-    gemspec
   end
 
   def clean_up_gemspec_files
