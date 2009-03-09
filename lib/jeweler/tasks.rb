@@ -6,10 +6,9 @@ class Jeweler
     attr_accessor :gemspec, :jeweler
 
     def initialize(gemspec = nil, &block)
-      @gemspec = gemspec || Gem::Specification.new()
-      yield @gemspec if block_given?
-
+      @gemspec = gemspec || Gem::Specification.new
       @jeweler = Jeweler.new(@gemspec)
+      yield @gemspec if block_given?
 
       define
     end

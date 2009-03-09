@@ -14,6 +14,8 @@ require 'jeweler/commands'
 
 require 'jeweler/tasks'
 
+require 'jeweler/specification'
+
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
 
