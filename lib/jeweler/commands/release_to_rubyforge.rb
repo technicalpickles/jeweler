@@ -15,6 +15,10 @@ class Jeweler
         @ruby_forge.configure rescue nil
         output.puts 'Logging in rubyforge'
         @ruby_forge.login
+        @ruby_forge.scrape_config
+        unless @ruby_forge.autoconfig['package_ids'].has_key?(@gemspec.name)
+          @ruby_forge.create_package(@gemspec.rubyforge_project, @gemspec.name)
+        end
 
         @ruby_forge.userconfig['release_notes'] = @gemspec.description if @gemspec.description
         @ruby_forge.userconfig['preformatted'] = true
