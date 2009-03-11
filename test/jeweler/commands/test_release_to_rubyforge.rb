@@ -18,9 +18,7 @@ class Jeweler
           @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
           stub(@rubyforge).login
-          stub(@rubyforge).scrape_config
           stub(@rubyforge).add_release("MyRubyForgeProjectName", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem")
-          @rubyforge.autoconfig['package_ids'] = { 'zomg' => 1234 }
 
           @gempsec = Object.new
           stub(@gemspec).description {"The zomg gem rocks."}
@@ -53,10 +51,6 @@ class Jeweler
           assert_received(@rubyforge) {|rubyforge| rubyforge.login }
         end
 
-        should "scrape rubyforge config" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.scrape_config }
-        end
-        
         should "set release notes" do
           assert_equal "The zomg gem rocks.", @rubyforge.userconfig["release_notes"]
         end
@@ -76,9 +70,9 @@ class Jeweler
           stub(@rubyforge).configure
           stub(@rubyforge).login
           stub(@rubyforge).scrape_config
-          stub(@rubyforge).add_release("MyRubyForgeProjectName", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem")
-          stub(@rubyforge).create_package("MyRubyForgeProjectName", "zomg")
-          @rubyforge.autoconfig['package_ids'] = { }
+          stub(@rubyforge).add_release("MyRubyForgeProjectName", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem") {
+            raise "no <package_id> configured for <zomg>"
+          }
 
           @gempsec = Object.new
           stub(@gemspec).description {"The zomg gem rocks."}
@@ -100,35 +94,12 @@ class Jeweler
           @command.version        = '1.2.3'
           @command.ruby_forge     = @rubyforge
 
-          @command.run
         end
 
-        should "configure" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.configure }
-        end
-
-        should "login" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.login }
-        end
-
-        should "scrape rubyforge config" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.scrape_config }
-        end
-
-        should "create new package" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.create_package("MyRubyForgeProjectName", "zomg")}
-        end
-        
-        should "set release notes" do
-          assert_equal "The zomg gem rocks.", @rubyforge.userconfig["release_notes"]
-        end
-        
-        should "set preformatted to true" do
-          assert_equal true, @rubyforge.userconfig['preformatted']
-        end
-        
-        should "add release" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.add_release("MyRubyForgeProjectName", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem") }
+        should "raise MissingRubyForgePackageError" do
+          assert_raises Jeweler::MissingRubyForgePackageError do
+            @command.run
+          end
         end
       end
       
@@ -137,7 +108,6 @@ class Jeweler
           @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
           stub(@rubyforge).login
-          stub(@rubyforge).scrape_config
           stub(@rubyforge).add_release(nil, "zomg", "1.2.3", "pkg/zomg-1.2.3.gem")
 
           @gempsec = Object.new
@@ -173,7 +143,6 @@ class Jeweler
           @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
           stub(@rubyforge).login
-          stub(@rubyforge).scrape_config
           stub(@rubyforge).add_release("some_project_that_doesnt_exist", "zomg", "1.2.3", "pkg/zomg-1.2.3.gem") do
             raise RuntimeError, "no <group_id> configured for <some_project_that_doesnt_exist>"
           end

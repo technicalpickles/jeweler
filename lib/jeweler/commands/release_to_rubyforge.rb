@@ -15,16 +15,20 @@ class Jeweler
         @ruby_forge.configure rescue nil
         output.puts 'Logging in rubyforge'
         @ruby_forge.login
-        @ruby_forge.scrape_config
-        unless @ruby_forge.autoconfig['package_ids'].has_key?(@gemspec.name)
-          @ruby_forge.create_package(@gemspec.rubyforge_project, @gemspec.name)
-        end
 
         @ruby_forge.userconfig['release_notes'] = @gemspec.description if @gemspec.description
         @ruby_forge.userconfig['preformatted'] = true
 
         output.puts "Releasing #{@gemspec.name}-#{@version} to #{@gemspec.rubyforge_project}"
-        @ruby_forge.add_release(@gemspec.rubyforge_project, @gemspec.name, @version.to_s, @gemspec_helper.gem_path)
+        begin
+          @ruby_forge.add_release(@gemspec.rubyforge_project, @gemspec.name, @version.to_s, @gemspec_helper.gem_path)
+        rescue StandardError => e
+          if e.message =~ /no <package_id> configured for <#{Regexp.escape @gemspec.name}>/i
+            raise MissingRubyForgePackageError
+          else
+            raise
+          end
+        end
       end
       
     end

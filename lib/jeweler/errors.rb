@@ -5,4 +5,7 @@ class Jeweler
 
    class VersionYmlError < StandardError
    end
+
+   class MissingRubyForgePackageError < StandardError
+   end
 end
