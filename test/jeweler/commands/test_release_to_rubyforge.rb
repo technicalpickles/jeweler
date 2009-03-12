@@ -29,7 +29,7 @@ class Jeweler
           @command.gemspec        = @gemspec
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
-          @command.ruby_forge     = @rubyforge
+          @command.rubyforge     = @rubyforge
 
           @command.run
         end
@@ -83,7 +83,7 @@ class Jeweler
           @command.gemspec        = @gemspec
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
-          @command.ruby_forge     = @rubyforge
+          @command.rubyforge      = @rubyforge
 
         end
 
@@ -119,7 +119,7 @@ class Jeweler
           @command.gemspec        = @gemspec
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
-          @command.ruby_forge     = @rubyforge
+          @command.rubyforge     = @rubyforge
         end
         
         should "raise error" do
@@ -157,7 +157,7 @@ class Jeweler
           @command.gemspec        = @gemspec
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
-          @command.ruby_forge     = @rubyforge
+          @command.rubyforge     = @rubyforge
         end
         
         should "raise error" do

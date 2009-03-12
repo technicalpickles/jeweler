@@ -117,6 +117,10 @@ class Jeweler
     build_command(Jeweler::Commands::ReleaseToRubyforge).run
   end
 
+  def setup_rubyforge
+    build_command(Jeweler::Commands::SetupRubyforge).run
+  end
+
   protected
 
   def build_command(command_class)
@@ -129,7 +133,7 @@ class Jeweler
     command.output = output if command.respond_to?(:output=)
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
     command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
-    command.ruby_forge = RubyForge.new if command.respond_to?(:ruby_forge=)
+    command.rubyforge = RubyForge.new if command.respond_to?(:ruby_forge=)
     
     command
   end

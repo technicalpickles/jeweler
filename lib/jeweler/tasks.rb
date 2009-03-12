@@ -90,12 +90,16 @@ class Jeweler
       end
       
       namespace :rubyforge do
-        namespace :release do
-          desc "Publish the current gem version to RubyForge."
-          task :gem do
-            @jeweler.release_gem_to_rubyforge
-          end
+        desc "Release the current gem version to RubyForge."
+        task :release do
+          @jeweler.release_gem_to_rubyforge
         end
+
+        desc "Setup a rubyforge project for this gem"
+        task :setup do
+          @jeweler.setup_rubyforge
+        end
+
       end
     end
   end
