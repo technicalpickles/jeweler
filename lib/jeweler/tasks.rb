@@ -92,7 +92,11 @@ class Jeweler
       namespace :rubyforge do
         desc "Release the current gem version to RubyForge."
         task :release do
-          @jeweler.release_gem_to_rubyforge
+          begin
+            @jeweler.release_gem_to_rubyforge
+          rescue NoRubyForgeProjectInGemspecError => e
+            abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+          end
         end
 
         desc "Setup a rubyforge project for this gem"

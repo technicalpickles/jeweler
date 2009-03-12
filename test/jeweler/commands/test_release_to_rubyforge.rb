@@ -122,8 +122,8 @@ class Jeweler
           @command.rubyforge     = @rubyforge
         end
         
-        should "raise error" do
-          assert_raises RuntimeError, /not configured/i do
+        should "raise NoRubyForgeProjectConfigured" do
+          assert_raises Jeweler::NoRubyForgeProjectInGemspecError do
             @command.run
           end
         end

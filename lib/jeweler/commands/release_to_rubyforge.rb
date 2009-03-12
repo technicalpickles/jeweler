@@ -10,7 +10,7 @@ class Jeweler
       end
 
       def run
-        raise "rubyforge_project not configured.  Add this to the Jeweler::Tasks block in your Rakefile." if @gemspec.rubyforge_project.nil?
+        raise NoRubyForgeProjectInGemspecError unless @gemspec.rubyforge_project
         
         @rubyforge.configure rescue nil
 
