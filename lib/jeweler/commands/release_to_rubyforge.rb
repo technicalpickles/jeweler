@@ -13,6 +13,7 @@ class Jeweler
         raise "rubyforge_project not configured.  Add this to the Jeweler::Tasks block in your Rakefile." if @gemspec.rubyforge_project.nil?
         
         @ruby_forge.configure rescue nil
+
         output.puts 'Logging in rubyforge'
         @ruby_forge.login
 

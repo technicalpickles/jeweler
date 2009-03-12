@@ -22,6 +22,15 @@ Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |di
   $LOAD_PATH.unshift(lib) if File.directory?(lib)
 end
 
+class RubyForgeStub
+  attr_accessor :userconfig, :autoconfig
+  
+  def initialize
+    @userconfig = {}
+    @autoconfig = {}
+  end
+end
+
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
 

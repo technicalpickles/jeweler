@@ -1,14 +1,5 @@
 require 'test_helper'
 
-class RubyForgeStub
-  attr_accessor :userconfig, :autoconfig
-  
-  def initialize
-    @userconfig = {}
-    @autoconfig = {}
-  end
-end
-
 class Jeweler
   module Commands
     class TestReleaseToRubyforge < Test::Unit::TestCase
