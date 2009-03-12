@@ -97,7 +97,11 @@ class Jeweler
 
         desc "Setup a rubyforge project for this gem"
         task :setup do
-          @jeweler.setup_rubyforge
+          begin 
+            @jeweler.setup_rubyforge
+          rescue NoRubyForgeProjectInGemspecError => e
+            abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+          end
         end
 
       end

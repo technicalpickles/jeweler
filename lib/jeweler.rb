@@ -133,7 +133,7 @@ class Jeweler
     command.output = output if command.respond_to?(:output=)
     command.base_dir = @base_dir if command.respond_to?(:base_dir=)
     command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
-    command.rubyforge = RubyForge.new if command.respond_to?(:ruby_forge=)
+    command.rubyforge = RubyForge.new if command.respond_to?(:rubyforge=)
     
     command
   end

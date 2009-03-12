@@ -38,6 +38,30 @@ class Jeweler
         end
       end
 
+      context "rubyforge_project not configured" do
+        setup do
+          @rubyforge = RubyForgeStub.new
+
+          @gemspec = Object.new
+          stub(@gemspec).name { 'zomg' }
+          stub(@gemspec).rubyforge_project { nil }
+
+          @output = StringIO.new
+
+          @command = Jeweler::Commands::SetupRubyforge.new
+          @command.output = @output
+          @command.gemspec = @gemspec
+          @command.rubyforge = @rubyforge
+        end
+
+        should "raise NoRubyForgeProjectConfigured" do
+          assert_raises Jeweler::NoRubyForgeProjectInGemspecError do
+            @command.run
+          end
+        end
+      end
+
+
     end
   end
 end

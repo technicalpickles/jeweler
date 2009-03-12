@@ -4,6 +4,8 @@ class Jeweler
       attr_accessor :gemspec, :output, :rubyforge
 
       def run
+        raise NoRubyForgeProjectInGemspecError unless @gemspec.rubyforge_project
+
         @rubyforge.configure
 
         output.puts "Logging into rubyforge"

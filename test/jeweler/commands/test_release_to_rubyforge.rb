@@ -94,7 +94,7 @@ class Jeweler
         end
       end
       
-      context "after running when rubyforge_project is not defined in gemspec" do
+      context "rubyforge_project is not defined in gemspec" do
         setup do
           @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
