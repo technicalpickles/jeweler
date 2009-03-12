@@ -33,7 +33,9 @@ Given /^I have configured git sanely$/ do
           'github.token' => @github_token})
 end
 
-
+Given /^I set JEWELER_OPTS env variable to "(.*)"$/ do |val|
+  ENV['JEWELER_OPTS'] = val
+end
 
 When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testing_framework, name, summary|
   @name = name
@@ -244,5 +246,6 @@ end
 
 
 After do
+  ENV['JEWELER_OPTS'] = nil
   FileUtils.rm_rf @working_dir if @working_dir
 end
