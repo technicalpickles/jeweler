@@ -4,7 +4,7 @@ Feature: git support
   generate a project that is setup for git
 
   Scenario: git remote configuration
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -12,14 +12,14 @@ Feature: git support
     And git repository 'origin' remote should be 'git@github.com:technicalpickles/the-perfect-gem.git'
 
   Scenario: .gitignore
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then a sane '.gitignore' is created
 
   Scenario: baseline repository
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -36,7 +36,7 @@ Feature: git support
     And no files are deleted
 
   Scenario: bacon
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -44,7 +44,7 @@ Feature: git support
     And 'spec/the_perfect_gem_spec.rb' was checked in
 
   Scenario: minitest
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -52,7 +52,7 @@ Feature: git support
     And 'test/the_perfect_gem_test.rb' was checked in
 
   Scenario: rspec
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -60,7 +60,7 @@ Feature: git support
     And 'spec/the_perfect_gem_spec.rb' was checked in
 
   Scenario: shoulda
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -68,7 +68,7 @@ Feature: git support
     And 'test/the_perfect_gem_test.rb' was checked in
 
   Scenario: testunit
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -76,7 +76,7 @@ Feature: git support
     And 'test/the_perfect_gem_test.rb' was checked in
 
   Scenario: micronaut
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -84,7 +84,7 @@ Feature: git support
     And 'examples/the_perfect_gem_example.rb' was checked in
 
   Scenario: cucumber
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'

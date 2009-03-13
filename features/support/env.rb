@@ -16,3 +16,7 @@ def yank_task_info(content, task)
     [$2, $3]
   end
 end
+
+def fixture_dir
+  File.expand_path File.join(File.dirname(__FILE__), '..', '..', 'test', 'fixtures')
+end

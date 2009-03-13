@@ -4,7 +4,7 @@ Feature: generated directory layout
   generate a directory layout
 
   Scenario: shared
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -16,7 +16,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
 
   Scenario: bacon
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -26,7 +26,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
 
   Scenario: minitest
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -36,7 +36,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
 
   Scenario: rspec
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -46,7 +46,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
 
   Scenario: shoulda
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -56,7 +56,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
 
   Scenario: testunit
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -66,7 +66,7 @@ Feature: generated directory layout
     And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
 
   Scenario: micronaut
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 

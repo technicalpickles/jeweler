@@ -1,9 +1,3 @@
-Given 'a working directory' do
-  @working_dir = File.join(File.dirname(__FILE__), '..', '..', 'tmp')
-  FileUtils.rm_rf @working_dir
-  FileUtils.mkdir_p @working_dir
-end
-
 Given /^I do not want cucumber stories$/ do
   @use_cucumber = false
 end

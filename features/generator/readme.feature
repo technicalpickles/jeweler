@@ -4,7 +4,7 @@ Feature: generated license
   generate a default license
 
   Scenario: copyright
-    Given a working directory
+    Given I am in a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
