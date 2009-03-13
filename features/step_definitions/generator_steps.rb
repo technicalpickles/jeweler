@@ -50,9 +50,11 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testi
   arguments = ['--directory',
                "#{@working_dir}/#{@name}",
                '--summary', @summary,
-               @use_cucumber ? '--cucumber' : nil,
-               "--#{@testing_framework}", @name,
-               @use_rubyforge ? '--rubyforge' : nil].compact
+                @use_cucumber ? '--cucumber' : nil,
+                @testing_framework ? "--#{@testing_framework}" : nil,
+                @use_rubyforge ? '--rubyforge' : nil,
+                @name].compact
+
   @stdout = OutputCatcher.catch_out do
     Jeweler::Generator::Application.run! *arguments
   end
