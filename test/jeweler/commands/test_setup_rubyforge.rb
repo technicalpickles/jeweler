@@ -3,24 +3,16 @@ require 'test_helper'
 class Jeweler
   module Commands
     class TestSetupRubyforge < Test::Unit::TestCase
+      subject { Jeweler::Commands::SetupRubyforge.new }
 
-      context "rubyforge_project is defined in gemspec and package exists on rubyforge" do
+      rubyforge_command_context "rubyforge_project is defined in gemspec and package exists on rubyforge" do
         setup do
-          @rubyforge = RubyForgeStub.new
           stub(@rubyforge).configure
           stub(@rubyforge).login
           stub(@rubyforge).create_package('myproject', 'zomg')
 
-          @gemspec = Object.new
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'myproject' }
-
-          @output = StringIO.new
-
-          @command = Jeweler::Commands::SetupRubyforge.new
-          @command.output = @output
-          @command.gemspec = @gemspec
-          @command.rubyforge = @rubyforge
 
           @command.run
         end
@@ -38,20 +30,10 @@ class Jeweler
         end
       end
 
-      context "rubyforge_project not configured" do
+      rubyforge_command_context "rubyforge_project not configured" do
         setup do
-          @rubyforge = RubyForgeStub.new
-
-          @gemspec = Object.new
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { nil }
-
-          @output = StringIO.new
-
-          @command = Jeweler::Commands::SetupRubyforge.new
-          @command.output = @output
-          @command.gemspec = @gemspec
-          @command.rubyforge = @rubyforge
         end
 
         should "raise NoRubyForgeProjectConfigured" do

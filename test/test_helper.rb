@@ -53,4 +53,45 @@ class Test::Unit::TestCase
       s.files = FileList[*files] unless files.empty?
     end
   end
+
+  class << self
+    attr_accessor :subject_block
+  end
+  def self.subject(&block)
+    self.subject_block = block
+  end
+
+  def subject
+    self.class.subject_block.call
+  end
+
+  def self.rubyforge_command_context(description, &block)
+    context description do
+      setup do
+        @command = subject
+
+        if @command.respond_to? :gemspec=
+          @gemspec = Object.new
+          @command.gemspec = @gemspec
+        end
+
+        if @command.respond_to? :gemspec_helper=
+          @gemspec_helper = Object.new
+          @command.gemspec_helper = @gemspec_helper
+        end
+
+        if @command.respond_to? :rubyforge=
+          @rubyforge = RubyForgeStub.new
+          @command.rubyforge = @rubyforge
+        end
+
+        if @command.respond_to? :output
+          @output = StringIO.new
+          @command.output = @output
+        end
+      end
+
+      context "", &block
+    end
+  end
 end
