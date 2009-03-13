@@ -74,7 +74,7 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
     rake version:bump:minor
     rake version:bump:patch
 
-## Releasing
+## Releasing to GitHub
 
 Jeweler handles releasing your gem into the wild:
 
@@ -86,9 +86,42 @@ It does the following for you:
  * Push to GitHub (which results in a gem being build)
  * Tag the version and push to GitHub
 
-Jeweler also handles releasing your gem to RubyForge.  Assuming you've configured ~/.ruby_forge properly and included :rubyforge_project in your Jeweler::Tasks block, the following will release your gem to RubyForge:
+## Releasing to RubyForge
 
-    rake rubyforge:release:gem
+Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There are a few steps you need to do before doing any RubyForge releases with Jeweler:
+
+ * [Create an account on RubyForge](http://rubyforge.org/account/register.php)
+ * Request a project on RubyForge. This involves waiting for a project approval, which can take any amount of time from a few hours to a week
+   * You might want to create an umbrella project where you can publish your gems, instead of one project per gem
+ * Install the RubyForge gem: sudo gem install rubyforge
+ * Run 'rubyforge setup' and fill in your username and password for RubyForge
+ * Run 'rubyforge config' to pull down information about your projects
+ * Run 'rubyforge login' to make sure you are able to login
+
+With this in place, you now update your Jeweler::Tasks to setup the RubyForge project you've just created:
+
+    begin
+      require 'jeweler'
+      Jeweler::Tasks.new do |s|
+        s.name = "the-perfect-gem"
+        s.summary = "TODO"
+        s.email = "josh@technicalpickles.com"
+        s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
+        s.description = "TODO"
+        s.authors = ["Josh Nichols"]
+        s.rubyforge_project = 'zomg'
+      end
+    rescue LoadError
+      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+    end
+
+Now you must initially create a 'package' for your gem in your 'project':
+
+    $ rake rubyforge:setup
+
+With all that setup out of the way, you can now release to RubyForge with impunity. This would release the current version of your gem:
+
+    $ rake rubyforge:release
 
 ## Workflow
 

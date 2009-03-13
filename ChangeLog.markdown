@@ -1,8 +1,11 @@
 # jeweler x.y.z
  
- * Ruby 1.9 support, thanks to rsanheim
 
-# jeweler 0.9.1
+ * 'rake install' now will 'rake build' first
+ * Support for releasing to RubyForge, thanks to jtrupiano
+ * Steps towards Ruby 1.9 support, thanks to rsanheim
+
+# jeweler 0.9.1 2009-03-05
 
  * Tasks:
   * Fixed populating default spec's extra_rdoc_files
