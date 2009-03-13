@@ -48,14 +48,11 @@ class Jeweler
       end
 
       desc "Displays the current version"
-      task :version => 'version:setup' do
+      task :version => 'VERSION.yml' do
         $stdout.puts "Current version: #{@jeweler.version}"
       end
 
       namespace :version do
-        desc "Setup initial version of 0.0.0"
-        task :setup => "VERSION.yml"
-
         desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH"
         task :write do
           major, minor, patch = ENV['MAJOR'].to_i, ENV['MINOR'].to_i, ENV['PATCH'].to_i

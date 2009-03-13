@@ -4,7 +4,7 @@ Feature: generating cucumber stories
   generate a project setup for their testing framework of choice
 
   Scenario: sans cucumber setup
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I do not want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
@@ -14,7 +14,7 @@ Feature: generating cucumber stories
     And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is not created
     
   Scenario: basic cucumber setup
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
@@ -28,7 +28,7 @@ Feature: generating cucumber stories
     And 'features/support/env.rb' requires 'the_perfect_gem'
 
   Scenario: cucumber setup for bacon
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
@@ -37,7 +37,7 @@ Feature: generating cucumber stories
     And cucumber world extends "Test::Unit::Assertions"
 
   Scenario: cucumber setup for shoulda
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
@@ -46,7 +46,7 @@ Feature: generating cucumber stories
     And cucumber world extends "Test::Unit::Assertions"
 
   Scenario: cucumber setup for testunit
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
@@ -55,7 +55,7 @@ Feature: generating cucumber stories
     And cucumber world extends "Test::Unit::Assertions"
 
   Scenario: cucumber setup for minitest
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
@@ -64,7 +64,7 @@ Feature: generating cucumber stories
     And cucumber world extends "Mini::Test::Assertions"
 
   Scenario: cucumber setup for rspec
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
@@ -73,7 +73,7 @@ Feature: generating cucumber stories
     And 'features/support/env.rb' requires 'spec/expectations'
 
   Scenario: cucumber setup for mirconaut
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'

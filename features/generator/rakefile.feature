@@ -4,7 +4,7 @@ Feature: generated Rakefile
   generate a Rakefile
 
   Scenario: shared
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -17,7 +17,7 @@ Feature: generated Rakefile
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
 
   Scenario: bacon
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -29,7 +29,7 @@ Feature: generated Rakefile
     And Rakefile has "spec" as the default task
 
   Scenario: minitest
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -40,7 +40,7 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: rspec
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -49,7 +49,7 @@ Feature: generated Rakefile
     And Rakefile has "spec" as the default task
 
   Scenario: shoulda
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -60,7 +60,7 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: micronaut
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -69,7 +69,7 @@ Feature: generated Rakefile
     And Rakefile has "examples" as the default task
 
   Scenario: testunit
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
@@ -80,7 +80,7 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: no cucumber
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I do not want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
@@ -88,7 +88,7 @@ Feature: generated Rakefile
     And Rakefile does not instantiate a Cucumber::Rake::Task
 
   Scenario: cucumber
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'

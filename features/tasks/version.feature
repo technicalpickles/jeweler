@@ -3,7 +3,7 @@ Feature: version rake task
   Scenario: a newly created project without a version
     Given a working directory
     And I use the jeweler command to generate the "the-perfect-gem" project in the working directory
-    And "VERSION.yml" doesn't already exist
+    And "the-perfect-gem/VERSION.yml" does not exist
     When I run "rake version" in "the-perfect-gem"
     Then the process should exit cleanly
     And the current version, 0.0.0, is displayed

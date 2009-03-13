@@ -18,8 +18,8 @@ Given /^I use the jeweler command to generate the "([^"]+)" project in the worki
   end
 end
 
-Given /^"VERSION\.yml" doesn't already exist$/ do
-  assert ! File.exists?(File.join(@working_dir, @name, 'VERSION.yml'))
+Given /^"([^"]+)" does not exist$/ do |file|
+  assert ! File.exists?(File.join(@working_dir, file))
 end
 
 When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|

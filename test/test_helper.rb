@@ -55,14 +55,27 @@ class Test::Unit::TestCase
   end
 
   class << self
-    attr_accessor :subject_block
+    attr_accessor :subject_block, :tested_type
   end
+
   def self.subject(&block)
     self.subject_block = block
   end
 
   def subject
-    self.class.subject_block.call
+    self.class.subject_block ? self.class.subject_block.call : default_subject
+  end
+
+  def default_subject
+    self.class.tested_type.new
+  end
+
+  def self.tested_type
+    @tested_type ||= eval self.name.gsub(/::Test/, '::')
+  end
+
+  def self.tests(tested_type)
+    self.tested_type = tested_type
   end
 
   def self.rubyforge_command_context(description, &block)

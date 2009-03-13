@@ -4,38 +4,38 @@ Feature: generated test or spec
   generate a test or spec
 
   Scenario: bacon
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 
   Scenario: minitest
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Mini::Test::TestCase'
 
   Scenario: rspec
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'spec/the_perfect_gem_spec.rb' should describe 'ThePerfectGem'
 
   Scenario: shoulda
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     And I intend to test with shoulda
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
 
   Scenario: testunit
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the_perfect_gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Test::Unit::TestCase'
 
   Scenario: micronaut
-    Given I am in a working directory
+    Given a working directory
     And I have configured git sanely
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'examples/the_perfect_gem_example.rb' should describe 'ThePerfectGem'
