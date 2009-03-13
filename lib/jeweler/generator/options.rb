@@ -1,11 +1,12 @@
 class Jeweler
   class Generator
     class Options < Hash
-      attr_reader :opts
+      attr_reader :opts, :orig_args
 
       def initialize(args)
         super()
 
+        @orig_args = args.clone
         self[:testing_framework] = :shoulda
 
         @opts = OptionParser.new do |o|
@@ -61,6 +62,10 @@ class Jeweler
         end
 
         @opts.parse!(args)
+      end
+
+      def merge(other)
+        self.class.new(@orig_args + other.orig_args)
       end
 
     end
