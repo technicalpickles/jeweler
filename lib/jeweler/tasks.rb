@@ -96,6 +96,8 @@ class Jeweler
             @jeweler.release_gem_to_rubyforge
           rescue NoRubyForgeProjectInGemspecError => e
             abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+          rescue RubyForgeProjectNotConfiguredError => e
+            abort "The RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
           end
         end
 
@@ -105,6 +107,8 @@ class Jeweler
             @jeweler.setup_rubyforge
           rescue NoRubyForgeProjectInGemspecError => e
             abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+          rescue RubyForgeProjectNotConfiguredError => e
+            abort "The RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
           end
         end
 

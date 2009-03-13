@@ -118,8 +118,8 @@ class Jeweler
           @command.version        = '1.2.3'
         end
         
-        should "raise error" do
-          assert_raises RuntimeError, /no <group_id> configured/i do
+        should "raise RubyForgeProjectNotConfiguredError" do
+          assert_raises RubyForgeProjectNotConfiguredError do
             @command.run
           end
         end

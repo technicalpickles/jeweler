@@ -24,7 +24,10 @@ class Jeweler
         begin
           @rubyforge.add_release(@gemspec.rubyforge_project, @gemspec.name, @version.to_s, @gemspec_helper.gem_path)
         rescue StandardError => e
-          if e.message =~ /no <package_id> configured for <#{Regexp.escape @gemspec.name}>/i
+          case e.message
+          when /no <group_id> configured for <#{Regexp.escape @gemspec.rubyforge_project}>/
+            raise RubyForgeProjectNotConfiguredError, @gemspec.rubyforge_project
+          when /no <package_id> configured for <#{Regexp.escape @gemspec.name}>/i
             raise MissingRubyForgePackageError, @gemspec.name
           else
             raise

@@ -43,6 +43,26 @@ class Jeweler
         end
       end
 
+      rubyforge_command_context "rubyforge project doesn't exist or not setup in ~/.rubyforge/autoconfig.yml" do
+        setup do
+          stub(@rubyforge).configure
+          stub(@rubyforge).login
+          stub(@rubyforge).create_package('some_project_that_doesnt_exist', 'zomg')do
+            raise RuntimeError, "no <group_id> configured for <some_project_that_doesnt_exist>"
+          end
+
+          stub(@gemspec).name { 'zomg' }
+          stub(@gemspec).rubyforge_project { 'some_project_that_doesnt_exist' }
+        end
+
+        should "raise RubyForgeProjectNotConfiguredError" do
+          assert_raises RubyForgeProjectNotConfiguredError do
+            @command.run
+          end
+        end 
+
+      end
+
 
     end
   end
