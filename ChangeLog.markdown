@@ -1,6 +1,5 @@
 # jeweler x.y.z
  
-
  * 'rake install' now will 'rake build' first
  * Support for releasing to RubyForge, thanks to jtrupiano
  * Steps towards Ruby 1.9 support, thanks to rsanheim
