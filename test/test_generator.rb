@@ -2,6 +2,10 @@ require 'test_helper'
 
 class TestGenerator < Test::Unit::TestCase
   def build_generator(testing_framework = nil, options = {})
+    stub.instance_of(Git::Lib).parse_config '~/.gitconfig' do
+      {'user.name' => 'John Doe', 'user.email' => 'john@example.com', 'github.user' => 'johndoe', 'github.token' => 'yyz'}
+    end
+
     options[:testing_framework] = testing_framework
     Jeweler::Generator.new('the-perfect-gem', options)
   end
