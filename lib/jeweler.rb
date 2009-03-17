@@ -17,7 +17,7 @@ require 'jeweler/tasks'
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
 
-  attr_reader :gemspec, :gemspec_helper
+  attr_reader :gemspec, :gemspec_helper, :version_helper
   attr_accessor :base_dir, :output
 
   def initialize(gemspec, base_dir = '.')
@@ -56,13 +56,13 @@ class Jeweler
 
   # Writes out the gemspec
   def write_gemspec
-    build_command(Jeweler::Commands::WriteGemspec).run
+    Jeweler::Commands::WriteGemspec.build_for(self).run
   end
 
   # Validates the project's gemspec from disk in an environment similar to how 
   # GitHub would build from it. See http://gist.github.com/16215
   def validate_gemspec
-    build_command(Jeweler::Commands::ValidateGemspec).run
+    Jeweler::Commands::ValidateGemspec.build_for(self).run
   end
 
   # is the project's gemspec from disk valid?

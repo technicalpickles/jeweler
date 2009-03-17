@@ -53,6 +53,40 @@ class Jeweler
 
       end
 
+      build_command_context "building for jeweler" do
+        setup do
+          @command = Jeweler::Commands::WriteGemspec.build_for(@jeweler)
+        end
+
+        should "assign base_dir" do
+          assert_same @base_dir, @command.base_dir
+        end
+
+        should "assign gemspec" do
+          assert_same @gemspec, @command.gemspec
+        end
+
+        should "assign version" do
+          assert_same @version, @command.version
+        end
+
+        should "assign output" do
+          assert_same @output, @command.output
+        end
+
+        should "assign gemspec_helper" do
+          assert_same @gemspec_helper, @command.gemspec_helper
+        end
+
+        should "assign version_helper" do
+          assert_same @version_helper, @command.version_helper
+        end
+
+        should "return WriteGemspec" do
+          assert_kind_of Jeweler::Commands::WriteGemspec, @command
+        end
+      end
+
     end
   end
 end

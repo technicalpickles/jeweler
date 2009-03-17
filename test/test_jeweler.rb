@@ -73,4 +73,35 @@ class TestJeweler < Test::Unit::TestCase
     jeweler.build_gem
   end
 
+  should "build and run write gemspec command when writing gemspec" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::WriteGemspec).build_for(jeweler) { command }
+
+    jeweler.write_gemspec
+  end
+
+  should "build and run validate gemspec command when validating gemspec" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::ValidateGemspec).build_for(jeweler) { command }
+
+    jeweler.validate_gemspec
+  end
+
+
+  should "respond to gemspec_helper" do
+    assert_respond_to build_jeweler, :gemspec_helper
+  end
+
+  should "respond to version_helper" do
+    assert_respond_to build_jeweler, :version_helper
+  end
+
 end

@@ -21,6 +21,19 @@ class Jeweler
         @gemspec_helper ||= GemSpecHelper.new(self.gemspec, self.base_dir)
       end
 
+      def self.build_for(jeweler)
+        command = new
+
+        command.base_dir = jeweler.base_dir
+        command.gemspec = jeweler.gemspec
+        command.version = jeweler.version
+        command.output = jeweler.output
+        command.gemspec_helper = jeweler.gemspec_helper
+        command.version_helper = jeweler.version_helper
+
+        command
+      end
+
     end
   end
 end
