@@ -62,4 +62,15 @@ class TestJeweler < Test::Unit::TestCase
     jeweler.release
   end
 
+  should "build and run build gem command when building gem" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::BuildGem).build_for(jeweler) { command }
+
+    jeweler.build_gem
+  end
+
 end

@@ -71,7 +71,7 @@ class Jeweler
   end
 
   def build_gem
-    build_command(Jeweler::Commands::BuildGem).run
+    Jeweler::Commands::BuildGem.build_for(self).run
   end
 
   def install_gem

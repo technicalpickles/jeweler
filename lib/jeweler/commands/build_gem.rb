@@ -17,6 +17,15 @@ class Jeweler
         gem_file_name = File.join(base_dir, gem_file_name)
         file_utils.mv gem_file_name, pkg_dir
       end
+
+      def self.build_for(jeweler)
+        command = new
+
+        command.base_dir = jeweler.base_dir
+        command.gemspec_helper = jeweler.gemspec_helper
+
+        command
+      end
     end
   end
 end

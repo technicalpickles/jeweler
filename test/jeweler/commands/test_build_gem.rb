@@ -48,6 +48,24 @@ class Jeweler
         end
       end
 
+      build_command_context "build for jeweler" do
+        setup do
+          @command = Jeweler::Commands::BuildGem.build_for(@jeweler)
+        end
+
+        should "assign base_dir" do
+          assert_same @base_dir, @jeweler.base_dir
+        end
+
+        should "assign gemspec_helper" do
+          assert_same @gemspec_helper, @jeweler.gemspec_helper
+        end
+
+        should "return BuildGem" do
+          assert_kind_of Jeweler::Commands::BuildGem, @command
+        end
+      end
+
     end
   end
 end
