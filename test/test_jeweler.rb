@@ -2,7 +2,9 @@ require 'test_helper'
 
 class TestJeweler < Test::Unit::TestCase
 
-  def build_jeweler(base_dir = '.')
+  def build_jeweler(base_dir = nil)
+    base_dir ||= non_git_dir_path
+
     Jeweler.new(build_spec, base_dir)
   end
 
@@ -47,6 +49,17 @@ class TestJeweler < Test::Unit::TestCase
 
     jeweler = build_jeweler(non_git_dir_path)
     assert ! jeweler.in_git_repo?, "jeweler doesn't know that #{jeweler.base_dir} is not a git repository"
+  end
+
+  should "build and run release command when running release" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::Release).build_for(jeweler) { command }
+
+    jeweler.release
   end
 
 end

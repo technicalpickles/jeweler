@@ -110,7 +110,7 @@ class Jeweler
   end
 
   def release
-    build_command(Jeweler::Commands::Release).run
+    Jeweler::Commands::Release.build_for(self).run
   end
   
   def release_gem_to_rubyforge

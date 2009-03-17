@@ -145,6 +145,36 @@ class Jeweler
           assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
         end
       end
+
+      build_command_context "building from jeweler" do
+        setup do
+          @command = Jeweler::Commands::Release.build_for(@jeweler)
+        end
+
+        should "assign gemspec" do
+          assert_same @gemspec, @command.gemspec
+        end
+
+        should "assign version" do
+          assert_same @version, @command.version
+        end
+
+        should "assign repo" do
+          assert_same @repo, @command.repo
+        end
+
+        should "assign output" do
+          assert_same @output, @command.output
+        end
+
+        should "assign gemspec_helper" do
+          assert_same @gemspec_helper, @command.gemspec_helper
+        end
+
+        should "assign base_dir" do
+          assert_same @base_dir, @command.base_dir
+        end
+      end
     end
   end
 end
