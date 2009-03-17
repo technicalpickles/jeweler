@@ -3,7 +3,9 @@ require 'test_helper'
 class Jeweler
   module Commands
     class TestSetupRubyforge < Test::Unit::TestCase
-      #subject { Jeweler::Commands::SetupRubyforge.new }
+      def self.subject
+        Jeweler::Commands::SetupRubyforge.new
+      end
 
       rubyforge_command_context "rubyforge_project is defined in gemspec and package exists on rubyforge" do
         setup do

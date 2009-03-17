@@ -2,135 +2,51 @@ require 'test_helper'
 
 class TestJeweler < Test::Unit::TestCase
 
-  def setup
-    @now = Time.now
-    stub(Time).now { @now }
-
-    FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
+  def build_jeweler(base_dir = '.')
+    Jeweler.new(build_spec, base_dir)
   end
 
-  def teardown
-    FileUtils.rm_rf("#{File.dirname(__FILE__)}/tmp")
+  def git_dir_path
+    File.join(tmp_dir, 'git')
   end
 
-  context "Initializing jewewler in a blank directory" do
-    setup do
-      FileUtils.mkdir_p(tmp_dir)
-      @jeweler = Jeweler.new(build_spec, tmp_dir)
-    end
-
-    should "not create a VERSION.yml" do
-      assert ! File.exists?(File.join(tmp_dir, 'VERSION.yml'))
-    end
+  def non_git_dir_path
+    File.join(tmp_dir, 'nongit')
   end
 
+  def build_git_dir
+    return_to = Dir.pwd
 
-  context "A Jeweler with a VERSION.yml" do
-    setup do
-      FileUtils.cp_r(fixture_dir, tmp_dir)
-      
-      @jeweler = Jeweler.new(build_spec, tmp_dir)
-      @jeweler.output = StringIO.new
-    end
-
-    should_have_major_version 1
-    should_have_minor_version 5
-    should_have_patch_version 2
-    should_be_version '1.5.2'
-
-    context "bumping the patch version" do
-      setup do
-        @jeweler.bump_patch_version 
-      end
-      should_bump_version 1, 5, 3
-    end
-
-    context "bumping the minor version" do
-      setup do
-        @jeweler.bump_minor_version
-      end
-
-      should_bump_version 1, 6, 0
-    end
-
-    context "bumping the major version" do
-      setup do
-        @jeweler.bump_major_version
-      end
-
-      should_bump_version 2, 0, 0
-    end
-
-    should "should populate gemspec's files" do
-      assert ! @jeweler.gemspec.files.empty?
-    end
-
-    context "with standard 'files' specified" do
-      setup do
-        @alt_jeweler = Jeweler.new(build_spec("[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"), tmp_dir)
-      end
-      
-      should "have the same files as when no 'files' are specified" do
-        assert_equal @jeweler.gemspec.files, @alt_jeweler.gemspec.files
-      end
-    end
-
-    context "gemsepc's rdoc" do
-      should 'have be enabled' do
-        assert @jeweler.gemspec.has_rdoc
-      end
-
-      should 'do inline source' do
-        assert @jeweler.gemspec.rdoc_options.include?('--inline-source')
-      end
-
-      should 'be utf-8' do
-        assert @jeweler.gemspec.rdoc_options.include?('--charset=UTF-8')
-      end
-
-    end
-
-    context "writing the gemspec" do
-      setup do
-        @jeweler.write_gemspec
-        @output = @jeweler.output.string
-      end
-
-      should "create bar.gemspec" do
-        assert File.exists?(File.join(tmp_dir, 'bar.gemspec'))
-      end
-
-      should "have created a valid gemspec" do
-        assert @jeweler.valid_gemspec?
-      end
-
-      should "output the name of the gemspec" do
-        assert_match 'bar.gemspec', @output
-      end
-
-      context "re-reading the gemspec" do
-        setup do
-          gemspec_path = File.join(tmp_dir, 'bar.gemspec')
-          data = File.read(gemspec_path)
-
-          @parsed_spec = eval("$SAFE = 3\n#{data}", binding, gemspec_path)
-        end
-
-        should "have version 1.5.2" do
-          assert_equal '1.5.2', @parsed_spec.version.version
-        end
-
-        should "have date filled in" do
-          assert_equal Time.local(@now.year, @now.month, @now.day), @parsed_spec.date
-        end
-      end
+    FileUtils.mkdir_p git_dir_path
+    begin
+      Dir.chdir git_dir_path
+      Git.init
+    ensure
+      Dir.chdir return_to
     end
   end
 
-  should "raise an exception when created with a nil gemspec" do
+  def build_non_git_dir
+    FileUtils.mkdir_p non_git_dir_path
+  end
+
+  should "raise an error if a nil gemspec is given" do
     assert_raises Jeweler::GemspecError do
-      @jeweler = Jeweler.new(nil, tmp_dir)
+      Jeweler.new(nil)
     end
+  end
+
+  should "know if it is in a git repo" do
+    build_git_dir
+
+    assert build_jeweler(git_dir_path).in_git_repo?
+  end
+
+  should "know if it is not in a git repo" do
+    build_non_git_dir
+
+    jeweler = build_jeweler(non_git_dir_path)
+    assert ! jeweler.in_git_repo?, "jeweler doesn't know that #{jeweler.base_dir} is not a git repository"
   end
 
 end

@@ -26,9 +26,9 @@ class Jeweler
     @base_dir       = base_dir
     @gemspec        = fill_in_gemspec_defaults(gemspec)
     @repo           = Git.open(base_dir) if in_git_repo?
-    @version_helper        = Jeweler::VersionHelper.new(@base_dir)
+    @version_helper = Jeweler::VersionHelper.new(@base_dir)
     @output         = $stdout
-    @gemspec_helper = GemSpecHelper.new(@gemspec,base_dir)
+    @gemspec_helper = GemSpecHelper.new(@gemspec, base_dir)
   end
 
   # Major version, as defined by the gemspec's Version module.
@@ -121,6 +121,11 @@ class Jeweler
     build_command(Jeweler::Commands::SetupRubyforge).run
   end
 
+
+  def in_git_repo?
+    File.exists?(File.join(self.base_dir, '.git'))
+  end
+
   protected
 
   def build_command(command_class)
@@ -136,10 +141,6 @@ class Jeweler
     command.rubyforge = RubyForge.new if command.respond_to?(:rubyforge=)
     
     command
-  end
-
-  def in_git_repo?
-    File.exists?(File.join(self.base_dir, '.git'))
   end
 
   def fill_in_gemspec_defaults(gemspec)

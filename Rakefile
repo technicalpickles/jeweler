@@ -23,7 +23,7 @@ Rake::TestTask.new(:test) do |test|
   test.pattern = 'test/**/test_*.rb'
   test.libs << 'test'
   test.verbose = true
-  test.ruby_opts << '-rtest_helper'
+  #test.ruby_opts << '-rtest_helper'
 end
 
 require 'rake/rdoctask'
