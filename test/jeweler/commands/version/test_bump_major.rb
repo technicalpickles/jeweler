@@ -14,6 +14,7 @@ class Jeweler
           command.update_version
         end
       end
+
     end
   end
 end

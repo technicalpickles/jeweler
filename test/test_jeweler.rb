@@ -51,28 +51,6 @@ class TestJeweler < Test::Unit::TestCase
     assert ! jeweler.in_git_repo?, "jeweler doesn't know that #{jeweler.base_dir} is not a git repository"
   end
 
-  should "build and run release command when running release" do
-    jeweler = build_jeweler
-
-    command = Object.new
-    mock(command).run
-
-    mock(Jeweler::Commands::Release).build_for(jeweler) { command }
-
-    jeweler.release
-  end
-
-  should "build and run build gem command when building gem" do
-    jeweler = build_jeweler
-
-    command = Object.new
-    mock(command).run
-
-    mock(Jeweler::Commands::BuildGem).build_for(jeweler) { command }
-
-    jeweler.build_gem
-  end
-
   should "build and run write gemspec command when writing gemspec" do
     jeweler = build_jeweler
 
@@ -94,6 +72,76 @@ class TestJeweler < Test::Unit::TestCase
 
     jeweler.validate_gemspec
   end
+
+  should "build and run build gem command when building gem" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::BuildGem).build_for(jeweler) { command }
+
+    jeweler.build_gem
+  end
+
+  should "build and run build gem command when installing gem" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::InstallGem).build_for(jeweler) { command }
+
+    jeweler.install_gem
+  end
+
+  should "build and run bump major version command when bumping major version" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::Version::BumpMajor).build_for(jeweler) { command }
+
+    jeweler.bump_major_version
+  end
+
+  should "build and run bump minor version command when bumping minor version" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::Version::BumpMinor).build_for(jeweler) { command }
+
+    jeweler.bump_minor_version
+  end
+
+  should "build and run write version command when writing version" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+    mock(command).major=(1)
+    mock(command).minor=(5)
+    mock(command).patch=(2)
+
+    mock(Jeweler::Commands::Version::Write).build_for(jeweler) { command }
+
+    jeweler.write_version(1, 5, 2)
+  end
+
+  should "build and run release command when running release" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::Release).build_for(jeweler) { command }
+
+    jeweler.release
+  end
+
 
 
   should "respond to gemspec_helper" do

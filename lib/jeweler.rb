@@ -81,27 +81,27 @@ class Jeweler
   # Bumps the patch version.
   #
   # 1.5.1 -> 1.5.2
-  def bump_patch_version(options = {})
-    build_command(Jeweler::Commands::Version::BumpPatch).run
+  def bump_patch_version()
+    Jeweler::Commands::Version::BumpPatch.build_for(self).run
   end
 
   # Bumps the minor version.
   #
   # 1.5.1 -> 1.6.0
-  def bump_minor_version(options = {})
-    build_command(Jeweler::Commands::Version::BumpMinor).run
+  def bump_minor_version()
+    Jeweler::Commands::Version::BumpMinor.build_for(self).run
   end
 
   # Bumps the major version.
   #
   # 1.5.1 -> 2.0.0
-  def bump_major_version(options = {})
-    build_command(Jeweler::Commands::Version::BumpMajor).run
+  def bump_major_version()
+    Jeweler::Commands::Version::BumpMajor.build_for(self).run
   end
 
   # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
   def write_version(major, minor, patch, options = {})
-    command = build_command(Jeweler::Commands::Version::Write)
+    command = Jeweler::Commands::Version::Write.build_for(self)
     command.major = major
     command.minor = minor
     command.patch = patch
