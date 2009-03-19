@@ -14,6 +14,13 @@ class Jeweler
 
         sh command # TODO where does sh actually come from!?
       end
+
+      def self.build_for(jeweler)
+        command = new
+        command.output = jeweler.output
+        command.gemspec_helper = jeweler.gemspec_helper
+        command
+      end
     end
   end
 end

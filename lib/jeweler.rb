@@ -75,7 +75,7 @@ class Jeweler
   end
 
   def install_gem
-    build_command(Jeweler::Commands::InstallGem).run
+    Jeweler::Commands::InstallGem.build_for(self).run
   end
 
   # Bumps the patch version.
