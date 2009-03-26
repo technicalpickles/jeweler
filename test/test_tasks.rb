@@ -34,7 +34,7 @@ class TestTasks < Test::Unit::TestCase
       assert Task.task_defined?(:'version:bump:minor')
       assert Task.task_defined?(:'version:bump:patch')
       assert Task.task_defined?(:'release')
-      assert Task.task_defined?(:'rubyforge:release')
+      assert Task.task_defined?(:'rubyforge:release:gem')
       assert Task.task_defined?(:'rubyforge:setup')
     end
   end

@@ -18,7 +18,7 @@ require 'jeweler/tasks'
 class Jeweler
 
   attr_reader :gemspec, :gemspec_helper, :version_helper
-  attr_accessor :base_dir, :output, :repo, :commit
+  attr_accessor :base_dir, :output, :repo, :commit, :rubyforge
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
@@ -30,6 +30,7 @@ class Jeweler
     @output         = $stdout
     @commit         = true
     @gemspec_helper = GemSpecHelper.new(@gemspec, base_dir)
+    @rubyforge      = RubyForge.new
   end
 
   # Major version, as defined by the gemspec's Version module.

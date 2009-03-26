@@ -11,7 +11,7 @@ begin
     gem.homepage = "http://github.com/technicalpickles/jeweler"
     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gem.authors = ["Josh Nichols"]
-    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.gitignore']
+    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.document', 'lib/jeweler/templates/.gitignore']
     gem.add_dependency 'peterwald-git'
   end
 rescue LoadError

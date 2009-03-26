@@ -87,14 +87,16 @@ class Jeweler
       end
       
       namespace :rubyforge do
-        desc "Release the current gem version to RubyForge."
-        task :release do
-          begin
-            @jeweler.release_gem_to_rubyforge
-          rescue NoRubyForgeProjectInGemspecError => e
-            abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
-          rescue RubyForgeProjectNotConfiguredError => e
-            abort "The RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
+        namespace :release do
+          desc "Release the current gem version to RubyForge."
+          task :gem => [:gemspec, :build] do
+            begin
+              @jeweler.release_gem_to_rubyforge
+            rescue NoRubyForgeProjectInGemspecError => e
+              abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+            rescue RubyForgeProjectNotConfiguredError => e
+              abort "The RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
+            end
           end
         end
 
