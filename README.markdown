@@ -48,6 +48,7 @@ It supports a number of options:
  * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
  * --rspec: generate spec_helper.rb and spec ready for rspec
  * --bacon: generate spec_helper.rb and spec ready for bacon
+ * --rubyfoge: setup releasing to rubyforge
 
 ## Gemspec
 
@@ -98,7 +99,7 @@ Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There ar
  * Run 'rubyforge config' to pull down information about your projects
  * Run 'rubyforge login' to make sure you are able to login
 
-With this in place, you now update your Jeweler::Tasks to setup the RubyForge project you've just created:
+With this in place, you now update your Jeweler::Tasks to setup `rubyforge_project` with the RubyForge project you've just created. (Note, using `jeweler --rubyforge` when generating the project does this for you automatically.)
 
     begin
       require 'jeweler'
@@ -109,17 +110,44 @@ With this in place, you now update your Jeweler::Tasks to setup the RubyForge pr
         s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
         s.description = "TODO"
         s.authors = ["Josh Nichols"]
-        s.rubyforge_project = 'zomg'
+        s.rubyforge_project = 'the-perfect-gem' # This line would be new
       end
     rescue LoadError
       puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+    end
+
+    # These are new tasks
+    begin
+      require 'rake/contrib/sshpublisher'
+      namespace :rubyforge do
+        
+        desc "Release gem and RDoc documentation to RubyForge"
+        task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
+        
+        namespace :release do
+          desc "Publish RDoc to RubyForge."
+          task :docs => [:rdoc] do
+            config = YAML.load(
+                File.read(File.expand_path('~/.rubyforge/user-config.yml'))
+            )
+    
+            host = "#{config['username']}@rubyforge.org"
+            remote_dir = "/var/www/gforge-projects/the-perfect-gem/"
+            local_dir = 'rdoc'
+    
+            Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload
+          end
+        end
+      end
+    rescue LoadError
+      puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
     end
 
 Now you must initially create a 'package' for your gem in your 'project':
 
     $ rake rubyforge:setup
 
-With all that setup out of the way, you can now release to RubyForge with impunity. This would release the current version of your gem:
+With all that setup out of the way, you can now release to RubyForge with impunity. This would release the current version of your gem, and upload the rdoc as your project's webpage.
 
     $ rake rubyforge:release
 
@@ -128,7 +156,7 @@ With all that setup out of the way, you can now release to RubyForge with impuni
  * Hack, commit, hack, commit, etc, etc
  * `rake version:bump:patch release` to do the actual version bump and release
  * Have a delicious scotch
- * Go to [Has My Gem Built Yet](http://hasmygembuiltyet.org) and wait for your gem to be built
+ * Install [gemstalker](http://github.com/technicalpickles/gemstalker), and use it to know when gem is built. It typically builds in a few minutes, but won't be installable for another 15 minutes.
 
 ## Links
 

@@ -11,8 +11,9 @@ begin
     gem.homepage = "http://github.com/technicalpickles/jeweler"
     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gem.authors = ["Josh Nichols"]
-    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.document', 'lib/jeweler/templates/.gitignore']
-    gem.add_dependency 'peterwald-git'
+    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*", 'lib/jeweler/templates/.documena', 'lib/jeweler/templates/.gitignore']
+    gem.add_dependency "peterwald-git"
+    gem.rubyforge_project = "pickles"
   end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
@@ -53,6 +54,32 @@ rescue LoadError
   task :features do
     abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
   end
+end
+
+begin
+  require 'rake/contrib/sshpublisher'
+  namespace :rubyforge do
+    
+    desc "Release gem and RDoc documentation to RubyForge"
+    task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
+    
+    namespace :release do
+      desc "Publish RDoc to RubyForge."
+      task :docs => [:rdoc] do
+        config = YAML.load(
+            File.read(File.expand_path('~/.rubyforge/user-config.yml'))
+        )
+
+        host = "#{config['username']}@rubyforge.org"
+        remote_dir = "/var/www/gforge-projects/pickles"
+        local_dir = 'rdoc'
+
+        Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload
+      end
+    end
+  end
+rescue LoadError
+  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
 end
 
 if ENV["RUN_CODE_RUN"] == "true"
