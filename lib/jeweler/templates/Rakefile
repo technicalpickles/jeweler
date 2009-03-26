@@ -36,7 +36,7 @@ require 'rake/testtask'
 Rake::TestTask.new(:<%= test_or_spec %>) do |<%= test_or_spec %>|
   <%= test_or_spec %>.libs << 'lib' << '<%= test_or_spec %>'
   <%= test_or_spec %>.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
-  <%= test_or_spec %>.verbose = false
+  <%= test_or_spec %>.verbose = true
 end
 <% end %>
 
