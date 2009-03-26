@@ -65,6 +65,23 @@ class Jeweler
 
       end
 
+      build_command_context "build for jeweler" do
+        setup do
+          @command = Jeweler::Commands::SetupRubyforge.build_for(@jeweler)
+        end
+
+        should "assign gemspec" do
+          assert_equal @gemspec, @command.gemspec
+        end
+
+        should "assign output" do
+          assert_equal @output, @command.output
+        end
+
+        should "assign rubyforge" do
+          assert_equal @rubyforge, @command.rubyforge
+        end
+      end
 
     end
   end

@@ -114,11 +114,11 @@ class Jeweler
   end
   
   def release_gem_to_rubyforge
-    build_command(Jeweler::Commands::ReleaseToRubyforge).run
+    Jeweler::Commands::ReleaseToRubyforge.build_for(self).run
   end
 
   def setup_rubyforge
-    build_command(Jeweler::Commands::SetupRubyforge).run
+    Jeweler::Commands::SetupRubyforge.build_for(self).run
   end
 
 
@@ -127,21 +127,6 @@ class Jeweler
   end
 
   protected
-
-  def build_command(command_class)
-    command = command_class.new
-    command.repo = @repo if command.respond_to?(:repo=)
-    command.version_helper = @version_helper if command.respond_to?(:version_helper=)
-    command.gemspec = @gemspec if command.respond_to?(:gemspec=)
-    command.commit = true if command.respond_to?(:commit=)
-    command.version = self.version if command.respond_to?(:version=)
-    command.output = output if command.respond_to?(:output=)
-    command.base_dir = @base_dir if command.respond_to?(:base_dir=)
-    command.gemspec_helper = GemSpecHelper.new(@gemspec, @base_dir) if command.respond_to?(:gemspec_helper)
-    command.rubyforge = RubyForge.new if command.respond_to?(:rubyforge=)
-    
-    command
-  end
 
   def fill_in_gemspec_defaults(gemspec)
     if gemspec.files.nil? || gemspec.files.empty?

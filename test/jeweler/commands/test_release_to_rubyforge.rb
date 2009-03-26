@@ -21,7 +21,6 @@ class Jeweler
           stub(@gemspec_helper).gem_path {'pkg/zomg-1.2.3.gem'}
           stub(@gemspec_helper).update_version('1.2.3')
 
-          @command.repo           = @repo
           @command.version        = '1.2.3'
 
           @command.run
@@ -124,6 +123,32 @@ class Jeweler
           assert_raises RubyForgeProjectNotConfiguredError do
             @command.run
           end
+        end
+      end
+
+      build_command_context "build for jeweler" do
+        setup do
+          @command = Jeweler::Commands::ReleaseToRubyforge.build_for(@jeweler)
+        end
+
+        should "assign gemspec helper" do
+          assert_equal @gemspec_helper, @command.gemspec_helper
+        end
+
+        should "assign gemspec" do
+          assert_equal @gemspec, @command.gemspec
+        end
+
+        should "assign version" do
+          assert_equal @version, @command.version
+        end
+
+        should "assign output" do
+          assert_equal @output, @command.output
+        end
+
+        should "assign rubyforge" do
+          assert_equal @rubyforge, @command.rubyforge
         end
       end
       

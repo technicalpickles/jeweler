@@ -23,6 +23,16 @@ class Jeweler
           end
         end
       end
+
+      def self.build_for(jeweler)
+        command = new
+
+        command.gemspec = jeweler.gemspec
+        command.output = jeweler.output
+        command.rubyforge = jeweler.rubyforge
+
+        command
+      end
     end
   end
 end

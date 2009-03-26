@@ -108,7 +108,7 @@ class Test::Unit::TestCase
         stub(@jeweler).output         { @output }
         stub(@jeweler).gemspec_helper { @gemspec_helper }
         stub(@jeweler).base_dir       { @base_dir }
-        stub(@rubyforge).rubyforge    { @rubyforge }
+        stub(@jeweler).rubyforge    { @rubyforge }
       end
 
       context "", &block

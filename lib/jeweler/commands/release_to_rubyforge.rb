@@ -3,7 +3,7 @@ require 'rubyforge'
 class Jeweler
   module Commands
     class ReleaseToRubyforge
-      attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :rubyforge
+      attr_accessor :gemspec, :version, :output, :gemspec_helper, :rubyforge
 
       def initialize
         self.output = $stdout
@@ -33,6 +33,17 @@ class Jeweler
             raise
           end
         end
+      end
+
+      def self.build_for(jeweler)
+        command = new
+        command.gemspec = jeweler.gemspec
+        command.gemspec_helper = jeweler.gemspec_helper
+        command.version = jeweler.version
+        command.rubyforge = jeweler.rubyforge
+        command.output = jeweler.output
+
+        command
       end
       
     end
