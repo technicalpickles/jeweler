@@ -162,4 +162,12 @@ class TestJeweler < Test::Unit::TestCase
     assert_respond_to build_jeweler, :version_helper
   end
 
+  should "respond to repo" do
+    assert_respond_to build_jeweler, :repo
+  end
+
+  should "respond to commit" do
+    assert_respond_to build_jeweler, :commit
+  end
+
 end

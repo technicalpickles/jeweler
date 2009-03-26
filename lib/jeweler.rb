@@ -18,7 +18,7 @@ require 'jeweler/tasks'
 class Jeweler
 
   attr_reader :gemspec, :gemspec_helper, :version_helper
-  attr_accessor :base_dir, :output
+  attr_accessor :base_dir, :output, :repo, :commit
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
@@ -28,6 +28,7 @@ class Jeweler
     @repo           = Git.open(base_dir) if in_git_repo?
     @version_helper = Jeweler::VersionHelper.new(@base_dir)
     @output         = $stdout
+    @commit         = true
     @gemspec_helper = GemSpecHelper.new(@gemspec, base_dir)
   end
 
