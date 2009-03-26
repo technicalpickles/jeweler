@@ -43,6 +43,10 @@ class Jeweler
             self[:create_repo] = true
           end
 
+          o.on('--rubyforge', 'setup project for rubyforge') do
+            self[:rubyforge] = true
+          end
+
           o.on('--summary [SUMMARY]', 'specify the summary of the project') do |summary|
             self[:summary] = summary
           end

@@ -9,6 +9,9 @@ begin
     gem.email = "<%= user_email %>"
     gem.homepage = "<%= github_url %>"
     gem.authors = ["<%= user_name %>"]
+<% if should_setup_rubyforge %>
+    gem.rubyforge_project = "<%= github_repo_name %>"
+  <% end %>
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
@@ -94,7 +97,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-# Rubyforge documentation task
+<% if should_setup_rubyforge %>
 begin
   require 'rake/contrib/sshpublisher'
   namespace :rubyforge do
@@ -120,3 +123,4 @@ begin
 rescue LoadError
   puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
 end
+<% end %>

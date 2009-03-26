@@ -6,6 +6,15 @@ Given /^I want cucumber stories$/ do
   @use_cucumber = true
 end
 
+And /^I do not want rubyforge setup$/ do
+  @use_rubyforge = false
+end
+
+And /^I want rubyforge setup$/ do
+  @use_rubyforge = true
+end
+
+
 Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
 end
@@ -36,7 +45,12 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testi
   end
 
 
-  arguments = ['--directory', "#{@working_dir}/#{@name}", '--summary', @summary, @use_cucumber ? '--cucumber' : nil, "--#{@testing_framework}", @name].compact
+  arguments = ['--directory',
+               "#{@working_dir}/#{@name}",
+               '--summary', @summary,
+               @use_cucumber ? '--cucumber' : nil,
+               "--#{@testing_framework}", @name,
+               @use_rubyforge ? '--rubyforge' : nil].compact
   @stdout = OutputCatcher.catch_out do
     Jeweler::Generator::Application.run! *arguments
   end
@@ -152,12 +166,12 @@ Then /^'(.*)' does not require '(.*)'$/ do |file, lib|
   assert_no_match /require ['"]#{Regexp.escape(lib)}['"]/, content
 end
 
-Then /^Rakefile does not require 'cucumber\/rake\/task'$/ do
-  Then "'Rakefile' does not require 'cucumber/rake/task'"
+Then /^Rakefile does not require '(.*)'$/ do |file|
+  Then "'Rakefile' does not require '#{file}'"
 end
 
-Then /^Rakefile requires 'cucumber\/rake\/task'$/ do
-  Then "'Rakefile' requires 'cucumber/rake/task'"
+Then /^Rakefile requires '(.*)'$/ do |file|
+  Then "'Rakefile' requires '#{file}'"
 end
 
 Then /^Rakefile does not instantiate a Cucumber::Rake::Task$/ do

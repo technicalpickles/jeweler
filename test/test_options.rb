@@ -63,6 +63,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--rubyforge' do
+    should 'enable rubyforge' do
+      assert @options[:rubyforge]
+    end
+  end
+
   for_options '--summary', 'zomg so awesome' do
     should 'have summary zomg so awesome' do
       assert_equal 'zomg so awesome', @options[:summary]
