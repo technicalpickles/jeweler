@@ -50,6 +50,12 @@ It supports a number of options:
  * --bacon: generate spec_helper.rb and spec ready for bacon
  * --rubyfoge: setup releasing to rubyforge
 
+### Default options
+
+Jeweler respects the JEWELER_OPTS environment variable. Want to always use RSpec, and you're using bash? Add this to ~/.bashrc:
+
+    export JEWELER_OPTS="--rspec"
+
 ## Gemspec
 
 Jeweler handles generating a gemspec file for your project:

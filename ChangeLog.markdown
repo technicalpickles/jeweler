@@ -1,4 +1,9 @@
-# jeweler x.y.z
+# jeweler unreleased
+
+ * generator will respect JEWELER_OPTS, as a way to provide default options
+ (pat-maddox)
+
+# jeweler 0.10.2
  
  * 'rake install' now will 'rake build' first
  * Support for releasing to RubyForge, thanks to jtrupiano
