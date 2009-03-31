@@ -132,7 +132,7 @@ class Jeweler
 
   def fill_in_gemspec_defaults(gemspec)
     if gemspec.files.nil? || gemspec.files.empty?
-      gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+      gemspec.files = FileList["[A-Z]*.*", "{bin,generators,lib,rails,spec,test}/**/*"]
     end
 
     if gemspec.executables.nil? || gemspec.executables.empty?
