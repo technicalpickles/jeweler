@@ -48,7 +48,7 @@ It supports a number of options:
  * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
  * --rspec: generate spec_helper.rb and spec ready for rspec
  * --bacon: generate spec_helper.rb and spec ready for bacon
- * --rubyfoge: setup releasing to rubyforge
+ * --rubyforge: setup releasing to rubyforge
 
 ### Default options
 
