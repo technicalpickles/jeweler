@@ -17,11 +17,6 @@ class Jeweler
           self.files = FileList["[A-Z]*.*", "{bin,examples,generators,lib,rails,spec,test}/**/*"]
         end
 
-        # only keep files, no directories, and sort
-        self.files = self.files.select do |path|
-          File.file? path
-        end.sort
-
         if blank?(executable)
           self.executables = Dir["bin/*"].map { |f| File.basename(f) }
         end

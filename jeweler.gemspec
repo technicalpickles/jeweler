@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/generator.rb",
     "lib/jeweler/generator/application.rb",
     "lib/jeweler/generator/options.rb",
+    "lib/jeweler/specification.rb",
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",
     "lib/jeweler/templates/.gitignore",
@@ -59,6 +60,10 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/testunit/helper.rb",
     "lib/jeweler/version_helper.rb",
     "test/fixtures/bar/VERSION.yml",
+    "test/fixtures/bar/bin/foo_the_ultimate_bin",
+    "test/fixtures/bar/hey_include_me_in_gemspec",
+    "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
+    "test/fixtures/bar/lib/foo_the_ultimate_lib/secret.rb",
     "test/fixtures/existing-project-with-version/LICENSE",
     "test/fixtures/existing-project-with-version/README.rdoc",
     "test/fixtures/existing-project-with-version/Rakefile",
@@ -88,12 +93,13 @@ Gem::Specification.new do |s|
     "test/test_helper.rb",
     "test/test_jeweler.rb",
     "test/test_options.rb",
+    "test/test_specification.rb",
     "test/test_tasks.rb",
     "test/test_version_helper.rb",
     "test/version_tmp/VERSION.yml"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
-  s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
+  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{pickles}
   s.rubygems_version = %q{1.3.1}

@@ -8,7 +8,7 @@ class TestSpecification < Test::Unit::TestCase
 
     @spec = Gem::Specification.new
     @spec.extend(Jeweler::Specification)
-    @spec.set_jeweler_defaults(fixture_dir)
+    @spec.set_jeweler_defaults(tmp_dir)
   end
 
   def teardown
@@ -52,10 +52,6 @@ class TestSpecification < Test::Unit::TestCase
       @spec.files << 'extra'
 
       assert_equal before + %w{ extra }, @spec.files
-    end
-
-    should "only include files (not directories), sorted" do
-      assert_equal %w{VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb}, @spec.files
     end
   end
 end

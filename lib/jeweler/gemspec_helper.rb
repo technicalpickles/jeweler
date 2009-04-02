@@ -21,9 +21,15 @@ class Jeweler
     end
 
     def write
+      # only keep files, no directories, and sort
+      @spec.files = @spec.files.select do |path|
+        File.file? File.join(@base_dir, path)
+      end.sort
+
       quoted_files = @spec.files.map {|file| %Q{"#{file}"}}
       nastily_formated_files = quoted_files.join(", ")
       nicely_formated_files  = quoted_files.join(",\n    ")
+
       File.open(path, 'w') do |f|
         f.write @spec.to_ruby.gsub(nastily_formated_files, nicely_formated_files)
       end 
