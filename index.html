@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 <p>Jeweler provides two things:</p>
 
 <ul>
@@ -12,91 +13,6 @@ layout: default
 
 <pre><code>$ sudo gem install jeweler</code></pre>
 
+<h2>Usage</h2>
 
-<h2>Using jeweler in an existing project</h2>
-
-<p>It's easy to get up and running. Update your instantiate a <code>Jeweler::Tasks</code>, and give it a block with details about your project.</p>
-
-<pre><code>begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "the-perfect-gem"
-    s.summary = "TODO"
-    s.email = "josh@technicalpickles.com"
-    s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-    s.description = "TODO"
-    s.authors = ["Josh Nichols"]
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-</code></pre>
-
-<p>In this example, <code>s</code> is a Gem::Specification object. See the documentation for what possible values you can set on it. </p>
-
-<h2>Kicking off a new project</h2>
-
-<p>Jeweler provides a generator:</p>
-
-<pre><code>jeweler the-perfect-gem
-</code></pre>
-
-<p>This will prepare a project in the 'the-perfect-gem' directory, setup to use Jeweler.</p>
-
-<p>It supports a number of options:</p>
-
-<ul>
-<li>--create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation</li>
-<li>--shoulda: generate test_helper.rb and empty test ready for shoulda (this is the default)</li>
-<li>--bacon: generate spec_helper.rb and empty spec ready for bacon</li>
-</ul>
-
-<h2>Gemspec</h2>
-
-<p>Jeweler handles generating a gemspec file for your project:</p>
-
-<pre><code>rake gemspec
-</code></pre>
-
-<p>This creates a gemspec for your project. It's based on the info you give <code>Jeweler::Tasks</code>, the current version of your project, and some defaults that Jeweler provides.</p>
-
-<h2>Gem</h2>
-
-<p>Jeweler gives you tasks for building and installing your gem:</p>
-
-<pre><code>rake build
-rake install
-</code></pre>
-
-<h2>Versioning</h2>
-
-<p>Jeweler tracks the version of your project. It assumes you will be using a version in the format <code>x.y.z</code>. <code>x</code> is the 'major' version, <code>y</code> is the 'minor' version, and <code>z</code> is the patch version.</p>
-
-<p>Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bumping the version:</p>
-
-<pre><code>rake version:bump:major
-rake version:bump:minor
-rake version:bump:patch
-</code></pre>
-
-<h2>Releasing</h2>
-
-<p>Jeweler handles releasing your gem into the wild:</p>
-
-<pre><code>rake release
-</code></pre>
-
-<p>It does the following for you:</p>
-
-<ul>
-<li>Regenerate the gemspec to the latest version of your project</li>
-<li>Push to GitHub (which results in a gem being build)</li>
-<li>Tag the version and push to GitHub</li>
-</ul>
-
-<h2>Links</h2>
-
-<ul>
-<li><a href="http://technicalpickles.lighthouseapp.com/projects/23560-jeweler/overview">Bugs</a></li>
-<li><a href="http://pledgie.org/campaigns/2604">Donate</a></li>
-</ul>
+<p>See the <a href="http://github.com/technicalpickles/jeweler/blob/master/README.markdown">README on GitHub</a> for the most-up to date usage of Jeweler.</p>
