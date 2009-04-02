@@ -14,23 +14,23 @@ Jeweler provides two things:
     
 ## Using in an existing project
 
-It's easy to get up and running. Update your instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
+It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
 
     begin
       require 'jeweler'
-      Jeweler::Tasks.new do |s|
-        s.name = "the-perfect-gem"
-        s.summary = "TODO"
-        s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-        s.description = "TODO"
-        s.authors = ["Josh Nichols"]
+      Jeweler::Tasks.new do |gemspec|
+        gemspec.name = "the-perfect-gem"
+        gemspec.summary = "TODO"
+        gemspec.email = "josh@technicalpickles.com"
+        gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
+        gemspec.description = "TODO"
+        gemspec.authors = ["Josh Nichols"]
       end
     rescue LoadError
       puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
     end
 
-In this example, `s` is a Gem::Specification object. See the [GemSpec reference](http://www.rubygems.org/read/chapter/20) for values of interest.
+The yield object here, `gemspec`, is a `Gem::Specification` object. See the [GemSpec reference](http://www.rubygems.org/read/chapter/20) for the full details on `Gem::Specification`.
 
 ## Using to start a new project
 
