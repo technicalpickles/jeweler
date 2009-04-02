@@ -13,12 +13,25 @@ class Jeweler
     # Assigns the Jeweler defaults to the Gem::Specification
     def set_jeweler_defaults(base_dir)
       Dir.chdir(base_dir) do
-        self.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"] if blank?(files)
-        self.executables = Dir["bin/*"].map { |f| File.basename(f) } if blank?(executables)
+        if blank?(files)
+          self.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+        end
+
+        # only keep files, no directories, and sort
+        self.files = self.files.select do |path|
+          File.file? path
+        end.sort
+
+        if blank?(executable)
+          self.executables = Dir["bin/*"].map { |f| File.basename(f) }
+        end
 
         self.has_rdoc = true
-        rdoc_options << '--inline-source' << '--charset=UTF-8'
-        self.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"] if blank?(extra_rdoc_files)
+        rdoc_options << '--charset=UTF-8'
+
+        if blank?(extra_rdoc_files)
+          self.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
+        end
       end
     end
 

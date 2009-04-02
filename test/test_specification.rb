@@ -2,6 +2,10 @@ require 'test_helper'
 
 class TestSpecification < Test::Unit::TestCase
   def setup
+    remove_tmpdir!
+    FileUtils.cp_r fixture_dir, tmp_dir
+
+
     @spec = Gem::Specification.new
     @spec.extend(Jeweler::Specification)
     @spec.set_jeweler_defaults(fixture_dir)
@@ -23,22 +27,18 @@ class TestSpecification < Test::Unit::TestCase
 
       context "with values already set" do
         setup do
-          @spec.files = %w{ foo bar }
+          @spec.files = %w{ hey_include_me_in_gemspec }
           @spec.set_jeweler_defaults(fixture_dir)
         end
 
         should "not re-populate `files'" do
-          assert_equal %w{ foo bar }, @spec.files
+          assert_equal %w{ hey_include_me_in_gemspec }, @spec.files
         end
       end
 
       context "for rdoc" do
         should "be enabled" do
           assert @spec.has_rdoc
-        end
-
-        should "do inline source" do
-          assert @spec.rdoc_options.include?('--inline-source')
         end
 
         should "be utf-8" do
@@ -52,6 +52,10 @@ class TestSpecification < Test::Unit::TestCase
       @spec.files << 'extra'
 
       assert_equal before + %w{ extra }, @spec.files
+    end
+
+    should "only include files (not directories), sorted" do
+      assert_equal %w{VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb}, @spec.files
     end
   end
 end

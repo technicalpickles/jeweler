@@ -36,8 +36,6 @@ class Jeweler
     @commit         = true
     @gemspec_helper = GemSpecHelper.new(gemspec, base_dir)
     @rubyforge      = RubyForge.new
-
-    clean_up_gemspec_files
   end
 
   # Major version, as defined by the gemspec's Version module.
@@ -135,10 +133,5 @@ class Jeweler
     File.exists?(File.join(self.base_dir, '.git'))
   end
 
-  def clean_up_gemspec_files
-    @gemspec.files = @gemspec.files.select do |path|
-      File.file? File.join(@base_dir, path)
-    end.sort
-  end
 end
 
