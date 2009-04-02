@@ -21,8 +21,11 @@ class Jeweler
     end
     
     def write
+      quoted_files = @spec.files.map {|file| %Q{"#{file}"}}
+      nastily_formated_files = quoted_files.join(", ")
+      nicely_formated_files  = quoted_files.join(",\n    ")
       File.open(path, 'w') do |f|
-        f.write @spec.to_ruby
+        f.write @spec.to_ruby.gsub(nastily_formated_files, nicely_formated_files)
       end 
     end
 
