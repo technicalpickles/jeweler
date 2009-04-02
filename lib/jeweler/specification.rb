@@ -14,7 +14,7 @@ class Jeweler
     def set_jeweler_defaults(base_dir)
       Dir.chdir(base_dir) do
         if blank?(files)
-          self.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+          self.files = FileList["[A-Z]*.*", "{bin,examples,generators,lib,rails,spec,test}/**/*"]
         end
 
         # only keep files, no directories, and sort
