@@ -2,8 +2,11 @@
 
  * generator will respect JEWELER_OPTS, as a way to provide default options
  (pat-maddox)
- * include 'rails' directory by default in gemspec files
+ * Include 'examples' and 'rails' directories by default in gemspec files
  * generated gemspec now will only include files (not directories). also, they are listed one per line, and sorted.
+ * Jeweler::Tasks's intializer has been improved:
+  * You can now pass it an existing gemspec (othewise a new one will be created)
+  * Jeweler sets its defaults before yielding the gemspec to you. This allows you to append to its defaults, so you aren't forced to entirely overwrite them just to add one value.
 
 # jeweler 0.10.2 2009-03-26
  
