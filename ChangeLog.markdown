@@ -2,8 +2,10 @@
 
  * generator will respect JEWELER_OPTS, as a way to provide default options
  (pat-maddox)
+ * include 'rails' directory by default in gemspec files
+ * generated gemspec now will only include files (not directories). also, they are listed one per line, and sorted.
 
-# jeweler 0.10.2
+# jeweler 0.10.2 2009-03-26
  
  * 'rake install' now will 'rake build' first
  * Support for releasing to RubyForge, thanks to jtrupiano
