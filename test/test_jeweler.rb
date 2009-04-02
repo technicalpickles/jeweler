@@ -4,6 +4,7 @@ class TestJeweler < Test::Unit::TestCase
 
   def build_jeweler(base_dir = nil)
     base_dir ||= non_git_dir_path
+    FileUtils.mkdir_p base_dir
 
     Jeweler.new(build_spec, base_dir)
   end
@@ -17,14 +18,10 @@ class TestJeweler < Test::Unit::TestCase
   end
 
   def build_git_dir
-    return_to = Dir.pwd
 
     FileUtils.mkdir_p git_dir_path
-    begin
-      Dir.chdir git_dir_path
+    Dir.chdir git_dir_path do
       Git.init
-    ensure
-      Dir.chdir return_to
     end
   end
 
