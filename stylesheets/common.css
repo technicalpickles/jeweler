@@ -29,7 +29,7 @@
 
 
 
-	div#wrapper 							{background:#fff; width:560px; margin:0 auto; padding:20px; border:10px solid #93B300; border-width:0 10px;}
+	div#wrapper 							{background:#fff; width:560px; margin:0 auto; padding:20px; border:10px solid #93B300; border-width:0 10px 10px 10px;}
 	div#header								{position:relative; border-bottom:1px dotted; margin:0 0 10px; padding:0 0 10px;}
 	div#header p							{margin:0; padding:0;}
 	div#header h1							{margin:0; padding:0;}
