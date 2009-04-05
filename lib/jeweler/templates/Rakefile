@@ -11,11 +11,11 @@ begin
     gem.authors = ["<%= user_name %>"]
 <% if should_setup_rubyforge %>
     gem.rubyforge_project = "<%= github_repo_name %>"
-  <% end %>
+<% end %>
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
 <% case testing_framework.to_sym %>

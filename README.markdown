@@ -7,10 +7,8 @@ Jeweler provides two things:
 
 ## Installing
 
-    # Run the following if you haven't done so before:
-    gem sources -a http://gems.github.com
     # Install the gem:
-    sudo gem install technicalpickles-jeweler
+    sudo gem install jeweler
     
 ## Using in an existing project
 
@@ -119,7 +117,7 @@ With this in place, you now update your Jeweler::Tasks to setup `rubyforge_proje
         s.rubyforge_project = 'the-perfect-gem' # This line would be new
       end
     rescue LoadError
-      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+      puts "Jeweler not available. Install it with: sudo gem install jeweler"
     end
 
     # These are new tasks
