@@ -4,23 +4,24 @@ class Jeweler
   # Extend a Gem::Specification instance with this module to give it Jeweler
   # super-cow powers.
   module Specification
-    # Return the `files' array _without_ duplicating it as the normal behaviour
-    # of Gem::Specification is.
-    def files
-      @files
+
+    def self.filelist_attribute(name)
+      code = %{
+        def #{name}
+          @#{name} ||= FileList[]
+        end
+        def #{name}=(value)
+          @#{name} = FileList[value]
+        end
+      }
+
+      module_eval code, __FILE__, __LINE__ - 9
     end
 
-    # Sets the 'files' array _without_ wrapping it as an Array, in order to keep it as a FileList
-    def files=(value)
-      @files = FileList.new(value)
-    end
+    filelist_attribute :files
+    filelist_attribute :test_files
+    filelist_attribute :extra_rdoc_files
 
-    def ruby_code(obj)
-      case obj
-      when Rake::FileList then obj.to_a.inspect
-      else super
-      end
-    end
 
     # Assigns the Jeweler defaults to the Gem::Specification
     def set_jeweler_defaults(base_dir)
@@ -43,6 +44,14 @@ class Jeweler
         if blank?(extra_rdoc_files)
           self.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
         end
+      end
+    end
+
+    # Used by Specification#to_ruby to generate a ruby-respresentation of a Gem::Specification
+    def ruby_code(obj)
+      case obj
+      when Rake::FileList then obj.to_a.inspect
+      else super
       end
     end
 

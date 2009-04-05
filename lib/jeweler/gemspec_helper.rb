@@ -21,17 +21,15 @@ class Jeweler
     end
 
     def write
-      @spec.files = normalize_files(@spec.files)
-      @spec.test_files = normalize_files(@spec.files)
-
-      quoted_files = @spec.files.map {|file| %Q{"#{file}"}}
-      nastily_formated_files = quoted_files.join(", ")
-      nicely_formated_files  = quoted_files.join(",\n    ")
+      normalize_files(:files)
+      normalize_files(:files)
+      normalize_files(:extra_rdoc_files)
 
       File.open(path, 'w') do |f|
         gemspec_ruby = @spec.to_ruby
-        gemspec_ruby = prettyify_array(gemspec_ruby, @spec.files)
-        gemspec_ruby = prettyify_array(gemspec_ruby, @spec.test_files)
+        gemspec_ruby = prettyify_array(gemspec_ruby, :files)
+        gemspec_ruby = prettyify_array(gemspec_ruby, :test_files)
+        gemspec_ruby = prettyify_array(gemspec_ruby, :extra_rdoc_files)
         f.write gemspec_ruby
       end 
     end
@@ -49,19 +47,23 @@ class Jeweler
       parsed_gemspec
     end
 
-    def normalize_files(array)
+    def normalize_files(array_name)
+      array = @spec.send(array_name)
       # only keep files, no directories, and sort
-      array.select do |path|
+      array = array.select do |path|
         File.file? File.join(@base_dir, path)
       end.sort
+
+      @spec.send("#{array_name}=", array)
     end
 
-    def prettyify_array(gemspec, array)
+    def prettyify_array(gemspec_ruby, array_name)
+      array = @spec.send(array_name)
       quoted_array = array.map {|file| %Q{"#{file}"}}
-      nastily_formated_array = quoted_array.join(", ")
-      nicely_formated_array  = quoted_array.join(",\n    ") 
+      nastily_formated_array = "s.#{array_name} = [#{quoted_array.join(", ")}]"
+      nicely_formated_array  = "s.#{array_name} = [\n    #{quoted_array.join(",\n    ")}\n  ]"
 
-      gemspec.gsub(nastily_formated_array, nicely_formated_array)
+      gemspec_ruby.gsub(nastily_formated_array, nicely_formated_array)
     end
 
     def gem_path

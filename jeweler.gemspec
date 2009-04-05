@@ -11,11 +11,17 @@ Gem::Specification.new do |s|
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
   s.executables = ["jeweler"]
-  s.extra_rdoc_files = ["README.markdown", "ChangeLog.markdown", "LICENSE"]
-  s.files = ["ChangeLog.markdown",
+  s.extra_rdoc_files = [
+    "ChangeLog.markdown",
+    "LICENSE",
+    "README.markdown"
+  ]
+  s.files = [
+    "ChangeLog.markdown",
     "LICENSE",
     "README.markdown",
     "Rakefile",
+    "VERSION.yml",
     "bin/jeweler",
     "lib/jeweler.rb",
     "lib/jeweler/commands.rb",
@@ -58,12 +64,14 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/testunit/flunking.rb",
     "lib/jeweler/templates/testunit/helper.rb",
     "lib/jeweler/version_helper.rb",
+    "test/fixtures/bar/VERSION.yml",
     "test/fixtures/bar/bin/foo_the_ultimate_bin",
     "test/fixtures/bar/hey_include_me_in_gemspec",
     "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
     "test/fixtures/existing-project-with-version/LICENSE",
     "test/fixtures/existing-project-with-version/README.rdoc",
     "test/fixtures/existing-project-with-version/Rakefile",
+    "test/fixtures/existing-project-with-version/VERSION.yml",
     "test/fixtures/existing-project-with-version/existing-project-with-version.gemspec",
     "test/fixtures/existing-project-with-version/lib/existing_project_with_version.rb",
     "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
@@ -91,7 +99,9 @@ Gem::Specification.new do |s|
     "test/test_options.rb",
     "test/test_specification.rb",
     "test/test_tasks.rb",
-    "test/test_version_helper.rb"]
+    "test/test_version_helper.rb",
+    "test/version_tmp/VERSION.yml"
+  ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -99,63 +109,11 @@ Gem::Specification.new do |s|
   s.rubyforge_project = %q{pickles}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
-  s.test_files = ["ChangeLog.markdown",
-    "LICENSE",
-    "README.markdown",
-    "Rakefile",
-    "bin/jeweler",
-    "lib/jeweler.rb",
-    "lib/jeweler/commands.rb",
-    "lib/jeweler/commands/build_gem.rb",
-    "lib/jeweler/commands/install_gem.rb",
-    "lib/jeweler/commands/release.rb",
-    "lib/jeweler/commands/release_to_rubyforge.rb",
-    "lib/jeweler/commands/setup_rubyforge.rb",
-    "lib/jeweler/commands/validate_gemspec.rb",
-    "lib/jeweler/commands/version/base.rb",
-    "lib/jeweler/commands/version/bump_major.rb",
-    "lib/jeweler/commands/version/bump_minor.rb",
-    "lib/jeweler/commands/version/bump_patch.rb",
-    "lib/jeweler/commands/version/write.rb",
-    "lib/jeweler/commands/write_gemspec.rb",
-    "lib/jeweler/errors.rb",
-    "lib/jeweler/gemspec_helper.rb",
-    "lib/jeweler/generator.rb",
-    "lib/jeweler/generator/application.rb",
-    "lib/jeweler/generator/options.rb",
-    "lib/jeweler/specification.rb",
-    "lib/jeweler/tasks.rb",
-    "lib/jeweler/templates/.document",
-    "lib/jeweler/templates/.gitignore",
-    "lib/jeweler/templates/LICENSE",
-    "lib/jeweler/templates/README.rdoc",
-    "lib/jeweler/templates/Rakefile",
-    "lib/jeweler/templates/bacon/flunking.rb",
-    "lib/jeweler/templates/bacon/helper.rb",
-    "lib/jeweler/templates/features/default.feature",
-    "lib/jeweler/templates/features/support/env.rb",
-    "lib/jeweler/templates/micronaut/flunking.rb",
-    "lib/jeweler/templates/micronaut/helper.rb",
-    "lib/jeweler/templates/minitest/flunking.rb",
-    "lib/jeweler/templates/minitest/helper.rb",
-    "lib/jeweler/templates/rspec/flunking.rb",
-    "lib/jeweler/templates/rspec/helper.rb",
-    "lib/jeweler/templates/shoulda/flunking.rb",
-    "lib/jeweler/templates/shoulda/helper.rb",
-    "lib/jeweler/templates/testunit/flunking.rb",
-    "lib/jeweler/templates/testunit/helper.rb",
-    "lib/jeweler/version_helper.rb",
-    "test/fixtures/bar/bin/foo_the_ultimate_bin",
-    "test/fixtures/bar/hey_include_me_in_gemspec",
+  s.test_files = [
     "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
-    "test/fixtures/existing-project-with-version/LICENSE",
-    "test/fixtures/existing-project-with-version/README.rdoc",
-    "test/fixtures/existing-project-with-version/Rakefile",
-    "test/fixtures/existing-project-with-version/existing-project-with-version.gemspec",
     "test/fixtures/existing-project-with-version/lib/existing_project_with_version.rb",
     "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
     "test/fixtures/existing-project-with-version/test/test_helper.rb",
-    "test/geminstaller.yml",
     "test/generators/initialization_test.rb",
     "test/jeweler/commands/test_build_gem.rb",
     "test/jeweler/commands/test_install_gem.rb",
@@ -178,7 +136,8 @@ Gem::Specification.new do |s|
     "test/test_options.rb",
     "test/test_specification.rb",
     "test/test_tasks.rb",
-    "test/test_version_helper.rb"]
+    "test/test_version_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
