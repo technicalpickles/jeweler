@@ -1,4 +1,4 @@
-# jeweler unreleased
+# jeweler 0.11.0 2009-04-05
 
  * generator will respect JEWELER_OPTS, as a way to provide default options
  (pat-maddox)
@@ -7,6 +7,7 @@
  * Jeweler::Tasks's intializer has been improved:
   * You can now pass it an existing gemspec (othewise a new one will be created)
   * Jeweler sets its defaults before yielding the gemspec to you. This allows you to append to its defaults, so you aren't forced to entirely overwrite them just to add one value.
+ * Managing a gemspec's files, test_files, and extra_rdoc_files is now more flexible. They are now wrapped in a FileList, so you can easily 'include' or 'exclude' patterns.
 
 # jeweler 0.10.2 2009-03-26
  
