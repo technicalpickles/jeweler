@@ -93,6 +93,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--zomg-invalid' do
+    should 'be an invalid argument' do
+      assert @options[:invalid_argument]
+    end
+  end
+
   context "merging options" do
     should "take options from each" do
       options = Jeweler::Generator::Options.new(["--rspec"]).

@@ -77,6 +77,32 @@ class TestApplication < Test::Unit::TestCase
     end
   end
 
+  context "called with --invalid-argument" do
+    setup do
+      @generator = build_generator
+      stub(@generator).run
+      stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
+
+      assert_nothing_raised do
+        @result = run_application("--invalid-argument")
+      end
+    end
+
+    should_exit_with_code 1
+
+    should 'display invalid argument' do
+      assert_match '--invalid-argument', @stderr
+    end
+
+    should 'display usage on stderr' do
+      assert_match 'Usage:', @stderr
+    end
+
+    should 'not display anything on stdout' do
+      assert_equal '', @stdout.squeeze.strip
+    end
+  end
+
   context "when called with repo name" do
     setup do
       @options = {:testing_framework => :shoulda}

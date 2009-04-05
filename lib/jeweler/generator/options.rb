@@ -61,7 +61,11 @@ class Jeweler
           end
         end
 
-        @opts.parse!(args)
+        begin
+          @opts.parse!(args)
+        rescue OptionParser::InvalidOption => e
+          self[:invalid_argument] = e.message
+        end
       end
 
       def merge(other)

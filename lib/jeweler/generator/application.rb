@@ -9,6 +9,11 @@ class Jeweler
           options = Jeweler::Generator::Options.new(arguments)
           options = options.merge(env_opts) if env_opts
 
+          if options[:invalid_argument]
+            $stderr.puts options[:invalid_argument]
+            options[:show_help] = true
+          end
+
           if options[:show_help]
             $stderr.puts options.opts
             return 1
