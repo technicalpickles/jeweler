@@ -10,11 +10,27 @@ class Jeweler
       @files
     end
 
+    # Sets the 'files' array _without_ wrapping it as an Array, in order to keep it as a FileList
+    def files=(value)
+      @files = FileList.new(value)
+    end
+
+    def ruby_code(obj)
+      case obj
+      when Rake::FileList then obj.to_a.inspect
+      else super
+      end
+    end
+
     # Assigns the Jeweler defaults to the Gem::Specification
     def set_jeweler_defaults(base_dir)
       Dir.chdir(base_dir) do
         if blank?(files)
-          self.files = FileList["[A-Z]*.*", "{bin,examples,generators,lib,rails,spec,test}/**/*"]
+          self.files = FileList["[A-Z]*.*", "{bin,examples,generators,lib,rails,spec,test}/**/*", 'Rakefile', 'LICENSE*']
+        end
+
+        if blank?(test_files)
+          self.test_files = FileList['{spec,test,examples}/**/*.rb']
         end
 
         if blank?(executable)

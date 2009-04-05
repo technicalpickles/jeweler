@@ -18,7 +18,7 @@ class TestSpecification < Test::Unit::TestCase
   context "Gem::Specification with Jeweler monkey-patches" do
     context "when setting defaults" do
       should "should populate `files'" do
-        assert_equal %w{ VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb }, @spec.files.sort
+        assert_equal %w{Rakefile VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb }, @spec.files.sort
       end
 
       should "should populate `executables'" do
