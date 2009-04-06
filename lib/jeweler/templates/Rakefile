@@ -4,13 +4,13 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "<%= github_repo_name %>"
+    gem.name = "<%= project_name %>"
     gem.summary = %Q{<%= summary %>}
     gem.email = "<%= user_email %>"
     gem.homepage = "<%= github_url %>"
     gem.authors = ["<%= user_name %>"]
 <% if should_setup_rubyforge %>
-    gem.rubyforge_project = "<%= github_repo_name %>"
+    gem.rubyforge_project = "<%= project_name %>"
 <% end %>
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -91,7 +91,7 @@ Rake::RDocTask.new do |rdoc|
   end
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "<%= github_repo_name %> #{version}"
+  rdoc.title = "<%= project_name %> #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
@@ -112,7 +112,7 @@ begin
         )
 
         host = "#{config['username']}@rubyforge.org"
-        remote_dir = "/var/www/gforge-projects/<%= github_repo_name %>/"
+        remote_dir = "/var/www/gforge-projects/<%= project_name %>/"
         local_dir = 'rdoc'
 
         Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload

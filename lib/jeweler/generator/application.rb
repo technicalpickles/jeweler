@@ -24,10 +24,10 @@ class Jeweler
             return 1
           end
 
-          github_repo_name = arguments.first
+          project_name = arguments.first
 
           begin
-            generator = Jeweler::Generator.new(github_repo_name, options)
+            generator = Jeweler::Generator.new(project_name, options)
             generator.run
             return 0
           rescue Jeweler::NoGitUserName
@@ -43,7 +43,7 @@ class Jeweler
             $stderr.puts %Q{No github.token found in ~/.gitconfig. Please tell git about your GitHub account (see http://github.com/blog/180-local-github-config for details). For example: git config --global github.token 6ef8395fecf207165f1a82178ae1b984}
             return 1
           rescue Jeweler::FileInTheWay
-            $stderr.puts "The directory #{github_repo_name} already exists. Maybe move it out of the way before continuing?"
+            $stderr.puts "The directory #{project_name} already exists. Maybe move it out of the way before continuing?"
             return 1
           end
         end

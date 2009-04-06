@@ -29,17 +29,17 @@ class Jeweler
 
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
-                  :github_repo_name, :github_username, :github_token,
+                  :project_name, :github_username, :github_token,
                   :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
 
-    def initialize(github_repo_name, options = {})
-      if github_repo_name.nil? || github_repo_name.squeeze.strip == ""
+    def initialize(project_name, options = {})
+      if project_name.nil? || project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
 
-      self.github_repo_name   = github_repo_name
+      self.project_name   = project_name
 
       self.testing_framework  = (options[:testing_framework] || DEFAULT_TESTING_FRAMEWORK).to_sym
       begin
@@ -51,7 +51,7 @@ class Jeweler
       end
 
 
-      self.target_dir             = options[:directory] || self.github_repo_name
+      self.target_dir             = options[:directory] || self.project_name
 
       self.should_create_repo     = options[:create_repo]
       self.summary                = options[:summary] || 'TODO'
@@ -65,7 +65,7 @@ class Jeweler
     def run
       create_files
       gitify
-      $stdout.puts "Jeweler has prepared your gem in #{github_repo_name}"
+      $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
       if should_create_repo
         create_and_push_repo
         $stdout.puts "Jeweler has pushed your repo to #{github_url}"
@@ -75,20 +75,20 @@ class Jeweler
     end
 
     def github_remote
-      "git@github.com:#{github_username}/#{github_repo_name}.git"
+      "git@github.com:#{github_username}/#{project_name}.git"
     end
 
     def github_url
-      "http://github.com/#{github_username}/#{github_repo_name}"
+      "http://github.com/#{github_username}/#{project_name}"
     end
 
     
     def constant_name
-      self.github_repo_name.split(/[-_]/).collect{|each| each.capitalize }.join
+      self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
     end
 
     def file_name_prefix
-      self.github_repo_name.gsub('-', '_')
+      self.project_name.gsub('-', '_')
     end
 
     def lib_dir
@@ -242,7 +242,7 @@ class Jeweler
         end
 
         begin
-          @repo.commit "Initial commit to #{github_repo_name}."
+          @repo.commit "Initial commit to #{project_name}."
         rescue Git::GitExecuteError => e
           raise
         end
@@ -263,13 +263,13 @@ class Jeweler
                                 'login' => github_username,
                                 'token' => github_token,
                                 'repository[description]' => summary,
-                                'repository[name]' => github_repo_name
+                                'repository[name]' => project_name
       # TODO do a HEAD request to see when it's ready
       @repo.push('origin')
     end
 
     def enable_gem_for_repo
-      url = "https://github.com/#{github_username}/#{github_repo_name}/update"
+      url = "https://github.com/#{github_username}/#{project_name}/update"
       `curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
       # FIXME use NET::HTTP instead of curl
       #Net::HTTP.post_form URI.parse(url),

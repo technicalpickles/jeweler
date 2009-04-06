@@ -1,4 +1,4 @@
-= <%= github_repo_name %>
+= <%= project_name %>
 
 Description goes here.
 

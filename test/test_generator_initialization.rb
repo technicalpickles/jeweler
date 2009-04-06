@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TestGeneratorInitialization < Test::Unit::TestCase
   def setup
-    @repo_name = 'the-perfect-gem'
+    @project_name = 'the-perfect-gem'
     @git_name = 'foo'
     @git_email = 'bar@example.com'
     @github_user = 'technicalpickles'
@@ -34,7 +34,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise an NoGitUserName' do
       assert_raise Jeweler::NoGitUserName do
-        Jeweler::Generator.new(@repo_name)
+        Jeweler::Generator.new(@project_name)
       end
     end
   end
@@ -46,7 +46,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitUserName' do
       assert_raise Jeweler::NoGitUserEmail do
-        Jeweler::Generator.new(@repo_name)
+        Jeweler::Generator.new(@project_name)
       end
     end
   end
@@ -58,7 +58,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NotGitHubUser' do
       assert_raise Jeweler::NoGitHubUser do
-        Jeweler::Generator.new(@repo_name)
+        Jeweler::Generator.new(@project_name)
       end
     end
   end
@@ -70,7 +70,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitHubToken' do
       assert_raise Jeweler::NoGitHubToken do
-        Jeweler::Generator.new(@repo_name)
+        Jeweler::Generator.new(@project_name)
       end
     end
   end
@@ -82,7 +82,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     context "for technicalpickle's the-perfect-gem repository" do
       setup do
-        @generator = Jeweler::Generator.new(@repo_name)
+        @generator = Jeweler::Generator.new(@project_name)
       end
 
       should "assign user's name from git config" do
@@ -101,12 +101,12 @@ class TestGeneratorInitialization < Test::Unit::TestCase
         assert_equal @github_user, @generator.github_username
       end
 
-      should "determine github repository name as the-perfect-gem" do
-        assert_equal @repo_name, @generator.github_repo_name
+      should "determine project name as the-perfect-gem" do
+        assert_equal @project_name, @generator.project_name
       end
 
       should "determine target directory as the same as the github repository name" do
-        assert_equal @generator.github_repo_name, @generator.target_dir
+        assert_equal @generator.project_name, @generator.target_dir
       end
     end
   end
