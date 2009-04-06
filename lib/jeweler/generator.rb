@@ -68,7 +68,7 @@ class Jeweler
       $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
       if should_create_repo
         create_and_push_repo
-        $stdout.puts "Jeweler has pushed your repo to #{github_url}"
+        $stdout.puts "Jeweler has pushed your repo to #{project_homepage}"
         enable_gem_for_repo
         $stdout.puts "Jeweler has enabled gem building for your repo"
       end
@@ -78,7 +78,7 @@ class Jeweler
       "git@github.com:#{github_username}/#{project_name}.git"
     end
 
-    def github_url
+    def project_homepage
       "http://github.com/#{github_username}/#{project_name}"
     end
 

@@ -50,8 +50,12 @@ class TestGenerator < Test::Unit::TestCase
     end
   end
 
-  should "have the correct github remote" do
+  should "have the correct git remote" do
     assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.git_remote
+  end
+
+  should "have the correct project homepage" do
+    assert_equal 'http://github.com/johndoe/the-perfect-gem', build_generator.project_homepage
   end
 
   should "have the correct constant name" do

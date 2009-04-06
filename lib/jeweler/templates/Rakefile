@@ -7,7 +7,7 @@ begin
     gem.name = "<%= project_name %>"
     gem.summary = %Q{<%= summary %>}
     gem.email = "<%= user_email %>"
-    gem.homepage = "<%= github_url %>"
+    gem.homepage = "<%= project_homepage %>"
     gem.authors = ["<%= user_name %>"]
 <% if should_setup_rubyforge %>
     gem.rubyforge_project = "<%= project_name %>"
