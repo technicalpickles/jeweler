@@ -4,6 +4,13 @@ require 'erb'
 require 'net/http'
 require 'uri'
 
+require 'jeweler/generator/bacon_mixin'
+require 'jeweler/generator/micronaut_mixin'
+require 'jeweler/generator/minitest_mixin'
+require 'jeweler/generator/rspec_mixin'
+require 'jeweler/generator/shoulda_mixin'
+require 'jeweler/generator/testunit_mixin'
+
 class Jeweler
   class NoGitUserName < StandardError
   end
@@ -26,6 +33,7 @@ class Jeweler
                   :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge
 
     SUPPORTED_TESTING_FRAMEWORKS = [:shoulda, :testunit, :bacon, :rspec, :micronaut, :minitest]
+    DEFAULT_TESTING_FRAMEWORK = :shoulda
 
     def initialize(github_repo_name, options = {})
       if github_repo_name.nil? || github_repo_name.squeeze.strip == ""
@@ -34,16 +42,21 @@ class Jeweler
 
       self.github_repo_name   = github_repo_name
 
-      self.testing_framework  = (options[:testing_framework] || :shoulda).to_sym
-      unless SUPPORTED_TESTING_FRAMEWORKS.include? self.testing_framework
+      self.testing_framework  = (options[:testing_framework] || DEFAULT_TESTING_FRAMEWORK).to_sym
+      begin
+        generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
+        generator_mixin = self.class.const_get(generator_mixin_name)
+        extend generator_mixin
+      rescue NameError => e
         raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
       end
 
-      self.target_dir         = options[:directory] || self.github_repo_name
 
-      self.should_create_repo = options[:create_repo]
-      self.summary            = options[:summary] || 'TODO'
-      self.should_use_cucumber= options[:use_cucumber]
+      self.target_dir             = options[:directory] || self.github_repo_name
+
+      self.should_create_repo     = options[:create_repo]
+      self.summary                = options[:summary] || 'TODO'
+      self.should_use_cucumber    = options[:use_cucumber]
       self.should_setup_rubyforge = options[:rubyforge]
 
       use_user_git_config
@@ -59,55 +72,6 @@ class Jeweler
         $stdout.puts "Jeweler has pushed your repo to #{github_url}"
         enable_gem_for_repo
         $stdout.puts "Jeweler has enabled gem building for your repo"
-      end
-    end
-
-    # Directory where 'tests' live
-    def test_dir
-      test_or_spec
-    end
-
-    # Default rake task to use
-    def default_task
-      case testing_framework.to_sym
-      when :shoulda, :testunit, :minitest
-        'test'
-      when :bacon, :rspec
-        'spec'
-      when :micronaut
-        'examples'
-      else
-        raise ArgumentError, "Don't know default task for #{testing_framework}"
-      end
-    end
-
-    def feature_support_require
-      case testing_framework.to_sym
-      when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
-        'test/unit/assertions'
-      when :minitest
-        'mini/test'
-      when :rspec
-        'spec/expectations'
-      when :micronaut
-        'micronaut/expectations'
-      else
-        raise "Don't know what to require for #{testing_framework}"
-      end
-    end
-
-    def feature_support_extend
-      case testing_framework.to_sym
-      when :testunit, :shoulda, :bacon # NOTE bacon doesn't really work inside of cucumber
-        'Test::Unit::Assertions'
-      when :minitest
-        'Mini::Test::Assertions'
-      when :rspec
-        nil
-      when :micronaut
-        'Micronaut::Matchers'
-      else
-        raise "Don't know what to extend for #{testing_framework}"
       end
     end
 
@@ -130,19 +94,6 @@ class Jeweler
 
     def lib_dir
       'lib'
-    end
-
-    def test_dir
-      case testing_framework.to_sym
-      when :shoulda, :testunit, :minitest
-        'test'
-      when :bacon, :rspec
-        'spec'
-      when :micronaut
-        'examples'
-      else
-        raise ArgumentError, "Don't know test dir for #{testing_framework.inspect}"
-      end
     end
 
     def test_filename
@@ -172,20 +123,6 @@ class Jeweler
     def features_steps_dir
       File.join(features_dir, 'step_definitions')
     end
-
-    def test_or_spec
-      case testing_framework.to_sym
-      when :shoulda, :testunit, :minitest
-        'test'
-      when :bacon, :rspec
-        'spec'
-      when :micronaut
-        'example'
-      else
-        raise ArgumentError, "Unknown test style: #{testing_framework}"
-      end
-    end
-
 
   protected
 
