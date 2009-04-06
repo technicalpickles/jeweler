@@ -32,7 +32,6 @@ class Jeweler
                   :github_repo_name, :github_username, :github_token,
                   :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge
 
-    SUPPORTED_TESTING_FRAMEWORKS = [:shoulda, :testunit, :bacon, :rspec, :micronaut, :minitest]
     DEFAULT_TESTING_FRAMEWORK = :shoulda
 
     def initialize(github_repo_name, options = {})
