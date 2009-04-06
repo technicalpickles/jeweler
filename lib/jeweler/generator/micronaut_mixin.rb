@@ -21,6 +21,10 @@ class Jeweler
       def test_or_spec
         'example'
       end
+
+      def test_task
+        'examples'
+      end
     end
   end
 end

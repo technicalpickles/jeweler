@@ -22,6 +22,10 @@ class Jeweler
         'test'
       end
 
+      def test_task
+        'test'
+      end
+
     end
   end
 end

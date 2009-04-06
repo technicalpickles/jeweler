@@ -22,6 +22,10 @@ class Jeweler
         'spec'
       end
 
+      def test_task
+        'spec'
+      end
+
     end
   end
 end

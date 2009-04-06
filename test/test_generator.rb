@@ -66,134 +66,69 @@ class TestGenerator < Test::Unit::TestCase
     assert_equal "the_perfect_gem", build_generator.file_name_prefix
   end
 
-  context "test_or_spec" do
-    should "be test for shoulda" do
-      assert_equal 'test', build_generator(:shoulda).test_or_spec
-    end
-
-    should "be test for testunit" do
-      assert_equal 'test', build_generator(:testunit).test_or_spec
-    end
-
-    should "be test for minitest" do
-      assert_equal 'test', build_generator(:minitest).test_or_spec
-    end
-
-    should "be spec for bacon" do
-      assert_equal 'spec', build_generator(:bacon).test_or_spec
-    end
-
-    should "be spec for rspec" do
-      assert_equal 'spec', build_generator(:rspec).test_or_spec
-    end
-
-    should "be example for micronaut" do
-      assert_equal 'example', build_generator(:micronaut).test_or_spec
+  def self.should_have_generator_attribute(attribute, value)
+    should "have #{value} for #{attribute}" do
+      assert_equal value, build_generator(@framework).send(attribute)
     end
   end
 
-  context "test_dir" do
-    should "be test for shoulda" do
-      assert_equal 'test', build_generator(:shoulda).test_dir
-    end
-
-    should "be test for testunit" do
-      assert_equal 'test', build_generator(:testunit).test_dir
-    end
-
-    should "be test for minitest" do
-      assert_equal 'test', build_generator(:minitest).test_dir
-    end
-
-    should "be spec for bacon" do
-      assert_equal 'spec', build_generator(:bacon).test_dir
-    end
-
-    should "be spec for rspec" do
-      assert_equal 'spec', build_generator(:rspec).test_dir
-    end
-
-    should "be examples for micronaut" do
-      assert_equal 'examples', build_generator(:micronaut).test_dir
-    end
+  context "shoulda" do
+    setup { @framework = :shoulda }
+    should_have_generator_attribute :test_or_spec, 'test'
+    should_have_generator_attribute :test_task, 'test'
+    should_have_generator_attribute :test_dir, 'test'
+    should_have_generator_attribute :default_task, 'test'
+    should_have_generator_attribute :feature_support_require, 'test/unit/assertions'
+    should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
   end
 
-  context "default_task" do
-    should "be test for shoulda" do
-      assert_equal 'test', build_generator(:shoulda).default_task
-    end
-
-    should "be test for testunit" do
-      assert_equal 'test', build_generator(:testunit).default_task
-    end
-
-    should "be test for minitest" do
-      assert_equal 'test', build_generator(:minitest).default_task
-    end
-
-    should "be spec for bacon" do
-      assert_equal 'spec', build_generator(:bacon).default_task
-    end
-
-    should "be spec for rspec" do
-      assert_equal 'spec', build_generator(:rspec).default_task
-    end
-
-    should "be examples for micronaut" do
-      assert_equal 'examples', build_generator(:micronaut).default_task
-    end
+  context "testunit" do
+    setup { @framework = :testunit }
+    should_have_generator_attribute :test_or_spec, 'test'
+    should_have_generator_attribute :test_task, 'test'
+    should_have_generator_attribute :test_dir, 'test'
+    should_have_generator_attribute :default_task, 'test'
+    should_have_generator_attribute :feature_support_require, 'test/unit/assertions'
+    should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
   end
 
-  context "feature_support_require" do
-    should "be test/unit/assertions for shoulda" do
-      assert_equal 'test/unit/assertions', build_generator(:shoulda).feature_support_require
-    end
-
-    should "be test/unit/assertions for testunit" do
-      assert_equal 'test/unit/assertions', build_generator(:testunit).feature_support_require
-    end
-
-    should "be mini/test for minitest" do
-      assert_equal 'mini/test', build_generator(:minitest).feature_support_require
-    end
-
-    should "be test/unit/assertions for bacon" do
-      assert_equal 'test/unit/assertions', build_generator(:bacon).feature_support_require
-    end
-
-    should "be spec/expectations for rspec" do
-      assert_equal 'spec/expectations', build_generator(:rspec).feature_support_require
-    end
-
-    should "be micronaut/expectations for micronaut" do
-      assert_equal 'micronaut/expectations', build_generator(:micronaut).feature_support_require
-    end
+  context "minitest" do
+    setup { @framework = :minitest }
+    should_have_generator_attribute :test_or_spec, 'test'
+    should_have_generator_attribute :test_task, 'test'
+    should_have_generator_attribute :test_dir, 'test'
+    should_have_generator_attribute :default_task, 'test'
+    should_have_generator_attribute :feature_support_require, 'mini/test'
+    should_have_generator_attribute :feature_support_extend, 'Mini::Test::Assertions'
   end
 
-  context "feature_support_extend" do
-    should "be Test::Unit::Assertions for shoulda" do
-      assert_equal 'Test::Unit::Assertions', build_generator(:shoulda).feature_support_extend
-    end
-
-    should "be Test::Unit::Assertions for testunit" do
-      assert_equal 'Test::Unit::Assertions', build_generator(:testunit).feature_support_extend
-    end
-
-    should "be Mini::Test::Assertions for minitest" do
-      assert_equal 'Mini::Test::Assertions', build_generator(:minitest).feature_support_extend
-    end
-
-    should "be Test::Unit::Assertions for bacon" do
-      assert_equal 'Test::Unit::Assertions', build_generator(:bacon).feature_support_extend
-    end
-
-    should "be nil for rspec" do
-      assert_equal nil, build_generator(:rspec).feature_support_extend
-    end
-
-    should "be Micronaut::Matchers for micronaut" do
-      assert_equal 'Micronaut::Matchers', build_generator(:micronaut).feature_support_extend
-    end
+  context "bacon" do
+    setup { @framework = :bacon }
+    should_have_generator_attribute :test_or_spec, 'spec'
+    should_have_generator_attribute :test_task, 'spec'
+    should_have_generator_attribute :test_dir, 'spec'
+    should_have_generator_attribute :default_task, 'spec'
+    should_have_generator_attribute :feature_support_require, 'test/unit/assertions'
+    should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
   end
 
+  context "rspec" do
+    setup { @framework = :rspec }
+    should_have_generator_attribute :test_or_spec, 'spec'
+    should_have_generator_attribute :test_task, 'spec'
+    should_have_generator_attribute :test_dir, 'spec'
+    should_have_generator_attribute :default_task, 'spec'
+    should_have_generator_attribute :feature_support_require, 'spec/expectations'
+    should_have_generator_attribute :feature_support_extend, nil
+  end
+
+  context "micronaut" do
+    setup { @framework = :micronaut }
+    should_have_generator_attribute :test_or_spec, 'example'
+    should_have_generator_attribute :test_task, 'examples'
+    should_have_generator_attribute :test_dir, 'examples'
+    should_have_generator_attribute :default_task, 'examples'
+    should_have_generator_attribute :feature_support_require, 'micronaut/expectations'
+    should_have_generator_attribute :feature_support_extend, 'Micronaut::Matchers'
+  end
 end

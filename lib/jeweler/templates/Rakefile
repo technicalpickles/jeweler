@@ -21,22 +21,22 @@ end
 <% case testing_framework.to_sym %>
 <% when :rspec %>
 require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.spec_files = FileList['spec/**/*_spec.rb']
+Spec::Rake::SpecTask.new(:<%= test_task %>) do |<%= test_task %>|
+  <%= test_task %>.libs << 'lib' << '<%= test_dir %>'
+  <%= test_task %>.spec_files = FileList['<%= test_dir %>/**/*_spec.rb']
 end
 <% when :micronaut %>
 require 'micronaut/rake_task'
-Micronaut::RakeTask.new(:examples) do |examples|
-  examples.pattern = 'examples/**/*_example.rb'
-  examples.ruby_opts << '-Ilib -Iexamples'
+Micronaut::RakeTask.new(<%= test_task %>) do |<%= test_task %>|
+  <%= test_task %>.pattern = '<%= test_dir %>/**/*_example.rb'
+  <%= test_task %>.ruby_opts << '-Ilib -I<%= test_dir %>'
 end
 <% else %>
 require 'rake/testtask'
-Rake::TestTask.new(:<%= test_or_spec %>) do |<%= test_or_spec %>|
-  <%= test_or_spec %>.libs << 'lib' << '<%= test_or_spec %>'
-  <%= test_or_spec %>.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
-  <%= test_or_spec %>.verbose = true
+Rake::TestTask.new(:<%= test_task %>) do |<%= test_task %>|
+  <%= test_task %>.libs << 'lib' << '<%= test_dir %>'
+  <%= test_task %>.pattern = '<%= test_dir %>/**/*_<%= test_or_spec %>.rb'
+  <%= test_task %>.verbose = true
 end
 <% end %>
 
@@ -49,16 +49,16 @@ Spec::Rake::SpecTask.new(:rcov) do |spec|
 end
 <% when :micronaut %>
 Micronaut::RakeTask.new(:rcov) do |examples|
-  examples.pattern = 'examples/**/*_example.rb'
-  examples.rcov_opts = '-Ilib -Iexamples'
+  examples.pattern = '<%= test_dir %>/**/*_example.rb'
+  examples.rcov_opts = '-Ilib -I<%= test_dir %>'
   examples.rcov = true
 end
 <% else %>
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |<%= test_or_spec %>|
-    <%= test_or_spec %>.libs << '<%= test_or_spec %>'
-    <%= test_or_spec %>.pattern = '<%= test_or_spec %>/**/*_<%= test_or_spec %>.rb'
+    <%= test_or_spec %>.libs << '<%= test_dir %>'
+    <%= test_or_spec %>.pattern = '<%= test_dir %>/**/*_<%= test_or_spec %>.rb'
     <%= test_or_spec %>.verbose = true
   end
 rescue LoadError
