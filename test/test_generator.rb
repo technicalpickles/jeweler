@@ -50,6 +50,18 @@ class TestGenerator < Test::Unit::TestCase
     end
   end
 
+  should "have the correct github remote" do
+    assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.github_remote
+  end
+
+  should "have the correct constant name" do
+    assert_equal "ThePerfectGem", build_generator.constant_name
+  end
+
+  should "have the correct file name prefix" do
+    assert_equal "the_perfect_gem", build_generator.file_name_prefix
+  end
+
   context "test_or_spec" do
     should "be test for shoulda" do
       assert_equal 'test', build_generator(:shoulda).test_or_spec
