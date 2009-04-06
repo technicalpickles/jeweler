@@ -51,7 +51,7 @@ class TestGenerator < Test::Unit::TestCase
   end
 
   should "have the correct github remote" do
-    assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.github_remote
+    assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.git_remote
   end
 
   should "have the correct constant name" do

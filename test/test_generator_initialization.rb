@@ -94,7 +94,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
       end
 
       should "assign github remote" do
-        assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', @generator.github_remote
+        assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', @generator.git_remote
       end
 
       should "assign github username from git config" do

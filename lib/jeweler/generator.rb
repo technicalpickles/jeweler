@@ -74,7 +74,7 @@ class Jeweler
       end
     end
 
-    def github_remote
+    def git_remote
       "git@github.com:#{github_username}/#{project_name}.git"
     end
 
@@ -248,7 +248,7 @@ class Jeweler
         end
 
         begin
-          @repo.add_remote('origin', github_remote)
+          @repo.add_remote('origin', git_remote)
         rescue Git::GitExecuteError => e
           puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
           raise
