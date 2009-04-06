@@ -25,6 +25,10 @@ class Jeweler
       def test_task
         'examples'
       end
+
+      def test_pattern
+        'examples/**/*_example.rb'
+      end
     end
   end
 end

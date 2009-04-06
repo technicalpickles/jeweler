@@ -26,6 +26,10 @@ class Jeweler
         'test'
       end
 
+      def test_pattern
+        'test/**/*_test.rb'
+      end
+
     end
   end
 end
