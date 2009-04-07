@@ -18,10 +18,6 @@ class Jeweler
         'test'
       end
 
-      def test_or_spec
-        'test'
-      end
-
       def test_task
         'test'
       end

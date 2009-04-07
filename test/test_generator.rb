@@ -78,7 +78,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "shoulda" do
     setup { @framework = :shoulda }
-    should_have_generator_attribute :test_or_spec, 'test'
     should_have_generator_attribute :test_task, 'test'
     should_have_generator_attribute :test_dir, 'test'
     should_have_generator_attribute :default_task, 'test'
@@ -91,7 +90,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "testunit" do
     setup { @framework = :testunit }
-    should_have_generator_attribute :test_or_spec, 'test'
     should_have_generator_attribute :test_task, 'test'
     should_have_generator_attribute :test_dir, 'test'
     should_have_generator_attribute :default_task, 'test'
@@ -104,7 +102,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "minitest" do
     setup { @framework = :minitest }
-    should_have_generator_attribute :test_or_spec, 'test'
     should_have_generator_attribute :test_task, 'test'
     should_have_generator_attribute :test_dir, 'test'
     should_have_generator_attribute :default_task, 'test'
@@ -117,7 +114,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "bacon" do
     setup { @framework = :bacon }
-    should_have_generator_attribute :test_or_spec, 'spec'
     should_have_generator_attribute :test_task, 'spec'
     should_have_generator_attribute :test_dir, 'spec'
     should_have_generator_attribute :default_task, 'spec'
@@ -130,7 +126,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "rspec" do
     setup { @framework = :rspec }
-    should_have_generator_attribute :test_or_spec, 'spec'
     should_have_generator_attribute :test_task, 'spec'
     should_have_generator_attribute :test_dir, 'spec'
     should_have_generator_attribute :default_task, 'spec'
@@ -143,7 +138,6 @@ class TestGenerator < Test::Unit::TestCase
 
   context "micronaut" do
     setup { @framework = :micronaut }
-    should_have_generator_attribute :test_or_spec, 'example'
     should_have_generator_attribute :test_task, 'examples'
     should_have_generator_attribute :test_dir, 'examples'
     should_have_generator_attribute :default_task, 'examples'
