@@ -98,10 +98,6 @@ class Jeweler
       'lib'
     end
 
-    def test_filename
-      "#{file_name_prefix}_#{test_or_spec}.rb"
-    end
-
     def test_helper_filename
       "#{test_or_spec}_helper.rb"
     end

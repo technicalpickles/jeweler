@@ -29,6 +29,10 @@ class Jeweler
       def test_pattern
         'examples/**/*_example.rb'
       end
+
+      def test_filename
+        "#{require_name}_example.rb"
+      end
     end
   end
 end

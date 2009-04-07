@@ -7,7 +7,7 @@ class TestGeneratorMixins < Test::Unit::TestCase
    Jeweler::Generator::TestunitMixin, Jeweler::Generator::MinitestMixin].each do |mixin|
     context "#{mixin}" do
       %w(default_task feature_support_require feature_support_extend
-         test_dir test_or_spec test_task test_pattern).each do |method|
+         test_dir test_or_spec test_task test_pattern test_filename).each do |method|
           should "define #{method}" do
             assert mixin.method_defined?(method)
           end

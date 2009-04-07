@@ -30,6 +30,10 @@ class Jeweler
         'spec/**/*_spec.rb'
       end
 
+      def test_filename
+        "#{require_name}_spec.rb"
+      end
+
     end
   end
 end
