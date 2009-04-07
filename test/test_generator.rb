@@ -86,6 +86,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
     should_have_generator_attribute :test_pattern, 'test/**/*_test.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_test.rb'
+    should_have_generator_attribute :test_helper_filename, 'test_helper.rb'
   end
 
   context "testunit" do
@@ -98,6 +99,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
     should_have_generator_attribute :test_pattern, 'test/**/*_test.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_test.rb'
+    should_have_generator_attribute :test_helper_filename, 'test_helper.rb'
   end
 
   context "minitest" do
@@ -110,6 +112,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, 'Mini::Test::Assertions'
     should_have_generator_attribute :test_pattern, 'test/**/*_test.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_test.rb'
+    should_have_generator_attribute :test_helper_filename, 'test_helper.rb'
   end
 
   context "bacon" do
@@ -122,6 +125,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
     should_have_generator_attribute :test_pattern, 'spec/**/*_spec.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_spec.rb'
+    should_have_generator_attribute :test_helper_filename, 'spec_helper.rb'
   end
 
   context "rspec" do
@@ -134,6 +138,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, nil
     should_have_generator_attribute :test_pattern, 'spec/**/*_spec.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_spec.rb'
+    should_have_generator_attribute :test_helper_filename, 'spec_helper.rb'
   end
 
   context "micronaut" do
@@ -146,5 +151,6 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :feature_support_extend, 'Micronaut::Matchers'
     should_have_generator_attribute :test_pattern, 'examples/**/*_example.rb'
     should_have_generator_attribute :test_filename, 'the_perfect_gem_example.rb'
+    should_have_generator_attribute :test_helper_filename, 'example_helper.rb'
   end
 end

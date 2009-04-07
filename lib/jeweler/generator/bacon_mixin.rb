@@ -34,6 +34,10 @@ class Jeweler
         "#{require_name}_spec.rb"
       end
 
+      def test_helper_filename
+        "spec_helper.rb"
+      end
+
     end
   end
 end

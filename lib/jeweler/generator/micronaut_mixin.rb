@@ -33,6 +33,10 @@ class Jeweler
       def test_filename
         "#{require_name}_example.rb"
       end
+
+      def test_helper_filename
+        "example_helper.rb"
+      end
     end
   end
 end
