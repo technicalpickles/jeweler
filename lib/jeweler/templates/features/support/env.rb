@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require '<%= file_name_prefix %>'
+require '<%= require_name %>'
 
 require '<%= feature_support_require %>'
 

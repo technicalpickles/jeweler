@@ -66,6 +66,10 @@ class TestGenerator < Test::Unit::TestCase
     assert_equal "the_perfect_gem", build_generator.file_name_prefix
   end
 
+  should "have the correct require name" do
+    assert_equal "the_perfect_gem", build_generator.require_name
+  end
+
   def self.should_have_generator_attribute(attribute, value)
     should "have #{value} for #{attribute}" do
       assert_equal value, build_generator(@framework).send(attribute)

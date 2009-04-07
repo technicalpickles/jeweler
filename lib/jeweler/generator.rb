@@ -81,10 +81,13 @@ class Jeweler
     def project_homepage
       "http://github.com/#{github_username}/#{project_name}"
     end
-
     
     def constant_name
       self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
+    end
+
+    def require_name
+      self.project_name.gsub('-', '_')
     end
 
     def file_name_prefix
