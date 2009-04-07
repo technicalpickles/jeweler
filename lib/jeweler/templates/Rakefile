@@ -18,7 +18,7 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
-<% case testing_framework.to_sym %>
+<% case testing_framework %>
 <% when :rspec %>
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:<%= test_task %>) do |<%= test_task %>|
@@ -40,7 +40,7 @@ Rake::TestTask.new(:<%= test_task %>) do |<%= test_task %>|
 end
 <% end %>
 
-<% case testing_framework.to_sym %>
+<% case testing_framework %>
 <% when :rspec %>
 Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.libs << 'lib' << 'spec'
