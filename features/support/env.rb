@@ -6,10 +6,7 @@ require 'output_catcher'
 
 require 'test/unit/assertions'
 
-World do |world|
-  world.extend(Test::Unit::Assertions)
-  world
-end
+World(Test::Unit::Assertions)
 
 def yank_task_info(content, task)
   if content =~ /#{Regexp.escape(task)}.new(\(.*\))? do \|(.*?)\|(.*?)end/m
