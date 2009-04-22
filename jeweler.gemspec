@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-04-05}
+  s.date = %q{2009-04-20}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -41,7 +41,13 @@ Gem::Specification.new do |s|
     "lib/jeweler/gemspec_helper.rb",
     "lib/jeweler/generator.rb",
     "lib/jeweler/generator/application.rb",
+    "lib/jeweler/generator/bacon_mixin.rb",
+    "lib/jeweler/generator/micronaut_mixin.rb",
+    "lib/jeweler/generator/minitest_mixin.rb",
     "lib/jeweler/generator/options.rb",
+    "lib/jeweler/generator/rspec_mixin.rb",
+    "lib/jeweler/generator/shoulda_mixin.rb",
+    "lib/jeweler/generator/testunit_mixin.rb",
     "lib/jeweler/specification.rb",
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",
@@ -77,7 +83,6 @@ Gem::Specification.new do |s|
     "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
     "test/fixtures/existing-project-with-version/test/test_helper.rb",
     "test/geminstaller.yml",
-    "test/generators/initialization_test.rb",
     "test/jeweler/commands/test_build_gem.rb",
     "test/jeweler/commands/test_install_gem.rb",
     "test/jeweler/commands/test_release.rb",
@@ -94,6 +99,8 @@ Gem::Specification.new do |s|
     "test/test_application.rb",
     "test/test_gemspec_helper.rb",
     "test/test_generator.rb",
+    "test/test_generator_initialization.rb",
+    "test/test_generator_mixins.rb",
     "test/test_helper.rb",
     "test/test_jeweler.rb",
     "test/test_options.rb",
@@ -114,7 +121,6 @@ Gem::Specification.new do |s|
     "test/fixtures/existing-project-with-version/lib/existing_project_with_version.rb",
     "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
     "test/fixtures/existing-project-with-version/test/test_helper.rb",
-    "test/generators/initialization_test.rb",
     "test/jeweler/commands/test_build_gem.rb",
     "test/jeweler/commands/test_install_gem.rb",
     "test/jeweler/commands/test_release.rb",
@@ -131,6 +137,8 @@ Gem::Specification.new do |s|
     "test/test_application.rb",
     "test/test_gemspec_helper.rb",
     "test/test_generator.rb",
+    "test/test_generator_initialization.rb",
+    "test/test_generator_mixins.rb",
     "test/test_helper.rb",
     "test/test_jeweler.rb",
     "test/test_options.rb",
@@ -145,10 +153,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<peterwald-git>, [">= 0"])
+      s.add_runtime_dependency(%q<rubyforge>, [">= 0"])
     else
       s.add_dependency(%q<peterwald-git>, [">= 0"])
+      s.add_dependency(%q<rubyforge>, [">= 0"])
     end
   else
     s.add_dependency(%q<peterwald-git>, [">= 0"])
+    s.add_dependency(%q<rubyforge>, [">= 0"])
   end
 end

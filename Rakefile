@@ -13,18 +13,20 @@ begin
     gem.authors = ["Josh Nichols"]
     gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
     gem.add_dependency "peterwald-git"
+    gem.add_dependency "rubyforge"
     gem.rubyforge_project = "pickles"
   end
 rescue LoadError
-  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install jeweler"
 end
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
-  test.pattern = 'test/**/test_*.rb'
+  test.test_files = FileList.new('test/**/test_*.rb') do |list|
+    list.exclude 'test/test_helper.rb'
+  end
   test.libs << 'test'
   test.verbose = true
-  #test.ruby_opts << '-rtest_helper'
 end
 
 require 'rake/rdoctask'
