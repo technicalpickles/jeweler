@@ -5,6 +5,12 @@ Jeweler provides two things:
  * Rake tasks for managing gems and versioning of a <a href="http://github.com">GitHub</a> project
  * A generator for creating kickstarting a new project
 
+## Quick Links
+
+ * [Wiki](http://wiki.github.com/technicalpickles/jeweler)
+ * [Bugs](http://github.com/technicalpickles/jeweler/issues)
+ * [Donate](http://pledgie.org/campaigns/2604)
+
 ## Installing
 
     # Install the gem:
@@ -162,7 +168,3 @@ With all that setup out of the way, you can now release to RubyForge with impuni
  * Have a delicious scotch
  * Install [gemstalker](http://github.com/technicalpickles/gemstalker), and use it to know when gem is built. It typically builds in a few minutes, but won't be installable for another 15 minutes.
 
-## Links
-
- * [Bugs](http://technicalpickles.lighthouseapp.com/projects/23560-jeweler/overview)
- * [Donate](http://pledgie.org/campaigns/2604)
