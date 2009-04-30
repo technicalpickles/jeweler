@@ -1,3 +1,10 @@
+# jeweler 0.11.1
+
+ * Lots of internal refactorings to how project generation happens
+ * Fixed missing dependency on rubyforge
+ * Depend on a recent version of schacon-git which works on ruby 1.9
+ * Tested on Ruby 1.9
+
 # jeweler 0.11.0 2009-04-05
 
  * generator will respect JEWELER_OPTS, as a way to provide default options
