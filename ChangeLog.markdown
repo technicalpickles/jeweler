@@ -3,6 +3,7 @@
  * Lots of internal refactorings to how project generation happens
  * Fixed missing dependency on rubyforge
  * Depend on a recent version of schacon-git which works on ruby 1.9
+ * Updated cucumber support for 0.3.x
  * Tested on Ruby 1.9
 
 # jeweler 0.11.0 2009-04-05
