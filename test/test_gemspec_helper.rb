@@ -32,5 +32,9 @@ class TestGemspecHelper < Test::Unit::TestCase
     should "make valid spec" do
       assert @helper.valid?
     end
+
+    should "parse" do
+      @helper.parse
+    end
   end
 end

@@ -63,6 +63,7 @@ class Test::Unit::TestCase
       s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
       s.authors = ["Josh Nichols"]
       s.files = FileList[*files] unless files.empty?
+      s.version = '0.1.1'
     end
   end
 
