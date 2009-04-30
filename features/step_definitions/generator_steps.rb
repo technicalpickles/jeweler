@@ -199,7 +199,7 @@ end
 
 Then /^cucumber world extends "(.*)"$/ do |module_to_extend|
   content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
-  assert_match "world.extend(#{module_to_extend})", content
+  assert_match "World(#{module_to_extend})", content
 end
 
 
