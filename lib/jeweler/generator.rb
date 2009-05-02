@@ -86,8 +86,12 @@ class Jeweler
       self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
     end
 
+    def lib_filename
+      "#{project_name}.rb"
+    end
+
     def require_name
-      self.project_name.gsub('-', '_')
+      self.project_name
     end
 
     def file_name_prefix
@@ -99,11 +103,11 @@ class Jeweler
     end
 
     def feature_filename
-      "#{file_name_prefix}.feature"
+      "#{project_name}.feature"
     end
 
     def steps_filename
-      "#{file_name_prefix}_steps.rb"
+      "#{project_name}_steps.rb"
     end
 
     def features_dir
@@ -144,7 +148,7 @@ class Jeweler
       output_template_in_target '.document'
 
       mkdir_in_target           lib_dir
-      touch_in_target           File.join(lib_dir, "#{file_name_prefix}.rb")
+      touch_in_target           File.join(lib_dir, lib_filename)
 
       mkdir_in_target           test_dir
       output_template_in_target File.join(testing_framework.to_s, 'helper.rb'), File.join(test_dir, test_helper_filename)

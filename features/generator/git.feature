@@ -27,7 +27,7 @@ Feature: git support
     And 'README.rdoc' was checked in
     And 'Rakefile' was checked in
     And 'LICENSE' was checked in
-    And 'lib/the_perfect_gem.rb' was checked in
+    And 'lib/the-perfect-gem.rb' was checked in
     And '.gitignore' was checked in
 
     And no files are untracked
@@ -41,7 +41,7 @@ Feature: git support
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'spec/spec_helper.rb' was checked in
-    And 'spec/the_perfect_gem_spec.rb' was checked in
+    And 'spec/the-perfect-gem_spec.rb' was checked in
 
   Scenario: minitest
     Given a working directory
@@ -49,7 +49,7 @@ Feature: git support
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
-    And 'test/the_perfect_gem_test.rb' was checked in
+    And 'test/the-perfect-gem_test.rb' was checked in
 
   Scenario: rspec
     Given a working directory
@@ -57,7 +57,7 @@ Feature: git support
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'spec/spec_helper.rb' was checked in
-    And 'spec/the_perfect_gem_spec.rb' was checked in
+    And 'spec/the-perfect-gem_spec.rb' was checked in
 
   Scenario: shoulda
     Given a working directory
@@ -65,7 +65,7 @@ Feature: git support
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
-    And 'test/the_perfect_gem_test.rb' was checked in
+    And 'test/the-perfect-gem_test.rb' was checked in
 
   Scenario: testunit
     Given a working directory
@@ -73,7 +73,7 @@ Feature: git support
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'test/test_helper.rb' was checked in
-    And 'test/the_perfect_gem_test.rb' was checked in
+    And 'test/the-perfect-gem_test.rb' was checked in
 
   Scenario: micronaut
     Given a working directory
@@ -81,7 +81,7 @@ Feature: git support
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'examples/example_helper.rb' was checked in
-    And 'examples/the_perfect_gem_example.rb' was checked in
+    And 'examples/the-perfect-gem_example.rb' was checked in
 
   Scenario: cucumber
     Given a working directory
@@ -89,6 +89,6 @@ Feature: git support
     And I want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then 'features/the_perfect_gem.feature' was checked in
+    Then 'features/the-perfect-gem.feature' was checked in
     And 'features/support/env.rb' was checked in
-    And 'features/step_definitions/the_perfect_gem_steps.rb' was checked in
+    And 'features/step_definitions/the-perfect-gem_steps.rb' was checked in

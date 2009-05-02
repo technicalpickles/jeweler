@@ -13,7 +13,7 @@ Feature: generated directory layout
 
     And a file named 'the-perfect-gem/README.rdoc' is created
     And a file named 'the-perfect-gem/.document' is created
-    And a file named 'the-perfect-gem/lib/the_perfect_gem.rb' is created
+    And a file named 'the-perfect-gem/lib/the-perfect-gem.rb' is created
 
   Scenario: bacon
     Given a working directory
@@ -23,7 +23,7 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/spec' is created
 
     And a file named 'the-perfect-gem/spec/spec_helper.rb' is created
-    And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
+    And a file named 'the-perfect-gem/spec/the-perfect-gem_spec.rb' is created
 
   Scenario: minitest
     Given a working directory
@@ -33,7 +33,7 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/test' is created
 
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
-    And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
+    And a file named 'the-perfect-gem/test/the-perfect-gem_test.rb' is created
 
   Scenario: rspec
     Given a working directory
@@ -43,7 +43,7 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/spec' is created
 
     And a file named 'the-perfect-gem/spec/spec_helper.rb' is created
-    And a file named 'the-perfect-gem/spec/the_perfect_gem_spec.rb' is created
+    And a file named 'the-perfect-gem/spec/the-perfect-gem_spec.rb' is created
 
   Scenario: shoulda
     Given a working directory
@@ -53,7 +53,7 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/test' is created
 
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
-    And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
+    And a file named 'the-perfect-gem/test/the-perfect-gem_test.rb' is created
 
   Scenario: testunit
     Given a working directory
@@ -63,7 +63,7 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/test' is created
 
     And a file named 'the-perfect-gem/test/test_helper.rb' is created
-    And a file named 'the-perfect-gem/test/the_perfect_gem_test.rb' is created
+    And a file named 'the-perfect-gem/test/the-perfect-gem_test.rb' is created
 
   Scenario: micronaut
     Given a working directory
@@ -73,4 +73,4 @@ Feature: generated directory layout
     Then a directory named 'the-perfect-gem/examples' is created
 
     And a file named 'the-perfect-gem/examples/example_helper.rb' is created
-    And a file named 'the-perfect-gem/examples/the_perfect_gem_example.rb' is created
+    And a file named 'the-perfect-gem/examples/the-perfect-gem_example.rb' is created

@@ -13,7 +13,9 @@ begin
   require 'ruby-debug'
 rescue LoadError
 end
+
 require 'rr'
+require 'redgreen'
 require 'time'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')

@@ -9,9 +9,9 @@ Feature: generating cucumber stories
     And I do not want cucumber stories
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is not created
+    And a file named 'the-perfect-gem/features/the-perfect-gem.feature' is not created
     And a file named 'the-perfect-gem/features/support/env.rb' is not created
-    And a file named 'the-perfect-gem/features/steps/the_perfect_gem_steps.rb' is not created
+    And a file named 'the-perfect-gem/features/steps/the-perfect-gem_steps.rb' is not created
     
   Scenario: basic cucumber setup
     Given a working directory
@@ -21,11 +21,11 @@ Feature: generating cucumber stories
 
     Then cucumber directories are created
 
-    And a file named 'the-perfect-gem/features/the_perfect_gem.feature' is created
+    And a file named 'the-perfect-gem/features/the-perfect-gem.feature' is created
     And a file named 'the-perfect-gem/features/support/env.rb' is created
-    And a file named 'the-perfect-gem/features/step_definitions/the_perfect_gem_steps.rb' is created
+    And a file named 'the-perfect-gem/features/step_definitions/the-perfect-gem_steps.rb' is created
 
-    And 'features/support/env.rb' requires 'the_perfect_gem'
+    And 'features/support/env.rb' requires 'the-perfect-gem'
 
   Scenario: cucumber setup for bacon
     Given a working directory
@@ -69,7 +69,7 @@ Feature: generating cucumber stories
     And I want cucumber stories
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then 'features/support/env.rb' requires 'the_perfect_gem'
+    Then 'features/support/env.rb' requires 'the-perfect-gem'
     And 'features/support/env.rb' requires 'spec/expectations'
 
   Scenario: cucumber setup for mirconaut
@@ -78,6 +78,6 @@ Feature: generating cucumber stories
     And I want cucumber stories
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then 'features/support/env.rb' requires 'the_perfect_gem'
+    Then 'features/support/env.rb' requires 'the-perfect-gem'
     And 'features/support/env.rb' requires 'micronaut/expectations'
     And cucumber world extends "Micronaut::Matchers"
