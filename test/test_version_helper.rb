@@ -22,10 +22,10 @@ class TestVersionHelper < Test::Unit::TestCase
       assert_equal version_s, @version_helper.to_s
     end
 
-    version_hash = {:major => major, :minor => minor, :patch => patch}
-    should "render hash as #{version_hash.inspect}" do
-      assert_equal version_hash, @version_helper.to_hash
-    end
+    #version_hash = {:major => major, :minor => minor, :patch => patch}
+    #should "render hash as #{version_hash.inspect}" do
+      #assert_equal version_hash, @version_helper.to_hash
+    #end
     
   end
 
@@ -35,6 +35,34 @@ class TestVersionHelper < Test::Unit::TestCase
       FileUtils.mkdir_p VERSION_TMP_DIR
 
       build_version_yml VERSION_TMP_DIR, 3, 5, 4
+
+      @version_helper = Jeweler::VersionHelper.new VERSION_TMP_DIR
+    end
+
+    should_have_version 3, 5, 4
+
+    context "bumping major version" do
+      setup { @version_helper.bump_major }
+      should_have_version 4, 0, 0
+    end
+
+    context "bumping the minor version" do
+      setup { @version_helper.bump_minor }
+      should_have_version 3, 6, 0
+    end
+
+    context "bumping the patch version" do
+      setup { @version_helper.bump_patch }
+      should_have_version 3, 5, 5
+    end
+  end
+
+  context "VERSION with 3.5.4" do
+    setup do
+      FileUtils.rm_rf VERSION_TMP_DIR
+      FileUtils.mkdir_p VERSION_TMP_DIR
+
+      build_version_plaintext VERSION_TMP_DIR, 3, 5, 4
 
       @version_helper = Jeweler::VersionHelper.new VERSION_TMP_DIR
     end
@@ -79,17 +107,20 @@ class TestVersionHelper < Test::Unit::TestCase
       should "not create VERSION.yml" do
         assert ! File.exists?(File.join(VERSION_TMP_DIR, 'VERSION.yml'))
       end
+      should "not create VERSION" do
+        assert ! File.exists?(File.join(VERSION_TMP_DIR, 'VERSION'))
+      end
 
       context "outputting" do
         setup do
           @version_helper.write
         end
 
-        should "create VERSION.yml" do
-          assert File.exists?(File.join(VERSION_TMP_DIR, 'VERSION.yml'))
+        should "create VERSION" do
+          assert File.exists?(File.join(VERSION_TMP_DIR, 'VERSION'))
         end
 
-        context "re-reading VERSION.yml" do
+        context "re-reading VERSION" do
           setup do
             @version_helper = Jeweler::VersionHelper.new(VERSION_TMP_DIR)
           end
@@ -101,15 +132,22 @@ class TestVersionHelper < Test::Unit::TestCase
   end
 
   def build_version_yml(base_dir, major, minor, patch)
-    version_yaml_path = File.join(base_dir, 'VERSION.yml')
+    version_path = File.join(base_dir, 'VERSION.yml')
 
-    File.open(version_yaml_path, 'w+') do |f|
+    File.open(version_path, 'w+') do |f|
       version_hash = {
         'major' => major.to_i,
         'minor' => minor.to_i,
         'patch' => patch.to_i
       }
       YAML.dump(version_hash, f)
+    end
+  end
+
+  def build_version_plaintext(base_dir, major, minor, patch)
+    version_path = File.join(base_dir, 'VERSION')
+    File.open(version_path, 'w+') do |f|
+      f.puts "#{major}.#{minor}.#{patch}"
     end
   end
 end
