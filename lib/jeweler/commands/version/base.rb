@@ -20,7 +20,7 @@ class Jeweler
 
         def commit_version
           if self.repo
-            self.repo.add('VERSION.yml')
+            self.repo.add(version_helper.path)
             self.repo.commit("Version bump to #{self.version_helper.to_s}")
           end
         end

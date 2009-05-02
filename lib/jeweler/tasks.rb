@@ -16,9 +16,10 @@ class Jeweler
   private
     def define
       desc "Setup initial version of 0.0.0"
-      file "VERSION.yml" do
-        @jeweler.write_version 0, 0, 0, :commit => false
-        $stdout.puts "Created VERSION.yml: 0.0.0"
+      task :version_required do
+        unless @jeweler.version_exists?
+          abort "Expected VERSION or VERSION.yml to exist. See version:write to create an initial one."
+        end
       end
 
       desc "Build gem"
@@ -36,18 +37,18 @@ class Jeweler
 
       namespace :gemspec do
         desc "Validates the gemspec"
-        task :validate => 'VERSION.yml' do
+        task :validate => :version_required do
           @jeweler.validate_gemspec
         end
 
-        desc "Generates the gemspec, using version from VERSION.yml"
-        task :generate => 'VERSION.yml' do
+        desc "Generates the gemspec, using version from VERSION"
+        task :generate => :version_required do
           @jeweler.write_gemspec
         end
       end
 
       desc "Displays the current version"
-      task :version => 'VERSION.yml' do
+      task :version => :version_required do
         $stdout.puts "Current version: #{@jeweler.version}"
       end
 
@@ -61,19 +62,19 @@ class Jeweler
 
         namespace :bump do
           desc "Bump the gemspec by a major version."
-          task :major => ['VERSION.yml', :version] do
+          task :major => [:version_required, :version] do
             @jeweler.bump_major_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a minor version."
-          task :minor => ['VERSION.yml', :version] do
+          task :minor => [:version_required, :version] do
             @jeweler.bump_minor_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end
 
           desc "Bump the gemspec by a patch version."
-          task :patch => ['VERSION.yml', :version] do
+          task :patch => [:version_required, :version] do
             @jeweler.bump_patch_version
             $stdout.puts "Updated version: #{@jeweler.version}"
           end

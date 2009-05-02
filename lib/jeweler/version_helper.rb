@@ -38,6 +38,10 @@ class Jeweler
           raise VersionYmlError, "#{yaml_path} does not exist!"
         end
       end
+
+      def path
+        yaml_path
+      end
     end
 
     module PlaintextExtension
@@ -59,7 +63,10 @@ class Jeweler
       def read_plaintext
         File.read(plaintext_path)
       end
-      
+
+      def path
+        plaintext_path
+      end
     end
 
     def initialize(base_dir)

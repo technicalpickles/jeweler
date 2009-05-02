@@ -133,5 +133,9 @@ class Jeweler
     File.exists?(File.join(self.base_dir, '.git'))
   end
 
+  def version_exists?
+    File.exists?(@version_helper.plaintext_path) || File.exists?(@version_helper.yaml_path)
+  end
+
 end
 
