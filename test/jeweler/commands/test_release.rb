@@ -4,18 +4,10 @@ class Jeweler
   module Commands
     class TestRelease < Test::Unit::TestCase
 
-      context "with added files" do
+      context "with pending changes" do
         setup do
           @repo = Object.new
           stub(@repo).checkout(anything)
-
-          status = Object.new
-          stub(status) do
-            added { ['README'] }
-            deleted { [] }
-            changed { [] }
-          end
-
           stub(@repo).status { status }
 
           @command                = Jeweler::Commands::Release.new
@@ -23,63 +15,8 @@ class Jeweler
           @command.repo           = @repo
           @command.gemspec_helper = @gemspec_helper
           @command.version        = '1.2.3'
-        end
 
-        should 'raise error' do
-          assert_raises RuntimeError, /try commiting/i do
-            @command.run
-          end
-        end
-      end
-
-      context "with deleted files" do
-        setup do
-          @repo = Object.new
-          stub(@repo).checkout(anything)
-
-          status = Object.new
-          stub(status) do
-            added { [] }
-            deleted { ['README'] }
-            changed { [] }
-          end
-
-          stub(@repo).status { status }
-
-          @command                = Jeweler::Commands::Release.new
-          @command.output         = @output
-          @command.repo           = @repo
-          @command.gemspec_helper = @gemspec_helper
-          @command.version        = '1.2.3'
-          @command.base_dir       = '.'
-        end
-
-        should 'raise error' do
-          assert_raises RuntimeError, /try commiting/i do
-            @command.run
-          end
-        end
-      end
-
-      context "with changed files" do
-        setup do
-          @repo = Object.new
-          stub(@repo).checkout(anything)
-
-          status = Object.new
-          stub(status) do
-            added { [] }
-            deleted { [] }
-            changed { ['README'] }
-          end
-
-          stub(@repo).status { status }
-
-          @command                = Jeweler::Commands::Release.new
-          @command.output         = @output
-          @command.repo           = @repo
-          @command.gemspec_helper = @gemspec_helper
-          @command.version        = '1.2.3'
+          stub(@command).any_pending_changes? { true }
         end
 
         should 'raise error' do
@@ -190,6 +127,64 @@ class Jeweler
         should "assign base_dir" do
           assert_same @base_dir, @command.base_dir
         end
+      end
+
+      context "any_pending_changes?" do
+
+        should "be true if there added files" do
+          repo = build_repo :added => %w(README)
+
+          command = Jeweler::Commands::Release.new
+          command.repo = repo
+
+          assert command.any_pending_changes?
+        end
+
+        should "be true if there are changed files" do
+          repo = build_repo :changed => %w(README)
+
+          command = Jeweler::Commands::Release.new
+          command.repo = repo
+
+          assert command.any_pending_changes?
+        end
+
+        should "be true if there are deleted files" do
+          repo = build_repo :deleted => %w(README)
+
+          command = Jeweler::Commands::Release.new
+          command.repo = repo
+
+          assert command.any_pending_changes?
+        end
+
+        should "be false if nothing added, changed, or deleted" do
+          repo = build_repo
+
+          command = Jeweler::Commands::Release.new
+          command.repo = repo
+
+          assert ! command.any_pending_changes?
+        end
+      end
+
+      def build_repo(options = {})
+        status = build_status options
+        repo = Object.new
+        stub(repo).status { status }
+        repo
+      end
+
+      def build_status(options = {})
+        options = {:added => [], :deleted => [], :changed => []}.merge(options)
+
+        status = Object.new
+        stub(status) do
+          added { options[:added] }
+          deleted { options[:deleted] }
+          changed { options[:changed] }
+        end
+        
       end
     end
   end
