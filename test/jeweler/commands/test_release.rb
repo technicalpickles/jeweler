@@ -52,6 +52,7 @@ class Jeweler
 
           stub(@command).tag_release!
           stub(@command).any_pending_changes? { false }
+          stub(@command).regenerate_gemspec!
 
           @command.run
         end
@@ -60,21 +61,8 @@ class Jeweler
           assert_received(@repo) {|repo| repo.checkout('master') }
         end
 
-        should "refresh gemspec version" do
-          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.update_version('1.2.3') }
-        end
-
-        should "write gemspec" do
-          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.write }
-
-        end
-
-        should "add gemspec to repository" do
-          assert_received(@repo) {|repo| repo.add('zomg.gemspec') }
-        end
-
-        should "commit with commit message including version" do
-          assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
+        should "regenerate gemspec" do
+          assert_received(@command) {|command| command.regenerate_gemspec! }
         end
 
         should "tag release" do
@@ -175,6 +163,49 @@ class Jeweler
 
         should "push tag to repository" do
           assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
+        end
+      end
+
+      context "regenerate_gemspec!" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            add(anything)
+            commit(anything)
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            write
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new :output => @output,
+                                                                   :repo => @repo,
+                                                                   :gemspec_helper => @gemspec_helper,
+                                                                   :version => '1.2.3'
+
+          @command.regenerate_gemspec!
+        end
+
+        should "refresh gemspec version" do
+          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.update_version('1.2.3') }
+        end
+
+        should "write gemspec" do
+          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.write }
+
+        end
+
+        should "add gemspec to repository" do
+          assert_received(@repo) {|repo| repo.add('zomg.gemspec') }
+        end
+
+        should "commit with commit message including version" do
+          assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
         end
       end
 

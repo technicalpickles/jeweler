@@ -16,12 +16,7 @@ class Jeweler
 
         raise "Hey buddy, try committing them files first" if any_pending_changes?
 
-        gemspec_helper.update_version(version)
-        gemspec_helper.write
-
-        repo.add(gemspec_helper.path)
-        output.puts "Committing #{gemspec_helper.path}"
-        repo.commit "Regenerated gemspec for version #{version}"
+        regenerate_gemspec!
 
         output.puts "Pushing master to origin"
         repo.push
@@ -39,6 +34,15 @@ class Jeweler
 
         output.puts "Pushing #{release_tag} to origin"
         repo.push('origin', release_tag)
+      end
+
+      def regenerate_gemspec!
+        gemspec_helper.update_version(version)
+        gemspec_helper.write
+
+        repo.add(gemspec_helper.path)
+        output.puts "Committing #{gemspec_helper.path}"
+        repo.commit "Regenerated gemspec for version #{version}"
       end
 
       def release_tag
