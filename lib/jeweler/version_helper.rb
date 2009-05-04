@@ -64,6 +64,10 @@ class Jeweler
         File.read(plaintext_path)
       end
 
+      def refresh
+        parse_plaintext
+      end
+
       def path
         plaintext_path
       end
