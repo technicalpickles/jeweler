@@ -2,7 +2,7 @@ require 'rake'
 
 $LOAD_PATH.unshift('lib')
 
-gem 'schacon-git'
+gem 'git'
 require 'git'
 
 begin
@@ -15,7 +15,7 @@ begin
     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gem.authors = ["Josh Nichols"]
     gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
-    gem.add_dependency "schacon-git", ">= 1.1.1"
+    gem.add_dependency "git", ">= 1.1.1"
     gem.add_dependency "rubyforge"
     gem.rubyforge_project = "pickles"
   end
