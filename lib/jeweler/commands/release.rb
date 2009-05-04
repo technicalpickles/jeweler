@@ -3,8 +3,12 @@ class Jeweler
     class Release
       attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
 
-      def initialize
+      def initialize(attributes = {})
         self.output = $stdout
+
+        attributes.each_pair do |key, value|
+          send("#{key}=", value)
+        end
       end
 
       def run
@@ -17,20 +21,24 @@ class Jeweler
 
         repo.add(gemspec_helper.path)
         output.puts "Committing #{gemspec_helper.path}"
-        repo.commit("Regenerated gemspec for version #{version}")
+        repo.commit "Regenerated gemspec for version #{version}"
 
         output.puts "Pushing master to origin"
         repo.push
 
+        tag_release!
+      end
+      
+      def any_pending_changes?
+        !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
+      end
+
+      def tag_release!
         output.puts "Tagging #{release_tag}"
         repo.add_tag(release_tag)
 
         output.puts "Pushing #{release_tag} to origin"
         repo.push('origin', release_tag)
-      end
-      
-      def any_pending_changes?
-        !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
       end
 
       def release_tag

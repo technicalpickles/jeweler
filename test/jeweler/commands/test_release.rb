@@ -34,8 +34,6 @@ class Jeweler
             add(anything)
             commit(anything)
             push
-            push(anything)
-            add_tag(anything)
           end
 
           @gemspec_helper = Object.new
@@ -45,22 +43,15 @@ class Jeweler
             update_version('1.2.3')
           end
 
-          status = Object.new
-          stub(status) do
-            added { [] }
-            deleted { [] }
-            changed { [] }
-          end
-
-          stub(@repo).status { status }
-
           @output = StringIO.new
 
-          @command                = Jeweler::Commands::Release.new
-          @command.output         = @output
-          @command.repo           = @repo
-          @command.gemspec_helper = @gemspec_helper
-          @command.version        = '1.2.3'
+          @command                = Jeweler::Commands::Release.new :output => @output,
+                                                                   :repo => @repo,
+                                                                   :gemspec_helper => @gemspec_helper,
+                                                                   :version => '1.2.3'
+
+          stub(@command).tag_release!
+          stub(@command).any_pending_changes? { false }
 
           @command.run
         end
@@ -86,16 +77,8 @@ class Jeweler
           assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
         end
 
-        should "push repository" do
-          assert_received(@repo) {|repo| repo.push }
-        end
-
         should "tag release" do
-          assert_received(@repo) {|repo| repo.add_tag("v1.2.3")}
-        end
-
-        should "push tag to repository" do
-          assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
+          assert_received(@command) {|command| command.tag_release! }
         end
       end
 
@@ -134,8 +117,7 @@ class Jeweler
         should "be true if there added files" do
           repo = build_repo :added => %w(README)
 
-          command = Jeweler::Commands::Release.new
-          command.repo = repo
+          command = Jeweler::Commands::Release.new :repo => repo
 
           assert command.any_pending_changes?
         end
@@ -165,6 +147,34 @@ class Jeweler
           command.repo = repo
 
           assert ! command.any_pending_changes?
+        end
+      end
+
+      context "tag_release!" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            add_tag(anything)
+            push(anything, anything)
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new
+          @command.output         = @output
+          @command.repo           = @repo
+          @command.gemspec_helper = @gemspec_helper
+          @command.version        = '1.2.3'
+
+          @command.tag_release!
+        end
+
+        should "tag release" do
+          assert_received(@repo) {|repo| repo.add_tag("v1.2.3")}
+        end
+
+        should "push tag to repository" do
+          assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
         end
       end
 
