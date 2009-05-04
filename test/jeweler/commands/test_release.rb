@@ -10,9 +10,12 @@ class Jeweler
           stub(@repo).checkout(anything)
 
           status = Object.new
-          stub(status).added { ['README'] }
-          stub(status).deleted { [] }
-          stub(status).changed { [] }
+          stub(status) do
+            added { ['README'] }
+            deleted { [] }
+            changed { [] }
+          end
+
           stub(@repo).status { status }
 
           @command                = Jeweler::Commands::Release.new
@@ -35,9 +38,12 @@ class Jeweler
           stub(@repo).checkout(anything)
 
           status = Object.new
-          stub(status).added { [] }
-          stub(status).deleted { ['README'] }
-          stub(status).changed { [] }
+          stub(status) do
+            added { [] }
+            deleted { ['README'] }
+            changed { [] }
+          end
+
           stub(@repo).status { status }
 
           @command                = Jeweler::Commands::Release.new
@@ -61,9 +67,12 @@ class Jeweler
           stub(@repo).checkout(anything)
 
           status = Object.new
-          stub(status).added { [] }
-          stub(status).deleted { [] }
-          stub(status).changed { ['README'] }
+          stub(status) do
+            added { [] }
+            deleted { [] }
+            changed { ['README'] }
+          end
+
           stub(@repo).status { status }
 
           @command                = Jeweler::Commands::Release.new
@@ -83,22 +92,29 @@ class Jeweler
       context "after running without pending changes" do
         setup do
           @repo = Object.new
-          stub(@repo).checkout(anything)
-          stub(@repo).add(anything)
-          stub(@repo).commit(anything)
-          stub(@repo).push
-          stub(@repo).push(anything)
-          stub(@repo).add_tag(anything)
+          stub(@repo) do
+            checkout(anything)
+            add(anything)
+            commit(anything)
+            push
+            push(anything)
+            add_tag(anything)
+          end
 
           @gemspec_helper = Object.new
-          stub(@gemspec_helper).write
-          stub(@gemspec_helper).path {'zomg.gemspec'}
-          stub(@gemspec_helper).update_version('1.2.3')
+          stub(@gemspec_helper) do
+            write
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
 
           status = Object.new
-          stub(status).added { [] }
-          stub(status).deleted { [] }
-          stub(status).changed { [] }
+          stub(status) do
+            added { [] }
+            deleted { [] }
+            changed { [] }
+          end
+
           stub(@repo).status { status }
 
           @output = StringIO.new
