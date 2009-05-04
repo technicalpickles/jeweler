@@ -12,16 +12,16 @@ class Jeweler
       end
 
       def run
-        repo.checkout('master')
-
         raise "Hey buddy, try committing them files first" if any_pending_changes?
+
+        repo.checkout('master')
 
         regenerate_gemspec!
 
         output.puts "Pushing master to origin"
         repo.push
 
-        tag_release!
+        tag_release! unless release_tagged?
       end
       
       def any_pending_changes?
@@ -47,6 +47,11 @@ class Jeweler
 
       def release_tag
         "v#{version}"
+      end
+
+      def release_tagged?
+        tag = repo.tag(release_tag) rescue nil
+        tag.nil?
       end
 
       def gemspec_helper

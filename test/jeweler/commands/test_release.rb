@@ -26,7 +26,7 @@ class Jeweler
         end
       end
 
-      context "after running without pending changes" do
+      context "run without pending changes and tagged not created already" do
         setup do
           @repo = Object.new
           stub(@repo) do
@@ -53,6 +53,7 @@ class Jeweler
           stub(@command).tag_release!
           stub(@command).any_pending_changes? { false }
           stub(@command).regenerate_gemspec!
+          stub(@command).release_tagged? { false }
 
           @command.run
         end
@@ -67,6 +68,51 @@ class Jeweler
 
         should "tag release" do
           assert_received(@command) {|command| command.tag_release! }
+        end
+      end
+
+      context "run without pending changes and tagged already" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            checkout(anything)
+            add(anything)
+            commit(anything)
+            push
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            write
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new :output => @output,
+                                                                   :repo => @repo,
+                                                                   :gemspec_helper => @gemspec_helper,
+                                                                   :version => '1.2.3'
+
+          #stub(@command).tag_release!
+          stub(@command).any_pending_changes? { false }
+          stub(@command).regenerate_gemspec!
+          stub(@command).release_tagged? { true }
+
+          @command.run
+        end
+
+        should "checkout master" do
+          assert_received(@repo) {|repo| repo.checkout('master') }
+        end
+
+        should "regenerate gemspec" do
+          assert_received(@command) {|command| command.regenerate_gemspec! }
+        end
+
+        should_eventually "not tag release" do
+          # need to have a way to verify tag_release! not being called, short of not stubbing it
         end
       end
 
@@ -207,6 +253,51 @@ class Jeweler
         should "commit with commit message including version" do
           assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
         end
+      end
+
+      context "release_tagged? when no tag exists" do
+        setup do
+          @repo = Object.new
+          stub(@repo).tag('v1.2.3') {raise Git::GitTagNameDoesNotExist, tag}
+          #stub(@repo) do
+            #tag('v1.2.3') do |tag|
+              #raise Git::GitTagNameDoesNotExist, tag
+            #end
+          #end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new
+          @command.output         = @output
+          @command.repo           = @repo
+          @command.version        = '1.2.3'
+        end
+
+        should_eventually "be false" do
+          assert ! @command.release_tagged?
+        end
+
+      end
+
+      context "release_tagged? when tag exists" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            tag('v1.2.3') { Object.new }
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new
+          @command.output         = @output
+          @command.repo           = @repo
+          @command.version        = '1.2.3'
+        end
+
+        should_eventually "be true" do
+          assert @command.release_tagged?
+        end
+
       end
 
       def build_repo(options = {})
