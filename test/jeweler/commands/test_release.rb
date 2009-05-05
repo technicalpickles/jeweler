@@ -26,7 +26,58 @@ class Jeweler
         end
       end
 
-      context "run without pending changes and tagged not created already" do
+      context "run without pending changes, and gemspec changed, and tagged not created already" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            checkout(anything)
+            add(anything)
+            commit(anything)
+            push
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            write
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new :output => @output,
+                                                                   :repo => @repo,
+                                                                   :gemspec_helper => @gemspec_helper,
+                                                                   :version => '1.2.3'
+
+          stub(@command).tag_release!
+          stub(@command).gemspec_changed? { true }
+          stub(@command).any_pending_changes? { false }
+          stub(@command).regenerate_gemspec!
+          stub(@command).commit_gemspec!
+          stub(@command).release_tagged? { false }
+
+          @command.run
+        end
+
+        should "checkout master" do
+          assert_received(@repo) {|repo| repo.checkout('master') }
+        end
+
+        should "regenerate gemspec" do
+          assert_received(@command) {|command| command.regenerate_gemspec! }
+        end
+
+        should "commit gemspec" do
+          assert_received(@command) {|command| command.commit_gemspec! }
+        end
+
+        should "tag release" do
+          assert_received(@command) {|command| command.tag_release! }
+        end
+      end
+
+      context "run without pending changes, and gemspec didn't change, and tagged not created already" do
         setup do
           @repo = Object.new
           stub(@repo) do
@@ -52,6 +103,7 @@ class Jeweler
 
           stub(@command).tag_release!
           stub(@command).any_pending_changes? { false }
+          stub(@command).gemspec_changed? { false } 
           stub(@command).regenerate_gemspec!
           stub(@command).release_tagged? { false }
 
@@ -64,6 +116,11 @@ class Jeweler
 
         should "regenerate gemspec" do
           assert_received(@command) {|command| command.regenerate_gemspec! }
+        end
+
+        should_eventually "not commit gemspec" do
+          # need a way to assert it wasn't received short of not stubbing it
+          #assert_received(@command) {|command| command.commit_gemspec! }
         end
 
         should "tag release" do
@@ -243,7 +300,31 @@ class Jeweler
 
         should "write gemspec" do
           assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.write }
+        end
+      end
 
+      context "commit_gemspec!" do
+        setup do
+          @repo = Object.new
+          stub(@repo) do
+            add(anything)
+            commit(anything)
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command                = Jeweler::Commands::Release.new :output => @output,
+                                                                   :repo => @repo,
+                                                                   :gemspec_helper => @gemspec_helper,
+                                                                   :version => '1.2.3'
+
+          @command.commit_gemspec!
         end
 
         should "add gemspec to repository" do
@@ -253,6 +334,7 @@ class Jeweler
         should "commit with commit message including version" do
           assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
         end
+
       end
 
       context "release_tagged? when no tag exists" do

@@ -17,6 +17,7 @@ class Jeweler
         repo.checkout('master')
 
         regenerate_gemspec!
+        commit_gemspec! if gemspec_changed?
 
         output.puts "Pushing master to origin"
         repo.push
@@ -36,13 +37,15 @@ class Jeweler
         repo.push('origin', release_tag)
       end
 
-      def regenerate_gemspec!
-        gemspec_helper.update_version(version)
-        gemspec_helper.write
-
+      def commit_gemspec!
         repo.add(gemspec_helper.path)
         output.puts "Committing #{gemspec_helper.path}"
         repo.commit "Regenerated gemspec for version #{version}"
+      end
+
+      def regenerate_gemspec!
+        gemspec_helper.update_version(version)
+        gemspec_helper.write
       end
 
       def release_tag
@@ -51,7 +54,11 @@ class Jeweler
 
       def release_tagged?
         tag = repo.tag(release_tag) rescue nil
-        tag.nil?
+        ! tag.nil?
+      end
+
+      def gemspec_changed?
+        ! any_pending_changes?
       end
 
       def gemspec_helper
