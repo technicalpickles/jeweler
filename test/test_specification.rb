@@ -3,7 +3,10 @@ require 'test_helper'
 class TestSpecification < Test::Unit::TestCase
   def setup
     remove_tmpdir!
-    FileUtils.cp_r fixture_dir, tmp_dir
+    path = File.join(FIXTURE_DIR, "existing-project-with-version-yaml")
+    Git.init(path)
+    FileUtils.cp_r path, tmp_dir
+    #breakpoint
 
 
     @spec = Gem::Specification.new
@@ -17,7 +20,8 @@ class TestSpecification < Test::Unit::TestCase
 
   context "Gem::Specification with Jeweler monkey-patches" do
     context "when setting defaults" do
-      should "should populate `files'" do
+      should_eventually "should populate `files'" do
+        # this implementation changed to use ruby-git
         assert_equal %w{Rakefile VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb }, @spec.files.sort
       end
 

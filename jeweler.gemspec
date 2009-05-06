@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-05-04}
+  s.date = %q{2009-05-06}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -17,12 +17,34 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
+    ".gitignore",
     "ChangeLog.markdown",
     "LICENSE",
     "README.markdown",
+    "ROADMAP",
     "Rakefile",
     "VERSION.yml",
     "bin/jeweler",
+    "features/generator/cucumber.feature",
+    "features/generator/directory_layout.feature",
+    "features/generator/dotdocument.feature",
+    "features/generator/env_options.feature",
+    "features/generator/git.feature",
+    "features/generator/license.feature",
+    "features/generator/rakefile.feature",
+    "features/generator/readme.feature",
+    "features/generator/test.feature",
+    "features/generator/test_helper.feature",
+    "features/placeholder.feature",
+    "features/step_definitions/debug_steps.rb",
+    "features/step_definitions/filesystem_steps.rb",
+    "features/step_definitions/generator_steps.rb",
+    "features/step_definitions/task_steps.rb",
+    "features/support/env.rb",
+    "features/tasks/build_gem.feature",
+    "features/tasks/version.feature",
+    "features/tasks/version_bumping.feature",
+    "jeweler.gemspec",
     "lib/jeweler.rb",
     "lib/jeweler/commands.rb",
     "lib/jeweler/commands/build_gem.rb",
@@ -52,6 +74,8 @@ Gem::Specification.new do |s|
     "lib/jeweler/specification.rb",
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",
+    "lib/jeweler/templates/.document",
+    "lib/jeweler/templates/.gitignore",
     "lib/jeweler/templates/.gitignore",
     "lib/jeweler/templates/LICENSE",
     "lib/jeweler/templates/README.rdoc",
@@ -75,14 +99,26 @@ Gem::Specification.new do |s|
     "test/fixtures/bar/bin/foo_the_ultimate_bin",
     "test/fixtures/bar/hey_include_me_in_gemspec",
     "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
-    "test/fixtures/existing-project-with-version/LICENSE",
-    "test/fixtures/existing-project-with-version/README.rdoc",
-    "test/fixtures/existing-project-with-version/Rakefile",
-    "test/fixtures/existing-project-with-version/VERSION.yml",
-    "test/fixtures/existing-project-with-version/existing-project-with-version.gemspec",
-    "test/fixtures/existing-project-with-version/lib/existing_project_with_version.rb",
-    "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
-    "test/fixtures/existing-project-with-version/test/test_helper.rb",
+    "test/fixtures/existing-project-with-version-plaintext/.document",
+    "test/fixtures/existing-project-with-version-plaintext/.gitignore",
+    "test/fixtures/existing-project-with-version-plaintext/LICENSE",
+    "test/fixtures/existing-project-with-version-plaintext/README.rdoc",
+    "test/fixtures/existing-project-with-version-plaintext/Rakefile",
+    "test/fixtures/existing-project-with-version-plaintext/VERSION",
+    "test/fixtures/existing-project-with-version-plaintext/existing-project-with-version.gemspec",
+    "test/fixtures/existing-project-with-version-plaintext/lib/existing_project_with_version.rb",
+    "test/fixtures/existing-project-with-version-plaintext/test/existing_project_with_version_test.rb",
+    "test/fixtures/existing-project-with-version-plaintext/test/test_helper.rb",
+    "test/fixtures/existing-project-with-version-yaml/.document",
+    "test/fixtures/existing-project-with-version-yaml/.gitignore",
+    "test/fixtures/existing-project-with-version-yaml/LICENSE",
+    "test/fixtures/existing-project-with-version-yaml/README.rdoc",
+    "test/fixtures/existing-project-with-version-yaml/Rakefile",
+    "test/fixtures/existing-project-with-version-yaml/VERSION.yml",
+    "test/fixtures/existing-project-with-version-yaml/existing-project-with-version.gemspec",
+    "test/fixtures/existing-project-with-version-yaml/lib/existing_project_with_version.rb",
+    "test/fixtures/existing-project-with-version-yaml/test/existing_project_with_version_test.rb",
+    "test/fixtures/existing-project-with-version-yaml/test/test_helper.rb",
     "test/geminstaller.yml",
     "test/jeweler/commands/test_build_gem.rb",
     "test/jeweler/commands/test_install_gem.rb",
@@ -107,8 +143,7 @@ Gem::Specification.new do |s|
     "test/test_options.rb",
     "test/test_specification.rb",
     "test/test_tasks.rb",
-    "test/test_version_helper.rb",
-    "test/version_tmp/VERSION.yml"
+    "test/test_version_helper.rb"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
@@ -119,9 +154,12 @@ Gem::Specification.new do |s|
   s.summary = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.test_files = [
     "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
-    "test/fixtures/existing-project-with-version/lib/existing_project_with_version.rb",
-    "test/fixtures/existing-project-with-version/test/existing_project_with_version_test.rb",
-    "test/fixtures/existing-project-with-version/test/test_helper.rb",
+    "test/fixtures/existing-project-with-version-plaintext/lib/existing_project_with_version.rb",
+    "test/fixtures/existing-project-with-version-plaintext/test/existing_project_with_version_test.rb",
+    "test/fixtures/existing-project-with-version-plaintext/test/test_helper.rb",
+    "test/fixtures/existing-project-with-version-yaml/lib/existing_project_with_version.rb",
+    "test/fixtures/existing-project-with-version-yaml/test/existing_project_with_version_test.rb",
+    "test/fixtures/existing-project-with-version-yaml/test/test_helper.rb",
     "test/jeweler/commands/test_build_gem.rb",
     "test/jeweler/commands/test_install_gem.rb",
     "test/jeweler/commands/test_release.rb",

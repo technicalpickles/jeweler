@@ -1,7 +1,13 @@
-Support plaintext VERSION file
-Integrate more closely with rubyforge (less generated Rakefile stuff)
-Support github user/token on generator command line
-Add command to output the Jeweler::Tasks to help with upgrading/migrating
-Improve documentation on wiki/readme
+= 1.0
 
-Handle project names with dashes in name better (ie foo-project will create lib/foo-project.rb as an entry point rather than foo_project)
+ * Integrate more closely with rubyforge (less generated Rakefile stuff)
+ * Support github user/token on generator command line
+ * Add command to output the Jeweler::Tasks to help with upgrading/migrating
+ * Improve documentation on wiki/readme
+
+= Unscheduled, or waiting for contributions
+
+ * Support C extensions
+ * Support JRuby gems
+ * Support thor
+ * Dealing with version bumps in other remotes
