@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/generator/rspec_mixin.rb",
     "lib/jeweler/generator/shoulda_mixin.rb",
     "lib/jeweler/generator/testunit_mixin.rb",
+    "lib/jeweler/rubyforge_tasks.rb",
     "lib/jeweler/specification.rb",
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",

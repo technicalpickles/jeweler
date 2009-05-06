@@ -13,6 +13,7 @@ require 'jeweler/generator/application'
 require 'jeweler/commands'
 
 require 'jeweler/tasks'
+require 'jeweler/rubyforge_tasks'
 
 require 'jeweler/specification'
 
