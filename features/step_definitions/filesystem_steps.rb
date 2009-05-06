@@ -23,7 +23,11 @@ Given /^"([^"]+)" does not exist$/ do |file|
 end
 
 When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
-  @stdout = `cd #{File.join(@working_dir, directory)}; #{command}`
+  full_path = File.join(@working_dir, directory)
+
+  assert File.directory?(full_path), "#{full_path} is not a directory"
+
+  @stdout = `cd #{full_path} && #{command}`
   @exited_cleanly = $?.exited?
 end
 
@@ -39,6 +43,10 @@ Then /^the process should exit cleanly$/ do
   assert @exited_cleanly, "Process did not exit cleanly: #{@stdout}"
 end
 
+Then /^the process should not exit cleanly$/ do
+  assert !@exited_cleanly, "Process did exit cleanly: #{@stdout}"
+end
+
 Given /^I use the existing project "([^"]+)" as a template$/ do |fixture_project|
   @name = fixture_project
   FileUtils.cp_r File.join(fixture_dir, fixture_project), @working_dir
@@ -48,5 +56,10 @@ Given /^"VERSION\.yml" contains hash "([^"]+)"$/ do |ruby_string|
   version_hash = YAML.load(File.read(File.join(@working_dir, @name, 'VERSION.yml')))
   evaled_hash = eval(ruby_string)
   assert_equal evaled_hash, version_hash
+end
+
+Given /^"VERSION" contains "([^\"]*)"$/ do |expected|
+  version = File.read(File.join(@working_dir, @name, 'VERSION')).chomp
+  assert_equal expected, version
 end
 
