@@ -6,6 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "<%= project_name %>"
     gem.summary = %Q{<%= summary %>}
+    gem.description = %Q{<%= description %>}
     gem.email = "<%= user_email %>"
     gem.homepage = "<%= project_homepage %>"
     gem.authors = ["<%= user_name %>"]

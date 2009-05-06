@@ -6,7 +6,7 @@ Feature: generated Rakefile
   Scenario: shared
     Given a working directory
     And I have configured git sanely
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
 
     Then 'Rakefile' requires 'rubygems'
     And 'Rakefile' requires 'rake'
@@ -14,6 +14,7 @@ Feature: generated Rakefile
     And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
     And Rakefile has 'bar@example.com' for the Jeweler::Tasks email
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
+    And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
 
   Scenario: bacon

@@ -37,9 +37,10 @@ Given /^I set JEWELER_OPTS env variable to "(.*)"$/ do |val|
   ENV['JEWELER_OPTS'] = val
 end
 
-When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testing_framework, name, summary|
+When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)' and described as '(.*)'$/ do |testing_framework, name, summary, description|
   @name = name
   @summary = summary
+  @description = description
 
   testing_framework = testing_framework.squeeze.strip
   unless testing_framework.blank?
@@ -50,6 +51,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)'$/ do |testi
   arguments = ['--directory',
                "#{@working_dir}/#{@name}",
                '--summary', @summary,
+               '--description', @description,
                 @use_cucumber ? '--cucumber' : nil,
                 @testing_framework ? "--#{@testing_framework}" : nil,
                 @use_rubyforge ? '--rubyforge' : nil,

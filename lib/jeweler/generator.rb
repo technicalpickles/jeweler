@@ -30,7 +30,8 @@ class Jeweler
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
                   :project_name, :github_username, :github_token,
-                  :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge
+                  :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge,
+                  :description
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
 
@@ -55,6 +56,7 @@ class Jeweler
 
       self.should_create_repo     = options[:create_repo]
       self.summary                = options[:summary] || 'TODO'
+      self.description            = options[:description] || 'TODO'
       self.should_use_cucumber    = options[:use_cucumber]
       self.should_setup_rubyforge = options[:rubyforge]
 

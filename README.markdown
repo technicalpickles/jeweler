@@ -25,6 +25,7 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
       Jeweler::Tasks.new do |gemspec|
         gemspec.name = "the-perfect-gem"
         gemspec.summary = "TODO"
+        gemspec.description = "TODO"
         gemspec.email = "josh@technicalpickles.com"
         gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
         gemspec.description = "TODO"
@@ -116,6 +117,7 @@ With this in place, you now update your Jeweler::Tasks to setup `rubyforge_proje
       Jeweler::Tasks.new do |s|
         s.name = "the-perfect-gem"
         s.summary = "TODO"
+        s.description = "TODO"
         s.email = "josh@technicalpickles.com"
         s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
         s.description = "TODO"

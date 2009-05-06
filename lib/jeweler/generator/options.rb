@@ -52,6 +52,10 @@ class Jeweler
             self[:summary] = summary
           end
 
+          o.on('--description [DESCRIPTION]', 'specify a description of the project') do |description|
+            self[:description] = description
+          end
+
           o.on('--directory [DIRECTORY]', 'specify the directory to generate into') do |directory|
             self[:directory] = directory
           end

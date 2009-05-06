@@ -35,6 +35,10 @@ class TestGenerator < Test::Unit::TestCase
       assert_equal "TODO", build_generator.summary
     end
 
+    should "have TODO as default description" do
+      assert_equal "TODO", build_generator.description
+    end
+
     should "not create repo by default" do
       assert ! build_generator.should_create_repo
     end

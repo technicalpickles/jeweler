@@ -75,6 +75,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--description', 'Descriptive' do
+    should 'have description Descriptive' do
+      assert_equal 'Descriptive', @options[:description]
+    end
+  end
+
   for_options '--directory', 'foo' do
     should 'have directory foo' do
       assert_equal 'foo', @options[:directory]
