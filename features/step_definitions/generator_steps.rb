@@ -178,17 +178,15 @@ Then /^Rakefile requires '(.*)'$/ do |file|
   Then "'Rakefile' requires '#{file}'"
 end
 
-Then /^Rakefile does not instantiate a Cucumber::Rake::Task$/ do
+Then /^Rakefile does not instantiate a (.*)$/ do |task_name|
   content = File.read(File.join(@working_dir, @name, 'Rakefile'))
-  assert_no_match /Cucumber::Rake::Task.new/, content
+  assert_no_match /#{task_name}/, content
 end
 
-Then /^Rakefile instantiates a Cucumber::Rake::Task$/ do
+Then /^Rakefile instantiates a (.*)$/ do |task_name|
   content = File.read(File.join(@working_dir, @name, 'Rakefile'))
-  assert_match /Cucumber::Rake::Task.new/, content
+  assert_match /#{task_name}/, content
 end
-
-
 
 
 Then /^'test\/test_helper\.rb' should autorun tests$/ do

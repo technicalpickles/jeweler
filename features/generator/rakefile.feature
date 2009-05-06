@@ -100,12 +100,11 @@ Feature: generated Rakefile
     And I have configured git sanely
     And I do not want rubyforge setup
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'rake/contrib/sshpublisher'
+    Then Rakefile does not instantiate a Jeweler::RubyforgeTasks
 
   Scenario: rubyforge
     Given a working directory
     And I have configured git sanely
     And I want rubyforge setup
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'rake/contrib/sshpublisher' 
-    And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks rubyforge_project
+    Then Rakefile instantiates a Jeweler::RubyforgeTasks
