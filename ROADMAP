@@ -1,6 +1,5 @@
 = 1.0
 
- * Integrate more closely with rubyforge (less generated Rakefile stuff)
  * Support github user/token on generator command line
  * Add command to output the Jeweler::Tasks to help with upgrading/migrating
  * Improve documentation on wiki/readme

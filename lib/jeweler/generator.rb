@@ -182,8 +182,10 @@ class Jeweler
         raise NoGitHubUser
       end
       
-      unless git_config.has_key? 'github.token'
-        raise NoGitHubToken
+      if should_create_repo
+        unless git_config.has_key? 'github.token'
+          raise NoGitHubToken
+        end
       end
 
       self.user_name       = git_config['user.name']

@@ -68,9 +68,9 @@ class TestGeneratorInitialization < Test::Unit::TestCase
       stub_git_config 'user.name' => @git_name, 'user.email' => @git_email, 'github.user' => @github_user
     end
 
-    should 'raise NoGitHubToken' do
+    should 'raise NoGitHubToken if creating repo' do
       assert_raise Jeweler::NoGitHubToken do
-        Jeweler::Generator.new(@project_name)
+        Jeweler::Generator.new(@project_name, :create_repo => true)
       end
     end
   end
