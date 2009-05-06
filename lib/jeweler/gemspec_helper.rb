@@ -58,12 +58,10 @@ class Jeweler
     end
 
     def prettyify_array(gemspec_ruby, array_name)
-      array = @spec.send(array_name)
-      quoted_array = array.map {|file| %Q{"#{file}"}}
-      nastily_formated_array = "s.#{array_name} = [#{quoted_array.join(", ")}]"
-      nicely_formated_array  = "s.#{array_name} = [\n    #{quoted_array.join(",\n    ")}\n  ]"
-
-      gemspec_ruby.gsub(nastily_formated_array, nicely_formated_array)
+      gemspec_ruby.gsub(/s\.#{array_name.to_s} = \[.+?\]/) do |match|
+        leadin, files = match[0..-2].split("[")
+        leadin + "[\n    #{files.split(",").join(",\n    ")}\n  ]"
+      end
     end
 
     def gem_path
