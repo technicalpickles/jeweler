@@ -1,11 +1,11 @@
 = 1.0
 
- * Support github user/token on generator command line
- * Add command to output the Jeweler::Tasks to help with upgrading/migrating
  * Improve documentation on wiki/readme
 
 = Unscheduled, or waiting for contributions
 
+ * Add command to output the Jeweler::Tasks to help with upgrading/migrating
+ * Support github user/token on generator command line
  * Support C extensions
  * Support JRuby gems
  * Support thor
