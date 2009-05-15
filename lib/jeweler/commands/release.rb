@@ -58,7 +58,7 @@ class Jeweler
       end
 
       def gemspec_changed?
-        ! any_pending_changes?
+        any_pending_changes?
       end
 
       def gemspec_helper
