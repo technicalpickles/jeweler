@@ -24,8 +24,8 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
       require 'jeweler'
       Jeweler::Tasks.new do |gemspec|
         gemspec.name = "the-perfect-gem"
-        gemspec.summary = "TODO"
-        gemspec.description = "TODO"
+        gemspec.summary = "Summarize your gem"
+        gemspec.description = "Describe your gem"
         gemspec.email = "josh@technicalpickles.com"
         gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
         gemspec.description = "TODO"

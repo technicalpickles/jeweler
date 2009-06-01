@@ -31,12 +31,12 @@ class TestGenerator < Test::Unit::TestCase
       assert_equal 'the-perfect-gem', build_generator.target_dir
     end
 
-    should "have TODO as default summary" do
-      assert_equal "TODO", build_generator.summary
+    should "have default summary" do
+      assert_equal "Summarize your gem", build_generator.summary
     end
 
-    should "have TODO as default description" do
-      assert_equal "TODO", build_generator.description
+    should "have default description" do
+      assert_equal "Describe your gem", build_generator.description
     end
 
     should "not create repo by default" do
