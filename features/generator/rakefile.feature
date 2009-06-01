@@ -96,6 +96,40 @@ Feature: generated Rakefile
     Then Rakefile requires 'cucumber/rake/task' 
     And Rakefile instantiates a Cucumber::Rake::Task
 
+  Scenario: no reek
+    Given a working directory
+    And I have configured git sanely
+    And I do not want reek
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile does not require 'reek/rake_task' 
+    And Rakefile does not instantiate a Reek::RakeTask
+
+  Scenario: reek
+    Given a working directory
+    And I have configured git sanely
+    And I want reek
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile requires 'reek/rake_task' 
+    And Rakefile instantiates a Reek::RakeTask
+
+  Scenario: no roodi
+    Given a working directory
+    And I have configured git sanely
+    And I do not want roodi
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile does not require 'roodi' 
+    And Rakefile does not require 'roodi_task' 
+    And Rakefile does not instantiate a RoodiTask
+
+  Scenario: roodi
+    Given a working directory
+    And I have configured git sanely
+    And I want roodi
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile requires 'roodi' 
+    And Rakefile requires 'roodi_task' 
+    And Rakefile instantiates a RoodiTask
+
   Scenario: no rubyforge
     Given a working directory
     And I have configured git sanely

@@ -47,6 +47,14 @@ class TestGenerator < Test::Unit::TestCase
       assert ! build_generator.should_use_cucumber
     end
 
+    should "not use reek by default" do
+      assert ! build_generator.should_use_reek
+    end
+
+    should "not use roodi by default" do
+      assert ! build_generator.should_use_roodi
+    end
+
     should "raise error for invalid testing frameworks" do
       assert_raise ArgumentError do
         build_generator(:zomg_invalid)

@@ -40,6 +40,14 @@ class Jeweler
             self[:use_cucumber] = true
           end
 
+          o.on('--reek', 'generate rake task for reek') do
+            self[:use_reek] = true
+          end
+
+          o.on('--roodi', 'generate rake task for roodi') do
+            self[:use_roodi] = true
+          end
+
           o.on('--create-repo', 'create the repository on GitHub') do
             self[:create_repo] = true
           end

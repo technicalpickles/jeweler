@@ -31,6 +31,7 @@ class Jeweler
     attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
                   :project_name, :github_username, :github_token,
                   :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge,
+                  :should_use_reek, :should_use_roodi,
                   :description
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
@@ -58,6 +59,8 @@ class Jeweler
       self.summary                = options[:summary] || 'TODO'
       self.description            = options[:description] || 'TODO'
       self.should_use_cucumber    = options[:use_cucumber]
+      self.should_use_reek        = options[:use_reek]
+      self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
 
       use_user_git_config

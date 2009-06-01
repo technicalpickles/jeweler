@@ -6,6 +6,22 @@ Given /^I want cucumber stories$/ do
   @use_cucumber = true
 end
 
+Given /^I do not want reek$/ do
+  @use_reek = false
+end
+
+Given /^I want reek$/ do
+  @use_reek = true
+end
+
+Given /^I do not want roodi$/ do
+  @use_roodi = false
+end
+
+Given /^I want roodi$/ do
+  @use_roodi = true
+end
+
 And /^I do not want rubyforge setup$/ do
   @use_rubyforge = false
 end

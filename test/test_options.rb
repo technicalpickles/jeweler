@@ -57,6 +57,18 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--reek' do
+    should 'enable reek' do
+      assert_equal true, @options[:use_reek]
+    end
+  end
+
+  for_options '--roodi' do
+    should 'enable roodi' do
+      assert_equal true, @options[:use_roodi]
+    end
+  end
+
   for_options '--create-repo' do
     should 'create repository' do
       assert @options[:create_repo]
