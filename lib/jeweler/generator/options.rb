@@ -43,6 +43,10 @@ class Jeweler
             self[:testing_framework] = :bacon
           end
 
+          o.on('--testspec', 'generate test/spec tests') do
+            self[:testing_framework] = :testspec
+          end
+
           o.on('--minitest', 'generate minitest tests') do
             self[:testing_framework] = :minitest
           end
