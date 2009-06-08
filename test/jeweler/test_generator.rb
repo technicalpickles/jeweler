@@ -106,4 +106,17 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :test_filename, 'the-perfect-gem_example.rb'
     should_have_generator_attribute :test_helper_filename, 'example_helper.rb'
   end
+  
+  context "testspec" do
+    setup { @framework = :testspec }
+    should_have_generator_attribute :test_task, 'test'
+    should_have_generator_attribute :test_dir, 'test'
+    should_have_generator_attribute :default_task, 'test'
+    should_have_generator_attribute :feature_support_require, 'test/unit/assertions'
+    should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
+    should_have_generator_attribute :test_pattern, 'test/**/*_test.rb'
+    should_have_generator_attribute :test_filename, 'the-perfect-gem_test.rb'
+    should_have_generator_attribute :test_helper_filename, 'test_helper.rb'
+  end
+  
 end
