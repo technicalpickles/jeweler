@@ -20,7 +20,6 @@ class Jeweler
 
   private
     def define
-      desc "Setup initial version of 0.0.0"
       task :version_required do
         unless jeweler.version_exists?
           abort "Expected VERSION or VERSION.yml to exist. See version:write to create an initial one."
