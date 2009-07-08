@@ -53,7 +53,11 @@ Given /^I set JEWELER_OPTS env variable to "(.*)"$/ do |val|
   ENV['JEWELER_OPTS'] = val
 end
 
-When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)' and described as '(.*)'$/ do |testing_framework, name, summary, description|
+When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)'$/ do |testing_framework, name, summary|
+  When "I generate a #{testing_framework}project named '#{name}' that is '#{summary}' and described as ''"
+end
+
+When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and described as '([^']*)'$/ do |testing_framework, name, summary, description|
   @name = name
   @summary = summary
   @description = description
@@ -71,6 +75,8 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '(.*)' and describ
                 @use_cucumber ? '--cucumber' : nil,
                 @testing_framework ? "--#{@testing_framework}" : nil,
                 @use_rubyforge ? '--rubyforge' : nil,
+                @use_roodi ? '--roodi' : nil,
+                @use_reek ? '--reek' : nil,
                 @name].compact
 
   @stdout = OutputCatcher.catch_out do
