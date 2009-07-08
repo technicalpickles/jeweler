@@ -56,8 +56,8 @@ class Jeweler
       self.target_dir             = options[:directory] || self.project_name
 
       self.should_create_repo     = options[:create_repo]
-      self.summary                = options[:summary] || 'Summarize your gem'
-      self.description            = options[:description] || 'Describe your gem'
+      self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
+      self.description            = options[:description] || 'TODO: longer description of your gem'
       self.should_use_cucumber    = options[:use_cucumber]
       self.should_use_reek        = options[:use_reek]
       self.should_use_roodi       = options[:use_roodi]

@@ -32,11 +32,11 @@ class TestGenerator < Test::Unit::TestCase
     end
 
     should "have default summary" do
-      assert_equal "Summarize your gem", build_generator.summary
+      assert_equal "TODO: one-line summary of your gem", build_generator.summary
     end
 
     should "have default description" do
-      assert_equal "Describe your gem", build_generator.description
+      assert_equal "TODO: longer description of your gem", build_generator.description
     end
 
     should "not create repo by default" do
