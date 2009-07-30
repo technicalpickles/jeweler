@@ -31,7 +31,7 @@ class Jeweler
           self.files = repo.ls_files.keys - repo.lib.ignored_files
         end
 
-        if blank?(test_files)
+        if blank?(test_files) && File.directory?(File.join(base_dir, '.git'))
           repo = Git.open(base_dir)
           self.test_files = FileList['{spec,test,examples}/**/*.rb'] - repo.lib.ignored_files
         end
