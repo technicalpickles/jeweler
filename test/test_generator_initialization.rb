@@ -10,7 +10,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
   end
 
   def stub_git_config(options = {})
-    stub.instance_of(Git::Lib).parse_config('~/.gitconfig') { options }
+    stub(Git).global_config() { options }
   end
 
   context "given a nil github repo name" do

@@ -131,10 +131,7 @@ class Jeweler
 
     # This is in a separate method so we can stub it out during testing
     def read_git_config
-      # we could just use Git::Base's .config, but that relies on a repo being around already
-      # ... which we don't have yet, since this is part of a sanity check
-      lib = Git::Lib.new(nil, nil)
-      config = lib.parse_config '~/.gitconfig'
+      Git.global_config
     end
 
   private
