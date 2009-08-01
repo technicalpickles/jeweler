@@ -15,13 +15,22 @@ begin
     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
     gem.authors = ["Josh Nichols"]
     gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
+
     gem.add_dependency "git", ">= 1.1.1"
     gem.add_dependency "rubyforge"
+
     gem.rubyforge_project = "pickles"
+
+    gem.add_development_dependency "thoughtbot-shoulda"
+    gem.add_development_dependency "mhennemeyer-output_catcher"
+    gem.add_development_dependency "rr"
+    gem.add_development_dependency "mocha"
+    gem.add_development_dependency "redgreen"
   end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install jeweler"
 end
+
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -104,3 +113,32 @@ if ENV["RUN_CODE_RUN"] == "true"
 else
   task :default => :test
 end
+
+namespace :development_dependencies do
+  task :check do
+    missing_dependencies = Rake.application.jeweler.gemspec.development_dependencies.select do |dependency|
+      begin
+        Gem.activate dependency.name, dependency.version_requirements.to_s
+        false
+      rescue LoadError => e
+        true
+      end
+    end
+
+    #require 'ruby-debug'; breakpoint
+
+    if missing_dependencies.empty?
+      puts "Development dependencies seem to be installed."
+    else
+      puts "Missing some dependencies. Install them with the following commands:"
+      missing_dependencies.each do |dependency|
+        puts %Q{\tgem install #{dependency.name} --version "#{dependency.version_requirements}"}
+      end
+      abort "Run the specified gem commands before trying to run this again: #{$0} #{ARGV.join(' ')}"
+    end
+
+  end
+end
+
+task :test => 'development_dependencies:check'
+task :features => 'development_dependencies:check'

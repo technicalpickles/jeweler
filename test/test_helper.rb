@@ -1,21 +1,24 @@
-# Use vendored gem because of limited gem availability on runcoderun
-# This is loosely based on 'vendor everything'.
-Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', '**')].each do |dir|
-  lib = "#{dir}/lib"
-  $LOAD_PATH.unshift(lib) if File.directory?(lib)
-end
-
 require 'test/unit'
 
 require 'rubygems'
-require 'shoulda'
 begin
   require 'ruby-debug'
 rescue LoadError
 end
 
-require 'rr'
-require 'redgreen'
+begin
+  require 'shoulda'
+  require 'rr'
+  require 'redgreen'
+rescue LoadError => e
+  puts "*" * 80
+  puts "Some dependencies needed to run tests were missing. Run the following command to find them:"
+  puts
+  puts "\trake development_dependencies:check"
+  puts "*" * 80
+  exit 1
+end
+
 require 'time'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
@@ -35,7 +38,7 @@ class RubyForgeStub
   end
 end
 
-require 'output_catcher'
+#require 'output_catcher'
 
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)

@@ -1,8 +1,18 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'jeweler'
 
-require 'mocha'
-require 'output_catcher'
+begin
+  require 'mocha'
+  require 'output_catcher'
+rescue LoadError => e
+  puts "*" * 80
+  puts "Some dependencies needed to run tests were missing. Run the following command to find them:"
+  puts
+  puts "\trake development_dependencies:check"
+  puts "*" * 80
+  exit 1
+end
+
 
 require 'test/unit/assertions'
 
