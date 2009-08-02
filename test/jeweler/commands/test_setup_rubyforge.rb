@@ -35,19 +35,54 @@ class Jeweler
             @command.package_exists?
           end
         end
-
       end
+
+      rubyforge_command_context "create_package" do
+        setup do
+          stub(@gemspec).name { 'zomg' }
+        end
+
+        context "when everything is happy" do
+          setup do
+            stub(@gemspec).rubyforge_project { 'myproject' }
+            stub(@rubyforge).create_package('myproject', 'zomg')
+
+            @command.create_package
+          end
+
+          should "create zomg package to myproject on rubyforge" do
+            assert_received(@rubyforge) {|rubyforge| rubyforge.create_package('myproject', 'zomg') }
+          end
+
+        end
+
+        context "when rubyforge project not existing or being setup in ~/.rubyforge/autoconfig.yml" do
+          setup do
+            stub(@gemspec).rubyforge_project { 'myproject' }
+            stub(@rubyforge).create_package('myproject', 'zomg')do
+              raise RuntimeError, "no <group_id> configured for <myproject>"
+            end
+          end
+
+          should "raise RubyForgeProjectNotConfiguredError" do
+            assert_raises RubyForgeProjectNotConfiguredError do
+              @command.create_package
+            end
+          end 
+        end
+      end
+
 
       rubyforge_command_context "rubyforge_project defined in gemspec and project existing on rubyforge" do
         setup do
           stub(@rubyforge).configure
           stub(@rubyforge).login
-          stub(@rubyforge).create_package('myproject', 'zomg')
 
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'myproject' }
 
           stub(@command).package_exists? { false }
+          stub(@command).create_package
           @command.run
         end
 
@@ -60,7 +95,7 @@ class Jeweler
         end
 
         should "create zomg package to myproject on rubyforge" do
-          assert_received(@rubyforge) {|rubyforge| rubyforge.create_package('myproject', 'zomg') }
+          assert_received(@command) {|command| command.create_package }
         end
       end
 
@@ -69,12 +104,12 @@ class Jeweler
           stub(@rubyforge).configure
           stub(@rubyforge).login
 
-          dont_allow(@rubyforge).create_package('myproject', 'zomg')
 
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'myproject' }
 
           stub(@command).package_exists? { true }
+          dont_allow(@command).create_package
           @command.run
         end
 
@@ -106,14 +141,14 @@ class Jeweler
         setup do
           stub(@rubyforge).configure
           stub(@rubyforge).login
-          stub(@rubyforge).create_package('some_project_that_doesnt_exist', 'zomg')do
-            raise RuntimeError, "no <group_id> configured for <some_project_that_doesnt_exist>"
-          end
 
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'some_project_that_doesnt_exist' }
 
           stub(@command).package_exists? { false }
+          stub(@command).create_package do
+            raise RubyForgeProjectNotConfiguredError, 'some_project_that_doesnt_exist'
+          end
         end
 
         should "raise RubyForgeProjectNotConfiguredError" do
