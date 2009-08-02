@@ -12,7 +12,7 @@ class Jeweler
       end
 
       def run
-        raise "Hey buddy, try committing them files first" if any_pending_changes?
+        raise "Hey buddy, try committing them files first" unless clean_staging_area?
 
         repo.checkout('master')
 
@@ -22,11 +22,12 @@ class Jeweler
         output.puts "Pushing master to origin"
         repo.push
 
-        tag_release! unless release_tagged?
+        tag_release! if release_not_tagged?
       end
       
-      def any_pending_changes?
-        !(@repo.status.added.empty? && @repo.status.deleted.empty? && @repo.status.changed.empty?)
+      def clean_staging_area?
+        status = repo.status
+        status.added.empty? && status.deleted.empty? && status.changed.empty?
       end
 
       def tag_release!
@@ -52,13 +53,15 @@ class Jeweler
         "v#{version}"
       end
 
-      def release_tagged?
+      def release_not_tagged?
         tag = repo.tag(release_tag) rescue nil
-        ! tag.nil?
+        tag.nil?
       end
 
       def gemspec_changed?
-        any_pending_changes?
+        `git status` # OMGHAX. status always ends up being 'M' unless this runs
+        status = repo.status[gemspec_helper.path]
+        ! status.type.nil?
       end
 
       def gemspec_helper

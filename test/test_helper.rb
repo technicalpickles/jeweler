@@ -94,6 +94,11 @@ class Test::Unit::TestCase
           @output = StringIO.new
           @command.output = @output
         end
+
+        if @command.respond_to? :repo
+          @repo = Object.new
+          @command.repo = @repo 
+        end
       end
 
       context "", &block

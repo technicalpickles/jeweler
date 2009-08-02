@@ -4,174 +4,136 @@ class Jeweler
   module Commands
     class TestRelease < Test::Unit::TestCase
 
-      context "with pending changes" do
-        setup do
-          @repo = Object.new
-          stub(@repo).checkout(anything)
-          stub(@repo).status { status }
+      rubyforge_command_context "running" do
+        context "happily" do
+          setup do
+            stub(@command).clean_staging_area? { true }
 
-          @command                = Jeweler::Commands::Release.new
-          @command.output         = @output
-          @command.repo           = @repo
-          @command.gemspec_helper = @gemspec_helper
-          @command.version        = '1.2.3'
+            stub(@repo).checkout(anything)
 
-          stub(@command).any_pending_changes? { true }
-        end
+            stub(@command).regenerate_gemspec!
 
-        should 'raise error' do
-          assert_raises RuntimeError, /try commiting/i do
+            stub(@command).gemspec_changed? { true }
+            stub(@command).commit_gemspec! { true }
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+            stub(@command).tag_release!
+
             @command.run
           end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('master') }
+          end
+
+          should "regenerate gemspec" do
+            assert_received(@command) {|command| command.regenerate_gemspec! }
+          end
+
+          should "commit gemspec" do
+            assert_received(@command) {|command| command.commit_gemspec! }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push }
+          end
+
+          should "tag release" do
+            assert_received(@command) {|command| command.tag_release! }
+          end
+
         end
+
+        context "with an unclean staging area" do
+          setup do
+            stub(@command).clean_staging_area? { false }
+          end
+
+          should 'raise error' do
+            assert_raises RuntimeError, /try commiting/i do
+              @command.run
+            end
+          end
+        end
+
+        context "with an unchanged gemspec" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+
+            stub(@repo).checkout(anything)
+
+            stub(@command).regenerate_gemspec!
+
+            stub(@command).gemspec_changed? { false }
+            dont_allow(@command).commit_gemspec! { true }
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+            stub(@command).tag_release!
+
+            @command.run
+          end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('master') }
+          end
+
+          should "regenerate gemspec" do
+            assert_received(@command) {|command| command.regenerate_gemspec! }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push }
+          end
+
+          should "tag release" do
+            assert_received(@command) {|command| command.tag_release! }
+          end
+
+        end
+
+        context "with a release already tagged" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+
+            stub(@repo).checkout(anything)
+
+            stub(@command).regenerate_gemspec!
+
+            stub(@command).gemspec_changed? { true }
+            stub(@command).commit_gemspec! { true }
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { false }
+            dont_allow(@command).tag_release!
+
+            @command.run
+          end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('master') }
+          end
+
+          should "regenerate gemspec" do
+            assert_received(@command) {|command| command.regenerate_gemspec! }
+          end
+
+          should "commit gemspec" do
+            assert_received(@command) {|command| command.commit_gemspec! }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push }
+          end
+
+        end
+
       end
 
-      context "run without pending changes, and gemspec changed, and tagged not created already" do
-        setup do
-          @repo = Object.new
-          stub(@repo) do
-            checkout(anything)
-            add(anything)
-            commit(anything)
-            push
-          end
-
-          @gemspec_helper = Object.new
-          stub(@gemspec_helper) do
-            write
-            path {'zomg.gemspec'}
-            update_version('1.2.3')
-          end
-
-          @output = StringIO.new
-
-          @command                = Jeweler::Commands::Release.new :output => @output,
-                                                                   :repo => @repo,
-                                                                   :gemspec_helper => @gemspec_helper,
-                                                                   :version => '1.2.3'
-
-          stub(@command).tag_release!
-          stub(@command).gemspec_changed? { true }
-          stub(@command).any_pending_changes? { false }
-          stub(@command).regenerate_gemspec!
-          stub(@command).commit_gemspec!
-          stub(@command).release_tagged? { false }
-
-          @command.run
-        end
-
-        should "checkout master" do
-          assert_received(@repo) {|repo| repo.checkout('master') }
-        end
-
-        should "regenerate gemspec" do
-          assert_received(@command) {|command| command.regenerate_gemspec! }
-        end
-
-        should "commit gemspec" do
-          assert_received(@command) {|command| command.commit_gemspec! }
-        end
-
-        should "tag release" do
-          assert_received(@command) {|command| command.tag_release! }
-        end
-      end
-
-      context "run without pending changes, and gemspec didn't change, and tagged not created already" do
-        setup do
-          @repo = Object.new
-          stub(@repo) do
-            checkout(anything)
-            add(anything)
-            commit(anything)
-            push
-          end
-
-          @gemspec_helper = Object.new
-          stub(@gemspec_helper) do
-            write
-            path {'zomg.gemspec'}
-            update_version('1.2.3')
-          end
-
-          @output = StringIO.new
-
-          @command                = Jeweler::Commands::Release.new :output => @output,
-                                                                   :repo => @repo,
-                                                                   :gemspec_helper => @gemspec_helper,
-                                                                   :version => '1.2.3'
-
-          stub(@command).tag_release!
-          stub(@command).any_pending_changes? { false }
-          stub(@command).gemspec_changed? { false } 
-          stub(@command).regenerate_gemspec!
-          stub(@command).release_tagged? { false }
-
-          @command.run
-        end
-
-        should "checkout master" do
-          assert_received(@repo) {|repo| repo.checkout('master') }
-        end
-
-        should "regenerate gemspec" do
-          assert_received(@command) {|command| command.regenerate_gemspec! }
-        end
-
-        should_eventually "not commit gemspec" do
-          # need a way to assert it wasn't received short of not stubbing it
-          #assert_received(@command) {|command| command.commit_gemspec! }
-        end
-
-        should "tag release" do
-          assert_received(@command) {|command| command.tag_release! }
-        end
-      end
-
-      context "run without pending changes and tagged already" do
-        setup do
-          @repo = Object.new
-          stub(@repo) do
-            checkout(anything)
-            add(anything)
-            commit(anything)
-            push
-          end
-
-          @gemspec_helper = Object.new
-          stub(@gemspec_helper) do
-            write
-            path {'zomg.gemspec'}
-            update_version('1.2.3')
-          end
-
-          @output = StringIO.new
-
-          @command                = Jeweler::Commands::Release.new :output => @output,
-                                                                   :repo => @repo,
-                                                                   :gemspec_helper => @gemspec_helper,
-                                                                   :version => '1.2.3'
-
-          #stub(@command).tag_release!
-          stub(@command).any_pending_changes? { false }
-          stub(@command).regenerate_gemspec!
-          stub(@command).release_tagged? { true }
-
-          @command.run
-        end
-
-        should "checkout master" do
-          assert_received(@repo) {|repo| repo.checkout('master') }
-        end
-
-        should "regenerate gemspec" do
-          assert_received(@command) {|command| command.regenerate_gemspec! }
-        end
-
-        should_eventually "not tag release" do
-          # need to have a way to verify tag_release! not being called, short of not stubbing it
-        end
-      end
 
       build_command_context "building from jeweler" do
         setup do
@@ -203,41 +165,41 @@ class Jeweler
         end
       end
 
-      context "any_pending_changes?" do
+      context "clean_staging_area?" do
 
-        should "be true if there added files" do
+        should "be false if there added files" do
           repo = build_repo :added => %w(README)
 
           command = Jeweler::Commands::Release.new :repo => repo
 
-          assert command.any_pending_changes?
+          assert ! command.clean_staging_area?
         end
 
-        should "be true if there are changed files" do
+        should "be false if there are changed files" do
           repo = build_repo :changed => %w(README)
 
           command = Jeweler::Commands::Release.new
           command.repo = repo
 
-          assert command.any_pending_changes?
+          assert ! command.clean_staging_area?
         end
 
-        should "be true if there are deleted files" do
+        should "be false if there are deleted files" do
           repo = build_repo :deleted => %w(README)
 
           command = Jeweler::Commands::Release.new
           command.repo = repo
 
-          assert command.any_pending_changes?
+          assert ! command.clean_staging_area?
         end
 
-        should "be false if nothing added, changed, or deleted" do
+        should "be true if nothing added, changed, or deleted" do
           repo = build_repo
 
           command = Jeweler::Commands::Release.new
           command.repo = repo
 
-          assert ! command.any_pending_changes?
+          assert command.clean_staging_area?
         end
       end
 
@@ -340,12 +302,7 @@ class Jeweler
       context "release_tagged? when no tag exists" do
         setup do
           @repo = Object.new
-          stub(@repo).tag('v1.2.3') {raise Git::GitTagNameDoesNotExist, tag}
-          #stub(@repo) do
-            #tag('v1.2.3') do |tag|
-              #raise Git::GitTagNameDoesNotExist, tag
-            #end
-          #end
+          stub(@repo).tag('v1.2.3') { raise Git::GitTagNameDoesNotExist, tag }
 
           @output = StringIO.new
 
@@ -355,8 +312,8 @@ class Jeweler
           @command.version        = '1.2.3'
         end
 
-        should_eventually "be false" do
-          assert ! @command.release_tagged?
+        should_eventually "be true" do
+          assert @command.release_not_tagged?
         end
 
       end
@@ -376,8 +333,8 @@ class Jeweler
           @command.version        = '1.2.3'
         end
 
-        should_eventually "be true" do
-          assert @command.release_tagged?
+        should_eventually "be false" do
+          assert @command.release_not_tagged?
         end
 
       end
