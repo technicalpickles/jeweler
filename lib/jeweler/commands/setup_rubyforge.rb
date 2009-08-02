@@ -11,7 +11,26 @@ class Jeweler
         output.puts "Logging into rubyforge"
         @rubyforge.login
 
+        if package_exists?
+          output.puts "#{@gemspec.name} package already exists in the #{@gemspec.rubyforge_project} project"
+          return
+        end
+
         output.puts "Creating #{@gemspec.name} package in the #{@gemspec.rubyforge_project} project"
+        create_package
+      end
+
+      def package_exists?
+        begin
+          @rubyforge.lookup 'package', @gemspec.name
+          true
+        rescue RuntimeError => e
+          raise unless e.message == "no <package_id> configured for <#{@gemspec.name}>"
+          false
+        end
+      end
+
+      def create_package
         begin
           @rubyforge.create_package(@gemspec.rubyforge_project, @gemspec.name)
         rescue StandardError => e

@@ -7,7 +7,38 @@ class Jeweler
         Jeweler::Commands::SetupRubyforge.new
       end
 
-      rubyforge_command_context "rubyforge_project is defined in gemspec and package exists on rubyforge" do
+      rubyforge_command_context "package_exists?" do
+        setup do
+          stub(@gemspec).name { 'zomg' }
+        end
+
+        should "be true if rubyforge.lookup doesn't cause an Error" do
+          mock(@rubyforge).lookup('package', 'zomg')
+
+          assert @command.package_exists?
+        end
+
+        should "be false if rubyforge.lookup raises an error like: no <package_id> configured for <zomg>" do
+          mock(@rubyforge).lookup('package', 'zomg') do
+            raise RuntimeError, "no <package_id> configured for <zomg>"
+          end
+
+          assert ! @command.package_exists?
+        end
+
+        should "reraise any other Errors" do
+          mock(@rubyforge).lookup('package', 'zomg') do
+            raise RuntimeError, 'burnination!'
+          end
+
+          assert_raises RuntimeError, 'burnination!' do
+            @command.package_exists?
+          end
+        end
+
+      end
+
+      rubyforge_command_context "rubyforge_project defined in gemspec and project existing on rubyforge" do
         setup do
           stub(@rubyforge).configure
           stub(@rubyforge).login
@@ -16,6 +47,7 @@ class Jeweler
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'myproject' }
 
+          stub(@command).package_exists? { false }
           @command.run
         end
 
@@ -32,7 +64,32 @@ class Jeweler
         end
       end
 
-      rubyforge_command_context "rubyforge_project not configured" do
+      rubyforge_command_context "rubyforge_project defined in gemspec, project and project already existing on rubyforge" do
+        setup do
+          stub(@rubyforge).configure
+          stub(@rubyforge).login
+
+          dont_allow(@rubyforge).create_package('myproject', 'zomg')
+
+          stub(@gemspec).name { 'zomg' }
+          stub(@gemspec).rubyforge_project { 'myproject' }
+
+          stub(@command).package_exists? { true }
+          @command.run
+        end
+
+        should "configure rubyforge" do
+          assert_received(@rubyforge) {|rubyforge| rubyforge.configure}
+        end
+
+        should "login to rubyforge" do
+          assert_received(@rubyforge) {|rubyforge| rubyforge.login}
+        end
+
+      end
+      
+
+      rubyforge_command_context "rubyforge_project is not defined" do
         setup do
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { nil }
@@ -45,7 +102,7 @@ class Jeweler
         end
       end
 
-      rubyforge_command_context "rubyforge project doesn't exist or not setup in ~/.rubyforge/autoconfig.yml" do
+      rubyforge_command_context "rubyforge project not existing or being setup in ~/.rubyforge/autoconfig.yml" do
         setup do
           stub(@rubyforge).configure
           stub(@rubyforge).login
@@ -55,6 +112,8 @@ class Jeweler
 
           stub(@gemspec).name { 'zomg' }
           stub(@gemspec).rubyforge_project { 'some_project_that_doesnt_exist' }
+
+          stub(@command).package_exists? { false }
         end
 
         should "raise RubyForgeProjectNotConfiguredError" do
