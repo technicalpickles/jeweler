@@ -36,7 +36,7 @@ class Jeweler
           self.test_files = FileList['{spec,test,examples}/**/*.rb'] - repo.lib.ignored_files
         end
 
-        if blank?(executable)
+        if blank?(executables)
           self.executables = Dir["bin/*"].map { |f| File.basename(f) }
         end
 

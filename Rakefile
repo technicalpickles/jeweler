@@ -49,7 +49,6 @@ begin
   require 'yard'
   YARD::Rake::YardocTask.new(:yardoc) do |t|
     t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
-    t.options = ["--output", "rdoc"]
   end
 rescue LoadError
   task :yardoc do

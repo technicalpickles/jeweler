@@ -6,6 +6,28 @@ class Rake::Application
 end
 
 class Jeweler
+  # Rake tasks for managing your gem.
+  #
+  # Here's a basic example of using it:
+  #
+  #   Jeweler::Tasks.new do |gem|
+  #     gem.name = "jeweler"
+  #     gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  #     gem.email = "josh@technicalpickles.com"
+  #     gem.homepage = "http://github.com/technicalpickles/jeweler"
+  #     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  #     gem.authors = ["Josh Nichols"]
+  #   end
+  #
+  # The block variable gem is actually a Gem::Specification, so you can do anything you would normally do with a Gem::Specification. For more details, see the official gemspec reference: http://docs.rubygems.org/read/chapter/20
+  #
+  # Jeweler fills in a few reasonable defaults for you:
+  #
+  # [gem.files] a Rake::FileList of anything that is in git and not gitignored. You can include/exclude this default set, or override it entirely
+  # [gem.test_files] Similar to gem.files, except it's only things under the spec, test, or examples directory.
+  # [gem.extra_rdoc_files] a Rake::FileList including files like README*, ChangeLog*, and LICENSE*
+  # [gem.executables] uses anything found in the bin/ directory. You can override this.
+  #
   class Tasks < ::Rake::TaskLib
     attr_accessor :gemspec, :jeweler
 
