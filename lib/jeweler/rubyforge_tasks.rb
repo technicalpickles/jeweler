@@ -6,6 +6,7 @@ require 'rake/contrib/sshpublisher'
 class Jeweler
   class RubyforgeTasks < ::Rake::TaskLib
     attr_accessor :project, :remote_doc_path
+    attr_accessor :doc_task
     attr_accessor :jeweler
 
     def initialize
@@ -15,6 +16,7 @@ class Jeweler
 
       self.remote_doc_path ||= jeweler.gemspec.name
       self.project ||= jeweler.gemspec.rubyforge_project
+      self.doc_task ||= :rdoc
 
       define
     end
@@ -39,15 +41,19 @@ class Jeweler
             end
           end
 
-          desc "Publish RDoc to RubyForge."
-          task :docs => [:rdoc] do
+          desc "Publish docs to RubyForge."
+          task :docs => doc_task do
             config = YAML.load(
               File.read(File.expand_path('~/.rubyforge/user-config.yml'))
             )
 
             host = "#{config['username']}@rubyforge.org"
             remote_dir = "/var/www/gforge-projects/#{project}/#{remote_doc_path}"
-            local_dir = 'rdoc'
+
+            local_dir = case doc_task
+                        when :rdoc then 'rdoc'
+                        when :yardoc then 'doc'
+                        end
 
             sh %{rsync -av --delete #{local_dir}/ #{host}:#{remote_dir}}
           end

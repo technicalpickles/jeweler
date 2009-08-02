@@ -27,6 +27,10 @@ begin
     gem.add_development_dependency "mocha"
     gem.add_development_dependency "redgreen"
   end
+
+  Jeweler::RubyforgeTasks.new do |t|
+    t.doc_task = :yardoc
+  end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install jeweler"
 end
@@ -43,12 +47,12 @@ end
 
 begin
   require 'yard'
-  YARD::Rake::YardocTask.new(:rdoc) do |t|
+  YARD::Rake::YardocTask.new(:yardoc) do |t|
     t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
     t.options = ["--output", "rdoc"]
   end
 rescue LoadError
-  task :rdoc do
+  task :yardoc do
     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
   end
 end
