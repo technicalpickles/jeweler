@@ -48,7 +48,7 @@ class TestApplication < Test::Unit::TestCase
   end
 
   def build_generator(name = 'zomg', options = {:testing_framework => :shoulda})
-    stub.instance_of(Git::Lib).parse_config '~/.gitconfig' do
+    stub(Git).global_config() do
       {'user.name' => 'John Doe', 'user.email' => 'john@example.com', 'github.user' => 'johndoe', 'github.token' => 'yyz'}
     end
 
