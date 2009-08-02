@@ -38,8 +38,6 @@ class RubyForgeStub
   end
 end
 
-#require 'output_catcher'
-
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
 
