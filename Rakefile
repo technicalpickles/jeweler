@@ -41,13 +41,18 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'jeweler'
-  rdoc.rdoc_files.include('README.markdown')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new(:rdoc) do |t|
+    t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
+    t.options = ["--output", "rdoc"]
+  end
+rescue LoadError
+  task :rdoc do
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+  end
 end
+
 
 begin
   require 'rcov/rcovtask'
