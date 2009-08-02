@@ -26,6 +26,19 @@ class Jeweler
         task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
 
         namespace :release do
+          desc "Release the current gem version to RubyForge."
+          task :gem => [:gemspec, :build] do
+            begin
+              jeweler.release_gem_to_rubyforge
+            rescue NoRubyForgeProjectInGemspecError => e
+              abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+            rescue MissingRubyForgePackageError => e
+              abort "Rubyforge reported that the #{e.message} package isn't setup. Run rake rubyforge:setup to do so."
+            rescue RubyForgeProjectNotConfiguredError => e
+              abort "RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
+            end
+          end
+
           desc "Publish RDoc to RubyForge."
           task :docs => [:rdoc] do
             config = YAML.load(
@@ -39,8 +52,19 @@ class Jeweler
             sh %{rsync -av --delete #{local_dir}/ #{host}:#{remote_dir}}
           end
         end
+
+        desc "Setup a rubyforge project for this gem"
+        task :setup do
+          begin 
+            jeweler.setup_rubyforge
+          rescue NoRubyForgeProjectInGemspecError => e
+            abort "Setting up RubyForge requires that you specify a 'rubyforge_project' in your Jeweler::Tasks declaration"
+          rescue RubyForgeProjectNotConfiguredError => e
+            abort "The RubyForge reported that #{e.message} wasn't configured. This means you need to run 'rubyforge setup', 'rubyforge login', and 'rubyforge configure', or maybe the project doesn't exist on RubyForge"
+          end
+        end
+
       end
-      
     end
   end
 end
