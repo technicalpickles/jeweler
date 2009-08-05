@@ -70,9 +70,11 @@ class Jeweler
             host = "#{config['username']}@rubyforge.org"
             remote_dir = "/var/www/gforge-projects/#{project}/#{remote_doc_path}"
 
-            local_dir = case doc_task
+            local_dir = case self.doc_task.to_sym
                         when :rdoc then 'rdoc'
                         when :yardoc then 'doc'
+                        else
+                          raise "Unsure what to run to generate documentation. Please set doc_task and re-run."
                         end
 
             sh %{rsync -av --delete #{local_dir}/ #{host}:#{remote_dir}}

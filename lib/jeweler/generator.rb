@@ -28,13 +28,16 @@ class Jeweler
   end    
 
   class Generator    
-    attr_accessor :target_dir, :user_name, :user_email, :summary, :testing_framework,
+    attr_accessor :target_dir, :user_name, :user_email, :summary,
                   :project_name, :github_username, :github_token,
-                  :repo, :should_create_repo, :should_use_cucumber, :should_setup_rubyforge,
+                  :repo, :should_create_repo, 
+                  :testing_framework, :documentation_framework,
+                  :should_use_cucumber, :should_setup_rubyforge,
                   :should_use_reek, :should_use_roodi,
                   :description
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
+    DEFAULT_DOCUMENTATION_FRAMEWORK = :rdoc
 
     def initialize(project_name, options = {})
       if project_name.nil? || project_name.squeeze.strip == ""
@@ -44,6 +47,7 @@ class Jeweler
       self.project_name   = project_name
 
       self.testing_framework  = (options[:testing_framework] || DEFAULT_TESTING_FRAMEWORK).to_sym
+      self.documentation_framework = options[:documentation_framework] || DEFAULT_DOCUMENTATION_FRAMEWORK
       begin
         generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
         generator_mixin = self.class.const_get(generator_mixin_name)
@@ -125,6 +129,14 @@ class Jeweler
 
     def features_steps_dir
       File.join(features_dir, 'step_definitions')
+    end
+
+    def doc_task
+      case documentation_framework
+      when :yard then "yardoc"
+      else
+        documentation_framework.to_s
+      end
     end
 
   protected

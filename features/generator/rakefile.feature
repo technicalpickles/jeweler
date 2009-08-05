@@ -3,9 +3,11 @@ Feature: generated Rakefile
   A user should be able to
   generate a Rakefile
 
-  Scenario: shared
+  Background:
     Given a working directory
     And I have configured git sanely
+
+  Scenario: shared
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
 
     Then 'Rakefile' requires 'rubygems'
@@ -18,8 +20,6 @@ Feature: generated Rakefile
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
 
   Scenario: bacon
-    Given a working directory
-    And I have configured git sanely
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
     
@@ -30,8 +30,6 @@ Feature: generated Rakefile
     And Rakefile has "spec" as the default task
 
   Scenario: minitest
-    Given a working directory
-    And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'rcov/rcovtask'
@@ -41,8 +39,6 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: rspec
-    Given a working directory
-    And I have configured git sanely
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'spec/rake/spectask'
@@ -50,8 +46,6 @@ Feature: generated Rakefile
     And Rakefile has "spec" as the default task
 
   Scenario: shoulda
-    Given a working directory
-    And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'rcov/rcovtask'
@@ -61,8 +55,6 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: micronaut
-    Given a working directory
-    And I have configured git sanely
     When I generate a micronaut project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'micronaut/rake_task'
@@ -70,8 +62,6 @@ Feature: generated Rakefile
     And Rakefile has "examples" as the default task
 
   Scenario: testunit
-    Given a working directory
-    And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'rcov/rcovtask'
@@ -81,65 +71,81 @@ Feature: generated Rakefile
     And Rakefile has "test" as the default task
 
   Scenario: no cucumber
-    Given a working directory
-    And I have configured git sanely
-    And I do not want cucumber stories
+    Given I do not want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile does not require 'cucumber/rake/task' 
     And Rakefile does not instantiate a Cucumber::Rake::Task
 
   Scenario: cucumber
-    Given a working directory
-    And I have configured git sanely
-    And I want cucumber stories
+    Given I want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile requires 'cucumber/rake/task' 
     And Rakefile instantiates a Cucumber::Rake::Task
 
   Scenario: no reek
-    Given a working directory
-    And I have configured git sanely
-    And I do not want reek
+    Given I do not want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile does not require 'reek/rake_task' 
     And Rakefile does not instantiate a Reek::RakeTask
 
   Scenario: reek
-    Given a working directory
-    And I have configured git sanely
-    And I want reek
+    Given I want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile requires 'reek/rake_task' 
     And Rakefile instantiates a Reek::RakeTask
 
   Scenario: no roodi
-    Given a working directory
-    And I have configured git sanely
-    And I do not want roodi
+    Given I do not want roodi
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile does not require 'roodi' 
     And Rakefile does not require 'roodi_task' 
     And Rakefile does not instantiate a RoodiTask
 
   Scenario: roodi
-    Given a working directory
-    And I have configured git sanely
-    And I want roodi
+    Given I want roodi
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile requires 'roodi' 
     And Rakefile requires 'roodi_task' 
     And Rakefile instantiates a RoodiTask
 
   Scenario: no rubyforge
-    Given a working directory
-    And I have configured git sanely
-    And I do not want rubyforge setup
+    Given I do not want rubyforge setup
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile does not instantiate a Jeweler::RubyforgeTasks
 
   Scenario: rubyforge
-    Given a working directory
-    And I have configured git sanely
+    Given I want rubyforge setup
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile instantiates a Jeweler::RubyforgeTasks
+
+  Scenario: yard
+    Given I want to use yard instead of rdoc
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    
+    Then 'Rakefile' does not require 'rake/rdoctask'
+    And 'Rakefile' requires 'yard'
+    And Rakefile instantiates a YARD::Rake::YardocTask
+
+  Scenario: rdoc
+    Given I want to use rdoc instead of yard
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    
+    Then 'Rakefile' does not require 'yard'
+    And 'Rakefile' requires 'rake/rdoctask'
+    And Rakefile does not instantiate a YARD::Rake::YardocTask
+    And Rakefile instantiates a Rake::RDocTask.new
+
+  Scenario: rubyforge and yard
+    Given I want to use yard instead of rdoc
     And I want rubyforge setup
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then Rakefile instantiates a Jeweler::RubyforgeTasks
+    And Rakefile has 'yardoc' for the Jeweler::RubyforgeTasks doc_task
+
+  Scenario: rubyfoge and doc
+    Given I want to use rdoc instead of yard
+    And I want rubyforge setup
+    And I want rubyforge setup
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then Rakefile instantiates a Jeweler::RubyforgeTasks
+    And Rakefile has 'rdoc' for the Jeweler::RubyforgeTasks doc_task

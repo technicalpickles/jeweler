@@ -17,7 +17,9 @@ begin
   end
 
 <% if should_setup_rubyforge %>
-  Jeweler::RubyforgeTasks.new
+  Jeweler::RubyforgeTasks.new do |rubyforge|
+    rubyforge.doc_task = "<%= doc_task %>"
+  end
 <% end %>
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
@@ -115,6 +117,8 @@ end
 
 task :default => :<%= default_task %>
 
+<% case documentation_framework %>
+<% when :rdoc %>
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   if File.exist?('VERSION')
@@ -128,4 +132,13 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
+<% when :yard %>
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new
+rescue LoadError
+  task :yardoc do
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+  end
+end
+<% end %>

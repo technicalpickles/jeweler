@@ -7,7 +7,8 @@ class Jeweler
         super()
 
         @orig_args = args.clone
-        self[:testing_framework] = :shoulda
+        self[:testing_framework]       = :shoulda
+        self[:documentation_framework] = :rdoc
 
         @opts = OptionParser.new do |o|
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
@@ -66,6 +67,14 @@ class Jeweler
 
           o.on('--directory [DIRECTORY]', 'specify the directory to generate into') do |directory|
             self[:directory] = directory
+          end
+
+          o.on('--yard', 'use yard for documentation') do
+            self[:documentation_framework] = :yard
+          end
+
+          o.on('--rdoc', 'use rdoc for documentation') do
+            self[:documentation_framework] = :rdoc
           end
 
           o.on_tail('-h', '--help', 'display this help and exit') do

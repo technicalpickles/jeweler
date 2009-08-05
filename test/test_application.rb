@@ -105,7 +105,7 @@ class TestApplication < Test::Unit::TestCase
 
   context "when called with repo name" do
     setup do
-      @options = {:testing_framework => :shoulda}
+      @options = {:testing_framework => :shoulda, :documentation_framework => :rdoc}
       @generator = build_generator('zomg', @options)
 
       stub(@generator).run

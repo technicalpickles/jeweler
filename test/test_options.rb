@@ -8,6 +8,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  def self.should_have_docmentation_framework(documentation_framework)
+    should "use #{documentation_framework} for documentation" do
+      assert_equal documentation_framework.to_sym, @options[:documentation_framework]
+    end
+  end
+
   def setup_options(*arguments)
     @options = Jeweler::Generator::Options.new(arguments)
   end
@@ -22,6 +28,7 @@ class TestOptions < Test::Unit::TestCase
   context "default options" do
     setup { setup_options }
     should_have_testing_framework :shoulda
+    should_have_docmentation_framework :rdoc
     should 'not create repository' do
       assert ! @options[:create_repo]
     end
@@ -79,6 +86,14 @@ class TestOptions < Test::Unit::TestCase
     should 'enable rubyforge' do
       assert @options[:rubyforge]
     end
+  end
+
+  for_options '--rdoc' do
+    should_have_docmentation_framework :rdoc
+  end
+
+  for_options '--yard' do
+    should_have_docmentation_framework :yard
   end
 
   for_options '--summary', 'zomg so awesome' do

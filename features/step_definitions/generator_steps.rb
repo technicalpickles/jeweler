@@ -30,6 +30,14 @@ And /^I want rubyforge setup$/ do
   @use_rubyforge = true
 end
 
+Given /^I want to use yard instead of rdoc$/ do
+  @documentation_framework = "yard"
+end
+
+Given /^I want to use rdoc instead of yard$/ do
+  @documentation_framework = "rdoc"
+end
+
 
 Given /^I intend to test with (\w+)$/ do |testing_framework|
   @testing_framework = testing_framework.to_sym
@@ -77,6 +85,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @use_rubyforge ? '--rubyforge' : nil,
                 @use_roodi ? '--roodi' : nil,
                 @use_reek ? '--reek' : nil,
+                @documentation_framework ? "--#{@documentation_framework}" : nil,
                 @name].compact
 
   @stdout = OutputCatcher.catch_out do
