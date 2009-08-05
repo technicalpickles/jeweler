@@ -1,5 +1,6 @@
 coverage
 pkg
+doc
 rdoc
 tags
 test/tmp
