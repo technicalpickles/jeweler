@@ -214,7 +214,7 @@ class Jeweler
       template_contents = File.read(File.join(template_dir, source))
       template = ERB.new(template_contents, nil, '<>')
 
-      template_result = template.result(binding)
+      template_result = template.result(binding).gsub(/\n\n\n+/, "\n\n")
 
       File.open(final_destination, 'w') {|file| file.write(template_result)}
 
