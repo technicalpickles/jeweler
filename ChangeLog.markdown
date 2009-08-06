@@ -1,3 +1,9 @@
+# jeweler 1.2.0 2009-08-06
+ * Generator now adds development dependencies appropriate to your testing framework
+ * Added check_dependencies tasks for verifying gem dependencies are installed
+ * Fixed typo in generated yard task
+ * Fixed generator from having a lot of extra newlines
+
 # jeweler 1.1.0 2009-08-05
 
  * Support for generating a project that uses yard instead of rdoc
