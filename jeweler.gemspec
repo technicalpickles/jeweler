@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.1.0"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-08-05}
+  s.date = %q{2009-08-06}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -51,6 +51,7 @@ Gem::Specification.new do |s|
      "lib/jeweler.rb",
      "lib/jeweler/commands.rb",
      "lib/jeweler/commands/build_gem.rb",
+     "lib/jeweler/commands/check_dependencies.rb",
      "lib/jeweler/commands/install_gem.rb",
      "lib/jeweler/commands/release.rb",
      "lib/jeweler/commands/release_to_rubyforge.rb",
@@ -70,9 +71,11 @@ Gem::Specification.new do |s|
      "lib/jeweler/generator/micronaut_mixin.rb",
      "lib/jeweler/generator/minitest_mixin.rb",
      "lib/jeweler/generator/options.rb",
+     "lib/jeweler/generator/rdoc_mixin.rb",
      "lib/jeweler/generator/rspec_mixin.rb",
      "lib/jeweler/generator/shoulda_mixin.rb",
      "lib/jeweler/generator/testunit_mixin.rb",
+     "lib/jeweler/generator/yard_mixin.rb",
      "lib/jeweler/rubyforge_tasks.rb",
      "lib/jeweler/specification.rb",
      "lib/jeweler/tasks.rb",
