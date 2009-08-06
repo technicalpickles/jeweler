@@ -11,6 +11,9 @@ require 'jeweler/generator/rspec_mixin'
 require 'jeweler/generator/shoulda_mixin'
 require 'jeweler/generator/testunit_mixin'
 
+require 'jeweler/generator/rdoc_mixin'
+require 'jeweler/generator/yard_mixin'
+
 class Jeweler
   class NoGitUserName < StandardError
   end
@@ -54,6 +57,14 @@ class Jeweler
         extend generator_mixin
       rescue NameError => e
         raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
+      end
+
+      begin
+        generator_mixin_name = "#{self.documentation_framework.to_s.capitalize}Mixin"
+        generator_mixin = self.class.const_get(generator_mixin_name)
+        extend generator_mixin
+      rescue NameError => e
+        raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
 
@@ -129,14 +140,6 @@ class Jeweler
 
     def features_steps_dir
       File.join(features_dir, 'step_definitions')
-    end
-
-    def doc_task
-      case documentation_framework
-      when :yard then "yardoc"
-      else
-        documentation_framework.to_s
-      end
     end
 
   protected
