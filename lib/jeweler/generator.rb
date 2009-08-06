@@ -32,12 +32,12 @@ class Jeweler
 
   class Generator    
     attr_accessor :target_dir, :user_name, :user_email, :summary,
-                  :project_name, :github_username, :github_token,
+                  :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_repo, 
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_setup_rubyforge,
                   :should_use_reek, :should_use_roodi,
-                  :description
+                  :development_dependencies
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
     DEFAULT_DOCUMENTATION_FRAMEWORK = :rdoc
@@ -46,6 +46,8 @@ class Jeweler
       if project_name.nil? || project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
+
+      self.development_dependencies = []
 
       self.project_name   = project_name
 
@@ -77,6 +79,8 @@ class Jeweler
       self.should_use_reek        = options[:use_reek]
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
+
+      development_dependencies << "cucumber" if should_use_cucumber
 
       use_user_git_config
       
