@@ -129,6 +129,12 @@ class Jeweler
     Jeweler::Commands::SetupRubyforge.build_for(self).run
   end
 
+  def check_dependencies(type = nil)
+    command = Jeweler::Commands::CheckDependencies.build_for(self)
+    command.type = type
+
+    command.run
+  end
 
   def in_git_repo?
     File.exists?(File.join(self.base_dir, '.git'))

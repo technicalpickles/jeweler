@@ -111,6 +111,24 @@ class Jeweler
       task :release do
         jeweler.release
       end
+
+      desc "Check that runtime and development dependencies are installed" 
+      task :check_dependencies do
+        jeweler.check_dependencies
+      end
+
+      namespace :check_dependencies do
+        desc "Check that runtime dependencies are installed"
+        task :runtime  do
+          jeweler.check_dependencies(:runtime)
+        end
+
+        desc"Check that development dependencies are installed"
+        task :development do
+          jeweler.check_dependencies(:development)
+        end
+
+      end
       
     end
   end

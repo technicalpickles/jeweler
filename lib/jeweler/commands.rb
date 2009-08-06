@@ -1,5 +1,6 @@
 require 'jeweler/commands/build_gem'
 require 'jeweler/commands/install_gem'
+require 'jeweler/commands/check_dependencies'
 require 'jeweler/commands/release'
 require 'jeweler/commands/release_to_rubyforge'
 require 'jeweler/commands/setup_rubyforge'
