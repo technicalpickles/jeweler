@@ -70,6 +70,26 @@ class Test::Unit::TestCase
     end
   end
 
+  def self.gemcutter_command_context(description, &block)
+    context description do
+      setup do
+        @command = eval(self.class.name.gsub(/::Test/, '::')).new
+
+        if @command.respond_to? :gemspec_helper=
+          @gemspec_helper = Object.new
+          @command.gemspec_helper = @gemspec_helper
+        end
+
+        if @command.respond_to? :output
+          @output = StringIO.new
+          @command.output = @output
+        end
+      end
+
+      context "", &block
+    end
+  end
+
   def self.rubyforge_command_context(description, &block)
     context description do
       setup do

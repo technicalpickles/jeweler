@@ -28,6 +28,8 @@ begin
     gem.add_development_dependency "redgreen"
   end
 
+  Jeweler::GemcutterTasks.new
+
   Jeweler::RubyforgeTasks.new do |t|
     t.doc_task = :yardoc
   end

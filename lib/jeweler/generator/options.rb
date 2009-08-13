@@ -53,6 +53,10 @@ class Jeweler
             self[:create_repo] = true
           end
 
+          o.on('--gemcutter', 'setup project for gemcutter') do
+            self[:gemcutter] = true
+          end
+
           o.on('--rubyforge', 'setup project for rubyforge') do
             self[:rubyforge] = true
           end

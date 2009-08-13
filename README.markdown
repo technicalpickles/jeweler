@@ -53,6 +53,7 @@ It supports a number of options:
  * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
  * --rspec: generate spec_helper.rb and spec ready for rspec
  * --bacon: generate spec_helper.rb and spec ready for bacon
+ * --gemcutter: setup releasing to gemcutter
  * --rubyforge: setup releasing to rubyforge
 
 ### Default options
@@ -97,6 +98,18 @@ It does the following for you:
  * Regenerate the gemspec to the latest version of your project
  * Push to GitHub (which results in a gem being build)
  * Tag the version and push to GitHub
+
+## Releasing to Gemcutter
+
+Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There are a few steps you need to do before doing any Gemcutter releases with Jeweler:
+
+ * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
+ * Install the Gemcutter gem: sudo gem install gemcutter
+ * Run 'gemcutter tumble' to set up gemcutter
+
+With all that setup out of the way, you can now release to Gemcutter with impunity. This would release the current version of your gem.
+
+    $ rake gemcutter:release
 
 ## Releasing to RubyForge
 

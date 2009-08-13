@@ -13,6 +13,7 @@ require 'jeweler/generator/application'
 require 'jeweler/commands'
 
 require 'jeweler/tasks'
+require 'jeweler/gemcutter_tasks'
 require 'jeweler/rubyforge_tasks'
 
 require 'jeweler/specification'
@@ -120,7 +121,11 @@ class Jeweler
   def release
     Jeweler::Commands::Release.build_for(self).run
   end
-  
+
+  def release_gem_to_gemcutter
+    Jeweler::Commands::ReleaseToGemcutter.build_for(self).run
+  end
+
   def release_gem_to_rubyforge
     Jeweler::Commands::ReleaseToRubyforge.build_for(self).run
   end
