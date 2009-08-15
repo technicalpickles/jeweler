@@ -282,11 +282,11 @@ class Jeweler
     end
     
     def create_and_push_repo
-      Net::HTTP.post_form URI.parse('http://github.com/repositories'),
+      Net::HTTP.post_form URI.parse('http://github.com/api/v2/yaml/repos/create'),
                                 'login' => github_username,
                                 'token' => github_token,
-                                'repository[description]' => summary,
-                                'repository[name]' => project_name
+                                'description' => summary,
+                                'name' => project_name
       # TODO do a HEAD request to see when it's ready
       @repo.push('origin')
     end
