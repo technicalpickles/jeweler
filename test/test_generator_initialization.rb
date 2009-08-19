@@ -128,6 +128,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
   context "using yard" do
     setup do
+      stub_git_config valid_git_config
       @generator = Jeweler::Generator.new(@project_name, :documentation_framework => :yard)
     end
 
@@ -139,6 +140,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
   context "using yard" do
     setup do
+      stub_git_config valid_git_config
       @generator = Jeweler::Generator.new(@project_name, :documentation_framework => :rdoc)
     end
 
@@ -148,6 +150,10 @@ class TestGeneratorInitialization < Test::Unit::TestCase
   end
 
   context "using options" do
+    setup do
+      stub_git_config valid_git_config
+    end
+
     should "set documentation" do
       generator = Jeweler::Generator.new(@project_name, :documentation_framework => :yard)
       assert_equal :yard, generator.documentation_framework
