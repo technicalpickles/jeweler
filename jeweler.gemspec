@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-08-06}
+  s.date = %q{2009-08-18}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
      "lib/jeweler/commands/check_dependencies.rb",
      "lib/jeweler/commands/install_gem.rb",
      "lib/jeweler/commands/release.rb",
+     "lib/jeweler/commands/release_to_gemcutter.rb",
      "lib/jeweler/commands/release_to_rubyforge.rb",
      "lib/jeweler/commands/setup_rubyforge.rb",
      "lib/jeweler/commands/validate_gemspec.rb",
@@ -64,6 +65,7 @@ Gem::Specification.new do |s|
      "lib/jeweler/commands/version/write.rb",
      "lib/jeweler/commands/write_gemspec.rb",
      "lib/jeweler/errors.rb",
+     "lib/jeweler/gemcutter_tasks.rb",
      "lib/jeweler/gemspec_helper.rb",
      "lib/jeweler/generator.rb",
      "lib/jeweler/generator/application.rb",
@@ -130,6 +132,7 @@ Gem::Specification.new do |s|
      "test/jeweler/commands/test_build_gem.rb",
      "test/jeweler/commands/test_install_gem.rb",
      "test/jeweler/commands/test_release.rb",
+     "test/jeweler/commands/test_release_to_gemcutter.rb",
      "test/jeweler/commands/test_release_to_rubyforge.rb",
      "test/jeweler/commands/test_setup_rubyforge.rb",
      "test/jeweler/commands/test_validate_gemspec.rb",
@@ -169,6 +172,7 @@ Gem::Specification.new do |s|
      "test/jeweler/commands/test_build_gem.rb",
      "test/jeweler/commands/test_install_gem.rb",
      "test/jeweler/commands/test_release.rb",
+     "test/jeweler/commands/test_release_to_gemcutter.rb",
      "test/jeweler/commands/test_release_to_rubyforge.rb",
      "test/jeweler/commands/test_setup_rubyforge.rb",
      "test/jeweler/commands/test_validate_gemspec.rb",
