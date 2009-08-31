@@ -31,10 +31,10 @@ class Jeweler
             generator.run
             return 0
           rescue Jeweler::NoGitUserName
-            $stderr.puts %Q{No user.name found in ~/.gitconfig. Please tell git about yourself (see http://github.com/guides/tell-git-your-user-name-and-email-address for details). For example: git config --global user.name "mad voo"}
+            $stderr.puts %Q{No user.name found in ~/.gitconfig. Please tell git about yourself (see http://help.github.com/git-email-settings/ for details). For example: git config --global user.name "mad voo"}
             return 1
           rescue Jeweler::NoGitUserEmail
-            $stderr.puts %Q{No user.email found in ~/.gitconfig. Please tell git about yourself (see http://github.com/guides/tell-git-your-user-name-and-email-address for details). For example: git config --global user.email mad.vooo@gmail.com}
+            $stderr.puts %Q{No user.email found in ~/.gitconfig. Please tell git about yourself (see http://help.github.com/git-email-settings/ for details). For example: git config --global user.email mad.vooo@gmail.com}
             return 1
           rescue Jeweler::NoGitHubUser
             $stderr.puts %Q{No github.user found in ~/.gitconfig. Please tell git about your GitHub account (see http://github.com/blog/180-local-github-config for details). For example: git config --global github.user defunkt}

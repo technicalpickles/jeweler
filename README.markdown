@@ -39,7 +39,7 @@ The yield object here, `gemspec`, is a `Gem::Specification` object. See the [Cus
 
 ## Using to start a new project
 
-Jeweler provides a generator. It requires you to [setup your name and email for git](http://github.com/guides/tell-git-your-user-name-and-email-address) and [your username and token for GitHub](http://github.com/guides/local-github-config).
+Jeweler provides a generator. It requires you to [setup your name and email for git](http://help.github.com/git-email-settings/) and [your username and token for GitHub](http://github.com/guides/local-github-config).
 
     jeweler the-perfect-gem
 
