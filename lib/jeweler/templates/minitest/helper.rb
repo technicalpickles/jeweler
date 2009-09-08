@@ -1,11 +1,11 @@
 require 'rubygems'
-require 'mini/test'
+require 'minitest/unit'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require '<%= require_name %>'
 
-class Mini::Test::TestCase
+class MiniTest::Unit::TestCase
 end
 
-Mini::Test.autorun
+MiniTest::Unit.autorun

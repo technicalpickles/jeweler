@@ -226,7 +226,7 @@ end
 Then /^'(.+?)' should autorun tests$/ do |test_helper|
   content = File.read(File.join(@working_dir, @name, test_helper))
 
-  assert_match "Mini::Test.autorun", content
+  assert_match "MiniTest::Unit.autorun", content
 end
 
 Then /^cucumber world extends "(.*)"$/ do |module_to_extend|

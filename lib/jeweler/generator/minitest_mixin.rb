@@ -10,11 +10,11 @@ class Jeweler
       end
 
       def feature_support_require
-        'mini/test'
+        'minitest/unit'
       end
 
       def feature_support_extend
-        'Mini::Test::Assertions'
+        'MiniTest::Assertions'
       end
 
       def test_dir

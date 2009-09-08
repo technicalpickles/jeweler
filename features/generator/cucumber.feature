@@ -12,7 +12,7 @@ Feature: generating cucumber stories
     And a file named 'the-perfect-gem/features/the-perfect-gem.feature' is not created
     And a file named 'the-perfect-gem/features/support/env.rb' is not created
     And a file named 'the-perfect-gem/features/steps/the-perfect-gem_steps.rb' is not created
-    
+
   Scenario: basic cucumber setup
     Given a working directory
     And I have configured git sanely
@@ -60,8 +60,8 @@ Feature: generating cucumber stories
     And I want cucumber stories
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then 'features/support/env.rb' requires 'mini/test'
-    And cucumber world extends "Mini::Test::Assertions"
+    Then 'features/support/env.rb' requires 'minitest/unit'
+    And cucumber world extends "MiniTest::Assertions"
 
   Scenario: cucumber setup for rspec
     Given a working directory
