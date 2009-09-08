@@ -62,9 +62,9 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :default_task, 'test'
     should_have_generator_attribute :feature_support_require, 'test/unit/assertions'
     should_have_generator_attribute :feature_support_extend, 'Test::Unit::Assertions'
-    should_have_generator_attribute :test_pattern, 'test/**/*_test.rb'
-    should_have_generator_attribute :test_filename, 'the-perfect-gem_test.rb'
-    should_have_generator_attribute :test_helper_filename, 'test_helper.rb'
+    should_have_generator_attribute :test_pattern, 'test/**/test_*.rb'
+    should_have_generator_attribute :test_filename, 'test_the-perfect-gem.rb'
+    should_have_generator_attribute :test_helper_filename, 'helper.rb'
   end
 
   context "minitest" do

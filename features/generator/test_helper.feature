@@ -37,9 +37,9 @@ Feature: generated test or spec
     Given a working directory
     And I have configured git sanely
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'test/test_helper.rb' requires 'test/unit'
-    And 'test/test_helper.rb' requires 'the-perfect-gem'
-  
+    Then 'test/helper.rb' requires 'test/unit'
+    And 'test/helper.rb' requires 'the-perfect-gem'
+
   Scenario: micronaut
     Given a working directory
     And I have configured git sanely

@@ -22,7 +22,7 @@ Feature: generated Rakefile
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
 
-    
+
     Then 'Rakefile' requires 'rcov/rcovtask'
     And Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
     And Rakefile has 'spec/**/*_spec.rb' for the Rcov::RcovTask pattern
@@ -65,47 +65,47 @@ Feature: generated Rakefile
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'rcov/rcovtask'
-    Then Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
-    And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
+    Then Rakefile has 'test/**/test_*.rb' for the Rake::TestTask pattern
+    And Rakefile has 'test/**/test_*.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
     And Rakefile has "test" as the default task
 
   Scenario: no cucumber
     Given I do not want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'cucumber/rake/task' 
+    Then Rakefile does not require 'cucumber/rake/task'
     And Rakefile does not instantiate a Cucumber::Rake::Task
 
   Scenario: cucumber
     Given I want cucumber stories
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'cucumber/rake/task' 
+    Then Rakefile requires 'cucumber/rake/task'
     And Rakefile instantiates a Cucumber::Rake::Task
 
   Scenario: no reek
     Given I do not want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'reek/rake_task' 
+    Then Rakefile does not require 'reek/rake_task'
     And Rakefile does not instantiate a Reek::RakeTask
 
   Scenario: reek
     Given I want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'reek/rake_task' 
+    Then Rakefile requires 'reek/rake_task'
     And Rakefile instantiates a Reek::RakeTask
 
   Scenario: no roodi
     Given I do not want roodi
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'roodi' 
-    And Rakefile does not require 'roodi_task' 
+    Then Rakefile does not require 'roodi'
+    And Rakefile does not require 'roodi_task'
     And Rakefile does not instantiate a RoodiTask
 
   Scenario: roodi
     Given I want roodi
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'roodi' 
-    And Rakefile requires 'roodi_task' 
+    Then Rakefile requires 'roodi'
+    And Rakefile requires 'roodi_task'
     And Rakefile instantiates a RoodiTask
 
   Scenario: no rubyforge
@@ -121,7 +121,7 @@ Feature: generated Rakefile
   Scenario: yard
     Given I want to use yard instead of rdoc
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    
+
     Then 'Rakefile' does not require 'rake/rdoctask'
     And 'Rakefile' requires 'yard'
     And Rakefile instantiates a YARD::Rake::YardocTask
@@ -129,7 +129,7 @@ Feature: generated Rakefile
   Scenario: rdoc
     Given I want to use rdoc instead of yard
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    
+
     Then 'Rakefile' does not require 'yard'
     And 'Rakefile' requires 'rake/rdoctask'
     And Rakefile does not instantiate a YARD::Rake::YardocTask
