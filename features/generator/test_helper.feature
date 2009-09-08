@@ -29,9 +29,9 @@ Feature: generated test or spec
     Given a working directory
     And I have configured git sanely
     When I generate a shoulda project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'test/test_helper.rb' requires 'test/unit'
-    And 'test/test_helper.rb' requires 'shoulda'
-    And 'test/test_helper.rb' requires 'the-perfect-gem'
+    Then 'test/helper.rb' requires 'test/unit'
+    And 'test/helper.rb' requires 'shoulda'
+    And 'test/helper.rb' requires 'the-perfect-gem'
 
   Scenario: testunit
     Given a working directory

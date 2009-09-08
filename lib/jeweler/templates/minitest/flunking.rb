@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'helper'
 
 class Test<%= constant_name %> < Mini::Test::TestCase
   def test_something_for_real
