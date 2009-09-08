@@ -223,8 +223,8 @@ Then /^Rakefile instantiates a (.*)$/ do |task_name|
 end
 
 
-Then /^'test\/test_helper\.rb' should autorun tests$/ do
-  content = File.read(File.join(@working_dir, @name, 'test/test_helper.rb'))
+Then /^'(.+?)' should autorun tests$/ do |test_helper|
+  content = File.read(File.join(@working_dir, @name, test_helper))
 
   assert_match "Mini::Test.autorun", content
 end

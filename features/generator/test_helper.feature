@@ -14,9 +14,9 @@ Feature: generated test or spec
     Given a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'test/test_helper.rb' requires 'mini/test'
-    And 'test/test_helper.rb' requires 'the-perfect-gem'
-    And 'test/test_helper.rb' should autorun tests
+    Then 'test/helper.rb' requires 'mini/test'
+    And 'test/helper.rb' requires 'the-perfect-gem'
+    And 'test/helper.rb' should autorun tests
 
   Scenario: rspec
     Given a working directory

@@ -13,7 +13,7 @@ Feature: generated test or spec
     Given a working directory
     And I have configured git sanely
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'test/the-perfect-gem_test.rb' should define 'ThePerfectGemTest' as a subclass of 'Mini::Test::TestCase'
+    Then 'test/test_the-perfect-gem.rb' should define 'TestThePerfectGem' as a subclass of 'Mini::Test::TestCase'
 
   Scenario: rspec
     Given a working directory

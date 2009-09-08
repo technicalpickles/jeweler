@@ -33,8 +33,8 @@ Feature: generated Rakefile
     When I generate a minitest project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' requires 'rcov/rcovtask'
-    And Rakefile has 'test/**/*_test.rb' for the Rake::TestTask pattern
-    And Rakefile has 'test/**/*_test.rb' for the Rcov::RcovTask pattern
+    And Rakefile has 'test/**/test_*.rb' for the Rake::TestTask pattern
+    And Rakefile has 'test/**/test_*.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
     And Rakefile has "test" as the default task
 

@@ -32,8 +32,8 @@ Feature: generated directory layout
 
     Then a directory named 'the-perfect-gem/test' is created
 
-    And a file named 'the-perfect-gem/test/test_helper.rb' is created
-    And a file named 'the-perfect-gem/test/the-perfect-gem_test.rb' is created
+    And a file named 'the-perfect-gem/test/helper.rb' is created
+    And a file named 'the-perfect-gem/test/test_the-perfect-gem.rb' is created
 
   Scenario: rspec
     Given a working directory
