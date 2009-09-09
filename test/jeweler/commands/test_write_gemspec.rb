@@ -27,27 +27,36 @@ class Jeweler
 
           @now = Time.now
           stub(Time.now).now { @now }
-
-          @command.run
         end
 
         should "refresh version" do
+          @command.run
           assert_received(@version_helper) {|version_helper| version_helper.refresh }
         end
 
         should "update gemspec version" do
+          @command.run
           assert_equal '1.2.3', @gemspec.version.to_s
         end
 
+        should "not refresh version neither update version if it's set on the gemspec" do
+          @gemspec.version = '2.3.4'
+          @command.run
+          assert_equal '2.3.4', @gemspec.version.to_s
+        end
+
         should "update gemspec date to the beginning of today" do
+          @command.run
           assert_equal Time.mktime(@now.year, @now.month, @now.day, 0, 0), @gemspec.date
         end
 
         should "write gemspec" do
+          @command.run
           assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.write }
         end
 
         should_eventually "output that the gemspec was written" do
+          @command.run
           assert_equal @output.string, "Generated: tmp/zomg.gemspec"
         end
 

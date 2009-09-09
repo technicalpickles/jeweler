@@ -8,10 +8,12 @@ class Jeweler
       end
 
       def run
-        version_helper.refresh
-        gemspec_helper.spec.version = version_helper.to_s
-        gemspec_helper.spec.date    = Time.now
+        gemspec_helper.spec.version ||= begin
+          version_helper.refresh
+          version_helper.to_s
+        end
 
+        gemspec_helper.spec.date    = Time.now
         gemspec_helper.write
 
         output.puts "Generated: #{gemspec_helper.path}"  

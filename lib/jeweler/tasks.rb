@@ -53,7 +53,7 @@ class Jeweler
   private
     def define
       task :version_required do
-        unless jeweler.version_exists?
+        if gemspec.version.nil? && !jeweler.version_exists?
           abort "Expected VERSION or VERSION.yml to exist. See version:write to create an initial one."
         end
       end
@@ -88,31 +88,33 @@ class Jeweler
         $stdout.puts "Current version: #{jeweler.version}"
       end
 
-      namespace :version do
-        desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH. Also recognizes BUILD, which defaults to nil"
-        task :write do
-          major, minor, patch, build = ENV['MAJOR'].to_i, ENV['MINOR'].to_i, ENV['PATCH'].to_i, (ENV['BUILD'] || nil )
-          jeweler.write_version(major, minor, patch, build, :announce => false, :commit => false)
-          $stdout.puts "Updated version: #{jeweler.version}"
-        end
-
-        namespace :bump do
-          desc "Bump the gemspec by a major version."
-          task :major => [:version_required, :version] do
-            jeweler.bump_major_version
+      if gemspec.version.nil?
+        namespace :version do
+          desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH. Also recognizes BUILD, which defaults to nil"
+          task :write do
+            major, minor, patch, build = ENV['MAJOR'].to_i, ENV['MINOR'].to_i, ENV['PATCH'].to_i, (ENV['BUILD'] || nil )
+            jeweler.write_version(major, minor, patch, build, :announce => false, :commit => false)
             $stdout.puts "Updated version: #{jeweler.version}"
           end
 
-          desc "Bump the gemspec by a minor version."
-          task :minor => [:version_required, :version] do
-            jeweler.bump_minor_version
-            $stdout.puts "Updated version: #{jeweler.version}"
-          end
+          namespace :bump do
+            desc "Bump the gemspec by a major version."
+            task :major => [:version_required, :version] do
+              jeweler.bump_major_version
+              $stdout.puts "Updated version: #{jeweler.version}"
+            end
 
-          desc "Bump the gemspec by a patch version."
-          task :patch => [:version_required, :version] do
-            jeweler.bump_patch_version
-            $stdout.puts "Updated version: #{jeweler.version}"
+            desc "Bump the gemspec by a minor version."
+            task :minor => [:version_required, :version] do
+              jeweler.bump_minor_version
+              $stdout.puts "Updated version: #{jeweler.version}"
+            end
+
+            desc "Bump the gemspec by a patch version."
+            task :patch => [:version_required, :version] do
+              jeweler.bump_patch_version
+              $stdout.puts "Updated version: #{jeweler.version}"
+            end
           end
         end
       end
