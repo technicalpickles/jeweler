@@ -8,7 +8,7 @@ rescue LoadError => e
   puts "*" * 80
   puts "Some dependencies needed to run tests were missing. Run the following command to find them:"
   puts
-  puts "\trake development_dependencies:check"
+  puts "\trake check_dependencies:development"
   puts "*" * 80
   exit 1
 end
