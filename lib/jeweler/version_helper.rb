@@ -3,7 +3,7 @@ require 'yaml'
 class Jeweler
   class VersionHelper
     attr_accessor :base_dir
-    attr_reader :major, :minor, :patch
+    attr_reader :major, :minor, :patch, :build
 
     module YamlExtension
       def write
@@ -16,7 +16,8 @@ class Jeweler
         {
           :major => major,
           :minor => minor,
-          :patch => patch
+          :patch => patch,
+          :build => build
         }
       end
 
@@ -29,6 +30,7 @@ class Jeweler
         @major = (yaml['major'] || yaml[:major]).to_i
         @minor = (yaml['minor'] || yaml[:minor]).to_i
         @patch = (yaml['patch'] || yaml[:patch]).to_i
+        @build = (yaml['build'] || yaml[:build])
       end
 
       def read_yaml
@@ -91,25 +93,29 @@ class Jeweler
       @major += 1
       @minor = 0
       @patch = 0
+      @build = nil
     end
 
     def bump_minor
       @minor += 1
       @patch = 0
+      @build = nil
     end
 
     def bump_patch
       @patch += 1
+      @build = nil
     end
 
-    def update_to(major, minor, patch)
+    def update_to(major, minor, patch, build=nil)
       @major = major
       @minor = minor
       @patch = patch
+      @build = build
     end
 
     def to_s
-      "#{major}.#{minor}.#{patch}"
+      [major, minor, patch, build].compact.join('.')
     end
 
     def yaml_path

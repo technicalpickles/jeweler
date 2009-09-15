@@ -4,7 +4,7 @@ class TestVersionHelper < Test::Unit::TestCase
 
   VERSION_TMP_DIR = File.dirname(__FILE__) + '/version_tmp'
 
-  def self.should_have_version(major, minor, patch)
+  def self.should_have_version(major, minor, patch, build=nil)
     should "have major version #{major}" do
       assert_equal major, @version_helper.major
     end
@@ -17,7 +17,11 @@ class TestVersionHelper < Test::Unit::TestCase
       assert_equal patch, @version_helper.patch
     end
 
-    version_s = "#{major}.#{minor}.#{patch}"
+    should "have build version #{build}" do
+      assert_equal build, @version_helper.build
+    end
+
+    version_s = [major, minor, patch, build].compact.join('.')
     should "render string as #{version_s.inspect}" do
       assert_equal version_s, @version_helper.to_s
     end
@@ -54,6 +58,34 @@ class TestVersionHelper < Test::Unit::TestCase
     context "bumping the patch version" do
       setup { @version_helper.bump_patch }
       should_have_version 3, 5, 5
+    end
+  end
+
+  context "VERSION.yml with 3.5.4.a1" do
+    setup do
+      FileUtils.rm_rf VERSION_TMP_DIR
+      FileUtils.mkdir_p VERSION_TMP_DIR
+
+      build_version_yml VERSION_TMP_DIR, 3, 5, 4, 'a1'
+
+      @version_helper = Jeweler::VersionHelper.new VERSION_TMP_DIR
+    end
+
+    should_have_version 3, 5, 4, 'a1'
+
+    context "bumping major version" do
+      setup { @version_helper.bump_major }
+      should_have_version 4, 0, 0, nil
+    end
+
+    context "bumping the minor version" do
+      setup { @version_helper.bump_minor }
+      should_have_version 3, 6, 0, nil
+    end
+
+    context "bumping the patch version" do
+      setup { @version_helper.bump_patch }
+      should_have_version 3, 5, 5, nil
     end
   end
 
@@ -131,7 +163,7 @@ class TestVersionHelper < Test::Unit::TestCase
     end
   end
 
-  def build_version_yml(base_dir, major, minor, patch)
+  def build_version_yml(base_dir, major, minor, patch, build=nil)
     version_path = File.join(base_dir, 'VERSION.yml')
 
     File.open(version_path, 'w+') do |f|
@@ -140,14 +172,15 @@ class TestVersionHelper < Test::Unit::TestCase
         'minor' => minor.to_i,
         'patch' => patch.to_i
       }
+      version_hash['build'] = build if build
       YAML.dump(version_hash, f)
     end
   end
 
-  def build_version_plaintext(base_dir, major, minor, patch)
+  def build_version_plaintext(base_dir, major, minor, patch, build=nil)
     version_path = File.join(base_dir, 'VERSION')
     File.open(version_path, 'w+') do |f|
-      f.puts "#{major}.#{minor}.#{patch}"
+      f.puts [major, minor, patch, build].compact.join('.')
     end
   end
 end

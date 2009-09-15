@@ -34,7 +34,7 @@ When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
   @exited_cleanly = $?.exited?
 end
 
-Then /^the updated version, (\d+\.\d+\.\d+), is displayed$/ do |version|
+Then /^the updated version, (.*), is displayed$/ do |version|
   assert_match "Updated version: #{version}", @stdout
 end
 
