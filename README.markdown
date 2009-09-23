@@ -105,7 +105,22 @@ Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There ar
 
  * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
  * Install the Gemcutter gem: sudo gem install gemcutter
- * Run 'gemcutter tumble' to set up gemcutter
+ * Run 'gemcutter tumble' to set up RubyGems to use gemcutter as the default source
+ * Update your Rakefile to make an instance of `Jeweler::GemcutterTasks`
+
+
+A Rakefile setup for gemcutter would include something like this:
+
+    begin
+      require 'jeweler'
+      Jeweler::Tasks.new do |gem|
+        # ommitted for brevity
+      end
+      Jeweler::GemcutterTasks.new
+    rescue LoadError
+      puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+    end
+
 
 With all that setup out of the way, you can now release to Gemcutter with impunity. This would release the current version of your gem.
 
@@ -116,59 +131,33 @@ With all that setup out of the way, you can now release to Gemcutter with impuni
 Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There are a few steps you need to do before doing any RubyForge releases with Jeweler:
 
  * [Create an account on RubyForge](http://rubyforge.org/account/register.php)
- * Request a project on RubyForge. This involves waiting for a project approval, which can take any amount of time from a few hours to a week
-   * You might want to create an umbrella project where you can publish your gems, instead of one project per gem
+ * Request a project on RubyForge.
  * Install the RubyForge gem: sudo gem install rubyforge
  * Run 'rubyforge setup' and fill in your username and password for RubyForge
  * Run 'rubyforge config' to pull down information about your projects
  * Run 'rubyforge login' to make sure you are able to login
 
-With this in place, you now update your Jeweler::Tasks to setup `rubyforge_project` with the RubyForge project you've just created. (Note, using `jeweler --rubyforge` when generating the project does this for you automatically.)
+After having done this, you need to update your `Rakefile`:
+
+ * In Jeweler::Tasks, you must set `rubyforge_project` to the project you just created
+ * Add Jeweler::RubyforgeTasks to bring in the appropriate tasks.
+ * Note, using `jeweler --rubyforge` when generating the project does this for you automatically.
 
     begin
       require 'jeweler'
       Jeweler::Tasks.new do |s|
-        s.name = "the-perfect-gem"
-        s.summary = "TODO"
-        s.description = "TODO"
-        s.email = "josh@technicalpickles.com"
-        s.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-        s.description = "TODO"
-        s.authors = ["Josh Nichols"]
+        # ommitted for brevity
         s.rubyforge_project = 'the-perfect-gem' # This line would be new
       end
-    rescue LoadError
-      puts "Jeweler not available. Install it with: sudo gem install jeweler"
-    end
 
-    # These are new tasks
-    begin
-      require 'rake/contrib/sshpublisher'
-      namespace :rubyforge do
-        
-        desc "Release gem and RDoc documentation to RubyForge"
-        task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
-        
-        namespace :release do
-          desc "Publish RDoc to RubyForge."
-          task :docs => [:rdoc] do
-            config = YAML.load(
-                File.read(File.expand_path('~/.rubyforge/user-config.yml'))
-            )
-    
-            host = "#{config['username']}@rubyforge.org"
-            remote_dir = "/var/www/gforge-projects/the-perfect-gem/"
-            local_dir = 'rdoc'
-    
-            Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload
-          end
-        end
+      Jeweler::RubyforgeTasks.new do |rubyforge|
+        rubyforge.doc_task = "rdoc"
       end
     rescue LoadError
-      puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
+      puts "Jeweler, or a dependency, not available. Install it with: sudo gem install jeweler"
     end
 
-Now you must initially create a 'package' for your gem in your 'project':
+Now you must initially create a 'package' for your gem in your RubyForge 'project':
 
     $ rake rubyforge:setup
 
@@ -176,7 +165,7 @@ With all that setup out of the way, you can now release to RubyForge with impuni
 
     $ rake rubyforge:release
 
-## Workflow
+## Release Workflow
 
  * Hack, commit, hack, commit, etc, etc
  * `rake version:bump:patch release` to do the actual version bump and release
