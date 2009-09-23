@@ -117,6 +117,34 @@ class TestVersionHelper < Test::Unit::TestCase
     end
   end
 
+  context "VERSION with 3.5.4.a1" do
+    setup do
+      FileUtils.rm_rf VERSION_TMP_DIR
+      FileUtils.mkdir_p VERSION_TMP_DIR
+
+      build_version_plaintext VERSION_TMP_DIR, 3, 5, 4, 'a1'
+
+      @version_helper = Jeweler::VersionHelper.new VERSION_TMP_DIR
+    end
+
+    should_have_version 3, 5, 4, 'a1'
+
+    context "bumping major version" do
+      setup { @version_helper.bump_major }
+      should_have_version 4, 0, 0, nil
+    end
+
+    context "bumping the minor version" do
+      setup { @version_helper.bump_minor }
+      should_have_version 3, 6, 0, nil
+    end
+
+    context "bumping the patch version" do
+      setup { @version_helper.bump_patch }
+      should_have_version 3, 5, 5, nil
+    end
+  end
+
   context "Non-existant VERSION.yml" do
     setup do
       FileUtils.rm_rf VERSION_TMP_DIR

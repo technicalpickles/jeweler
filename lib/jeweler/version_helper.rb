@@ -55,10 +55,13 @@ class Jeweler
 
       def parse_plaintext
         plaintext = read_plaintext.chomp
-        if plaintext =~ /^(\d+)\.(\d+)\.(\d+)$/
+        # http://rubular.com/regexes/10467 -> 3.5.4.a1
+        # http://rubular.com/regexes/10468 -> 3.5.4
+        if plaintext =~ /^(\d+)\.(\d+)\.(\d+)(?:\.(.*?))?$/
           @major = $1.to_i
           @minor = $2.to_i
           @patch = $3.to_i
+          @build = $4
         end
       end
 
