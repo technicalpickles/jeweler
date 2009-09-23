@@ -122,10 +122,11 @@ class TestJeweler < Test::Unit::TestCase
     mock(command).major=(1)
     mock(command).minor=(5)
     mock(command).patch=(2)
+    mock(command).build=('a1')
 
     mock(Jeweler::Commands::Version::Write).build_for(jeweler) { command }
 
-    jeweler.write_version(1, 5, 2)
+    jeweler.write_version(1, 5, 2, 'a1')
   end
 
   should "build and run release command when running release" do
