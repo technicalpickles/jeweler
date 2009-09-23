@@ -136,12 +136,11 @@ Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There ar
  * Run 'rubyforge setup' and fill in your username and password for RubyForge
  * Run 'rubyforge config' to pull down information about your projects
  * Run 'rubyforge login' to make sure you are able to login
-
-After having done this, you need to update your `Rakefile`:
-
  * In Jeweler::Tasks, you must set `rubyforge_project` to the project you just created
  * Add Jeweler::RubyforgeTasks to bring in the appropriate tasks.
  * Note, using `jeweler --rubyforge` when generating the project does this for you automatically.
+
+A Rakefile setup for rubyforge would include something like this:
 
     begin
       require 'jeweler'
