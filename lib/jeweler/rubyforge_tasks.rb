@@ -32,13 +32,21 @@ class Jeweler
     def initialize
       yield self if block_given?
 
-      self.jeweler = Rake.application.jeweler
-
-      self.remote_doc_path ||= jeweler.gemspec.name
-      self.project ||= jeweler.gemspec.rubyforge_project
       self.doc_task ||= :rdoc
 
       define
+    end
+
+    def jeweler
+      @jeweler ||= Rake.application.jeweler
+    end
+
+    def remote_doc_path
+      @remote_doc_path ||= jeweler.gemspec.name
+    end
+
+    def project
+      @project ||= jeweler.gemspec.rubyforge_project
     end
 
     def define

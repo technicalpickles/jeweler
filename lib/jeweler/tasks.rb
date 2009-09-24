@@ -2,7 +2,11 @@ require 'rake'
 require 'rake/tasklib'
 
 class Rake::Application
-  attr_accessor :jeweler
+  attr_accessor :jeweler_tasks
+
+  def jeweler
+    jeweler_tasks.jeweler
+  end
 end
 
 class Jeweler
@@ -33,11 +37,17 @@ class Jeweler
 
     def initialize(gemspec = nil, &block)
       @gemspec = gemspec || Gem::Specification.new
-      @jeweler = Jeweler.new(@gemspec)
-      yield @gemspec if block_given?
+      if block_given?
+        jeweler # preload it
+        yield @gemspec
+      end
 
-      Rake.application.jeweler = @jeweler
+      Rake.application.jeweler_tasks = self
       define
+    end
+
+    def jeweler
+      @jeweler ||= Jeweler.new(gemspec)
     end
 
   private
