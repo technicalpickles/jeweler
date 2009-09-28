@@ -1,7 +1,5 @@
 require 'rake'
 require 'rake/tasklib'
-require 'rake/contrib/sshpublisher'
-
 
 class Jeweler
   # Rake tasks for putting a Jeweler gem on Rubyforge.

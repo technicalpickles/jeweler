@@ -171,10 +171,6 @@ class Jeweler
         should "assign output" do
           assert_equal @output, @command.output
         end
-
-        should "assign rubyforge" do
-          assert_equal @rubyforge, @command.rubyforge
-        end
       end
 
     end

@@ -3,6 +3,13 @@ class Jeweler
     class SetupRubyforge
       attr_accessor :gemspec, :output, :rubyforge
 
+
+      def initialize
+        self.output = $stdout
+        require 'rubyforge'
+        self.rubyforge = RubyForge.new
+      end
+
       def run
         raise NoRubyForgeProjectInGemspecError unless @gemspec.rubyforge_project
 
@@ -48,7 +55,6 @@ class Jeweler
 
         command.gemspec = jeweler.gemspec
         command.output = jeweler.output
-        command.rubyforge = jeweler.rubyforge
 
         command
       end

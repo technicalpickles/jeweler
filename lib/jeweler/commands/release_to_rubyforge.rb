@@ -1,5 +1,3 @@
-require 'rubyforge'
-
 class Jeweler
   module Commands
     class ReleaseToRubyforge
@@ -7,9 +5,13 @@ class Jeweler
 
       def initialize
         self.output = $stdout
+
+        require 'rubyforge'
+        self.rubyforge = RubyForge.new
       end
 
       def run
+
         raise NoRubyForgeProjectInGemspecError unless @gemspec.rubyforge_project
         
         @rubyforge.configure rescue nil
@@ -40,7 +42,6 @@ class Jeweler
         command.gemspec = jeweler.gemspec
         command.gemspec_helper = jeweler.gemspec_helper
         command.version = jeweler.version
-        command.rubyforge = jeweler.rubyforge
         command.output = jeweler.output
 
         command

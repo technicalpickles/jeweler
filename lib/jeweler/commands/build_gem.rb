@@ -9,6 +9,7 @@ class Jeweler
 
       def run
         gemspec = gemspec_helper.parse
+        require 'rubygems/builder'
         gem_file_name = Gem::Builder.new(gemspec).build
 
         pkg_dir = File.join(base_dir, 'pkg')

@@ -1,3 +1,4 @@
+
 class Jeweler
   class Generator
     class Options < Hash
@@ -10,6 +11,7 @@ class Jeweler
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
 
+        require 'optparse'
         @opts = OptionParser.new do |o|
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
 

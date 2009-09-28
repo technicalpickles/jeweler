@@ -31,6 +31,9 @@ class Jeweler
   end    
 
   class Generator    
+    require 'jeweler/generator/options'
+    require 'jeweler/generator/application'
+
     attr_accessor :target_dir, :user_name, :user_email, :summary,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_repo, 

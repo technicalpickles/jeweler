@@ -1,14 +1,21 @@
-require 'jeweler/commands/build_gem'
-require 'jeweler/commands/install_gem'
-require 'jeweler/commands/check_dependencies'
-require 'jeweler/commands/release'
-require 'jeweler/commands/release_to_gemcutter'
-require 'jeweler/commands/release_to_rubyforge'
-require 'jeweler/commands/setup_rubyforge'
-require 'jeweler/commands/validate_gemspec'
-require 'jeweler/commands/write_gemspec'
-require 'jeweler/commands/version/base'
-require 'jeweler/commands/version/bump_major'
-require 'jeweler/commands/version/bump_minor'
-require 'jeweler/commands/version/bump_patch'
-require 'jeweler/commands/version/write'
+class Jeweler
+  module Commands
+    autoload :BuildGem, 'jeweler/commands/build_gem'
+    autoload :InstallGem, 'jeweler/commands/install_gem'
+    autoload :CheckDependencies, 'jeweler/commands/check_dependencies'
+    autoload :Release, 'jeweler/commands/release'
+    autoload :ReleaseToGemcutter, 'jeweler/commands/release_to_gemcutter'
+    autoload :ReleaseToRubyforge, 'jeweler/commands/release_to_rubyforge'
+    autoload :SetupRubyforge, 'jeweler/commands/setup_rubyforge'
+    autoload :ValidateGemspec, 'jeweler/commands/validate_gemspec'
+    autoload :WriteGemspec, 'jeweler/commands/write_gemspec'
+
+    module Version
+      autoload :Base,      'jeweler/commands/version/base'
+      autoload :BumpMajor, 'jeweler/commands/version/bump_major'
+      autoload :BumpMinor, 'jeweler/commands/version/bump_minor'
+      autoload :BumpPatch, 'jeweler/commands/version/bump_patch'
+      autoload :Write,     'jeweler/commands/version/write'
+    end
+  end
+end

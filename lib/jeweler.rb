@@ -1,28 +1,24 @@
 require 'date'
-require 'rubygems/user_interaction'
-require 'rubygems/builder'
-require 'rubyforge'
-
-require 'jeweler/errors'
-require 'jeweler/version_helper'
-require 'jeweler/gemspec_helper'
-require 'jeweler/generator'
-require 'jeweler/generator/options'
-require 'jeweler/generator/application'
-
-require 'jeweler/commands'
-
-require 'jeweler/tasks'
-require 'jeweler/gemcutter_tasks'
-require 'jeweler/rubyforge_tasks'
-
-require 'jeweler/specification'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 class Jeweler
+  require 'jeweler/errors'
+  require 'rubygems/user_interaction'
+
+  autoload :Generator,      'jeweler/generator'
+
+  autoload :Commands,       'jeweler/commands'
+  
+  autoload :VersionHelper,  'jeweler/version_helper'
+  autoload :GemSpecHelper,  'jeweler/gemspec_helper'
+
+  autoload :Tasks,          'jeweler/tasks'
+  autoload :GemcutterTasks, 'jeweler/gemcutter_tasks'
+  autoload :RubyforgeTasks, 'jeweler/rubyforge_tasks'
+  autoload :Specification,  'jeweler/specification'
 
   attr_reader :gemspec, :gemspec_helper, :version_helper
-  attr_accessor :base_dir, :output, :repo, :commit, :rubyforge
+  attr_accessor :base_dir, :output, :repo, :commit
 
   def initialize(gemspec, base_dir = '.')
     raise(GemspecError, "Can't create a Jeweler with a nil gemspec") if gemspec.nil?
@@ -37,7 +33,6 @@ class Jeweler
     @output         = $stdout
     @commit         = true
     @gemspec_helper = GemSpecHelper.new(gemspec, base_dir)
-    @rubyforge      = RubyForge.new
   end
 
   # Major version, as defined by the gemspec's Version module.
