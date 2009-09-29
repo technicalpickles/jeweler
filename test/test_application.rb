@@ -25,42 +25,23 @@ class TestApplication < Test::Unit::TestCase
     result
   end
 
+  def stub_options(options)
+    stub(options).opts { 'Usage:' }
+
+    stub(Jeweler::Generator::Options).new { options }
+
+    options
+  end
+
   def self.should_exit_with_code(code)
     should "exit with code #{code}" do
       assert_equal code, @result
     end
   end
 
-  context "called without any args" do
+  context "when options indicate help usage" do
     setup do
-      @result = run_application
-    end
-
-    should_exit_with_code 1
-
-    should 'display usage on stderr' do
-      assert_match 'Usage:', @stderr
-    end
-
-    should 'not display anything on stdout' do
-      assert_equal '', @stdout.squeeze.strip
-    end
-  end
-
-  def build_generator(name = 'zomg', options = {:testing_framework => :shoulda})
-    stub(Git).global_config() do
-      {'user.name' => 'John Doe', 'user.email' => 'john@example.com', 'github.user' => 'johndoe', 'github.token' => 'yyz'}
-    end
-
-    options = options.merge(:project_name => name)
-
-    Jeweler::Generator.new(options)
-  end
-
-  context "called with -h" do
-    setup do
-      @generator = build_generator
-      stub(@generator).run
+      stub_options :show_help => true
       stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
 
       assert_nothing_raised do
@@ -70,7 +51,7 @@ class TestApplication < Test::Unit::TestCase
 
     should_exit_with_code 1
 
-    should 'display usage on stderr' do
+    should 'should puts option usage' do
       assert_match 'Usage:', @stderr
     end
 
@@ -79,10 +60,9 @@ class TestApplication < Test::Unit::TestCase
     end
   end
 
-  context "called with --invalid-argument" do
+  context "when options indicate an invalid argument" do
     setup do
-      @generator = build_generator
-      stub(@generator).run
+      stub_options :invalid_argument => '--invalid-argument'
       stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
 
       assert_nothing_raised do
@@ -103,38 +83,29 @@ class TestApplication < Test::Unit::TestCase
     should 'not display anything on stdout' do
       assert_equal '', @stdout.squeeze.strip
     end
+
   end
 
-  context "when called with repo name" do
+  context "when options are good" do
     setup do
-      @options = {:testing_framework => :shoulda, :documentation_framework => :rdoc}
-      @generator = build_generator('zomg', @options)
-
+      @options   = stub_options :project_name => 'zomg'
+      @generator = "generator"
       stub(@generator).run
       stub(Jeweler::Generator).new { @generator }
-    end
 
-    should 'return exit code 0' do
-      result = run_application("zomg")
-      assert_equal 0, result
-    end
-    
-    should 'create generator with repo name and no options' do
-      run_application("zomg")
-
-      assert_received Jeweler::Generator do |subject|
-        subject.new(@options.merge(:project_name => 'zomg'))
+      assert_nothing_raised do
+        @result = run_application("zomg")
       end
     end
 
-    should 'run generator' do
-      run_application("zomg")
+    should_exit_with_code 0
 
-      assert_received(@generator) {|subject| subject.run }
+    should "create generator with options" do
+      assert_received(Jeweler::Generator) {|subject| subject.new(@options) }
     end
 
-    should 'not display usage on stderr' do
-      assert_no_match /Usage:/, @stderr
+    should "run generator" do
+      assert_received(@generator) {|subject| subject.run }
     end
   end
 

@@ -11,6 +11,12 @@ class Jeweler
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
 
+        git_config = Git.global_config
+        self[:user_name]       = git_config['user.name']
+        self[:user_email]      = git_config['user.email']
+        self[:github_username] = git_config['github.user']
+        self[:github_token]    = git_config['github.token']
+
         require 'optparse'
         @opts = OptionParser.new do |o|
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
@@ -73,6 +79,22 @@ class Jeweler
 
           o.on('--directory [DIRECTORY]', 'specify the directory to generate into') do |directory|
             self[:directory] = directory
+          end
+
+          o.on('--user-name [USER_NAME]', "the user's name, ie that is credited in the LICENSE") do |user_name|
+            self[:user_name] = user_name
+          end
+
+          o.on('--user-email [USER_EMAIL]', "the user's email, ie that is credited in the Gem specification") do |user_email|
+            self[:user_email] = user_email
+          end
+
+          o.on('--github-username [GITHUB_USERNAME]', "name of the user on GitHub to set the project up under") do |github_username|
+            self[:github_username] = github_username
+          end
+
+          o.on('--github-token [GITHUB_TOKEN]', "GitHub token to use for interacting with the GitHub API") do |github_token|
+            self[:github_token] = github_token
           end
 
           o.on('--yard', 'use yard for documentation') do

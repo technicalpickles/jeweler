@@ -2,26 +2,12 @@ require 'test_helper'
 
 class TestGeneratorInitialization < Test::Unit::TestCase
   def setup
-    @project_name = 'the-perfect-gem'
-    @git_name = 'foo'
-    @git_email = 'bar@example.com'
-    @github_user = 'technicalpickles'
-    @github_token = 'zomgtoken'
-  end
-
-  def stub_git_config(options = {})
-    stub(Git).global_config() { options }
-  end
-
-  def valid_git_config
-    { 'user.name' => @git_name, 'user.email' => @git_email, 'github.user' => @github_user, 'github.token' => @github_token }
+    set_default_git_config
   end
 
   context "given a nil github repo name" do
     setup do
       stub_git_config
-
-      @block = lambda {  }
     end
 
     should 'raise NoGithubRepoNameGiven' do

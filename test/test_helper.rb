@@ -156,4 +156,20 @@ class Test::Unit::TestCase
     end
 
   end
+
+  def stub_git_config(options = {})
+    stub(Git).global_config() { options }
+  end
+
+  def set_default_git_config
+    @project_name = 'the-perfect-gem'
+    @git_name = 'foo'
+    @git_email = 'bar@example.com'
+    @github_user = 'technicalpickles'
+    @github_token = 'zomgtoken'
+  end
+
+  def valid_git_config
+    { 'user.name' => @git_name, 'user.email' => @git_email, 'github.user' => @github_user, 'github.token' => @github_token }
+  end
 end
