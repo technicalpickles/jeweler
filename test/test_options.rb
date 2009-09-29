@@ -15,7 +15,7 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def setup_options(*arguments)
-    @options = Jeweler::Generator::Options.new(arguments)
+    @options = Jeweler::Generator::Options.new(["project_name"] + arguments)
   end
 
   def self.for_options(*options)
@@ -31,6 +31,9 @@ class TestOptions < Test::Unit::TestCase
     should_have_docmentation_framework :rdoc
     should 'not create repository' do
       assert ! @options[:create_repo]
+    end
+    should "have project name" do
+      assert_equal "project_name", @options[:project_name]
     end
   end
 

@@ -90,6 +90,7 @@ class Jeweler
 
         begin
           @opts.parse!(args)
+          self[:project_name] = args.shift
         rescue OptionParser::InvalidOption => e
           self[:invalid_argument] = e.message
         end

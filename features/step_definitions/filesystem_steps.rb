@@ -26,7 +26,7 @@ When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
   full_path = File.join(@working_dir, directory)
 
   lib_path = File.expand_path 'lib'
-  command.gsub!(/^rake /, "rake -I#{lib_path} ")
+  command.gsub!(/^rake /, "rake --trace -I#{lib_path} ")
 
   assert File.directory?(full_path), "#{full_path} is not a directory"
 

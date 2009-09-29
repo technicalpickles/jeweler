@@ -52,7 +52,9 @@ class TestApplication < Test::Unit::TestCase
       {'user.name' => 'John Doe', 'user.email' => 'john@example.com', 'github.user' => 'johndoe', 'github.token' => 'yyz'}
     end
 
-    Jeweler::Generator.new(name, options)
+    options = options.merge(:project_name => name)
+
+    Jeweler::Generator.new(options)
   end
 
   context "called with -h" do
@@ -121,7 +123,7 @@ class TestApplication < Test::Unit::TestCase
       run_application("zomg")
 
       assert_received Jeweler::Generator do |subject|
-        subject.new('zomg', @options)
+        subject.new(@options.merge(:project_name => 'zomg'))
       end
     end
 

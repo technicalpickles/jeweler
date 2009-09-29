@@ -45,15 +45,13 @@ class Jeweler
     DEFAULT_TESTING_FRAMEWORK = :shoulda
     DEFAULT_DOCUMENTATION_FRAMEWORK = :rdoc
 
-    def initialize(project_name, options = {})
-      if project_name.nil? || project_name.squeeze.strip == ""
+    def initialize(options = {})
+      self.project_name   = options[:project_name]
+      if self.project_name.nil? || self.project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
 
       self.development_dependencies = []
-
-      self.project_name   = project_name
-
       self.testing_framework  = (options[:testing_framework] || DEFAULT_TESTING_FRAMEWORK).to_sym
       self.documentation_framework = options[:documentation_framework] || DEFAULT_DOCUMENTATION_FRAMEWORK
       begin

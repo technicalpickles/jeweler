@@ -19,15 +19,13 @@ class Jeweler
             return 1
           end
 
-          unless arguments.size == 1
+          if options[:project_name].nil? || options[:project_name].squeeze.strip == ""
             $stderr.puts options.opts
             return 1
           end
 
-          project_name = arguments.first
-
           begin
-            generator = Jeweler::Generator.new(project_name, options)
+            generator = Jeweler::Generator.new(options)
             generator.run
             return 0
           rescue Jeweler::NoGitUserName

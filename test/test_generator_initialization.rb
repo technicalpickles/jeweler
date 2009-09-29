@@ -26,7 +26,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGithubRepoNameGiven' do
       assert_raise Jeweler::NoGitHubRepoNameGiven do
-        Jeweler::Generator.new(nil)
+        Jeweler::Generator.new()
       end
     end
   end
@@ -38,7 +38,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise an NoGitUserName' do
       assert_raise Jeweler::NoGitUserName do
-        Jeweler::Generator.new(@project_name)
+        Jeweler::Generator.new(:project_name => @project_name)
       end
     end
   end
@@ -50,7 +50,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitUserName' do
       assert_raise Jeweler::NoGitUserEmail do
-        Jeweler::Generator.new(@project_name)
+        Jeweler::Generator.new(:project_name => @project_name)
       end
     end
   end
@@ -62,7 +62,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NotGitHubUser' do
       assert_raise Jeweler::NoGitHubUser do
-        Jeweler::Generator.new(@project_name)
+        Jeweler::Generator.new(:project_name => @project_name)
       end
     end
   end
@@ -74,7 +74,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitHubToken if creating repo' do
       assert_raise Jeweler::NoGitHubToken do
-        Jeweler::Generator.new(@project_name, :create_repo => true)
+        Jeweler::Generator.new(:project_name => @project_name, :create_repo => true)
       end
     end
   end
@@ -82,7 +82,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
   context "default configuration" do
     setup do
       stub_git_config valid_git_config
-      @generator = Jeweler::Generator.new(@project_name)
+      @generator = Jeweler::Generator.new(:project_name => @project_name)
     end
 
     should "use shoulda for testing" do
@@ -129,7 +129,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
   context "using yard" do
     setup do
       stub_git_config valid_git_config
-      @generator = Jeweler::Generator.new(@project_name, :documentation_framework => :yard)
+      @generator = Jeweler::Generator.new(:project_name => @project_name, :documentation_framework => :yard)
     end
 
     should "set the doc_task to yardoc" do
@@ -141,7 +141,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
   context "using yard" do
     setup do
       stub_git_config valid_git_config
-      @generator = Jeweler::Generator.new(@project_name, :documentation_framework => :rdoc)
+      @generator = Jeweler::Generator.new(:project_name => @project_name, :documentation_framework => :rdoc)
     end
 
     should "set the doc_task to rdoc" do
@@ -155,7 +155,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
     end
 
     should "set documentation" do
-      generator = Jeweler::Generator.new(@project_name, :documentation_framework => :yard)
+      generator = Jeweler::Generator.new(:project_name => @project_name, :documentation_framework => :yard)
       assert_equal :yard, generator.documentation_framework
     end
   end

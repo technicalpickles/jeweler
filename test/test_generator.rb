@@ -7,59 +7,7 @@ class TestGenerator < Test::Unit::TestCase
     end
 
     options[:testing_framework] = testing_framework
-    Jeweler::Generator.new('the-perfect-gem', options)
-  end
-
-  context "initialize" do
-    should "raise error if nil repo name given" do
-      assert_raise Jeweler::NoGitHubRepoNameGiven do
-        Jeweler::Generator.new(nil)
-      end
-    end
-
-    should "raise error if blank repo name given" do
-      assert_raise Jeweler::NoGitHubRepoNameGiven do
-        Jeweler::Generator.new("")
-      end
-    end
-
-    should "have shoulda as default framework" do
-      assert_equal :shoulda, build_generator.testing_framework
-    end
-
-    should "have repository name as default target dir" do
-      assert_equal 'the-perfect-gem', build_generator.target_dir
-    end
-
-    should "have default summary" do
-      assert_equal "TODO: one-line summary of your gem", build_generator.summary
-    end
-
-    should "have default description" do
-      assert_equal "TODO: longer description of your gem", build_generator.description
-    end
-
-    should "not create repo by default" do
-      assert ! build_generator.should_create_repo
-    end
-
-    should "not use cucumber by default" do
-      assert ! build_generator.should_use_cucumber
-    end
-
-    should "not use reek by default" do
-      assert ! build_generator.should_use_reek
-    end
-
-    should "not use roodi by default" do
-      assert ! build_generator.should_use_roodi
-    end
-
-    should "raise error for invalid testing frameworks" do
-      assert_raise ArgumentError do
-        build_generator(:zomg_invalid)
-      end
-    end
+    Jeweler::Generator.new(options.merge(:project_name => 'the-perfect-gem'))
   end
 
   should "have the correct git remote" do
