@@ -49,7 +49,8 @@ Given /^I have configured git sanely$/ do
   @github_user = 'technicalpickles'
   @github_token = 'zomgtoken'
 
-  Jeweler::Generator.any_instance.stubs(:read_git_config).
+  require 'git'
+  Git.stubs(:global_config).
         returns({
           'user.name' => @user_name,
           'user.email' => @user_email,
