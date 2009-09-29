@@ -2,12 +2,14 @@ require 'test_helper'
 
 class TestGenerator < Test::Unit::TestCase
   def build_generator(testing_framework = nil, options = {})
-    stub(Git).global_config() do
-      {'user.name' => 'John Doe', 'user.email' => 'john@example.com', 'github.user' => 'johndoe', 'github.token' => 'yyz'}
-    end
+    options = options.merge :project_name => 'the-perfect-gem',
+                            :user_name => 'John Doe',
+                            :user_email => 'john@example.com',
+                            :github_username => 'johndoe',
+                            :github_token => 'yyz'
 
     options[:testing_framework] = testing_framework
-    Jeweler::Generator.new(options.merge(:project_name => 'the-perfect-gem'))
+    Jeweler::Generator.new(options)
   end
 
   should "have the correct git remote" do

@@ -84,7 +84,28 @@ class Jeweler
 
       development_dependencies << "cucumber" if should_use_cucumber
 
-      use_user_git_config
+      self.user_name       = options[:user_name]
+      self.user_email      = options[:user_email]
+      self.github_username = options[:github_username]
+      self.github_token    = options[:github_token]
+
+      unless self.user_name
+        raise NoGitUserName
+      end
+      
+      unless self.user_email
+        raise NoGitUserEmail
+      end
+      
+      unless self.github_username
+        raise NoGitHubUser
+      end
+      
+      if should_create_repo
+        unless self.github_token
+          raise NoGitHubToken
+        end
+      end
       
     end
 
@@ -190,33 +211,6 @@ class Jeweler
 
     end
 
-    def use_user_git_config
-      git_config = self.read_git_config
-
-      unless git_config.has_key? 'user.name'
-        raise NoGitUserName
-      end
-      
-      unless git_config.has_key? 'user.email'
-        raise NoGitUserEmail
-      end
-      
-      unless git_config.has_key? 'github.user'
-        raise NoGitHubUser
-      end
-      
-      if should_create_repo
-        unless git_config.has_key? 'github.token'
-          raise NoGitHubToken
-        end
-      end
-
-      self.user_name       = git_config['user.name']
-      self.user_email      = git_config['user.email']
-      self.github_username = git_config['github.user']
-      self.github_token    = git_config['github.token']
-    end
-
     def output_template_in_target(source, destination = source)
       final_destination = File.join(target_dir, destination)
 
@@ -292,6 +286,7 @@ class Jeweler
       @repo.push('origin')
     end
 
+    # FIXME This was borked awhile ago, and even more so with gems being disabled
     def enable_gem_for_repo
       url = "https://github.com/#{github_username}/#{project_name}/update"
       `curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
