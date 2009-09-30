@@ -4,15 +4,6 @@ require 'erb'
 require 'net/http'
 require 'uri'
 
-require 'jeweler/generator/bacon_mixin'
-require 'jeweler/generator/micronaut_mixin'
-require 'jeweler/generator/minitest_mixin'
-require 'jeweler/generator/rspec_mixin'
-require 'jeweler/generator/shoulda_mixin'
-require 'jeweler/generator/testunit_mixin'
-
-require 'jeweler/generator/rdoc_mixin'
-require 'jeweler/generator/yard_mixin'
 
 class Jeweler
   class NoGitUserName < StandardError
@@ -34,18 +25,33 @@ class Jeweler
     require 'jeweler/generator/options'
     require 'jeweler/generator/application'
 
+    require 'jeweler/generator/github_mixin'
+
+    require 'jeweler/generator/bacon_mixin'
+    require 'jeweler/generator/micronaut_mixin'
+    require 'jeweler/generator/minitest_mixin'
+    require 'jeweler/generator/rspec_mixin'
+    require 'jeweler/generator/shoulda_mixin'
+    require 'jeweler/generator/testunit_mixin'
+
+    require 'jeweler/generator/rdoc_mixin'
+    require 'jeweler/generator/yard_mixin'
+
     attr_accessor :target_dir, :user_name, :user_email, :summary,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_repo, 
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
-                  :development_dependencies
+                  :development_dependencies,
+                  :options
 
     DEFAULT_TESTING_FRAMEWORK = :shoulda
     DEFAULT_DOCUMENTATION_FRAMEWORK = :rdoc
 
     def initialize(options = {})
+      self.options = options
+
       self.project_name   = options[:project_name]
       if self.project_name.nil? || self.project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
@@ -70,10 +76,8 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-
       self.target_dir             = options[:directory] || self.project_name
 
-      self.should_create_repo     = options[:create_repo]
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
       self.should_use_cucumber    = options[:use_cucumber]
@@ -86,8 +90,6 @@ class Jeweler
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
-      self.github_username = options[:github_username]
-      self.github_token    = options[:github_token]
 
       unless self.user_name
         raise NoGitUserName
@@ -96,17 +98,8 @@ class Jeweler
       unless self.user_email
         raise NoGitUserEmail
       end
-      
-      unless self.github_username
-        raise NoGitHubUser
-      end
-      
-      if should_create_repo
-        unless self.github_token
-          raise NoGitHubToken
-        end
-      end
-      
+
+      extend GithubMixin
     end
 
     def run
@@ -117,18 +110,10 @@ class Jeweler
         create_and_push_repo
         $stdout.puts "Jeweler has pushed your repo to #{project_homepage}"
         enable_gem_for_repo
-        $stdout.puts "Jeweler has enabled gem building for your repo"
+        #$stdout.puts "Jeweler has enabled gem building for your repo"
       end
     end
 
-    def git_remote
-      "git@github.com:#{github_username}/#{project_name}.git"
-    end
-
-    def project_homepage
-      "http://github.com/#{github_username}/#{project_name}"
-    end
-    
     def constant_name
       self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
     end
@@ -288,8 +273,10 @@ class Jeweler
 
     # FIXME This was borked awhile ago, and even more so with gems being disabled
     def enable_gem_for_repo
-      url = "https://github.com/#{github_username}/#{project_name}/update"
-      `curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
+      $stdout.puts "Visit #{project_homepage}/edit and click 'Enable RubyGems'"
+      #url = "https://github.com/#{github_username}/#{project_name}/update"
+      #`curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
+  
       # FIXME use NET::HTTP instead of curl
       #Net::HTTP.post_form URI.parse(url),
                                 #'login' => github_username,
