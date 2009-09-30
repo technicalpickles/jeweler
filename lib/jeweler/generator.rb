@@ -215,7 +215,7 @@ class Jeweler
       $stdout.puts "\tcreate\t#{destination}"
     end
 
-    def enable_version_control
+    def create_version_control
       Dir.chdir(target_dir) do
         begin
           @repo = Git.init()
