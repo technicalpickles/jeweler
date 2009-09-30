@@ -39,7 +39,7 @@ class Jeweler
 
     attr_accessor :target_dir, :user_name, :user_email, :summary,
                   :description, :project_name, :github_username, :github_token,
-                  :repo, :should_create_repo, 
+                  :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
@@ -91,22 +91,17 @@ class Jeweler
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
 
-      unless self.user_name
-        raise NoGitUserName
-      end
-      
-      unless self.user_email
-        raise NoGitUserEmail
-      end
+      raise NoGitUserName unless self.user_name
+      raise NoGitUserEmail unless self.user_email
 
       extend GithubMixin
     end
 
     def run
       create_files
-      gitify
+      create_version_control
       $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
-      if should_create_repo
+      if should_create_remote_repo
         create_and_push_repo
         $stdout.puts "Jeweler has pushed your repo to #{project_homepage}"
         enable_gem_for_repo
@@ -154,13 +149,6 @@ class Jeweler
       File.join(features_dir, 'step_definitions')
     end
 
-  protected
-
-    # This is in a separate method so we can stub it out during testing
-    def read_git_config
-      Git.global_config
-    end
-
   private
     def create_files
       unless File.exists?(target_dir) || File.directory?(target_dir)
@@ -180,8 +168,10 @@ class Jeweler
       touch_in_target           File.join(lib_dir, lib_filename)
 
       mkdir_in_target           test_dir
-      output_template_in_target File.join(testing_framework.to_s, 'helper.rb'), File.join(test_dir, test_helper_filename)
-      output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'), File.join(test_dir, test_filename)
+      output_template_in_target File.join(testing_framework.to_s, 'helper.rb'),
+                                File.join(test_dir, test_helper_filename)
+      output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'),
+                                File.join(test_dir, test_filename)
 
       if should_use_cucumber
         mkdir_in_target           features_dir
@@ -202,6 +192,7 @@ class Jeweler
       template_contents = File.read(File.join(template_dir, source))
       template = ERB.new(template_contents, nil, '<>')
 
+      # squish extraneous whitespace from some of the conditionals
       template_result = template.result(binding).gsub(/\n\n\n+/, "\n\n")
 
       File.open(final_destination, 'w') {|file| file.write(template_result)}
@@ -227,10 +218,8 @@ class Jeweler
       $stdout.puts "\tcreate\t#{destination}"
     end
 
-    def gitify
-      saved_pwd = Dir.pwd
-      Dir.chdir(target_dir)
-      begin
+    def enable_version_control
+      Dir.chdir(target_dir) do
         begin
           @repo = Git.init()
         rescue Git::GitExecuteError => e
@@ -256,8 +245,6 @@ class Jeweler
           puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
           raise
         end
-      ensure
-        Dir.chdir(saved_pwd)
       end
     end
     
