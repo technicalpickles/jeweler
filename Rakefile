@@ -16,7 +16,7 @@ begin
     gem.authors = ["Josh Nichols"]
     gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
 
-    gem.add_dependency "git", ">= 1.2.1"
+    gem.add_dependency "git", ">= 1.2.3"
     gem.add_dependency "rubyforge"
 
     gem.rubyforge_project = "pickles"
