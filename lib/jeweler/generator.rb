@@ -46,9 +46,6 @@ class Jeweler
                   :development_dependencies,
                   :options
 
-    DEFAULT_TESTING_FRAMEWORK = :shoulda
-    DEFAULT_DOCUMENTATION_FRAMEWORK = :rdoc
-
     def initialize(options = {})
       self.options = options
 
@@ -58,8 +55,8 @@ class Jeweler
       end
 
       self.development_dependencies = []
-      self.testing_framework  = (options[:testing_framework] || DEFAULT_TESTING_FRAMEWORK).to_sym
-      self.documentation_framework = options[:documentation_framework] || DEFAULT_DOCUMENTATION_FRAMEWORK
+      self.testing_framework  = options[:testing_framework]
+      self.documentation_framework = options[:documentation_framework]
       begin
         generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
         generator_mixin = self.class.const_get(generator_mixin_name)

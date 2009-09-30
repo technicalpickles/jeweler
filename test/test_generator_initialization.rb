@@ -24,7 +24,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise an NoGitUserName' do
       assert_raise Jeweler::NoGitUserName do
-        Jeweler::Generator.new(:project_name => @project_name)
+        Jeweler::Generator.new(:project_name => @project_name, :testing_framework => :shoulda, :documentation_framework => :rdoc)
       end
     end
   end
@@ -36,7 +36,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitUserEmail' do
       assert_raise Jeweler::NoGitUserEmail do
-        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name)
+        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :testing_framework => :shoulda, :documentation_framework => :rdoc)
       end
     end
   end
@@ -48,7 +48,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NotGitHubUser' do
       assert_raise Jeweler::NoGitHubUser do
-        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :user_email => @git_email)
+        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :user_email => @git_email, :testing_framework => :shoulda, :documentation_framework => :rdoc)
       end
     end
   end
@@ -60,18 +60,22 @@ class TestGeneratorInitialization < Test::Unit::TestCase
 
     should 'raise NoGitHubToken if creating repo' do
       assert_raise Jeweler::NoGitHubToken do
-        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :user_email => @git_email, :github_username => @github_user, :create_repo => true)
+        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :user_email => @git_email, :github_username => @github_user, :create_repo => true, :testing_framework => :shoulda, :documentation_framework => :rdoc)
       end
     end
   end
 
   def build_generator(options = {})
-    options = options.merge :project_name => @project_name,
-                            :user_name => @git_name,
-                            :user_email => @git_email,
-                            :github_username => @github_user,
-                            :github_token => @github_token
-   Jeweler::Generator.new(options) 
+    defaults = { :project_name => @project_name,
+                 :user_name => @git_name,
+                 :user_email => @git_email,
+                 :github_username => @github_user,
+                 :github_token => @github_token,
+                 :testing_framework =>             :shoulda,
+                 :documentation_framework =>       :rdoc }
+
+    options = defaults.merge(options)
+    Jeweler::Generator.new(options) 
   end
 
   context "default configuration" do

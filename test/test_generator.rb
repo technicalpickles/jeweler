@@ -1,12 +1,13 @@
 require 'test_helper'
 
 class TestGenerator < Test::Unit::TestCase
-  def build_generator(testing_framework = nil, options = {})
+  def build_generator(testing_framework = :shoulda, options = {})
     options = options.merge :project_name => 'the-perfect-gem',
                             :user_name => 'John Doe',
                             :user_email => 'john@example.com',
                             :github_username => 'johndoe',
-                            :github_token => 'yyz'
+                            :github_token => 'yyz',
+                            :documentation_framework => :rdoc
 
     options[:testing_framework] = testing_framework
     Jeweler::Generator.new(options)
