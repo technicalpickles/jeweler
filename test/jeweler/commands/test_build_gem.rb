@@ -1,5 +1,4 @@
-# not sure why I need to use this form instead of just require 'test_helper'
-require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'test_helper'))
+require 'test_helper'
 
 class Jeweler
   module Commands
