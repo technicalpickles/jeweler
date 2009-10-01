@@ -55,7 +55,7 @@ class Jeweler
 
   # Human readable version, which is used in the gemspec.
   def version
-    @version_helper.to_s
+    @gemspec.version || @version_helper.to_s
   end
 
   # Writes out the gemspec
