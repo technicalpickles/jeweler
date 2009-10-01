@@ -87,6 +87,7 @@ class Jeweler
           end
         end
 
+
         desc "Setup a rubyforge project for this gem"
         task :setup do
           begin 
@@ -99,6 +100,8 @@ class Jeweler
         end
 
       end
+
+      task :release => 'rubyforge:release'
     end
   end
 end

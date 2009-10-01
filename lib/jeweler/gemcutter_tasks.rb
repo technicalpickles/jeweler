@@ -30,6 +30,8 @@ class Jeweler
           jeweler.release_gem_to_gemcutter
         end
       end
+
+      task :release => 'gemcutter:release'
     end
   end
 end
