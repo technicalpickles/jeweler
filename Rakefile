@@ -17,7 +17,8 @@ begin
     gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
 
     gem.add_dependency "git", ">= 1.2.3"
-    gem.add_dependency "rubyforge"
+    gem.add_dependency "rubyforge", ">= 2.0.0"
+    gem.add_dependency "gemcutter", ">= 0.1.0"
 
     gem.rubyforge_project = "pickles"
 
