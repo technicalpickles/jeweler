@@ -109,6 +109,10 @@ class Jeweler
             self[:git_remote] = git_remote
           end
 
+          o.on('--homepage [HOMEPAGE]', "the homepage for your project (defaults to the GitHub repo)") do |homepage|
+            self[:homepage] = homepage
+          end
+
           o.on('--create-repo', 'create the repository on GitHub') do
             self[:create_repo] = true
           end

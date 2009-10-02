@@ -168,6 +168,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--homepage', 'http://zomg.com' do
+    should 'set hoempage' do
+      assert_equal 'http://zomg.com', @options[:homepage]
+    end
+  end
+
   for_options '--git-remote', 'git@my-awesome-domain.com:zomg.git' do
     should 'set the git remote' do
       assert_equal 'git@my-awesome-domain.com:zomg.git', @options[:git_remote]
