@@ -117,7 +117,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
     end
 
     should "set homepage as github based on username and project name" do
-      assert_equal "http://github.com/#{@github_user}/#{@project_name}", @generator.project_homepage
+      assert_equal "http://github.com/#{@github_user}/#{@project_name}", @generator.homepage
     end
 
     should "set github username from git config" do

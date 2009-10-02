@@ -100,7 +100,7 @@ class Jeweler
       $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
       if should_create_remote_repo
         create_and_push_repo
-        $stdout.puts "Jeweler has pushed your repo to #{project_homepage}"
+        $stdout.puts "Jeweler has pushed your repo to #{homepage}"
         enable_gem_for_repo
         #$stdout.puts "Jeweler has enabled gem building for your repo"
       end
@@ -257,7 +257,7 @@ class Jeweler
 
     # FIXME This was borked awhile ago, and even more so with gems being disabled
     def enable_gem_for_repo
-      $stdout.puts "Visit #{project_homepage}/edit and click 'Enable RubyGems'"
+      $stdout.puts "Visit #{homepage}/edit and click 'Enable RubyGems'"
       #url = "https://github.com/#{github_username}/#{project_name}/update"
       #`curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
   

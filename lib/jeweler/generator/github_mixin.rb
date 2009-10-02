@@ -21,7 +21,7 @@ class Jeweler
         @git_remote ||= "git@github.com:#{github_username}/#{project_name}.git"
       end
 
-      def project_homepage
+      def homepage
         @homepage ||= "http://github.com/#{github_username}/#{project_name}"
       end
     end
