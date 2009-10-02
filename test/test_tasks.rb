@@ -22,8 +22,9 @@ class TestTasks < Test::Unit::TestCase
     end
 
     should 'yield the gemspec instance' do
-      spec = nil; Jeweler::Tasks.new { |s| spec = s }
-      assert_not_nil spec
+      spec = nil
+      @jt = Jeweler::Tasks.new { |s| spec = s }
+      assert_not_nil @jt.jeweler.gemspec
     end
 
     should 'set the gemspec defaults before yielding it' do

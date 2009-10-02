@@ -33,21 +33,22 @@ class Jeweler
   # [gem.executables] uses anything found in the bin/ directory. You can override this.
   #
   class Tasks < ::Rake::TaskLib
-    attr_accessor :gemspec, :jeweler
+    attr_accessor :gemspec, :jeweler, :gemspec_building_block
 
-    def initialize(gemspec = nil, &block)
+    def initialize(gemspec = nil, &gemspec_building_block)
       @gemspec = gemspec || Gem::Specification.new
-      if block_given?
-        jeweler # preload it
-        yield @gemspec
-      end
+      self.gemspec_building_block = gemspec_building_block
 
       Rake.application.jeweler_tasks = self
       define
     end
 
     def jeweler
-      @jeweler ||= Jeweler.new(gemspec)
+      if @jeweler.nil?
+        @jeweler = Jeweler.new(gemspec)
+        gemspec_building_block.call gemspec if gemspec_building_block
+      end
+      @jeweler
     end
 
   private
