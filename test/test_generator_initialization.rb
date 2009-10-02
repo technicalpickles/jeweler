@@ -150,4 +150,15 @@ class TestGeneratorInitialization < Test::Unit::TestCase
     end
   end
 
+  context "using a custom homepage" do
+    setup do
+      @generator = build_generator(:homepage => 'http://zomg.com')
+    end
+
+    should "set the homepage" do
+      assert_equal "http://zomg.com", @generator.homepage
+    end
+
+  end
+
 end

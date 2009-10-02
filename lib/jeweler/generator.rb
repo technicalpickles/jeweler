@@ -37,7 +37,7 @@ class Jeweler
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
-    attr_accessor :target_dir, :user_name, :user_email, :summary,
+    attr_accessor :target_dir, :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
@@ -87,6 +87,7 @@ class Jeweler
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
+      self.homepage        = options[:homepage]
 
       raise NoGitUserName unless self.user_name
       raise NoGitUserEmail unless self.user_email
