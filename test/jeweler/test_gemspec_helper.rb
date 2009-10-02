@@ -8,7 +8,7 @@ class TestGemspecHelper < Test::Unit::TestCase
     end
 
     should 'have sane gemspec path' do
-      assert_equal "test/#{@spec.name}.gemspec", @helper.path
+      assert_equal "test/jeweler/#{@spec.name}.gemspec", @helper.path
     end
   end
 
