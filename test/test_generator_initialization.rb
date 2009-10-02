@@ -112,8 +112,12 @@ class TestGeneratorInitialization < Test::Unit::TestCase
       assert_equal @git_email, @generator.user_email
     end
 
-    should "set a github remote based on username and project name" do
+    should "set origin remote as github, based on username and project name" do
       assert_equal "git@github.com:#{@github_user}/#{@project_name}.git", @generator.git_remote
+    end
+
+    should "set homepage as github based on username and project name" do
+      assert_equal "http://github.com/#{@github_user}/#{@project_name}", @generator.project_homepage
     end
 
     should "set github username from git config" do

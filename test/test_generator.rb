@@ -13,14 +13,6 @@ class TestGenerator < Test::Unit::TestCase
     Jeweler::Generator.new(options)
   end
 
-  should "have the correct git remote" do
-    assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.git_remote
-  end
-
-  should "have the correct project homepage" do
-    assert_equal 'http://github.com/johndoe/the-perfect-gem', build_generator.project_homepage
-  end
-
   should "have the correct constant name" do
     assert_equal "ThePerfectGem", build_generator.constant_name
   end
