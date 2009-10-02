@@ -168,6 +168,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--git-remote', 'git@my-awesome-domain.com:zomg.git' do
+    should 'set the git remote' do
+      assert_equal 'git@my-awesome-domain.com:zomg.git', @options[:git_remote]
+    end
+  end
+
   for_options '--github-username', 'mygithub' do
     should "set github username" do
       assert_equal 'mygithub', @options[:github_username]
