@@ -82,6 +82,11 @@ class Jeweler
         task :generate => :version_required do
           jeweler.write_gemspec
         end
+
+        desc "Display the gemspec for debugging purposes"
+        task :debug do
+          puts jeweler.gemspec_helper.to_ruby
+        end
       end
 
       desc "Displays the current version"
