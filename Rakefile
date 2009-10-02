@@ -2,40 +2,33 @@ require 'rake'
 
 $LOAD_PATH.unshift('lib')
 
-gem 'git'
-require 'git'
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name = "jeweler"
+  gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  gem.email = "josh@technicalpickles.com"
+  gem.homepage = "http://github.com/technicalpickles/jeweler"
+  gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  gem.authors = ["Josh Nichols"]
+  gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "jeweler"
-    gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    gem.email = "josh@technicalpickles.com"
-    gem.homepage = "http://github.com/technicalpickles/jeweler"
-    gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-    gem.authors = ["Josh Nichols"]
-    gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
+  gem.add_dependency "git", ">= 1.2.4"
+  gem.add_dependency "rubyforge", ">= 2.0.0"
+  gem.add_dependency "gemcutter", ">= 0.1.0"
 
-    gem.add_dependency "git", ">= 1.2.3"
-    gem.add_dependency "rubyforge", ">= 2.0.0"
-    gem.add_dependency "gemcutter", ">= 0.1.0"
+  gem.rubyforge_project = "pickles"
 
-    gem.rubyforge_project = "pickles"
+  gem.add_development_dependency "thoughtbot-shoulda"
+  gem.add_development_dependency "mhennemeyer-output_catcher"
+  gem.add_development_dependency "rr"
+  gem.add_development_dependency "mocha"
+  gem.add_development_dependency "redgreen"
+end
 
-    gem.add_development_dependency "thoughtbot-shoulda"
-    gem.add_development_dependency "mhennemeyer-output_catcher"
-    gem.add_development_dependency "rr"
-    gem.add_development_dependency "mocha"
-    gem.add_development_dependency "redgreen"
-  end
+Jeweler::GemcutterTasks.new
 
-  Jeweler::GemcutterTasks.new
-
-  Jeweler::RubyforgeTasks.new do |t|
-    t.doc_task = :yardoc
-  end
-rescue LoadError
-  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install jeweler"
+Jeweler::RubyforgeTasks.new do |t|
+  t.doc_task = :yardoc
 end
 
 
