@@ -52,6 +52,19 @@ class Jeweler
     end
 
   private
+
+    def yield_gemspec_set_version?
+      yielded_gemspec = @gemspec.dup
+      yielded_gemspec.extend(Jeweler::Specification)
+      yielded_gemspec.files = FileList[]
+      yielded_gemspec.test_files = FileList[]
+      yielded_gemspec.extra_rdoc_files = FileList[]
+
+      gemspec_building_block.call(yielded_gemspec) if gemspec_building_block
+
+      ! yielded_gemspec.version.nil?
+    end
+
     def define
       task :version_required do
         if jeweler.expects_version_file? && !jeweler.version_file_exists?
@@ -94,7 +107,7 @@ class Jeweler
         $stdout.puts "Current version: #{jeweler.version}"
       end
 
-      if jeweler.gemspec.version.nil?
+      unless yield_gemspec_set_version?
         namespace :version do
           desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH. Also recognizes BUILD, which defaults to nil"
           task :write do
