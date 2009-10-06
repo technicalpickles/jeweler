@@ -54,7 +54,7 @@ class Jeweler
   private
     def define
       task :version_required do
-        if gemspec.version.nil? && !jeweler.version_exists?
+        if jeweler.expects_version_file? && !jeweler.version_file_exists?
           abort "Expected VERSION or VERSION.yml to exist. See version:write to create an initial one."
         end
       end
@@ -94,7 +94,7 @@ class Jeweler
         $stdout.puts "Current version: #{jeweler.version}"
       end
 
-      if gemspec.version.nil?
+      if jeweler.gemspec.version.nil?
         namespace :version do
           desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH. Also recognizes BUILD, which defaults to nil"
           task :write do
