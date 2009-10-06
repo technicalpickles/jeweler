@@ -11,6 +11,10 @@ class Jeweler
 
           @gemspec_helper = Object.new
           stub(@gemspec_helper).parse { @gemspec }
+          stub(@gemspec_helper).update_version
+
+
+          @version_helper = "Jeweler::VersionHelper"
 
           @builder = Object.new
           stub(Gem::Builder).new { @builder }
@@ -26,8 +30,14 @@ class Jeweler
           @command.base_dir = @base_dir
           @command.file_utils = @file_utils
           @command.gemspec_helper = @gemspec_helper
+          @command.version_helper = @version_helper
 
           @command.run
+        end
+
+        should "update version of gemspec helper" do
+          assert_received(@gemspec_helper) {|gemspec_helper| gemspec_helper.update_version(@version_helper)}
+
         end
 
         should "call gemspec helper's parse" do
