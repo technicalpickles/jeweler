@@ -138,10 +138,21 @@ class Jeweler
         end
       end
 
-      desc "Release the current version. Includes updating the gemspec, pushing, and tagging the release"
-      task :release do
-        jeweler.release
+      namespace :github do
+        task :release do
+          jeweler.release_gem_to_github
+        end
       end
+
+      task :release => 'github:release'
+
+      namespace :git do
+        task :release do
+          jeweler.release_to_git
+        end
+      end
+
+      task :release => 'git:release'
 
       desc "Check that runtime and development dependencies are installed" 
       task :check_dependencies do
