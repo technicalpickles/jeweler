@@ -129,15 +129,26 @@ class TestJeweler < Test::Unit::TestCase
     jeweler.write_version(1, 5, 2, 'a1')
   end
 
-  should "build and run release command when running release" do
+  should "build and run release to github command when running release_gem_to_github" do
     jeweler = build_jeweler
 
     command = Object.new
     mock(command).run
 
-    mock(Jeweler::Commands::Release).build_for(jeweler) { command }
+    mock(Jeweler::Commands::ReleaseToGithub).build_for(jeweler) { command }
 
-    jeweler.release
+    jeweler.release_gem_to_github
+  end
+
+  should "build and run release to git command when running release_to_git" do
+    jeweler = build_jeweler
+
+    command = Object.new
+    mock(command).run
+
+    mock(Jeweler::Commands::ReleaseToGit).build_for(jeweler) { command }
+
+    jeweler.release_to_git
   end
 
   should "build and run release to rubyforge command when running release to rubyforge" do

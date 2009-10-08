@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Jeweler
   module Commands
-    class TestRelease < Test::Unit::TestCase
+    class TestReleaseToGithub < Test::Unit::TestCase
 
       rubyforge_command_context "running" do
         context "happily" do
@@ -19,7 +19,6 @@ class Jeweler
             stub(@repo).push
 
             stub(@command).release_not_tagged? { true }
-            stub(@command).tag_release!
 
             @command.run
           end
@@ -38,10 +37,6 @@ class Jeweler
 
           should "push" do
             assert_received(@repo) {|repo| repo.push }
-          end
-
-          should "tag release" do
-            assert_received(@command) {|command| command.tag_release! }
           end
 
         end
@@ -72,7 +67,6 @@ class Jeweler
             stub(@repo).push
 
             stub(@command).release_not_tagged? { true }
-            stub(@command).tag_release!
 
             @command.run
           end
@@ -87,10 +81,6 @@ class Jeweler
 
           should "push" do
             assert_received(@repo) {|repo| repo.push }
-          end
-
-          should "tag release" do
-            assert_received(@command) {|command| command.tag_release! }
           end
 
         end
@@ -109,7 +99,6 @@ class Jeweler
             stub(@repo).push
 
             stub(@command).release_not_tagged? { false }
-            dont_allow(@command).tag_release!
 
             @command.run
           end
@@ -137,7 +126,7 @@ class Jeweler
 
       build_command_context "building from jeweler" do
         setup do
-          @command = Jeweler::Commands::Release.build_for(@jeweler)
+          @command = Jeweler::Commands::ReleaseToGithub.build_for(@jeweler)
         end
 
         should "assign gemspec" do
@@ -170,7 +159,7 @@ class Jeweler
         should "be false if there added files" do
           repo = build_repo :added => %w(README)
 
-          command = Jeweler::Commands::Release.new :repo => repo
+          command = Jeweler::Commands::ReleaseToGithub.new :repo => repo
 
           assert ! command.clean_staging_area?
         end
@@ -178,7 +167,7 @@ class Jeweler
         should "be false if there are changed files" do
           repo = build_repo :changed => %w(README)
 
-          command = Jeweler::Commands::Release.new
+          command = Jeweler::Commands::ReleaseToGithub.new
           command.repo = repo
 
           assert ! command.clean_staging_area?
@@ -187,7 +176,7 @@ class Jeweler
         should "be false if there are deleted files" do
           repo = build_repo :deleted => %w(README)
 
-          command = Jeweler::Commands::Release.new
+          command = Jeweler::Commands::ReleaseToGithub.new
           command.repo = repo
 
           assert ! command.clean_staging_area?
@@ -196,38 +185,10 @@ class Jeweler
         should "be true if nothing added, changed, or deleted" do
           repo = build_repo
 
-          command = Jeweler::Commands::Release.new
+          command = Jeweler::Commands::ReleaseToGithub.new
           command.repo = repo
 
           assert command.clean_staging_area?
-        end
-      end
-
-      context "tag_release!" do
-        setup do
-          @repo = Object.new
-          stub(@repo) do
-            add_tag(anything)
-            push(anything, anything)
-          end
-
-          @output = StringIO.new
-
-          @command                = Jeweler::Commands::Release.new
-          @command.output         = @output
-          @command.repo           = @repo
-          @command.gemspec_helper = @gemspec_helper
-          @command.version        = '1.2.3'
-
-          @command.tag_release!
-        end
-
-        should "tag release" do
-          assert_received(@repo) {|repo| repo.add_tag("v1.2.3")}
-        end
-
-        should "push tag to repository" do
-          assert_received(@repo) {|repo| repo.push('origin', 'v1.2.3')}
         end
       end
 
@@ -248,7 +209,7 @@ class Jeweler
 
           @output = StringIO.new
 
-          @command                = Jeweler::Commands::Release.new :output => @output,
+          @command                = Jeweler::Commands::ReleaseToGithub.new :output => @output,
                                                                    :repo => @repo,
                                                                    :gemspec_helper => @gemspec_helper,
                                                                    :version => '1.2.3'
@@ -281,7 +242,7 @@ class Jeweler
 
           @output = StringIO.new
 
-          @command                = Jeweler::Commands::Release.new :output => @output,
+          @command                = Jeweler::Commands::ReleaseToGithub.new :output => @output,
                                                                    :repo => @repo,
                                                                    :gemspec_helper => @gemspec_helper,
                                                                    :version => '1.2.3'
@@ -306,7 +267,7 @@ class Jeweler
 
           @output = StringIO.new
 
-          @command                = Jeweler::Commands::Release.new
+          @command                = Jeweler::Commands::ReleaseToGithub.new
           @command.output         = @output
           @command.repo           = @repo
           @command.version        = '1.2.3'
@@ -327,7 +288,7 @@ class Jeweler
 
           @output = StringIO.new
 
-          @command                = Jeweler::Commands::Release.new
+          @command                = Jeweler::Commands::ReleaseToGithub.new
           @command.output         = @output
           @command.repo           = @repo
           @command.version        = '1.2.3'
