@@ -21,6 +21,7 @@ class Jeweler
   class GitInitFailed < StandardError
   end    
 
+  # Generator for creating a jeweler-enabled project
   class Generator    
     require 'jeweler/generator/options'
     require 'jeweler/generator/application'

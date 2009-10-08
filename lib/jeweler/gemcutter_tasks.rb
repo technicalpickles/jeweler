@@ -11,7 +11,6 @@ class Jeweler
   #     Jeweler::Gemcutter.new
   #
   # Easy enough, right?
-  #
   class GemcutterTasks < ::Rake::TaskLib
     attr_accessor :jeweler
 

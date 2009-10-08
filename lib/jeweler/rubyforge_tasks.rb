@@ -17,6 +17,7 @@ class Jeweler
   #  * project: the rubyforge project to operate on. This defaults to whatever you specified in your gemspec. Defaults to your gem name.
   #  * remote_doc_path: the place to upload docs to on Rubyforge under /var/www/gforge-projects/#{project}/
   #
+  # See also http://wiki.github.com/technicalpickles/jeweler/rubyforge
   class RubyforgeTasks < ::Rake::TaskLib
     # The RubyForge project to interact with. Defaults to whatever is in your jeweler gemspec.
     attr_accessor :project

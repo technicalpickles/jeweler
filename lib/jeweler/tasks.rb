@@ -4,6 +4,9 @@ require 'rake/tasklib'
 class Rake::Application
   attr_accessor :jeweler_tasks
 
+  # The jeweler instance that has be instantiated in the current Rakefile.
+  #
+  # This is usually useful if you want to get at info like version from other files.
   def jeweler
     jeweler_tasks.jeweler
   end
@@ -23,15 +26,7 @@ class Jeweler
   #     gem.authors = ["Josh Nichols"]
   #   end
   #
-  # The block variable gem is actually a Gem::Specification, so you can do anything you would normally do with a Gem::Specification. For more details, see the official gemspec reference: http://docs.rubygems.org/read/chapter/20
-  #
-  # Jeweler fills in a few reasonable defaults for you:
-  #
-  # [gem.files] a Rake::FileList of anything that is in git and not gitignored. You can include/exclude this default set, or override it entirely
-  # [gem.test_files] Similar to gem.files, except it's only things under the spec, test, or examples directory.
-  # [gem.extra_rdoc_files] a Rake::FileList including files like README*, ChangeLog*, and LICENSE*
-  # [gem.executables] uses anything found in the bin/ directory. You can override this.
-  #
+  # The block variable gem is actually a Gem::Specification, so you can do anything you would normally do with a Gem::Specification. For more details, see the official gemspec reference: http://docs.rubygems.org/read/chapter/20 . In addition, it has a defaults set for you. See Jeweler::Specification for more details.
   class Tasks < ::Rake::TaskLib
     attr_accessor :gemspec, :jeweler, :gemspec_building_block
 

@@ -58,16 +58,17 @@ class Jeweler
       parsed_gemspec
     end
 
-    def normalize_files(array_name)
-      array = @spec.send(array_name)
+    def normalize_files(array_attribute)
+      array = @spec.send(array_attribute)
       # only keep files, no directories, and sort
       array = array.select do |path|
         File.file? File.join(@base_dir, path)
       end.sort
 
-      @spec.send("#{array_name}=", array)
+      @spec.send("#{array_attribute}=", array)
     end
 
+    # Adds extra space when outputting an array. This helps create better version control diffs, because otherwise it is all on the same line.
     def prettyify_array(gemspec_ruby, array_name)
       gemspec_ruby.gsub(/s\.#{array_name.to_s} = \[.+?\]/) do |match|
         leadin, files = match[0..-2].split("[")

@@ -1,6 +1,11 @@
 require 'date'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
+#
+# See Jeweler::Tasks for examples of how to get started. Additionally, resources are available on the wiki:
+#
+# * http://wiki.github.com/technicalpickles/jeweler/create-a-new-project
+# * http://wiki.github.com/technicalpickles/jeweler/configure-an-existing-project
 class Jeweler
   require 'jeweler/errors'
   require 'rubygems/user_interaction'
@@ -74,10 +79,12 @@ class Jeweler
     gemspec_helper.valid?
   end
 
+  # Build a gem using the project's latest Gem::Specification
   def build_gem
     Jeweler::Commands::BuildGem.build_for(self).run
   end
 
+  # Install a previously built gem
   def install_gem
     Jeweler::Commands::InstallGem.build_for(self).run
   end
