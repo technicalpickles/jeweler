@@ -31,7 +31,7 @@ class Jeweler
     def initialize
       yield self if block_given?
 
-      self.doc_task ||= :rdoc
+      self.doc_task = :rdoc if self.doc_task == nil # be sure to allow it to be set to false, to allow disabling
 
       define
     end
@@ -51,9 +51,6 @@ class Jeweler
     def define
       namespace :rubyforge do
 
-        desc "Release gem and RDoc documentation to RubyForge"
-        task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
-
         namespace :release do
           desc "Release the current gem version to RubyForge."
           task :gem => [:gemspec, :build] do
@@ -68,26 +65,33 @@ class Jeweler
             end
           end
 
-          desc "Publish docs to RubyForge."
-          task :docs => doc_task do
-            config = YAML.load(
-              File.read(File.expand_path('~/.rubyforge/user-config.yml'))
-            )
+          if publish_documentation?
+            desc "Publish docs to RubyForge."
+            task :docs => doc_task do
+              config = YAML.load(
+                File.read(File.expand_path('~/.rubyforge/user-config.yml'))
+              )
 
-            host = "#{config['username']}@rubyforge.org"
-            remote_dir = "/var/www/gforge-projects/#{project}/#{remote_doc_path}"
+              host = "#{config['username']}@rubyforge.org"
+              remote_dir = "/var/www/gforge-projects/#{project}/#{remote_doc_path}"
 
-            local_dir = case self.doc_task.to_sym
-                        when :rdoc then 'rdoc'
-                        when :yardoc then 'doc'
-                        else
-                          raise "Unsure what to run to generate documentation. Please set doc_task and re-run."
-                        end
+              local_dir = case self.doc_task.to_sym
+                          when :rdoc then 'rdoc'
+                          when :yardoc then 'doc'
+                          else
+                            raise "Unsure what to run to generate documentation. Please set doc_task and re-run."
+                          end
 
-            sh %{rsync -av --delete #{local_dir}/ #{host}:#{remote_dir}}
+              sh %{rsync --archive --verbose --delete #{local_dir}/ #{host}:#{remote_dir}}
+            end
           end
         end
 
+
+        desc "Release gem and RDoc documentation to RubyForge"
+        task :release => "rubyforge:release:gem"
+        task :release => "rubyforge:release:docs" if publish_documentation?
+          
 
         desc "Setup a rubyforge project for this gem"
         task :setup do
@@ -103,6 +107,10 @@ class Jeweler
       end
 
       task :release => 'rubyforge:release'
+    end
+
+    def publish_documentation?
+      ! (doc_task == false || doc_task == :none)
     end
   end
 end
