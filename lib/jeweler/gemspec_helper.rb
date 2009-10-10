@@ -83,6 +83,11 @@ class Jeweler
     def update_version(version)
       @spec.version = version.to_s
     end
+    
+    # Checks whether it uses the version helper or the users defined version.
+    def has_version?
+      !@spec.version.nil?
+    end
 
   end
 end

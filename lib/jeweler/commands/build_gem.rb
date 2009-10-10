@@ -8,7 +8,7 @@ class Jeweler
       end
 
       def run
-        gemspec_helper.update_version(version_helper)
+        gemspec_helper.update_version(version_helper) unless gemspec_helper.has_version?
 
         gemspec = gemspec_helper.parse
 
