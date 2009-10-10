@@ -47,3 +47,10 @@ Feature: generated test or spec
     Then 'examples/example_helper.rb' requires 'rubygems'
     Then 'examples/example_helper.rb' requires 'micronaut'
     Then 'examples/example_helper.rb' requires 'the-perfect-gem'
+
+  Scenario: riot
+    Given a working directory
+      And I have configured git sanely
+    When I generate a riot project named 'the-perfect-gem' that is 'zomg, so good'
+    Then 'test/teststrap.rb' requires 'riot'
+      And 'test/teststrap.rb' requires 'the-perfect-gem'

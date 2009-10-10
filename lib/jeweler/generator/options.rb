@@ -51,6 +51,10 @@ class Jeweler
             self[:testing_framework] = :micronaut
           end
 
+          o.on('--riot', 'generate riot tests') do
+            self[:testing_framework] = :riot
+          end
+
           o.separator ""
 
           o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do
