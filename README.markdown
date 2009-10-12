@@ -87,6 +87,16 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
     rake version:bump:minor
     rake version:bump:patch
 
+If you wish to specify the version number in your code, you may
+specify the version inside of the Jeweler block:
+
+    require File.dir(__FILE__) + "lib/my_project/version.rb"
+
+    Jeweler::Tasks.new do |s|
+       s.version = MyProject::VERSION
+       # more stuff
+    end
+
 ## Releasing to GitHub
 
 Jeweler handles releasing your gem into the wild:
