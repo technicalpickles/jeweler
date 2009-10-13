@@ -30,10 +30,10 @@ class Jeweler
 
     @gemspec = gemspec
     @gemspec.extend(Specification)
-    @gemspec.set_jeweler_defaults(base_dir)
+    @gemspec.set_jeweler_defaults(base_dir, git_base_dir)
 
     @base_dir       = base_dir
-    @repo           = Git.open(base_dir) if in_git_repo?
+    @repo           = Git.open(git_base_dir) if in_git_repo?
     @version_helper = Jeweler::VersionHelper.new(base_dir)
     @output         = $stdout
     @commit         = true
@@ -148,8 +148,19 @@ class Jeweler
     command.run
   end
 
+  def git_base_dir(base_dir = nil)
+    if base_dir
+      base_dir = File.dirname(base_dir)
+    else
+      base_dir = File.expand_path(self.base_dir || ".")
+    end
+    return nil if base_dir==File.dirname("/")
+    return base_dir if File.exists?(File.join(base_dir, '.git'))
+    return git_base_dir(base_dir)
+  end    
+
   def in_git_repo?
-    File.exists?(File.join(self.base_dir, '.git'))
+    git_base_dir
   end
 
   def version_file_exists?

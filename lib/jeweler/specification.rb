@@ -27,14 +27,14 @@ class Jeweler
     filelist_attribute :test_files
     filelist_attribute :extra_rdoc_files
 
-
     # Assigns the Jeweler defaults to the Gem::Specification
-    def set_jeweler_defaults(base_dir)
+    def set_jeweler_defaults(base_dir, git_base_dir = nil)
       Dir.chdir(base_dir) do
         require 'git'
-        if blank?(files) && File.directory?(File.join(base_dir, '.git'))
-          repo = Git.open(base_dir)
-          self.files = repo.ls_files.keys - repo.lib.ignored_files
+        if blank?(files) && git_base_dir
+          git_subdir = File.expand_path(base_dir).sub(File.join(File.expand_path(git_base_dir), ""), "")          
+          repo = Git.open(git_base_dir)
+          self.files = (repo.ls_files.keys - repo.lib.ignored_files).map {|fn| fn.sub(File.join(git_subdir, ""), "")}
         end
 
         if blank?(test_files) && File.directory?(File.join(base_dir, '.git'))

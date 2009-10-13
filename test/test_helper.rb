@@ -27,7 +27,7 @@ require 'jeweler'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'shoulda_macros/jeweler_macros'
 
-TMP_DIR = File.expand_path('../tmp', __FILE__)
+TMP_DIR = '/tmp/jeweler_test'
 FIXTURE_DIR = File.expand_path('../fixtures', __FILE__)
 
 class RubyForgeStub

@@ -48,6 +48,11 @@ class TestJeweler < Test::Unit::TestCase
     assert ! jeweler.in_git_repo?, "jeweler doesn't know that #{jeweler.base_dir} is not a git repository"
   end
 
+  should "find the base repo" do
+    jeweler = build_jeweler(File.dirname(File.expand_path(__FILE__)))
+    assert_equal File.dirname(File.dirname(File.expand_path(__FILE__))), jeweler.git_base_dir
+  end
+
   should "build and run write gemspec command when writing gemspec" do
     jeweler = build_jeweler
 
