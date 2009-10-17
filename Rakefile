@@ -12,7 +12,7 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Josh Nichols"]
   gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
 
-  gem.add_dependency "git", ">= 1.2.4"
+  gem.add_dependency "git", ">= 1.2.5"
   gem.add_dependency "rubyforge", ">= 2.0.0"
   gem.add_dependency "gemcutter", ">= 0.1.0"
 
