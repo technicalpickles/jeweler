@@ -1,16 +1,19 @@
-*~
-\#*
-.\#*
-*.sw?
-## OS STUFF
+## MAC OS
 .DS_Store
 
-## TM SPECIFIC
+## TEXTMATE
 *.tmproj
 tmtags
 
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+
 ## PROJECT::GENERAL
-*.sw?
 coverage
 rdoc
 pkg
