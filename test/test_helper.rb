@@ -1,6 +1,8 @@
 require 'test/unit'
 
 require 'rubygems'
+require 'rake'
+
 begin
   require 'ruby-debug'
 rescue LoadError

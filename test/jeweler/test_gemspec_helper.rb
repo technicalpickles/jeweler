@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class TestGemspecHelper < Test::Unit::TestCase
+  def setup
+    Rake.application.instance_variable_set(:@rakefile, "Rakefile")
+  end
+
   context "given a gemspec" do
     setup do
       @spec = build_spec
