@@ -85,7 +85,7 @@ class Jeweler
       self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
 
-      development_dependencies << "cucumber" if should_use_cucumber
+      development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
@@ -172,6 +172,13 @@ class Jeweler
                                 File.join(test_dir, test_helper_filename)
       output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'),
                                 File.join(test_dir, test_filename)
+
+
+      if testing_framework == :rspec
+        output_template_in_target File.join(testing_framework.to_s, 'spec.opts'),
+                                  File.join(test_dir, 'spec.opts')
+
+      end
 
       if should_use_cucumber
         mkdir_in_target           features_dir

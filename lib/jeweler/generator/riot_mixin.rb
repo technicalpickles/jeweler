@@ -2,7 +2,7 @@ class Jeweler
   class Generator
     module RiotMixin
       def self.extended(generator)
-        generator.development_dependencies << "riot"
+        generator.development_dependencies << ["riot", ">= 0"]
       end
 
       def default_task

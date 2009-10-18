@@ -13,8 +13,8 @@ begin
 <% if should_setup_rubyforge %>
     gem.rubyforge_project = "<%= project_name %>"
 <% end %>
-<% development_dependencies.each do |dependency| %>
-    gem.add_development_dependency "<%= dependency %>"
+<% development_dependencies.each do |name, version| %>
+    gem.add_development_dependency "<%= name %>", "<%= version %>"
 <% end %>
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

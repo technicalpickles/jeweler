@@ -2,7 +2,7 @@ class Jeweler
   class Generator
     module MicronautMixin
       def self.extended(generator)
-        generator.development_dependencies << "spicycode-micronaut"
+        generator.development_dependencies << ["spicycode-micronaut", ">= 0"]
       end
       
       def default_task

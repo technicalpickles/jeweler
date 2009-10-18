@@ -3,7 +3,7 @@ class Jeweler
     module BaconMixin
 
       def self.extended(generator)
-        generator.development_dependencies << "bacon"
+        generator.development_dependencies << ["bacon", ">= 0"]
       end
 
       def default_task
