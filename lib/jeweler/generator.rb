@@ -21,6 +21,8 @@ class Jeweler
   class GitInitFailed < StandardError
   end    
 
+  autoload :Specification, 'jeweler/specification'
+
   # Generator for creating a jeweler-enabled project
   class Generator    
     require 'jeweler/generator/options'
@@ -40,14 +42,14 @@ class Jeweler
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
-    attr_accessor :target_dir, :user_name, :user_email, :summary, :homepage,
+    attr_accessor :target, :target_dir, :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
-                  :options
+                  :options, :gemspec
 
     def initialize(options = {})
       self.options = options
@@ -76,7 +78,7 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.target_dir             = options[:directory] || self.project_name
+      self.target                 = options[:directory] || self.project_name
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
@@ -99,14 +101,20 @@ class Jeweler
     end
 
     def run
-      create_files
-      create_version_control
-      $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
-      if should_create_remote_repo
-        create_and_push_repo
-        $stdout.puts "Jeweler has pushed your repo to #{homepage}"
-        enable_gem_for_repo
-        #$stdout.puts "Jeweler has enabled gem building for your repo"
+      if target =~ /\.gemspec$/ 
+        self.target_dir = File.dirname(target)
+        create_rakefile_template
+      else
+        self.target_dir = self.target
+
+        create_scaffold
+
+        create_version_control
+        if should_create_remote_repo
+          create_and_push_repo
+          enable_gem_for_repo
+          #$stdout.puts "Jeweler has enabled gem building for your repo"
+        end
       end
     end
 
@@ -151,16 +159,31 @@ class Jeweler
     end
 
   private
-    def create_files
-      unless File.exists?(target_dir) || File.directory?(target_dir)
-        FileUtils.mkdir target_dir
+    def create_rakefile_template
+      self.gemspec = Gem::Specification.load(target)
+      self.gemspec.extend(Jeweler::Specification)
+
+      rakefile_target = File.join(target_dir, 'Rakefile')
+      if File.exist? rakefile_target
+        $stdout.puts "# Rakefile already exists. Here's what we would have generated:"
+        $stdout.puts ""
+        $stdout.puts render_template('Rakefile_from_gemspec.erb')
       else
-        raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
+        output_template_in_target 'Rakefile_from_gemspec.erb', 'Rakefile'
+        $stdout.puts "Jeweler has created #{rakefile_target} based on #{target}"
+      end
+    end
+
+    def create_scaffold
+      unless File.exists?(target) || File.directory?(target)
+        FileUtils.mkdir target
+      else
+        raise FileInTheWay, "The directory #{target} already exists, aborting. Maybe move it out of the way before continuing?"
       end
 
+      output_template_in_target 'Rakefile'
 
       output_template_in_target '.gitignore'
-      output_template_in_target 'Rakefile'
       output_template_in_target 'LICENSE'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'
@@ -192,6 +215,7 @@ class Jeweler
         touch_in_target           File.join(features_steps_dir, steps_filename)
       end
 
+      $stdout.puts "Jeweler has prepared your gem in #{target}"
     end
 
     def render_template(source)
@@ -216,7 +240,7 @@ class Jeweler
     end
 
     def mkdir_in_target(directory)
-      final_destination = File.join(target_dir, directory)
+      final_destination = File.join(target, directory)
 
       FileUtils.mkdir final_destination
 
@@ -224,13 +248,13 @@ class Jeweler
     end
 
     def touch_in_target(destination)
-      final_destination = File.join(target_dir, destination)
+      final_destination = File.join(target, destination)
       FileUtils.touch  final_destination
       $stdout.puts "\tcreate\t#{destination}"
     end
 
     def create_version_control
-      Dir.chdir(target_dir) do
+      Dir.chdir(target) do
         begin
           @repo = Git.init()
         rescue Git::GitExecuteError => e
@@ -267,6 +291,8 @@ class Jeweler
                                 'name' => project_name
       # TODO do a HEAD request to see when it's ready
       @repo.push('origin')
+
+      $stdout.puts "Jeweler has pushed your repo to #{homepage}"
     end
 
     # FIXME This was borked awhile ago, and even more so with gems being disabled

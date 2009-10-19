@@ -57,10 +57,64 @@ class Jeweler
 
     # Used by Specification#to_ruby to generate a ruby-respresentation of a Gem::Specification
     def ruby_code(obj)
+      require 'rake'
       case obj
       when Rake::FileList then obj.to_a.inspect
       else super
       end
+    end
+
+    JEWELER_PROVIDED_ATTRIBUTES = [
+      :has_rdoc,
+      :date
+
+    ]
+    def to_jeweler_tasks
+      mark_version
+      result = []
+      result << "require 'jeweler'"
+      result << "Jeweler::Tasks.new do |gemspec|"
+      result << "  gemspec.name = #{ruby_code name}"
+      result << "  gemspec.version = #{ruby_code version}"
+      unless platform.nil? or platform == Gem::Platform::RUBY then
+        result << "  gemspec.platform = #{ruby_code original_platform}"
+      end
+
+      handled = [
+        :dependencies,
+        :name,
+        :platform,
+        :required_rubygems_version,
+        :specification_version,
+        :version,
+      ]
+
+      baseline_gemspec = Gem::Specification.new
+
+      attributes = self.class.attribute_names.sort_by { |attr_name,| attr_name.to_s }
+
+      attributes.each do |attr_name, default|
+        next if handled.include? attr_name
+        current_value = self.send(attr_name)
+        baseline_value = baseline_gemspec.send(attr_name)
+        if current_value != default  && current_value != baseline_value
+          result << "  gemspec.#{attr_name} = #{ruby_code current_value}"
+        end
+      end
+
+      unless dependencies.empty? then
+        result << ""
+        dependencies.each do |dep|
+          version_reqs_param = dep.requirements_list.inspect
+          dep.instance_variable_set :@type, :runtime if dep.type.nil? # HACK
+          result << "  gemspec.add_#{dep.type}_dependency(%q<#{dep.name}>, #{version_reqs_param})"
+        end
+      end
+
+      result << "end"
+      result << nil
+
+      result.join "\n"
     end
 
     private
