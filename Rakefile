@@ -50,22 +50,18 @@ begin
     t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
   end
 rescue LoadError
-  task :yardoc do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install yard"
-  end
+  task :yardoc => :check_dependencies
 end
 
 
 begin
   require 'rcov/rcovtask'
-  Rcov::RcovTask.new(:rcov) do |rcov|
+  Rcov::RcovTask.new(:rcov => :check_dependencies) do |rcov|
     rcov.libs << 'test'
     rcov.pattern = 'test/**/test_*.rb'
   end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
+rescue
+  task :rcov => :check_dependencies
 end
 
 begin
@@ -79,13 +75,9 @@ begin
     end
   end
 rescue LoadError
-  task :features do
-    abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
-  end
+  task :features => :check_dependencies
   namespace :features do
-    task :pretty do
-      abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
-    end
+    task :pretty => :check_dependencies
   end
 end
 
