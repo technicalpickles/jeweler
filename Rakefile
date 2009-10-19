@@ -23,6 +23,9 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency "rr"
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "redgreen"
+
+  gem.add_development_dependency "yard"
+  gem.add_development_dependency "cucumber"
 end
 
 Jeweler::GemcutterTasks.new
@@ -48,7 +51,7 @@ begin
   end
 rescue LoadError
   task :yardoc do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install yard"
   end
 end
 
