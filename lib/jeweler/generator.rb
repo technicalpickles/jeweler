@@ -160,7 +160,14 @@ class Jeweler
 
 
       output_template_in_target '.gitignore'
-      output_template_in_target 'Rakefile'
+      
+      case options[:scripting_framework]
+      when :rake
+        output_template_in_target 'Rakefile'
+      when :thor
+        output_template_in_target 'Thorfile'
+      end
+
       output_template_in_target 'LICENSE'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'

@@ -1,0 +1,11 @@
+require 'thor/rake_compat'
+require 'spec/rake/spectask'
+ 
+GEM_NAME = 'thor'
+EXTRA_RDOC_FILES = ["README.rdoc", "LICENSE", "CHANGELOG.rdoc", "VERSION", "Thorfile"]
+ 
+class Default < Thor
+  include Thor::RakeCompat
+
+  <%= render_template 'tasks.erb' %>
+end
