@@ -2,9 +2,14 @@ require 'test_helper'
 
 class TestGeneratorMixins < Test::Unit::TestCase
 
-  [Jeweler::Generator::BaconMixin, Jeweler::Generator::MicronautMixin,
-   Jeweler::Generator::RspecMixin, Jeweler::Generator::ShouldaMixin,
-   Jeweler::Generator::TestunitMixin, Jeweler::Generator::MinitestMixin].each do |mixin|
+  [Jeweler::Generator::BaconMixin,
+   Jeweler::Generator::MicronautMixin,
+   Jeweler::Generator::MinitestMixin,
+   Jeweler::Generator::RspecMixin,
+   Jeweler::Generator::ShouldaMixin,
+   Jeweler::Generator::TestspecMixin,
+   Jeweler::Generator::TestunitMixin,
+  ].each do |mixin|
     context "#{mixin}" do
       %w(default_task feature_support_require feature_support_extend
          test_dir test_task test_pattern test_filename
