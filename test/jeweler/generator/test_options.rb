@@ -7,6 +7,12 @@ class TestOptions < Test::Unit::TestCase
     stub_git_config valid_git_config
   end
 
+  def self.should_have_scripting_framework(scripting_framework)
+    should "use #{scripting_framework} for scripting" do
+      assert_equal scripting_framework.to_sym, @options[:scripting_framework]
+    end
+  end
+
   def self.should_have_testing_framework(testing_framework)
     should "use #{testing_framework} for testing" do
       assert_equal testing_framework.to_sym, @options[:testing_framework]
@@ -34,6 +40,8 @@ class TestOptions < Test::Unit::TestCase
     setup { setup_options }
     should_have_testing_framework :shoulda
     should_have_docmentation_framework :rdoc
+    should_have_scripting_framework :rake
+
     should 'not create repository' do
       assert ! @options[:create_repo]
     end
@@ -114,6 +122,14 @@ class TestOptions < Test::Unit::TestCase
     should 'enable rubyforge' do
       assert @options[:rubyforge]
     end
+  end
+
+  for_options '--rake' do
+    should_have_scripting_framework :rake
+  end
+
+  for_options '--thor' do
+    should_have_scripting_framework :thor
   end
 
   for_options '--rdoc' do

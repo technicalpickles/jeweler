@@ -194,14 +194,18 @@ class Jeweler
 
     end
 
-    def output_template_in_target(source, destination = source)
-      final_destination = File.join(target_dir, destination)
-
+    def render_template(source)
       template_contents = File.read(File.join(template_dir, source))
       template = ERB.new(template_contents, nil, '<>')
 
       # squish extraneous whitespace from some of the conditionals
       template_result = template.result(binding).gsub(/\n\n\n+/, "\n\n")
+    end
+
+    def output_template_in_target(source, destination = source)
+      final_destination = File.join(target_dir, destination)
+
+      template_result = render_template(source)
 
       File.open(final_destination, 'w') {|file| file.write(template_result)}
 

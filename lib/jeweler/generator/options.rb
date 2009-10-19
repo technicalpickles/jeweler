@@ -8,6 +8,7 @@ class Jeweler
         super()
 
         @orig_args = args.clone
+        self[:scripting_framework]     = :rake
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
 
@@ -57,6 +58,16 @@ class Jeweler
 
           o.on('--riot', 'generate riot tests') do
             self[:testing_framework] = :riot
+          end
+
+          o.separator ""
+
+          o.on('--rake', 'generate Rakefile') do
+            self[:scripting_framework] = :rake
+          end
+
+          o.on('--thor', 'generate Thorfile') do
+            self[:scripting_framework] = :thor
           end
 
           o.separator ""
