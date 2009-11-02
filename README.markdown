@@ -8,6 +8,7 @@ Jeweler provides two things:
 ## Quick Links
 
  * [Wiki](http://wiki.github.com/technicalpickles/jeweler)
+ * [Mailing List](http://groups.google.com/group/jeweler-rb)
  * [Bugs](http://github.com/technicalpickles/jeweler/issues)
  * [Donate](http://pledgie.org/campaigns/2604)
 
