@@ -133,7 +133,12 @@ class Jeweler
         end
       end
 
+      desc "Release gem"
+      task :release do
+      end
+
       namespace :github do
+        desc "Release Gem to GitHub"
         task :release do
           jeweler.release_gem_to_github
         end
@@ -142,6 +147,7 @@ class Jeweler
       task :release => 'github:release'
 
       namespace :git do
+        desc "Tag a release in Git"
         task :release do
           jeweler.release_to_git
         end
