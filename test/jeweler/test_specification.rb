@@ -113,15 +113,32 @@ class TestSpecification < Test::Unit::TestCase
       repo = Git.init(@project)
       repo.add('.')
       repo.commit('Initial commit')
-
-
-      @gemspec  = build_jeweler_gemspec
-      @gemspec.set_jeweler_defaults(@project, @project)
     end
 
-    should "populate files from git" do
-      assert_equal %w(Rakefile lib/example.rb), @gemspec.files
+    context "and the files defaults are used" do
+      setup do
+        @gemspec  = build_jeweler_gemspec
+        @gemspec.set_jeweler_defaults(@project, @project)
+      end
+
+      should "populate files from git" do
+        assert_equal %w(Rakefile lib/example.rb), @gemspec.files
+      end
     end
+
+    context "and the files specified manually" do
+      setup do
+        @gemspec  = build_jeweler_gemspec do |gemspec|
+          gemspec.files = %w(Rakefile)
+        end
+        @gemspec.set_jeweler_defaults(@project, @project)
+      end
+
+      should "not be overridden by files from git" do
+        assert_equal %w(Rakefile), @gemspec.files
+      end
+    end
+
   end
 
   context "there are some files and is setup for git with ignored files" do
@@ -187,39 +204,4 @@ class TestSpecification < Test::Unit::TestCase
       assert_equal [], @gemspec.files.sort
     end
   end
-
-  #context "Gem::Specification with Jeweler monkey-patches" do
-  #  setup do
-  #    remove_tmpdir!
-  #    path = File.join(FIXTURE_DIR, "existing-project-with-version-yaml")
-  #    Git.init(path)
-  #    FileUtils.cp_r path, tmp_dir
-
-  #    @spec = Gem::Specification.new
-  #    @spec.extend(Jeweler::Specification)
-
-  #  end
-
-  #  context "when setting defaults" do
-  #    setup do
-  #      @spec.set_jeweler_defaults(tmp_dir)
-  #    end
-
-  #    should_eventually "should populate `files'" do
-  #      assert_equal %w{Rakefile VERSION.yml bin/foo_the_ultimate_bin lib/foo_the_ultimate_lib.rb }, @spec.files.sort
-  #    end
-
-  #    context "with values already set" do
-  #      setup do
-  #        @spec.files = %w{ hey_include_me_in_gemspec }
-  #        @spec.set_jeweler_defaults(fixture_dir)
-  #      end
-
-  #      should "not re-populate `files'" do
-  #        assert_equal %w{ hey_include_me_in_gemspec }, @spec.files
-  #      end
-  #    end
-  #  end
-
-  #end
 end
