@@ -103,6 +103,30 @@ class TestSpecification < Test::Unit::TestCase
     end
   end
 
+  context "there are mutiple extconf.rb in the project directory" do
+    setup do
+      @project.directory('ext') do |ext|
+        ext.file 'extconf.rb'
+        ext.directory('trogdor_native') do |trogdor_native|
+          trogdor_native.file 'extconf.rb'
+        end
+      end
+    end
+
+    context "and there hasn't been any extensions set on the gemspec" do
+      setup do
+        @gemspec  = build_jeweler_gemspec
+        @gemspec.set_jeweler_defaults(@project)
+      end
+
+      should "have all the extconf.rb files in extensions" do
+        assert_equal %w(ext/extconf.rb ext/trogdor_native/extconf.rb), @gemspec.extensions
+      end
+
+    end
+
+  end
+
   context "there are some files and is setup for git" do
     setup do
       @project.file 'Rakefile'
