@@ -7,6 +7,7 @@ class Jeweler
         setup do
           stub(@gemspec_helper).gem_path { 'pkg/zomg-1.1.1.gem' } 
           stub(@command).sudo_wrapper { 'sudo gem install --local pkg/zomg-1.1.1.gem' }
+          stub(@command).gem_command { 'gem' }
           stub(@command).sh
 
           @command.run
