@@ -13,6 +13,9 @@ class Jeweler
     def self.filelist_attribute(name)
       code = %{
         def #{name}
+          if @#{name} && @#{name}.class != FileList
+            @#{name} = FileList[@#{name}]
+          end
           @#{name} ||= FileList[]
         end
         def #{name}=(value)
@@ -29,28 +32,40 @@ class Jeweler
 
     # Assigns the Jeweler defaults to the Gem::Specification
     def set_jeweler_defaults(base_dir, git_base_dir = nil)
-      Dir.chdir(base_dir) do
+      base_dir = File.expand_path(base_dir)
+      git_base_dir = if git_base_dir
+                       File.expand_path(git_base_dir)
+                     else
+                       base_dir
+                     end
+      can_git = git_base_dir && File.directory?(File.join(git_base_dir, '.git'))
+
+      Dir.chdir(git_base_dir) do
         require 'git'
-        if blank?(files) && git_base_dir
-          git_subdir = File.expand_path(base_dir).sub(File.join(File.expand_path(git_base_dir), ""), "")          
-          repo = Git.open(git_base_dir)
-          self.files = (repo.ls_files.keys - repo.lib.ignored_files).map {|fn| fn.sub(File.join(git_subdir, ""), "")}
+        repo = Git.open(git_base_dir) if can_git
+
+        if blank?(files) && repo
+          base_dir_with_trailing_separator = File.join(base_dir, "")
+
+          self.files = (repo.ls_files(base_dir).keys - repo.lib.ignored_files).map do |file|
+            #breakpoint
+            File.expand_path(file).sub(base_dir_with_trailing_separator, "")
+          end
         end
 
-        if blank?(test_files) && File.directory?(File.join(base_dir, '.git'))
-          repo = Git.open(base_dir)
+        if blank?(test_files) && repo
           self.test_files = FileList['{spec,test,examples}/**/*.rb'] - repo.lib.ignored_files
         end
 
         if blank?(executables)
-          self.executables = Dir["bin/*"].map { |f| File.basename(f) }
+          self.executables = Dir['bin/*'].map { |f| File.basename(f) }
         end
 
         self.has_rdoc = true
         rdoc_options << '--charset=UTF-8'
 
         if blank?(extra_rdoc_files)
-          self.extra_rdoc_files = FileList["README*", "ChangeLog*", "LICENSE*"]
+          self.extra_rdoc_files = FileList['README*', 'ChangeLog*', 'LICENSE*', 'TODO']
         end
       end
     end

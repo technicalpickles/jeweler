@@ -23,6 +23,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency "rr"
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "redgreen"
+  gem.add_development_dependency "devver-construct"
 
   gem.add_development_dependency "yard"
   gem.add_development_dependency "cucumber"

@@ -12,6 +12,8 @@ begin
   require 'shoulda'
   require 'rr'
   require 'redgreen'
+  require 'construct'
+  require 'git'
 rescue LoadError => e
   puts "*" * 80
   puts "Some dependencies needed to run tests were missing. Run the following command to find them:"
@@ -42,6 +44,7 @@ end
 
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
+  include Construct::Helpers
 
   def tmp_dir
     TMP_DIR
