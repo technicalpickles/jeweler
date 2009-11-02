@@ -151,7 +151,9 @@ class TestSpecification < Test::Unit::TestCase
     setup do
       @subproject = File.join(@project, 'subproject')
       @project.file 'Rakefile'
+      @project.file 'README'
       @project.directory 'subproject' do |subproject|
+        subproject.file 'README'
         subproject.directory('lib') do |lib|
           lib.file 'subproject_example.rb'
         end
@@ -166,7 +168,7 @@ class TestSpecification < Test::Unit::TestCase
     end
 
     should "populate files from git relative to sub directory" do
-      assert_equal %w(lib/subproject_example.rb).sort, @gemspec.files.sort
+      assert_equal %w(lib/subproject_example.rb README).sort, @gemspec.files.sort
     end
   end
 
