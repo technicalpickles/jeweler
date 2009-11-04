@@ -105,8 +105,8 @@ It does the following for you:
 Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There are a few steps you need to do before doing any Gemcutter releases with Jeweler:
 
  * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
- * Install the Gemcutter gem: sudo gem install gemcutter
- * Run 'gemcutter tumble' to set up RubyGems to use gemcutter as the default source
+ * Install the Gemcutter gem: gem install gemcutter
+ * Run 'gem tumble' to set up RubyGems to use gemcutter as the default source
  * Update your Rakefile to make an instance of `Jeweler::GemcutterTasks`
 
 
