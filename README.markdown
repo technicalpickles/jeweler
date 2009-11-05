@@ -29,7 +29,6 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
         gemspec.description = "Describe your gem"
         gemspec.email = "josh@technicalpickles.com"
         gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-        gemspec.description = "TODO"
         gemspec.authors = ["Josh Nichols"]
       end
     rescue LoadError
