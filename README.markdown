@@ -90,10 +90,10 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
 If you wish to specify the version number in your code, you may
 specify the version inside of the Jeweler block:
 
-    require File.dir(__FILE__) + "lib/my_project/version.rb"
+    require File.dirname(__FILE__) + "lib/my_project/version.rb"
 
-    Jeweler::Tasks.new do |s|
-       s.version = MyProject::VERSION
+    Jeweler::Tasks.new do |gemspec|
+       gemspec.version = MyProject::VERSION
        # more stuff
     end
 
@@ -123,7 +123,7 @@ A Rakefile setup for gemcutter would include something like this:
 
     begin
       require 'jeweler'
-      Jeweler::Tasks.new do |gem|
+      Jeweler::Tasks.new do |gemspec|
         # ommitted for brevity
       end
       Jeweler::GemcutterTasks.new
@@ -154,9 +154,9 @@ A Rakefile setup for rubyforge would include something like this:
 
     begin
       require 'jeweler'
-      Jeweler::Tasks.new do |s|
+      Jeweler::Tasks.new do |gemspec|
         # ommitted for brevity
-        s.rubyforge_project = 'the-perfect-gem' # This line would be new
+        gemspec.rubyforge_project = 'the-perfect-gem' # This line would be new
       end
 
       Jeweler::RubyforgeTasks.new do |rubyforge|
