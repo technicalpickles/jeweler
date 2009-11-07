@@ -6,19 +6,19 @@ class Jeweler
       rubyforge_command_context "running" do
         setup do
           stub(@gemspec_helper).gem_path { 'pkg/zomg-1.1.1.gem' } 
-          stub(@command).sudo_wrapper { 'sudo gem install --local pkg/zomg-1.1.1.gem' }
+          stub(@command).sudo_wrapper { 'sudo gem install pkg/zomg-1.1.1.gem' }
           stub(@command).gem_command { 'gem' }
           stub(@command).sh
 
           @command.run
         end
 
-        should "call sudo wrapper with gem install --local" do
-          assert_received(@command) {|command| command.sudo_wrapper('gem install --local pkg/zomg-1.1.1.gem') }
+        should "call sudo wrapper with gem install" do
+          assert_received(@command) {|command| command.sudo_wrapper('gem install pkg/zomg-1.1.1.gem') }
         end
 
         should "call sh with output of sudo wrapper" do
-          assert_received(@command) {|command| command.sh 'sudo gem install --local pkg/zomg-1.1.1.gem' }
+          assert_received(@command) {|command| command.sh 'sudo gem install pkg/zomg-1.1.1.gem' }
         end
       end
 

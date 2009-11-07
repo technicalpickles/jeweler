@@ -11,7 +11,7 @@ class Jeweler
 
 
       def run
-        command = "#{gem_command} install --local #{gemspec_helper.gem_path}"
+        command = "#{gem_command} install #{gemspec_helper.gem_path}"
         output.puts "Executing #{command.inspect}:"
 
         sh sudo_wrapper(command) # TODO where does sh actually come from!? - rake, apparently
