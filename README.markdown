@@ -90,7 +90,7 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
 If you wish to specify the version number in your code, you may
 specify the version inside of the Jeweler block:
 
-    require File.dirname(__FILE__) + "lib/my_project/version.rb"
+    require File.dirname(__FILE__) + "/lib/my_project/version.rb"
 
     Jeweler::Tasks.new do |gemspec|
        gemspec.version = MyProject::VERSION
