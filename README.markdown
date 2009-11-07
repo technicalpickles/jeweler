@@ -32,7 +32,7 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
         gemspec.authors = ["Josh Nichols"]
       end
     rescue LoadError
-      puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+      puts "Jeweler not available. Install it with: sudo gem install jeweler"
     end
 
 The yield object here, `gemspec`, is a `Gem::Specification` object. See the [Customizing your project's gem specification](http://wiki.github.com/technicalpickles/jeweler/customizing-your-projects-gem-specification) for more details about how you can customize your gemspec.
