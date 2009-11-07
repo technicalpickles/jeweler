@@ -77,7 +77,7 @@ class Jeweler
     # Used by Specification#to_ruby to generate a ruby-respresentation of a Gem::Specification
     def ruby_code(obj)
       case obj
-      when Rake::FileList then obj.to_a.inspect
+      when Rake::FileList then obj.uniq.to_a.inspect
       else super
       end
     end
