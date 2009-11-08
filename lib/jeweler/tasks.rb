@@ -73,7 +73,7 @@ class Jeweler
       end
 
       desc "Install gem using sudo"
-      task :install => ['check_dependencies:runtime', :build] do
+      task :install => [:build] do
         jeweler.install_gem
       end
 
