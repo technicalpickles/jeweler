@@ -25,8 +25,8 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
       require 'jeweler'
       Jeweler::Tasks.new do |gemspec|
         gemspec.name = "the-perfect-gem"
-        gemspec.summary = "Summarize your gem"
-        gemspec.description = "Describe your gem"
+        gemspec.summary = "One line summary of your gem"
+        gemspec.description = "A different and possibly longer explanation of"
         gemspec.email = "josh@technicalpickles.com"
         gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
         gemspec.authors = ["Josh Nichols"]
@@ -45,7 +45,7 @@ Jeweler provides a generator. It requires you to [setup your name and email for 
 
 This will prepare a project in the 'the-perfect-gem' directory, setup to use Jeweler.
 
-It supports a number of options:
+It supports a number of options. Here's a taste, but `jeweler --help` will give you the most up-to-date listing:
 
  * --create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation
  * --testunit: generate test_helper.rb and test ready for test/unit
@@ -72,10 +72,21 @@ This creates a gemspec for your project. It's based on the info you give `Jewele
 
 ## Gem
 
-Jeweler gives you tasks for building and installing your gem:
+Jeweler gives you tasks for building and installing your gem.
+
+    rake install
+
+To build the gem (which will end up in `pkg`), run:
 
     rake build
+
+To install the gem (and build if necessary), ie using gem install, run:
+
     rake install
+
+Note, this does not use `sudo` to install it, so if your ruby setup needs that, you should prefix it with sudo:
+
+    sudo rake install
 
 ## Versioning
 
@@ -87,8 +98,7 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
     rake version:bump:minor
     rake version:bump:patch
 
-If you wish to specify the version number in your code, you may
-specify the version inside of the Jeweler block:
+You can also programatically set the version if you wish. Typically, you use this to have a module with the version info so clients can access it. The only downside here is you no longer can use the version:bump tasks. 
 
     require File.dirname(__FILE__) + "/lib/my_project/version.rb"
 
@@ -97,7 +107,18 @@ specify the version inside of the Jeweler block:
        # more stuff
     end
 
-## Releasing to GitHub
+### Prerelease versioning
+
+Major, minor, and patch versions have a distant cousin: build. You can use this to add an arbitrary (or you know, regular type) version. This is particularly useful for prereleases.
+
+You have two ways of doing this:
+
+ * Use `verion:write` and specify `BUILD=pre1` 
+ * Edit VERSION by hand to add a fourth version segment
+
+Jeweler does not provide a `version:bump:build` because the build version can really be anything, so it's hard to know what should be the next bump.
+
+## Releasing
 
 Jeweler handles releasing your gem into the wild:
 
@@ -106,16 +127,18 @@ Jeweler handles releasing your gem into the wild:
 It does the following for you:
 
  * Regenerate the gemspec to the latest version of your project
- * Push to GitHub (which results in a gem being build)
- * Tag the version and push to GitHub
+ * git pushes to origin/master branch
+ * git tags the version and pushes to the origin remote
 
-## Releasing to Gemcutter
+As is though, it doesn't actually get your gem anywhere. To do that, you'll need use rubyforge or gemcutter.
+
+### Releasing to Gemcutter
 
 Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There are a few steps you need to do before doing any Gemcutter releases with Jeweler:
 
  * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
  * Install the Gemcutter gem: gem install gemcutter
- * Run 'gem tumble' to set up RubyGems to use gemcutter as the default source
+ * Run 'gem tumble' to set up RubyGems to use gemcutter as the default source if you haven't already
  * Update your Rakefile to make an instance of `Jeweler::GemcutterTasks`
 
 
@@ -132,11 +155,13 @@ A Rakefile setup for gemcutter would include something like this:
     end
 
 
-With all that setup out of the way, you can now release to Gemcutter with impunity. This would release the current version of your gem.
+After you have configured this, `rake release` will now also release to Gemutter.
+
+If you need to release it without the rest of the release task, you can run:
 
     $ rake gemcutter:release
 
-## Releasing to RubyForge
+### Releasing to RubyForge
 
 Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There are a few steps you need to do before doing any RubyForge releases with Jeweler:
 
@@ -170,14 +195,14 @@ Now you must initially create a 'package' for your gem in your RubyForge 'projec
 
     $ rake rubyforge:setup
 
-With all that setup out of the way, you can now release to RubyForge with impunity. This would release the current version of your gem, and upload the rdoc as your project's webpage.
+After you have configured this, `rake release` will now also release to Gemutter.
+
+If you need to release it without the rest of the release task, you can run:
 
     $ rake rubyforge:release
 
-## Release Workflow
+## Development and Release Workflow
 
  * Hack, commit, hack, commit, etc, etc
  * `rake version:bump:patch release` to do the actual version bump and release
- * Have a delicious scotch
- * Install [gemstalker](http://github.com/technicalpickles/gemstalker), and use it to know when gem is built. It typically builds in a few minutes, but won't be installable for another 15 minutes.
-
+ * Have a delicious beverage (I suggest scotch)
