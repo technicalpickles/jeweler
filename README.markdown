@@ -3,7 +3,7 @@
 Jeweler provides two things:
 
  * Rake tasks for managing gems and versioning of a <a href="http://github.com">GitHub</a> project
- * A generator for creating kickstarting a new project
+ * A generator for creating/kickstarting a new project
 
 ## Quick Links
 
@@ -16,7 +16,7 @@ Jeweler provides two things:
 
     # Install the gem:
     sudo gem install jeweler
-    
+
 ## Using in an existing project
 
 It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
@@ -49,7 +49,7 @@ It supports a number of options. Here's a taste, but `jeweler --help` will give 
 
  * --create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation
  * --testunit: generate test_helper.rb and test ready for test/unit
- * --minitest: generate test_helper.rb and test ready for minitest 
+ * --minitest: generate test_helper.rb and test ready for minitest
  * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
  * --rspec: generate spec_helper.rb and spec ready for rspec
  * --bacon: generate spec_helper.rb and spec ready for bacon
@@ -80,7 +80,7 @@ To build the gem (which will end up in `pkg`), run:
 
     rake build
 
-To install the gem (and build if necessary), ie using gem install, run:
+To install the gem (and build if necessary), i.e. using gem install, run:
 
     rake install
 
@@ -98,7 +98,7 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
     rake version:bump:minor
     rake version:bump:patch
 
-You can also programatically set the version if you wish. Typically, you use this to have a module with the version info so clients can access it. The only downside here is you no longer can use the version:bump tasks. 
+You can also programmatically set the version if you wish. Typically, you use this to have a module with the version info so clients can access it. The only downside here is you no longer can use the version:bump tasks.
 
     require File.dirname(__FILE__) + "/lib/my_project/version.rb"
 
@@ -113,7 +113,7 @@ Major, minor, and patch versions have a distant cousin: build. You can use this 
 
 You have two ways of doing this:
 
- * Use `verion:write` and specify `BUILD=pre1` 
+ * Use `version:write` and specify `BUILD=pre1`
  * Edit VERSION by hand to add a fourth version segment
 
 Jeweler does not provide a `version:bump:build` because the build version can really be anything, so it's hard to know what should be the next bump.
@@ -130,7 +130,7 @@ It does the following for you:
  * git pushes to origin/master branch
  * git tags the version and pushes to the origin remote
 
-As is though, it doesn't actually get your gem anywhere. To do that, you'll need use rubyforge or gemcutter.
+As is though, it doesn't actually get your gem anywhere. To do that, you'll need to use rubyforge or gemcutter.
 
 ### Releasing to Gemcutter
 
@@ -147,7 +147,7 @@ A Rakefile setup for gemcutter would include something like this:
     begin
       require 'jeweler'
       Jeweler::Tasks.new do |gemspec|
-        # ommitted for brevity
+        # omitted for brevity
       end
       Jeweler::GemcutterTasks.new
     rescue LoadError
@@ -155,7 +155,7 @@ A Rakefile setup for gemcutter would include something like this:
     end
 
 
-After you have configured this, `rake release` will now also release to Gemutter.
+After you have configured this, `rake release` will now also release to Gemcutter.
 
 If you need to release it without the rest of the release task, you can run:
 
@@ -195,7 +195,7 @@ Now you must initially create a 'package' for your gem in your RubyForge 'projec
 
     $ rake rubyforge:setup
 
-After you have configured this, `rake release` will now also release to Gemutter.
+After you have configured this, `rake release` will now also release to RubyForge.
 
 If you need to release it without the rest of the release task, you can run:
 
