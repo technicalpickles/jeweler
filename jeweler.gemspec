@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-10-18}
+  s.date = %q{2009-11-18}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -85,8 +85,6 @@ Gem::Specification.new do |s|
      "lib/jeweler/specification.rb",
      "lib/jeweler/tasks.rb",
      "lib/jeweler/templates/.document",
-     "lib/jeweler/templates/.document",
-     "lib/jeweler/templates/.gitignore",
      "lib/jeweler/templates/.gitignore",
      "lib/jeweler/templates/LICENSE",
      "lib/jeweler/templates/README.rdoc",
@@ -95,10 +93,12 @@ Gem::Specification.new do |s|
      "lib/jeweler/templates/bacon/helper.rb",
      "lib/jeweler/templates/features/default.feature",
      "lib/jeweler/templates/features/support/env.rb",
+     "lib/jeweler/templates/jeweler_tasks.erb",
      "lib/jeweler/templates/micronaut/flunking.rb",
      "lib/jeweler/templates/micronaut/helper.rb",
      "lib/jeweler/templates/minitest/flunking.rb",
      "lib/jeweler/templates/minitest/helper.rb",
+     "lib/jeweler/templates/other_tasks.erb",
      "lib/jeweler/templates/riot/flunking.rb",
      "lib/jeweler/templates/riot/helper.rb",
      "lib/jeweler/templates/rspec/flunking.rb",
@@ -231,6 +231,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rr>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<redgreen>, [">= 0"])
+      s.add_development_dependency(%q<devver-construct>, [">= 0"])
+      s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<cucumber>, [">= 0"])
     else
       s.add_dependency(%q<git>, [">= 1.2.5"])
       s.add_dependency(%q<rubyforge>, [">= 2.0.0"])
@@ -240,6 +243,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rr>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<redgreen>, [">= 0"])
+      s.add_dependency(%q<devver-construct>, [">= 0"])
+      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<cucumber>, [">= 0"])
     end
   else
     s.add_dependency(%q<git>, [">= 1.2.5"])
@@ -250,6 +256,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rr>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<redgreen>, [">= 0"])
+    s.add_dependency(%q<devver-construct>, [">= 0"])
+    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<cucumber>, [">= 0"])
   end
 end
 

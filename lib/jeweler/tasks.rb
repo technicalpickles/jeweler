@@ -68,7 +68,7 @@ class Jeweler
       end
 
       desc "Build gem"
-      task :build do
+      task :build => :gemspec do
         jeweler.build_gem
       end
 
