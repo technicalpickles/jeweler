@@ -34,9 +34,15 @@ class TestOptions < Test::Unit::TestCase
     setup { setup_options }
     should_have_testing_framework :shoulda
     should_have_docmentation_framework :rdoc
+
     should 'not create repository' do
       assert ! @options[:create_repo]
     end
+
+    should 'use gemcutter' do
+      assert @options[:gemcutter]
+    end
+
     should "have project name" do
       assert_equal "project_name", @options[:project_name]
     end
@@ -113,6 +119,18 @@ class TestOptions < Test::Unit::TestCase
   for_options '--rubyforge' do
     should 'enable rubyforge' do
       assert @options[:rubyforge]
+    end
+  end
+
+  for_options '--no-gemcutter' do
+    should 'enable rubyforge' do
+      assert ! @options[:gemcutter]
+    end
+  end
+
+  for_options '--gemcutter' do
+    should 'enable rubyforge' do
+      assert @options[:gemcutter]
     end
   end
 

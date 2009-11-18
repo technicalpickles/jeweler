@@ -10,6 +10,7 @@ class Jeweler
         @orig_args = args.clone
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
+        self[:gemcutter]               = true
 
         git_config = Git.global_config
         self[:user_name]       = git_config['user.name']
@@ -77,8 +78,8 @@ class Jeweler
 
           o.separator ""
 
-          o.on('--gemcutter', 'setup project for gemcutter') do
-            self[:gemcutter] = true
+          o.on('--[no-]gemcutter', 'setup project for gemcutter') do |v|
+            self[:gemcutter] = v
           end
 
           o.on('--rubyforge', 'setup project for rubyforge') do
