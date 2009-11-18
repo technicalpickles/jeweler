@@ -1,3 +1,15 @@
+# jeweler 1.4.0 2009-11-XX
+
+ * Generator now adds gemcutter support by default. Disable it with --no-gemcutter
+ * Generator now creates a reek task that works with the latest reek. If you have a previously generated project using it, you may need to change the require line to: require 'reek/adapters/rake_task'
+ * Generator now exits with the correct exit code
+ * `rake install` no longer uses `sudo` to install. If your ruby configuration needs sudo to install, use `sudo rake install` instead.
+ * `rake install` now correctly installs dependencies as well
+ * `rake install` should correctly figure out which `gem` binary to invoke now
+ * `rake build` now will regenerate the gemspec as well
+ * `rake gemspec` now eliminates duplicates for gemspec.files, gemspec.rdoc_files, etc
+ * `rake gemspec` now automtically populate gemspec.extensions with any extconf.rb files you have in `ext`
+
 # jeweler 1.2.0 2009-08-06
  * Generator now adds development dependencies appropriate to your testing framework
  * Added check_dependencies tasks for verifying gem dependencies are installed
