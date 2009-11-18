@@ -3,7 +3,7 @@ require 'test_helper'
 class TestJeweler < Test::Unit::TestCase
 
   def build_jeweler(base_dir = nil)
-    base_dir ||= non_git_dir_path
+    base_dir ||= git_dir_path
     FileUtils.mkdir_p base_dir
 
     Jeweler.new(build_spec, base_dir)

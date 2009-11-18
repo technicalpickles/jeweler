@@ -33,12 +33,13 @@ class Jeweler
     # Assigns the Jeweler defaults to the Gem::Specification
     def set_jeweler_defaults(base_dir, git_base_dir = nil)
       base_dir = File.expand_path(base_dir)
+      #breakpoint
       git_base_dir = if git_base_dir
                        File.expand_path(git_base_dir)
                      else
                        base_dir
                      end
-      can_git = git_base_dir && File.directory?(File.join(git_base_dir, '.git'))
+      can_git = git_base_dir && base_dir.include?(git_base_dir) && File.directory?(File.join(git_base_dir, '.git'))
 
       Dir.chdir(git_base_dir) do
         require 'git'
