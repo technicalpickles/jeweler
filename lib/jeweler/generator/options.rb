@@ -137,6 +137,14 @@ class Jeweler
             self[:documentation_framework] = :rdoc
           end
 
+          o.separator ""
+
+          o.on('--sinatra', 'generate a sinatra skeleton') do
+            self[:use_sinatra] = true
+          end
+
+          o.separator ""
+
           o.on_tail('-h', '--help', 'display this help and exit') do
             self[:show_help] = true
           end

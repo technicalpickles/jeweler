@@ -47,6 +47,7 @@ class Jeweler
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
+                  :use_sinatra,
                   :options
 
     def initialize(options = {})
@@ -85,6 +86,13 @@ class Jeweler
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
+
+      self.use_sinatra = options[:use_sinatra]
+
+      if use_sinatra
+        development_dependencies << ["rack-test", ">= 0"] << ["racksh", ">= 0"] << ["shotgun", ">= 0"]
+      end
+
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
@@ -163,8 +171,16 @@ class Jeweler
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'
 
+      if use_sinatra
+        output_template_in_target File.join('sinatra', 'config.ru'), 'config.ru'
+      end
+
       mkdir_in_target           lib_dir
-      touch_in_target           File.join(lib_dir, lib_filename)
+      if use_sinatra
+        output_template_in_target File.join('sinatra', 'main.rb'), File.join(lib_dir, lib_filename)
+      else
+        touch_in_target           File.join(lib_dir, lib_filename)
+      end
 
       mkdir_in_target           test_dir
       output_template_in_target File.join(testing_framework.to_s, 'helper.rb'),
@@ -189,6 +205,8 @@ class Jeweler
         mkdir_in_target           features_steps_dir
         touch_in_target           File.join(features_steps_dir, steps_filename)
       end
+
+      
 
     end
 

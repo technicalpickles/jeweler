@@ -115,3 +115,13 @@ rescue LoadError
   end
 end
 <% end %>
+
+<% if use_sinatra %>
+task :server do
+  sh 'shotgun'
+end
+
+task :console do
+  sh 'racksh'
+end
+<% end %>
