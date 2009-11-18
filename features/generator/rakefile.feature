@@ -85,13 +85,13 @@ Feature: generated Rakefile
   Scenario: no reek
     Given I do not want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'reek/rake_task'
+    Then Rakefile does not require 'reek/adapters/rake_task'
     And Rakefile does not instantiate a Reek::RakeTask
 
   Scenario: reek
     Given I want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'reek/rake_task'
+    Then Rakefile requires 'reek/adapters/rake_task'
     And Rakefile instantiates a Reek::RakeTask
 
   Scenario: no roodi

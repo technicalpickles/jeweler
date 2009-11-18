@@ -65,7 +65,7 @@ end
 
 <% if should_use_reek %>
 begin
-  require 'reek/rake_task'
+  require 'reek/adapters/rake_task'
   Reek::RakeTask.new do |t|
     t.fail_on_error = true
     t.verbose = false
