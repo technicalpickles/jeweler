@@ -10,6 +10,23 @@
  * `rake gemspec` now eliminates duplicates for gemspec.files, gemspec.rdoc_files, etc
  * `rake gemspec` now automtically populate gemspec.extensions with any extconf.rb files you have in `ext`
 
+# jeweler 1.3.0
+
+ * Now supports an addition version type, build. This can be used to add a fourth segment of the version that's arbirtary. One example use is having prereleases.
+ * Jeweler now lazily loads, to avoid causing side-effects when running other rake tasks
+ * Version can now be set explicitly on the gemspec, rather than relying on a VERSION file
+ * Rubyforge and Gemcutter support now hooks into `rake release`
+ * `rake build` now uses an in-memory copy of the gemspec, rather than the filesystem persisted one
+ * Rubyforge support no longer forces the uploading of documentation
+ * Generator:
+  * Allow arbitrary homepage and git remotes, to decouple a bit from GitHub
+  * Support for the riot testing framework: http://github.com/thumblemonks/riot/ 
+  * Support for test/spec
+  * .gitignore now ignores emacs temporary files
+  * rspec support now creates a spec.opts with support for color and other stuff
+  * Updated minitest support (formally miniunit)
+  * Improved support for autotest
+
 # jeweler 1.2.0 2009-08-06
  * Generator now adds development dependencies appropriate to your testing framework
  * Added check_dependencies tasks for verifying gem dependencies are installed
