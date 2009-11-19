@@ -105,8 +105,6 @@ class Jeweler
       if should_create_remote_repo
         create_and_push_repo
         $stdout.puts "Jeweler has pushed your repo to #{homepage}"
-        enable_gem_for_repo
-        #$stdout.puts "Jeweler has enabled gem building for your repo"
       end
     end
 
@@ -265,23 +263,8 @@ class Jeweler
                                 'token' => github_token,
                                 'description' => summary,
                                 'name' => project_name
-      # TODO do a HEAD request to see when it's ready
+      # TODO do a HEAD request to see when it's ready?
       @repo.push('origin')
     end
-
-    # FIXME This was borked awhile ago, and even more so with gems being disabled
-    def enable_gem_for_repo
-      $stdout.puts "Visit #{homepage}/edit and click 'Enable RubyGems'"
-      #url = "https://github.com/#{github_username}/#{project_name}/update"
-      #`curl -F 'login=#{github_username}' -F 'token=#{github_token}' -F 'field=repository_rubygem' -F 'value=1' #{url} 2>/dev/null`
-  
-      # FIXME use NET::HTTP instead of curl
-      #Net::HTTP.post_form URI.parse(url),
-                                #'login' => github_username,
-                                #'token' => github_token,
-                                #'field' => 'repository_rubygem',
-                                #'value' => '1'
-    end
-
   end
 end
