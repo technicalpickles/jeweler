@@ -1,4 +1,4 @@
-# jeweler 1.4.0 2009-11-XX
+# jeweler 1.4.0 2009-11-19
 
  * Generator now adds gemcutter support by default. Disable it with --no-gemcutter
  * Generator now creates a reek task that works with the latest reek. If you have a previously generated project using it, you may need to change the require line to: require 'reek/adapters/rake_task'
@@ -9,6 +9,7 @@
  * `rake build` now will regenerate the gemspec as well
  * `rake gemspec` now eliminates duplicates for gemspec.files, gemspec.rdoc_files, etc
  * `rake gemspec` now automtically populate gemspec.extensions with any extconf.rb files you have in `ext`
+ * Releasing to Rubyforge is now deprecated in favor of Gemcutter.
 
 # jeweler 1.3.0
 
