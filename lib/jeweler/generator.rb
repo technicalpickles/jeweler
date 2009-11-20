@@ -173,6 +173,9 @@ class Jeweler
 
       if use_sinatra
         output_template_in_target File.join('sinatra', 'config.ru'), 'config.ru'
+        mkdir_in_target 'bin'
+        output_template_in_target File.join('sinatra', 'bin'), File.join('bin', project_name)
+        FileUtils.chmod 0755, File.join(target_dir, 'bin', project_name)
       end
 
       mkdir_in_target           lib_dir
