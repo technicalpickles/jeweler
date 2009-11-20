@@ -54,6 +54,7 @@ class Jeweler
         namespace :release do
           desc "Release the current gem version to RubyForge."
           task :gem => [:gemspec, :build] do
+            $stderr.puts "DEPRECATION: Releasing gems to RubyForge is deprecated. You should see about releasing to Gemcutter instead: http://wiki.github.com/technicalpickles/jeweler/gemcutter"
             begin
               jeweler.release_gem_to_rubyforge
             rescue NoRubyForgeProjectInGemspecError => e
@@ -95,6 +96,7 @@ class Jeweler
 
         desc "Setup a rubyforge project for this gem"
         task :setup do
+          $stderr.puts "DEPRECATION: Releasing gems to RubyForge is deprecated. You should see about releasing to Gemcutter instead: http://wiki.github.com/technicalpickles/jeweler/gemcutter"
           begin 
             jeweler.setup_rubyforge
           rescue NoRubyForgeProjectInGemspecError => e
