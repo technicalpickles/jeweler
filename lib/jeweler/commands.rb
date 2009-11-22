@@ -10,6 +10,7 @@ class Jeweler
     autoload :SetupRubyforge, 'jeweler/commands/setup_rubyforge'
     autoload :ValidateGemspec, 'jeweler/commands/validate_gemspec'
     autoload :WriteGemspec, 'jeweler/commands/write_gemspec'
+    autoload :BuildSigningKey, 'jeweler/commands/build_signing_key'
 
     module Version
       autoload :Base,      'jeweler/commands/version/base'

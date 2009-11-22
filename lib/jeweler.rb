@@ -20,6 +20,7 @@ class Jeweler
   autoload :Tasks,          'jeweler/tasks'
   autoload :GemcutterTasks, 'jeweler/gemcutter_tasks'
   autoload :RubyforgeTasks, 'jeweler/rubyforge_tasks'
+  autoload :Signer,         'jeweler/signer'
   autoload :Specification,  'jeweler/specification'
 
   attr_reader :gemspec, :gemspec_helper, :version_helper
@@ -139,6 +140,10 @@ class Jeweler
 
   def setup_rubyforge
     Jeweler::Commands::SetupRubyforge.build_for(self).run
+  end
+
+  def build_signing_key
+    Jeweler::Commands::BuildSigningKey.build_for(self).run
   end
 
   def check_dependencies(type = nil)

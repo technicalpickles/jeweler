@@ -1,5 +1,5 @@
-#!/usr/bin/env ruby
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+#!/usr/bin/env ruby -I../lib
+#$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'jeweler/generator'
 
 exit Jeweler::Generator::Application.run!(*ARGV)

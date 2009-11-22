@@ -27,6 +27,7 @@ Jeweler::Tasks.new do |gem|
 
   gem.add_development_dependency "yard"
   gem.add_development_dependency "cucumber"
+
 end
 
 Jeweler::GemcutterTasks.new

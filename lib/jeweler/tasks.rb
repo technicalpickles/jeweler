@@ -170,7 +170,12 @@ class Jeweler
         task :development do
           jeweler.check_dependencies(:development)
         end
+      end
 
+      namespace :signing_key do
+        task :build do
+          jeweler.build_signing_key
+        end
       end
       
     end

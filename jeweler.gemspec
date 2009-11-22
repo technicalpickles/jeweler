@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-11-19}
+  s.date = %q{2009-11-20}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "ChangeLog.markdown",
      "LICENSE",
-     "README.markdown"
+     "README.markdown",
+     "TODO"
   ]
   s.files = [
     ".gitignore",
@@ -50,6 +51,7 @@ Gem::Specification.new do |s|
      "lib/jeweler.rb",
      "lib/jeweler/commands.rb",
      "lib/jeweler/commands/build_gem.rb",
+     "lib/jeweler/commands/build_signing_key.rb",
      "lib/jeweler/commands/check_dependencies.rb",
      "lib/jeweler/commands/install_gem.rb",
      "lib/jeweler/commands/release_to_gemcutter.rb",
@@ -82,6 +84,7 @@ Gem::Specification.new do |s|
      "lib/jeweler/generator/testunit_mixin.rb",
      "lib/jeweler/generator/yard_mixin.rb",
      "lib/jeweler/rubyforge_tasks.rb",
+     "lib/jeweler/signer.rb",
      "lib/jeweler/specification.rb",
      "lib/jeweler/tasks.rb",
      "lib/jeweler/templates/.document",
