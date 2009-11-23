@@ -156,18 +156,6 @@ class TestJeweler < Test::Unit::TestCase
     jeweler.release_to_git
   end
 
-  should "build and run release to rubyforge command when running release to rubyforge" do
-    jeweler = build_jeweler
-
-    command = Object.new
-    mock(command).run
-
-    mock(Jeweler::Commands::ReleaseToRubyforge).build_for(jeweler) { command }
-
-    jeweler.release_gem_to_rubyforge
-  end
-
-
   should "respond to gemspec_helper" do
     assert_respond_to build_jeweler, :gemspec_helper
   end

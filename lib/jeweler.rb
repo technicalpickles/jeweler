@@ -134,11 +134,11 @@ class Jeweler
   end
 
   def release_gem_to_rubyforge
-    Jeweler::Commands::ReleaseToRubyforge.build_for(self).run
+    # no-op
   end
 
   def setup_rubyforge
-    Jeweler::Commands::SetupRubyforge.build_for(self).run
+    # no-op...
   end
 
   def check_dependencies(type = nil)
