@@ -189,6 +189,12 @@ Then /^'(.*)' should contextualize '(.*)'$/ do |file, describe_name|
   assert_match %Q{context "#{describe_name}" do}, @spec_content
 end
 
+Then /^'(.*)' should have tests for '(.*)'$/ do |file, describe_name|
+  @tests_content ||= File.read((File.join(@working_dir, @name, file)))
+
+  assert_match %Q{Shindo.tests("#{describe_name}") do}, @tests_content
+end
+
 Then /^'(.*)' requires '(.*)'$/ do |file, lib|
   content = File.read(File.join(@working_dir, @name, file))
 

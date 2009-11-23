@@ -54,3 +54,10 @@ Feature: generated test or spec
     When I generate a riot project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/teststrap.rb' requires 'riot'
       And 'test/teststrap.rb' requires 'the-perfect-gem'
+
+  Scenario: shindo
+    Given a working directory
+    And I have configured git sanely
+    When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
+    Then 'tests/tests_helper.rb' requires 'the-perfect-gem'
+    Then 'tests/tests_helper.rb' requires 'shindo'

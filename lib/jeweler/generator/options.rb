@@ -59,6 +59,10 @@ class Jeweler
             self[:testing_framework] = :riot
           end
 
+          o.on('--shindo', 'generate shindo tests') do
+            self[:testing_framework] = :shindo
+          end
+
           o.separator ""
 
           o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do

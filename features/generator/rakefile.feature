@@ -124,3 +124,9 @@ Feature: generated Rakefile
     And 'Rakefile' requires 'rake/rdoctask'
     And Rakefile does not instantiate a YARD::Rake::YardocTask
     And Rakefile instantiates a Rake::RDocTask.new
+
+  Scenario: shindo
+    When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
+    And 'Rakefile' requires 'shindo/rake'
+    And Rakefile instantiates a Shindo::Rake.new
+    And Rakefile has "tests" as the default task

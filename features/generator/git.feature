@@ -92,3 +92,11 @@ Feature: git support
     Then 'features/the-perfect-gem.feature' was checked in
     And 'features/support/env.rb' was checked in
     And 'features/step_definitions/the-perfect-gem_steps.rb' was checked in
+
+  Scenario: shindo
+    Given a working directory
+    And I have configured git sanely
+    When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then 'tests/tests_helper.rb' was checked in
+    And 'tests/the-perfect-gem_tests.rb' was checked in

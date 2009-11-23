@@ -74,3 +74,13 @@ Feature: generated directory layout
 
     And a file named 'the-perfect-gem/examples/example_helper.rb' is created
     And a file named 'the-perfect-gem/examples/the-perfect-gem_example.rb' is created
+
+  Scenario: shindo
+    Given a working directory
+    And I have configured git sanely
+    When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then a directory named 'the-perfect-gem/tests' is created
+
+    And a file named 'the-perfect-gem/spec/tests_helper.rb' is created
+    And a file named 'the-perfect-gem/spec/the-perfect-gem_tests.rb' is created

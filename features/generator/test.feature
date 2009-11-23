@@ -46,3 +46,9 @@ Feature: generated test or spec
     When I generate a riot project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'test/the-perfect-gem_test.rb' should contextualize 'the-perfect-gem'
       And 'test/the-perfect-gem_test.rb' requires 'teststrap'
+
+  Scenario: shindo
+    Given a working directory
+    And I have configured git sanely
+    When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
+    Then 'tests/the-perfect-gem_tests.rb' should have tests for 'ThePerfectGem'

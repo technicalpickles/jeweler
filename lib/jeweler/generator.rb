@@ -36,6 +36,7 @@ class Jeweler
     require 'jeweler/generator/testspec_mixin'
     require 'jeweler/generator/testunit_mixin'
     require 'jeweler/generator/riot_mixin'
+    require 'jeweler/generator/shindo_mixin'
 
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
