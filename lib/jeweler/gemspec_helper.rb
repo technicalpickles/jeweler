@@ -71,7 +71,8 @@ class Jeweler
     def prettyify_array(gemspec_ruby, array_name)
       gemspec_ruby.gsub(/s\.#{array_name.to_s} = \[.+?\]/) do |match|
         leadin, files = match[0..-2].split("[")
-        leadin + "[\n    #{files.split(",").join(",\n    ")}\n  ]"
+        
+        leadin + "[\n    #{files.gsub(%|", "|, %|",\n    "|)}\n  ]"
       end
     end
 
