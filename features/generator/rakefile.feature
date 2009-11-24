@@ -108,16 +108,6 @@ Feature: generated Rakefile
     And Rakefile requires 'roodi_task'
     And Rakefile instantiates a RoodiTask
 
-  Scenario: no rubyforge
-    Given I do not want rubyforge setup
-    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not instantiate a Jeweler::RubyforgeTasks
-
-  Scenario: rubyforge
-    Given I want rubyforge setup
-    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile instantiates a Jeweler::RubyforgeTasks
-
   Scenario: yard
     Given I want to use yard instead of rdoc
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'

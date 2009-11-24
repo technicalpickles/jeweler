@@ -2,7 +2,7 @@ require 'rake'
 require 'rake/tasklib'
 
 class Jeweler
-  # Rake tasks for putting a Jeweler gem on Rubyforge.
+  # (Mostly deprecated) Rake tasks for putting a Jeweler gem on Rubyforge.
   #
   # Jeweler::Tasks.new needs to be used before this.
   #
@@ -32,8 +32,6 @@ class Jeweler
 
       yield self if block_given?
 
-      $stderr.puts "Releasing gems to Rubyforge is no longer support. See details at http://wiki.github.com/technicalpickles/jeweler/migrating-from-releasing-gems-to-rubyforge"
-
       define
     end
 
@@ -53,10 +51,8 @@ class Jeweler
       namespace :rubyforge do
 
         namespace :release do
-          desc "Release the current gem version to RubyForge."
-          task :gem do
-            $stderr.puts "DEPRECATION: Releasing gems to RubyForge is deprecated. You should see about releasing to Gemcutter instead: http://wiki.github.com/technicalpickles/jeweler/gemcutter"
-          end
+          desc "Pretend to release the current gem version to RubyForge, but actually release to Gemcutter."
+          task :gem => 'gemcutter:release'
 
           if publish_documentation?
             desc "Publish docs to RubyForge."
