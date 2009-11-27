@@ -146,7 +146,7 @@ class TestSpecification < Test::Unit::TestCase
       end
 
       should "populate files from git" do
-        assert_equal %w(Rakefile lib/example.rb), @gemspec.files
+        assert_equal %w(Rakefile lib/example.rb), @gemspec.files.sort
       end
     end
 
@@ -184,7 +184,7 @@ class TestSpecification < Test::Unit::TestCase
     end
 
     should "populate files from git excluding ignored" do
-      assert_equal %w(.gitignore Rakefile lib/example.rb), @gemspec.files
+      assert_equal %w(.gitignore Rakefile lib/example.rb), @gemspec.files.sort
     end
   end
 
