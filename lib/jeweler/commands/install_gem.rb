@@ -7,7 +7,6 @@ class Jeweler
         self.output = $stdout
       end
 
-
       def run
         command = "#{gem_command} install #{gemspec_helper.gem_path}"
         output.puts "Executing #{command.inspect}:"
@@ -16,7 +15,7 @@ class Jeweler
       end
 
       def gem_command
-        Config::CONFIG['RUBY_INSTALL_NAME'].sub('ruby', 'gem')
+        "#{Config::CONFIG['RUBY_INSTALL_NAME']} -S gem"
       end
 
       def self.build_for(jeweler)
