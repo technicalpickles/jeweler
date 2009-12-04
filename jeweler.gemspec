@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2009-11-19}
+  s.date = %q{2009-12-04}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -226,7 +226,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<git>, [">= 1.2.5"])
       s.add_runtime_dependency(%q<rubyforge>, [">= 2.0.0"])
       s.add_runtime_dependency(%q<gemcutter>, [">= 0.1.0"])
-      s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+      s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_development_dependency(%q<rr>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
@@ -238,7 +238,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<git>, [">= 1.2.5"])
       s.add_dependency(%q<rubyforge>, [">= 2.0.0"])
       s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
-      s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+      s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_dependency(%q<rr>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
@@ -251,7 +251,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<git>, [">= 1.2.5"])
     s.add_dependency(%q<rubyforge>, [">= 2.0.0"])
     s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
-    s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+    s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
     s.add_dependency(%q<rr>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])

@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
 
   gem.rubyforge_project = "pickles"
 
-  gem.add_development_dependency "thoughtbot-shoulda"
+  gem.add_development_dependency "shoulda"
   gem.add_development_dependency "mhennemeyer-output_catcher"
   gem.add_development_dependency "rr"
   gem.add_development_dependency "mocha"
