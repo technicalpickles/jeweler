@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pathname'
 
 class Jeweler
   module Commands
@@ -247,6 +248,7 @@ class Jeweler
                                                                    :gemspec_helper => @gemspec_helper,
                                                                    :version => '1.2.3'
 
+          stub(@command).working_subdir { Pathname.new(".") }
           @command.commit_gemspec!
         end
 
@@ -258,6 +260,80 @@ class Jeweler
           assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
         end
 
+      end
+
+      context "commit_gemspec! in top dir" do
+        setup do
+          @repo = Object.new
+
+          stub(@repo) do
+            add(anything)
+            commit(anything)
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command = Jeweler::Commands::ReleaseToGithub.new :output => @output,
+            :repo => @repo,
+            :gemspec_helper => @gemspec_helper,
+            :version => '1.2.3',
+            :base_dir => '.'
+
+          @dir = Object.new
+          stub(@repo).dir { @dir }
+          stub(@dir).path { "/x/y/z" }
+
+          stub(@command).base_dir_path { Pathname.new("/x/y/z") }
+
+          @command.commit_gemspec!
+        end
+
+        should "add gemspec to repository" do
+          assert_received(@repo) {|repo| repo.add('zomg.gemspec') }
+        end
+      end
+
+      context "commit_gemspec! in sub dir" do
+        setup do
+          @repo = Object.new
+
+          stub(@repo) do
+            add(anything)
+            commit(anything)
+          end
+
+          @gemspec_helper = Object.new
+          stub(@gemspec_helper) do
+            path {'zomg.gemspec'}
+            update_version('1.2.3')
+          end
+
+          @output = StringIO.new
+
+          @command = Jeweler::Commands::ReleaseToGithub.new :output => @output,
+            :repo => @repo,
+            :gemspec_helper => @gemspec_helper,
+            :version => '1.2.3',
+            :base_dir => '.'
+
+          @dir = Object.new
+          stub(@repo).dir { @dir }
+          stub(@dir).path { "/x/y/z" }
+
+          stub(@command).base_dir_path { Pathname.new("/x/y/z/gem") }
+
+          @command.commit_gemspec!
+        end
+
+        should "add gemspec to repository" do
+          assert_received(@repo) {|repo| repo.add('gem/zomg.gemspec') }
+        end
       end
 
       context "release_tagged? when no tag exists" do
