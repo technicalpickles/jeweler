@@ -7,7 +7,7 @@ Spec::Rake::SpecTask.new(:<%= test_task %>) do |<%= test_task %>|
 end
 <% when :micronaut %>
 require 'micronaut/rake_task'
-Micronaut::RakeTask.new(<%= test_task %>) do |<%= test_task %>|
+Micronaut::RakeTask.new(:<%= test_task %>) do |<%= test_task %>|
   <%= test_task %>.pattern = '<%= test_pattern %>'
   <%= test_task %>.ruby_opts << '-Ilib -I<%= test_dir %>'
 end
