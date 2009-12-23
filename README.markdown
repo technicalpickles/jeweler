@@ -14,8 +14,8 @@ Jeweler provides two things:
 
 ## Installing
 
-    # Install the gem:
-    sudo gem install jeweler
+# Install the gem:
+    gem install jeweler
 
 ## Using in an existing project
 
