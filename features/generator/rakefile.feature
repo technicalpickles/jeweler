@@ -124,18 +124,3 @@ Feature: generated Rakefile
     And 'Rakefile' requires 'rake/rdoctask'
     And Rakefile does not instantiate a YARD::Rake::YardocTask
     And Rakefile instantiates a Rake::RDocTask.new
-
-  Scenario: rubyforge and yard
-    Given I want to use yard instead of rdoc
-    And I want rubyforge setup
-    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile instantiates a Jeweler::RubyforgeTasks
-    And Rakefile has 'yardoc' for the Jeweler::RubyforgeTasks doc_task
-
-  Scenario: rubyfoge and doc
-    Given I want to use rdoc instead of yard
-    And I want rubyforge setup
-    And I want rubyforge setup
-    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile instantiates a Jeweler::RubyforgeTasks
-    And Rakefile has 'rdoc' for the Jeweler::RubyforgeTasks doc_task
