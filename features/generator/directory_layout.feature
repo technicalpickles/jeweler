@@ -82,5 +82,5 @@ Feature: generated directory layout
 
     Then a directory named 'the-perfect-gem/tests' is created
 
-    And a file named 'the-perfect-gem/spec/tests_helper.rb' is created
-    And a file named 'the-perfect-gem/spec/the-perfect-gem_tests.rb' is created
+    And a file named 'the-perfect-gem/tests/tests_helper.rb' is created
+    And a file named 'the-perfect-gem/tests/the-perfect-gem_tests.rb' is created
