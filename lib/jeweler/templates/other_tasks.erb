@@ -46,7 +46,7 @@ begin
   end
 rescue LoadError
   task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+    abort "RCov is not available. In order to run rcov, you must: gem install spicycode-rcov"
   end
 end
 <% end %>
@@ -61,7 +61,7 @@ begin
   task :features => :check_dependencies
 rescue LoadError
   task :features do
-    abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+    abort "Cucumber is not available. In order to run features, you must: gem install cucumber"
   end
 end
 <% end %>
@@ -76,7 +76,7 @@ begin
   end
 rescue LoadError
   task :reek do
-    abort "Reek is not available. In order to run reek, you must: sudo gem install reek"
+    abort "Reek is not available. In order to run reek, you must: gem install reek"
   end
 end
 <% end %>
@@ -90,7 +90,7 @@ begin
   end
 rescue LoadError
   task :roodi do
-    abort "Roodi is not available. In order to run roodi, you must: sudo gem install roodi"
+    abort "Roodi is not available. In order to run roodi, you must: gem install roodi"
   end
 end
 <% end %>
@@ -114,7 +114,7 @@ begin
   YARD::Rake::YardocTask.new
 rescue LoadError
   task :yardoc do
-    abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"
+    abort "YARD is not available. In order to run yardoc, you must: gem install yard"
   end
 end
 <% end %>

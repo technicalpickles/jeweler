@@ -32,7 +32,7 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
         gemspec.authors = ["Josh Nichols"]
       end
     rescue LoadError
-      puts "Jeweler not available. Install it with: sudo gem install jeweler"
+      puts "Jeweler not available. Install it with: gem install jeweler"
     end
 
 The yield object here, `gemspec`, is a `Gem::Specification` object. See the [Customizing your project's gem specification](http://wiki.github.com/technicalpickles/jeweler/customizing-your-projects-gem-specification) for more details about how you can customize your gemspec.
@@ -151,7 +151,7 @@ A Rakefile setup for gemcutter would include something like this:
       end
       Jeweler::GemcutterTasks.new
     rescue LoadError
-      puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+      puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
     end
 
 
@@ -167,7 +167,7 @@ Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There ar
 
  * [Create an account on RubyForge](http://rubyforge.org/account/register.php)
  * Request a project on RubyForge.
- * Install the RubyForge gem: sudo gem install rubyforge
+ * Install the RubyForge gem: gem install rubyforge
  * Run 'rubyforge setup' and fill in your username and password for RubyForge
  * Run 'rubyforge config' to pull down information about your projects
  * Run 'rubyforge login' to make sure you are able to login
@@ -188,7 +188,7 @@ A Rakefile setup for rubyforge would include something like this:
         rubyforge.doc_task = "rdoc"
       end
     rescue LoadError
-      puts "Jeweler, or a dependency, not available. Install it with: sudo gem install jeweler"
+      puts "Jeweler, or a dependency, not available. Install it with: gem install jeweler"
     end
 
 Now you must initially create a 'package' for your gem in your RubyForge 'project':
