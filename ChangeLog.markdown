@@ -8,12 +8,12 @@
  * `rake install` should correctly figure out which `gem` binary to invoke now
  * `rake build` now will regenerate the gemspec as well
  * `rake gemspec` now eliminates duplicates for gemspec.files, gemspec.rdoc_files, etc
- * `rake gemspec` now automtically populate gemspec.extensions with any extconf.rb files you have in `ext`
+ * `rake gemspec` now automatically populates gemspec.extensions with any extconf.rb files you have in `ext`
  * Releasing to Rubyforge is now deprecated in favor of Gemcutter.
 
 # jeweler 1.3.0
 
- * Now supports an addition version type, build. This can be used to add a fourth segment of the version that's arbirtary. One example use is having prereleases.
+ * Now supports an additional version type, build. This can be used to add a fourth segment of the version that's arbitrary. One example use is having prereleases.
  * Jeweler now lazily loads, to avoid causing side-effects when running other rake tasks
  * Version can now be set explicitly on the gemspec, rather than relying on a VERSION file
  * Rubyforge and Gemcutter support now hooks into `rake release`
@@ -21,7 +21,7 @@
  * Rubyforge support no longer forces the uploading of documentation
  * Generator:
   * Allow arbitrary homepage and git remotes, to decouple a bit from GitHub
-  * Support for the riot testing framework: http://github.com/thumblemonks/riot/ 
+  * Support for the riot testing framework: http://github.com/thumblemonks/riot/
   * Support for test/spec
   * .gitignore now ignores emacs temporary files
   * rspec support now creates a spec.opts with support for color and other stuff
@@ -76,7 +76,7 @@
  * Managing a gemspec's files, test_files, and extra_rdoc_files is now more flexible. They are now wrapped in a FileList, so you can easily 'include' or 'exclude' patterns.
 
 # jeweler 0.10.2 2009-03-26
- 
+
  * 'rake install' now will 'rake build' first
  * Support for releasing to RubyForge, thanks to jtrupiano
  * Steps towards Ruby 1.9 support, thanks to rsanheim
@@ -85,19 +85,19 @@
 
  * Tasks:
   * Fixed populating default spec's extra_rdoc_files
-  * Removed redudant gem building/installing tasks. Use rake build and rake install
+  * Removed redundant gem building/installing tasks. Use rake build and rake install
  * Generator:
   * Added support for micronaut
   * Generate nicer block variable names in Rakefile
   * Cucumber generation now places steps in features/step_features, to follow cucumber standards
 
-  * shoulda and test/unit test_helpers no longers require mocha 
+  * shoulda and test/unit test_helpers no longer require mocha
   * Rakefile uses more readable block variable names
   * .gitignore now includes pkg and coverage directories
   * Avoid puts'ing in Rakefile when LoadError occurs. Instead, define a task that aborts with instructions to install.
   * Cucumber is now optional. Generate stories using --cucumber
   * Bacon's 'test' task is now 'spec'
-  * Generate README.rdoc instead of just a plain text README 
+  * Generate README.rdoc instead of just a plain text README
   * Updated year in README.rdoc and COPYRIGHT to be based on the current year instead of hardcoded
 
 # jeweler 0.8.1 2009-02-03
@@ -114,7 +114,7 @@
   * Added support for cucumber
   * Creating a new gem is now more verbose, and will show files/directories created
  * Binaries will now be automatically detected in 'bin'
-  
+
 # jeweler 0.7.2 2009-01-29
 
  * Added rake task 'version:bump' which is shorthand for 'version:bump:patch'
