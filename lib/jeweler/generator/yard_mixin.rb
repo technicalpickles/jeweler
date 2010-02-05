@@ -6,7 +6,7 @@ class Jeweler
       end
       
       def doc_task
-        'yardoc'
+        'yard'
       end
     end
   end
