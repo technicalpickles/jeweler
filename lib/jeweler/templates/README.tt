@@ -1,11 +1,11 @@
-= <%= project_name %>
+h1. <%= project_name %>
 
 Description goes here.
 
-== Note on Patches/Pull Requests
+h2. Note on Patches/Pull Requests
  
 <%= render_template 'pull_requests.erb' %>
 
-== Copyright
+h2. Copyright
 
 Copyright (c) <%= Time.now.year %> <%= user_name %>. See LICENSE for details.

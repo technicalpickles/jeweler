@@ -47,6 +47,7 @@ class Jeweler
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
+                  :documentation_markup,
                   :development_dependencies,
                   :options
 
@@ -61,6 +62,8 @@ class Jeweler
       self.development_dependencies = []
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
+      self.documentation_markup = options[:documentation_markup]
+
       begin
         generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
         generator_mixin = self.class.const_get(generator_mixin_name)
@@ -170,7 +173,20 @@ class Jeweler
       output_template_in_target 'Rakefile'
       output_template_in_target 'Gemfile'
       output_template_in_target 'LICENSE'
-      output_template_in_target 'README.rdoc'
+
+      if documentation_framework == :yard
+        case documentation_markup
+        when :markdown
+          output_template_in_target 'README.md'
+        when :textile
+          output_template_in_target 'README.tt'
+        else
+          output_template_in_target 'README.rdoc'
+        end
+      else
+        output_template_in_target 'README.rdoc'
+      end
+
       output_template_in_target '.document'
 
       mkdir_in_target           lib_dir

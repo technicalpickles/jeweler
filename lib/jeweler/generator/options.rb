@@ -10,6 +10,7 @@ class Jeweler
         @orig_args = args.clone
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
+        self[:documentation_markup] = :rdoc
 
         git_config = Git.global_config
         self[:user_name]       = git_config['user.name']
@@ -128,8 +129,17 @@ class Jeweler
             self[:documentation_framework] = :yard
           end
 
+          o.on('--markdown', 'use markdown formatted yard documentation') do
+            self[:documentation_markup] = :markdown
+          end
+
+          o.on('--textile', 'use textile formatted yard documentation') do
+            self[:documentation_markup] = :textile
+          end
+
           o.on('--rdoc', 'use rdoc for documentation') do
             self[:documentation_framework] = :rdoc
+            self[:documentation_markup] = :rdoc
           end
 
           o.on_tail('-h', '--help', 'display this help and exit') do
