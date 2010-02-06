@@ -48,7 +48,8 @@ class Jeweler
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
-                  :options
+                  :options,
+                  :git_remote
 
     def initialize(options = {})
       self.options = options
@@ -100,6 +101,8 @@ class Jeweler
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
       self.homepage        = options[:homepage]
+      
+      self.git_remote      = options[:git_remote]
 
       raise NoGitUserName unless self.user_name
       raise NoGitUserEmail unless self.user_email
