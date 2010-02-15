@@ -286,3 +286,11 @@ After do
   ENV['JEWELER_OPTS'] = nil
   FileUtils.rm_rf @working_dir if @working_dir
 end
+
+Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
+  @gemfile_content ||= File.read(File.join(@working_dir, @name, 'Gemfile'))
+
+  group_block = yank_group_info(@gemfile_content, group)
+
+  assert_match name, group_block
+end

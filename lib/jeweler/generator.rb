@@ -89,6 +89,12 @@ class Jeweler
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
+      # TODO make bundler optional?
+      development_dependencies << ["bundler", ">= 0.9.5"]
+
+      development_dependencies << ["reek", ">= 0"] if should_use_reek
+      development_dependencies << ["roodi", ">= 0"] if should_use_roodi
+
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
       self.homepage        = options[:homepage]
@@ -160,6 +166,7 @@ class Jeweler
 
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
+      output_template_in_target 'Gemfile'
       output_template_in_target 'LICENSE'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'

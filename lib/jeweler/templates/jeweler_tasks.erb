@@ -10,6 +10,7 @@ begin
 <% if should_setup_rubyforge %>
     gem.rubyforge_project = "<%= project_name %>"
 <% end %>
+    # Have dependencies? Add them to Gemfile
 <% development_dependencies.each do |name, version| %>
     gem.add_development_dependency "<%= name %>", "<%= version %>"
 <% end %>
@@ -26,4 +27,3 @@ begin
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
-

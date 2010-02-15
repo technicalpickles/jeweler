@@ -22,6 +22,12 @@ def yank_task_info(content, task)
   end
 end
 
+def yank_group_info(content, group)
+  if content =~ /group :#{group} do(.*?)end/m
+    $1
+  end
+end
+
 def fixture_dir
   File.expand_path File.join(File.dirname(__FILE__), '..', '..', 'test', 'fixtures')
 end
