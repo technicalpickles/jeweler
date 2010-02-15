@@ -88,3 +88,15 @@ end
 
 task :test => :check_dependencies
 task :features => :check_dependencies
+
+
+namespace :test do
+  task :gemspec_dup do
+    gemspec = Rake.application.jeweler.gemspec
+    dupped_gemspec = gemspec.dup
+    cloned_gemspec = gemspec.clone
+    #require 'ruby-debug';breakpoint
+    puts gemspec.to_ruby
+    puts dupped_gemspec.to_ruby
+  end
+end

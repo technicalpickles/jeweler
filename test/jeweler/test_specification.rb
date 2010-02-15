@@ -19,6 +19,13 @@ class TestSpecification < Test::Unit::TestCase
     gemspec
   end
 
+  should "be able to use to_ruby on a duped gemspec without error" do
+    gemspec = build_jeweler_gemspec
+    gemspec.files.include 'throwaway value'
+
+    gemspec.dup.to_ruby
+  end
+
   context "basic defaults" do
     setup do
       @gemspec = build_jeweler_gemspec

@@ -85,10 +85,24 @@ class Jeweler
       end
     end
 
+
     private
 
     def blank?(value)
       value.nil? || value.empty?
     end
+  end
+end
+
+
+# Workaround for cloning/duping a Gem::Specification
+# documented in http://github.com/technicalpickles/jeweler/issues#issue/73
+Gem::Specification.class_eval do
+  def initialize_copy(original)
+    super
+
+    self.files = original.files.to_a
+    self.test_files = original.test_files.to_a
+    self.extra_rdoc_files = original.extra_rdoc_files.to_a
   end
 end
