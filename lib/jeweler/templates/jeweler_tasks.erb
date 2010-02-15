@@ -1,29 +1,23 @@
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "<%= project_name %>"
-    gem.summary = %Q{<%= summary %>}
-    gem.description = %Q{<%= description %>}
-    gem.email = "<%= user_email %>"
-    gem.homepage = "<%= homepage %>"
-    gem.authors = ["<%= user_name %>"]
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name = "<%= project_name %>"
+  gem.summary = %Q{<%= summary %>}
+  gem.description = %Q{<%= description %>}
+  gem.email = "<%= user_email %>"
+  gem.homepage = "<%= homepage %>"
+  gem.authors = ["<%= user_name %>"]
 <% if should_setup_rubyforge %>
-    gem.rubyforge_project = "<%= project_name %>"
+  gem.rubyforge_project = "<%= project_name %>"
 <% end %>
-    # Have dependencies? Add them to Gemfile
-<% development_dependencies.each do |name, version| %>
-    gem.add_development_dependency "<%= name %>", "<%= version %>"
-<% end %>
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-<% if should_setup_gemcutter %>
-  Jeweler::GemcutterTasks.new
-<% end %>
-<% if should_setup_rubyforge %>
-  Jeweler::RubyforgeTasks.new do |rubyforge|
-    rubyforge.doc_task = "<%= doc_task %>"
-  end
-<% end %>
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+  # Have dependencies? Add them to Gemfile
+
+  # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 end
+<% if should_setup_gemcutter %>
+Jeweler::GemcutterTasks.new
+<% end %>
+<% if should_setup_rubyforge %>
+Jeweler::RubyforgeTasks.new do |rubyforge|
+  rubyforge.doc_task = "<%= doc_task %>"
+end
+<% end %>

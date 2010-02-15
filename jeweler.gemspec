@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
     "ChangeLog.markdown",
+    "Gemfile",
     "LICENSE",
     "README.markdown",
     "Rakefile",
@@ -32,6 +33,7 @@ Gem::Specification.new do |s|
     "features/generator/directory_layout.feature",
     "features/generator/dotdocument.feature",
     "features/generator/env_options.feature",
+    "features/generator/gemfile.feature",
     "features/generator/git.feature",
     "features/generator/license.feature",
     "features/generator/rakefile.feature",
@@ -86,6 +88,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",
     "lib/jeweler/templates/.gitignore",
+    "lib/jeweler/templates/Gemfile",
     "lib/jeweler/templates/LICENSE",
     "lib/jeweler/templates/README.rdoc",
     "lib/jeweler/templates/Rakefile",
@@ -171,7 +174,8 @@ Gem::Specification.new do |s|
     "test/jeweler/test_version_helper.rb",
     "test/shoulda_macros/jeweler_macros.rb",
     "test/test_helper.rb",
-    "test/test_jeweler.rb"
+    "test/test_jeweler.rb",
+    "tmp/existing-project-with-version-plaintext/VERSION"
   ]
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -223,6 +227,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<git>, [">= 1.2.5"])
       s.add_runtime_dependency(%q<gemcutter>, [">= 0.1.0"])
+      s.add_runtime_dependency(%q<bundler>, [">= 0.9.5"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_development_dependency(%q<rr>, [">= 0"])
@@ -236,6 +241,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<git>, [">= 1.2.5"])
       s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
+      s.add_dependency(%q<bundler>, [">= 0.9.5"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_dependency(%q<rr>, [">= 0"])
@@ -250,6 +256,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<git>, [">= 1.2.5"])
     s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
+    s.add_dependency(%q<bundler>, [">= 0.9.5"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
     s.add_dependency(%q<rr>, [">= 0"])

@@ -37,61 +37,33 @@ Micronaut::RakeTask.new(:rcov) do |examples|
   examples.rcov = true
 end
 <% else %>
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |<%= test_task %>|
-    <%= test_task %>.libs << '<%= test_dir %>'
-    <%= test_task %>.pattern = '<%= test_pattern %>'
-    <%= test_task %>.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: gem install spicycode-rcov"
-  end
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |<%= test_task %>|
+  <%= test_task %>.libs << '<%= test_dir %>'
+  <%= test_task %>.pattern = '<%= test_pattern %>'
+  <%= test_task %>.verbose = true
 end
 <% end %>
 
-task :<%= test_task %> => :check_dependencies
-
 <% if should_use_cucumber %>
-begin
-  require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features)
-
-  task :features => :check_dependencies
-rescue LoadError
-  task :features do
-    abort "Cucumber is not available. In order to run features, you must: gem install cucumber"
-  end
-end
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new(:features)
 <% end %>
 
 <% if should_use_reek %>
-begin
-  require 'reek/adapters/rake_task'
-  Reek::RakeTask.new do |t|
-    t.fail_on_error = true
-    t.verbose = false
-    t.source_files = 'lib/**/*.rb'
-  end
-rescue LoadError
-  task :reek do
-    abort "Reek is not available. In order to run reek, you must: gem install reek"
-  end
+require 'reek/adapters/rake_task'
+Reek::RakeTask.new do |t|
+  t.fail_on_error = true
+  t.verbose = false
+  t.source_files = 'lib/**/*.rb'
 end
 <% end %>
 
 <% if should_use_roodi %>
-begin
-  require 'roodi'
-  require 'roodi_task'
-  RoodiTask.new do |t|
-    t.verbose = false
-  end
-rescue LoadError
-  task :roodi do
-    abort "Roodi is not available. In order to run roodi, you must: gem install roodi"
-  end
+require 'roodi'
+require 'roodi_task'
+RoodiTask.new do |t|
+  t.verbose = false
 end
 <% end %>
 
@@ -109,12 +81,6 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 <% when :yard %>
-begin
-  require 'yard'
-  YARD::Rake::YardocTask.new
-rescue LoadError
-  task :yardoc do
-    abort "YARD is not available. In order to run yardoc, you must: gem install yard"
-  end
-end
+require 'yard'
+YARD::Rake::YardocTask.new
 <% end %>
