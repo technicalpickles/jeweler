@@ -235,4 +235,34 @@ class TestSpecification < Test::Unit::TestCase
       assert_equal [], @gemspec.files.sort
     end
   end
+
+  context "there's a Gemfile with dependencies" do
+    setup do
+      @project.file 'Gemfile', %Q{
+        group :runtime do
+          gem "git", ">= 1.2.5"
+        end
+        group :development do
+          gem "shoulda"
+        end
+      }
+      @gemspec  = build_jeweler_gemspec
+      @gemspec.set_jeweler_defaults(@project, @project)
+    end
+
+    should "include Gemfile's runtime group in gemspec's runtime dependencies" do
+      assert_equal 1, @gemspec.runtime_dependencies.size
+      dependency = @gemspec.runtime_dependencies.first
+      assert_equal "git", dependency.name
+      assert_equal ">= 1.2.5", dependency.version_requirements.to_s
+    end
+
+    should "include Gemfile's development group in gemspec's development dependencies" do
+      assert_equal 1, @gemspec.development_dependencies.size
+      dependency = @gemspec.development_dependencies.first
+      assert_equal "shoulda", dependency.name
+      assert_equal ">= 0", dependency.version_requirements.to_s
+    end
+
+  end
 end

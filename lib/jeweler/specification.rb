@@ -74,6 +74,17 @@ class Jeweler
         if blank?(extra_rdoc_files)
           self.extra_rdoc_files = FileList['README*', 'ChangeLog*', 'LICENSE*', 'TODO']
         end
+
+        if File.exist?('Gemfile')
+          require 'bundler'
+          bundler = Bundler.load
+          bundler.dependencies_for(:runtime).each do |dependency|
+            self.add_dependency dependency.name, dependency.version_requirements.to_s
+          end
+          bundler.dependencies_for(:development).each do |dependency|
+            self.add_development_dependency dependency.name, dependency.version_requirements.to_s
+          end
+        end
       end
     end
 
