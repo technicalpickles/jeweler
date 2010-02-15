@@ -1,28 +1,26 @@
 require 'test/unit'
-
 require 'rubygems'
-require 'rake'
 
 begin
   require 'ruby-debug'
 rescue LoadError
 end
 
+require 'bundler'
 begin
-  require 'shoulda'
-  require 'rr'
-  require 'redgreen'
-  require 'construct'
-  require 'git'
-rescue LoadError => e
-  puts "*" * 80
-  puts "Some dependencies needed to run tests were missing. Run the following command to find them:"
-  puts
-  puts "\trake check_dependencies:development"
-  puts "*" * 80
-  exit 1
+  Bundler.setup(:runtime, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
 end
 
+require 'rake'
+require 'shoulda'
+require 'rr'
+require 'redgreen'
+require 'construct'
+require 'git'
 require 'time'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')

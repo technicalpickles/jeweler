@@ -220,6 +220,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<git>, [">= 1.2.5"])
       s.add_runtime_dependency(%q<gemcutter>, [">= 0.1.0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
@@ -230,7 +231,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<devver-construct>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
+      s.add_development_dependency(%q<rcov>, [">= 0"])
     else
+      s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<git>, [">= 1.2.5"])
       s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
@@ -241,8 +244,10 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<devver-construct>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
+      s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
+    s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<git>, [">= 1.2.5"])
     s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
@@ -253,6 +258,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<devver-construct>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
+    s.add_dependency(%q<rcov>, [">= 0"])
   end
 end
 
