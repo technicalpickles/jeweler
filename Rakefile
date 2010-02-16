@@ -13,7 +13,7 @@ $LOAD_PATH.unshift('lib')
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   gem.name = "jeweler"
-  gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  gem.summary = "Opinionated tool for creating and managing RubyGem projects"
   gem.email = "josh@technicalpickles.com"
   gem.homepage = "http://github.com/technicalpickles/jeweler"
   gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
