@@ -41,6 +41,7 @@ task :default => :test
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   if File.exist?('VERSION.yml')
+    require 'yaml'
     config = YAML.load(File.read('VERSION.yml'))
     version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
   else
@@ -65,6 +66,7 @@ begin
     namespace :release do
       desc "Publish RDoc to RubyForge."
       task :docs => [:rdoc] do
+        require 'yaml'
         config = YAML.load(
             File.read(File.expand_path('~/.rubyforge/user-config.yml'))
         )
