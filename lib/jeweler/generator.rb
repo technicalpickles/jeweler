@@ -82,7 +82,7 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.target_dir             = options[:directory] || self.project_name
+      self.target_dir             = Pathname.new(options[:directory] || self.project_name)
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
@@ -169,7 +169,7 @@ class Jeweler
 
   private
     def create_files
-      unless File.exists?(target_dir) || File.directory?(target_dir)
+      unless target_dir.exist? || target_dir.directory?
         FileUtils.mkdir target_dir
       else
         raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
@@ -218,7 +218,7 @@ class Jeweler
     def output_template_in_target(source, destination = source)
       mkdir_in_target           File.dirname(destination)
 
-      final_destination = File.join(target_dir, destination)
+      final_destination = target_dir.join(destination)
       template_result   = render_template(source)
 
       File.open(final_destination, 'w') {|file| file.write(template_result)}
@@ -231,7 +231,7 @@ class Jeweler
     end
 
     def mkdir_in_target(directory)
-      final_destination = File.join(target_dir, directory)
+      final_destination = target_dir.join(directory)
 
       FileUtils.mkdir_p final_destination
 
@@ -240,7 +240,7 @@ class Jeweler
 
     def touch_in_target(destination)
       mkdir_in_target           File.dirname(destination)
-      final_destination = File.join(target_dir, destination)
+      final_destination = target_dir.join(destination)
       FileUtils.touch  final_destination
       $stdout.puts "\tcreate\t#{destination}"
     end

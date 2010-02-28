@@ -101,7 +101,7 @@ class TestGeneratorInitialization < Test::Unit::TestCase
     end
 
     should "set target directory to the project name" do
-      assert_equal @project_name, @generator.target_dir
+      assert_equal @project_name, @generator.target_dir.to_s
     end
 
     should "set user's name from git config" do
