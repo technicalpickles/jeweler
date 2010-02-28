@@ -45,7 +45,7 @@ class Jeweler
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
-    attr_accessor :target_dir, :user_name, :user_email, :summary, :homepage,
+    attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
@@ -82,7 +82,7 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.target_dir             = Pathname.new(options[:directory] || self.project_name)
+      self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
@@ -117,7 +117,7 @@ class Jeweler
     def run
       create_files
       create_version_control
-      $stdout.puts "Jeweler has prepared your gem in #{target_dir}"
+      $stdout.puts "Jeweler has prepared your gem in #{destination_root}"
       if should_create_remote_repo
         create_and_push_repo
         $stdout.puts "Jeweler has pushed your repo to #{homepage}"
@@ -169,15 +169,6 @@ class Jeweler
 
   private
     def create_files
-      unless target_dir.exist? || target_dir.directory?
-        FileUtils.mkdir target_dir
-      else
-        raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
-      end
-
-      self.destination_root = target_dir
-
-
       template '.gitignore'
       template 'Rakefile'
       template 'Gemfile'
@@ -226,7 +217,7 @@ class Jeweler
     end
 
     def create_version_control
-      Dir.chdir(target_dir) do
+      Dir.chdir(destination_root) do
         begin
           @repo = Git.init()
         rescue Git::GitExecuteError => e

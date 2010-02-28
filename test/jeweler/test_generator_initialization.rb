@@ -100,8 +100,8 @@ class TestGeneratorInitialization < Test::Unit::TestCase
       assert_match /todo/i, @generator.description
     end
 
-    should "set target directory to the project name" do
-      assert_equal @project_name, @generator.target_dir.to_s
+    should "set destination root to the project name, expanded as a path" do
+      assert_equal Pathname.new(@project_name).expand_path.to_s, @generator.destination_root
     end
 
     should "set user's name from git config" do
