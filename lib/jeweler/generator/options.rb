@@ -146,7 +146,11 @@ class Jeweler
       end
 
       def merge(other)
-        self.class.new(@orig_args + other.orig_args)
+        if other.respond_to?(:orig_args)
+          self.class.new(@orig_args + other.orig_args)
+        else
+          super
+        end
       end
 
     end

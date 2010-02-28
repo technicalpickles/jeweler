@@ -5,6 +5,7 @@ require 'net/http'
 require 'uri'
 
 require 'thor'
+require 'pathname'
 
 class Jeweler
   class NoGitUserName < StandardError
