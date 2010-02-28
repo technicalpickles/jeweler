@@ -127,6 +127,21 @@ Feature: generated Rakefile
 
   Scenario: shindo
     When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
-    And 'Rakefile' requires 'shindo/rake'
+    Then 'Rakefile' requires 'shindo/rake'
     And Rakefile instantiates a Shindo::Rake.new
     And Rakefile has "tests" as the default task
+
+  #Scenario: in side an existing
+  #  Given 'the-perfect-gem' is a git repository
+  #  And there isn't an existing 'Rakefile'
+  #  And there is an existing 'lib/the-perfect-gem.rb'
+  #  When I jewelerify it
+  #  Then the process should exit cleanly
+  #  And 'Rakefile' requires 'rubygems'
+  #  And 'Rakefile' requires 'rake'
+  #  And 'Rakefile' requires 'rake/rdoctask'
+  #  And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
+  #  And Rakefile has 'bar@example.com' for the Jeweler::Tasks email
+  #  And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
+  #  And Rakefile has 'Descriptive' for the Jeweler::Tasks description
+  #  And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage

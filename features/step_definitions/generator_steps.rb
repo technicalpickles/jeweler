@@ -87,6 +87,42 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
   @repo = Git.open(File.join(@working_dir, @name))
 end
 
+Given /^'((?:\w|-|_)+)' is a git repository$/ do |path|
+  @name = path
+  path = File.join(@working_dir, path)
+  FileUtils.mkdir_p path
+  @repo = Git.init(path)
+end
+
+Given /^there isn't an existing 'Rakefile'$/ do
+  assert ! File.exist?(File.join(@working_dir, @name, 'Rakefile'))
+end
+
+Given /^there is an existing '(.*)'$/ do |path|
+  path = File.join(@working_dir, @name, path)
+  FileUtils.mkdir_p File.dirname(path)
+  File.open(path, 'w') do |f|
+    f.write "# perfectness goes here"
+  end
+end
+
+When /^I jewelerify it$/ do
+  arguments = ['--directory',
+               "#{@working_dir}/#{@name}",
+               #'--summary', @summary,
+               #'--description', @description,
+                @use_cucumber ? '--cucumber' : nil,
+                @testing_framework ? "--#{@testing_framework}" : nil,
+                @use_roodi ? '--roodi' : nil,
+                @use_reek ? '--reek' : nil,
+                @documentation_framework ? "--#{@documentation_framework}" : nil,
+                @name].compact
+
+  @stdout = OutputCatcher.catch_out do
+    Jeweler::Generator::Application.run! *arguments
+  end
+end
+
 Then /^a directory named '(.*)' is created$/ do |directory|
   directory = File.join(@working_dir, directory)
 

@@ -4,6 +4,7 @@ require 'erb'
 require 'net/http'
 require 'uri'
 
+require 'thor'
 
 class Jeweler
   class NoGitUserName < StandardError
@@ -22,7 +23,10 @@ class Jeweler
   end    
 
   # Generator for creating a jeweler-enabled project
-  class Generator    
+  class Generator 
+    include Thor::Base
+    include Thor::Actions
+
     require 'jeweler/generator/options'
     require 'jeweler/generator/application'
 
@@ -120,44 +124,47 @@ class Jeweler
       end
     end
 
-    def constant_name
-      self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
-    end
+    no_tasks do
 
-    def lib_filename
-      "#{project_name}.rb"
-    end
+      def constant_name
+        self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
+      end
 
-    def require_name
-      self.project_name
-    end
+      def lib_filename
+        "#{project_name}.rb"
+      end
 
-    def file_name_prefix
-      self.project_name.gsub('-', '_')
-    end
+      def require_name
+        self.project_name
+      end
 
-    def lib_dir
-      'lib'
-    end
+      def file_name_prefix
+        self.project_name.gsub('-', '_')
+      end
 
-    def feature_filename
-      "#{project_name}.feature"
-    end
+      def lib_dir
+        'lib'
+      end
 
-    def steps_filename
-      "#{project_name}_steps.rb"
-    end
+      def feature_filename
+        "#{project_name}.feature"
+      end
 
-    def features_dir
-      'features'
-    end
+      def steps_filename
+        "#{project_name}_steps.rb"
+      end
 
-    def features_support_dir
-      File.join(features_dir, 'support')
-    end
+      def features_dir
+        'features'
+      end
 
-    def features_steps_dir
-      File.join(features_dir, 'step_definitions')
+      def features_support_dir
+        File.join(features_dir, 'support')
+      end
+
+      def features_steps_dir
+        File.join(features_dir, 'step_definitions')
+      end
     end
 
   private
@@ -176,10 +183,8 @@ class Jeweler
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'
 
-      mkdir_in_target           lib_dir
       touch_in_target           File.join(lib_dir, lib_filename)
 
-      mkdir_in_target           test_dir
       output_template_in_target File.join(testing_framework.to_s, 'helper.rb'),
                                 File.join(test_dir, test_helper_filename)
       output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'),
@@ -193,20 +198,17 @@ class Jeweler
       end
 
       if should_use_cucumber
-        mkdir_in_target           features_dir
         output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
 
-        mkdir_in_target           features_support_dir
         output_template_in_target File.join(features_support_dir, 'env.rb')
 
-        mkdir_in_target           features_steps_dir
         touch_in_target           File.join(features_steps_dir, steps_filename)
       end
 
     end
 
     def render_template(source)
-      template_contents = File.read(File.join(template_dir, source))
+      template_contents = File.read(File.join(source_root, source))
       template          = ERB.new(template_contents, nil, '<>')
 
       # squish extraneous whitespace from some of the conditionals
@@ -214,6 +216,8 @@ class Jeweler
     end
 
     def output_template_in_target(source, destination = source)
+      mkdir_in_target           File.dirname(destination)
+
       final_destination = File.join(target_dir, destination)
       template_result   = render_template(source)
 
@@ -222,19 +226,20 @@ class Jeweler
       $stdout.puts "\tcreate\t#{destination}"
     end
 
-    def template_dir
+    def source_root
       File.join(File.dirname(__FILE__), 'templates')
     end
 
     def mkdir_in_target(directory)
       final_destination = File.join(target_dir, directory)
 
-      FileUtils.mkdir final_destination
+      FileUtils.mkdir_p final_destination
 
       $stdout.puts "\tcreate\t#{directory}"
     end
 
     def touch_in_target(destination)
+      mkdir_in_target           File.dirname(destination)
       final_destination = File.join(target_dir, destination)
       FileUtils.touch  final_destination
       $stdout.puts "\tcreate\t#{destination}"
