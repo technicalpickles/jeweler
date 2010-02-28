@@ -217,32 +217,29 @@ class Jeweler
     end
 
     def create_version_control
-      Dir.chdir(destination_root) do
-        begin
-          @repo = Git.init()
-        rescue Git::GitExecuteError => e
-          raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
-        end
+      begin
+        @repo = Git.init(destination_root)
+      rescue Git::GitExecuteError => e
+        raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
+      end
 
-        begin
-          @repo.add('.')
-        rescue Git::GitExecuteError => e
-          #raise GitAddFailed, "There was some problem adding this directory to the git changeset"
-          raise
-        end
+      begin
+        @repo.add(destination_root)
+      rescue Git::GitExecuteError => e
+        raise
+      end
 
-        begin
-          @repo.commit "Initial commit to #{project_name}."
-        rescue Git::GitExecuteError => e
-          raise
-        end
+      begin
+        @repo.commit "Initial commit to #{project_name}."
+      rescue Git::GitExecuteError => e
+        raise
+      end
 
-        begin
-          @repo.add_remote('origin', git_remote)
-        rescue Git::GitExecuteError => e
-          puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
-          raise
-        end
+      begin
+        @repo.add_remote('origin', git_remote)
+      rescue Git::GitExecuteError => e
+        puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
+        raise
       end
     end
     
