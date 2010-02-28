@@ -175,34 +175,36 @@ class Jeweler
         raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
       end
 
+      self.destination_root = target_dir
 
-      output_template_in_target '.gitignore'
-      output_template_in_target 'Rakefile'
-      output_template_in_target 'Gemfile'
-      output_template_in_target 'LICENSE'
-      output_template_in_target 'README.rdoc'
-      output_template_in_target '.document'
 
-      touch_in_target           File.join(lib_dir, lib_filename)
+      template '.gitignore'
+      template 'Rakefile'
+      template 'Gemfile'
+      template 'LICENSE'
+      template 'README.rdoc'
+      template '.document'
 
-      output_template_in_target File.join(testing_framework.to_s, 'helper.rb'),
+      create_file           File.join(lib_dir, lib_filename)
+
+      template File.join(testing_framework.to_s, 'helper.rb'),
                                 File.join(test_dir, test_helper_filename)
-      output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'),
+      template File.join(testing_framework.to_s, 'flunking.rb'),
                                 File.join(test_dir, test_filename)
 
 
       if testing_framework == :rspec
-        output_template_in_target File.join(testing_framework.to_s, 'spec.opts'),
+        template File.join(testing_framework.to_s, 'spec.opts'),
                                   File.join(test_dir, 'spec.opts')
 
       end
 
       if should_use_cucumber
-        output_template_in_target File.join(%w(features default.feature)), File.join('features', feature_filename)
+        template File.join(%w(features default.feature)), File.join('features', feature_filename)
 
-        output_template_in_target File.join(features_support_dir, 'env.rb')
+        template File.join(features_support_dir, 'env.rb')
 
-        touch_in_target           File.join(features_steps_dir, steps_filename)
+        create_file           File.join(features_steps_dir, steps_filename)
       end
 
     end
@@ -215,34 +217,12 @@ class Jeweler
       template.result(binding).gsub(/\n\n\n+/, "\n\n")
     end
 
-    def output_template_in_target(source, destination = source)
-      mkdir_in_target           File.dirname(destination)
-
-      final_destination = target_dir.join(destination)
-      template_result   = render_template(source)
-
-      File.open(final_destination, 'w') {|file| file.write(template_result)}
-
-      $stdout.puts "\tcreate\t#{destination}"
-    end
-
-    def source_root
+    def self.source_root
       File.join(File.dirname(__FILE__), 'templates')
     end
 
-    def mkdir_in_target(directory)
-      final_destination = target_dir.join(directory)
-
-      FileUtils.mkdir_p final_destination
-
-      $stdout.puts "\tcreate\t#{directory}"
-    end
-
-    def touch_in_target(destination)
-      mkdir_in_target           File.dirname(destination)
-      final_destination = target_dir.join(destination)
-      FileUtils.touch  final_destination
-      $stdout.puts "\tcreate\t#{destination}"
+    def source_root
+      self.class.source_root
     end
 
     def create_version_control
