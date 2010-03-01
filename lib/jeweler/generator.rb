@@ -7,6 +7,9 @@ require 'uri'
 require 'thor'
 require 'pathname'
 
+require 'thor/actions/git_init'
+require 'thor/actions/git_remote'
+
 class Jeweler
   class NoGitUserName < StandardError
   end
@@ -120,7 +123,7 @@ class Jeweler
       create_version_control
       $stdout.puts "Jeweler has prepared your gem in #{destination_root}"
       if should_create_remote_repo
-        create_and_push_repo
+        create_repo
         $stdout.puts "Jeweler has pushed your repo to #{homepage}"
       end
     end
@@ -218,40 +221,16 @@ class Jeweler
     end
 
     def create_version_control
-      begin
-        @repo = Git.init(destination_root)
-      rescue Git::GitExecuteError => e
-        raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
-      end
-
-      begin
-        @repo.add(destination_root)
-      rescue Git::GitExecuteError => e
-        raise
-      end
-
-      begin
-        @repo.commit "Initial commit to #{project_name}."
-      rescue Git::GitExecuteError => e
-        raise
-      end
-
-      begin
-        @repo.add_remote('origin', git_remote)
-      rescue Git::GitExecuteError => e
-        puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
-        raise
-      end
+      git_init '.'
+      add_git_remote '.', 'origin', git_remote
     end
     
-    def create_and_push_repo
+    def create_repo
       Net::HTTP.post_form URI.parse('http://github.com/api/v2/yaml/repos/create'),
                                 'login' => github_username,
                                 'token' => github_token,
                                 'description' => summary,
                                 'name' => project_name
-      # TODO do a HEAD request to see when it's ready?
-      @repo.push('origin')
     end
   end
 end
