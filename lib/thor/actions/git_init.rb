@@ -26,7 +26,6 @@ class Thor
       end
 
       def invoke_with_conflict_check(&block)
-        require 'ruby-debug'
         if ! exists?
           base.shell.say_status "git init", "already a git repo", :blue if config[:verbose]
         else

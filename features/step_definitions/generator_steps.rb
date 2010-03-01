@@ -296,22 +296,6 @@ Then /^git repository '(.*)' remote should be '(.*)'/ do |remote, remote_url|
   assert_equal 'git@github.com:technicalpickles/the-perfect-gem.git', remote.url
 end
 
-Then /^a commit with the message '(.*)' is made$/ do |message|
-  assert_match message, @repo.log.first.message
-end
-
-Then /^'(.*)' was checked in$/ do |file|
-  status = @repo.status[file]
-
-  assert_not_nil status, "wasn't able to get status for #{file}"
-  assert ! status.untracked, "#{file} was untracked"
-  assert_nil status.type, "#{file} had a type. it should have been nil"
-end
-
-Then /^no files are (\w+)$/ do |type|
-  assert_equal 0, @repo.status.send(type).size
-end
-
 Then /^Rakefile has "(.*)" as the default task$/ do |task|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
   assert_match "task :default => :#{task}", @rakefile_content
