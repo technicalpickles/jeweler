@@ -36,22 +36,19 @@ class Jeweler
 
     require 'jeweler/generator/github_mixin'
 
-    require 'jeweler/generator/bacon_mixin'
-    require 'jeweler/generator/micronaut_mixin'
-    require 'jeweler/generator/minitest_mixin'
-    require 'jeweler/generator/rspec_mixin'
-    require 'jeweler/generator/shoulda_mixin'
-    require 'jeweler/generator/testspec_mixin'
-    require 'jeweler/generator/testunit_mixin'
-    require 'jeweler/generator/riot_mixin'
-    require 'jeweler/generator/shindo_mixin'
-
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
     require 'jeweler/generator/testing_frameworks/base'
-    require 'jeweler/generator/testing_frameworks/shoulda'
+    require 'jeweler/generator/testing_frameworks/bacon'
+    require 'jeweler/generator/testing_frameworks/micronaut'
+    require 'jeweler/generator/testing_frameworks/minitest'
     require 'jeweler/generator/testing_frameworks/rspec'
+    require 'jeweler/generator/testing_frameworks/shoulda'
+    require 'jeweler/generator/testing_frameworks/testspec'
+    require 'jeweler/generator/testing_frameworks/testunit'
+    require 'jeweler/generator/testing_frameworks/riot'
+    require 'jeweler/generator/testing_frameworks/shindo'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -75,9 +72,7 @@ class Jeweler
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       begin
-        generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
 
-        generator_mixin = self.class.const_get(generator_mixin_name)
 
         testing_framework_class_name = self.testing_framework.to_s.capitalize
 
@@ -85,6 +80,8 @@ class Jeweler
                                    TestingFrameworks.const_get(testing_framework_class_name).new(self)
 
                                  else
+                                   generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
+                                   generator_mixin = self.class.const_get(generator_mixin_name)
                                    extend generator_mixin
                                    self
                                  end

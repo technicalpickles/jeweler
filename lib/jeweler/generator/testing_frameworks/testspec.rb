@@ -1,9 +1,10 @@
-require 'jeweler/generator/shoulda_mixin'
+require 'jeweler/generator/testspec_mixin'
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Shoulda < Base
+      class Testspec < Base
       end
     end
   end
 end
+

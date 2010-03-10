@@ -1,8 +1,9 @@
-require 'jeweler/generator/shoulda_mixin'
+require 'jeweler/generator/micronaut_mixin'
+
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Shoulda < Base
+      class Micronaut < Base
       end
     end
   end

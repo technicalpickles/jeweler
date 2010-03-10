@@ -1,9 +1,10 @@
-require 'jeweler/generator/shoulda_mixin'
+require 'jeweler/generator/shindo_mixin'
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Shoulda < Base
+      class Shindo < Base
       end
     end
   end
 end
+

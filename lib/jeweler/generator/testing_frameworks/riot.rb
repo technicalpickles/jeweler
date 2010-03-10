@@ -1,8 +1,8 @@
-require 'jeweler/generator/shoulda_mixin'
+require 'jeweler/generator/riot_mixin'
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Shoulda < Base
+      class Riot < Base
       end
     end
   end
