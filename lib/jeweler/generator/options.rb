@@ -27,6 +27,10 @@ class Jeweler
 
           o.separator ""
 
+          o.on('--testing-framework [FRAMEWORK]', 'specify the testing framework to generate') do |framework|
+            self[:testing_framework] = framework.to_sym
+          end
+
           o.on('--rspec', 'generate rspec code examples') do
             self[:testing_framework] = :rspec
           end

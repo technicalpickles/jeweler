@@ -60,31 +60,31 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
-  for_options "--bacon" do
+  for_options '--testing-framework', 'bacon' do
     should_have_testing_framework :bacon
   end
 
-  for_options '--micronaut' do
+  for_options '--testing-framework', 'micronaut' do
     should_have_testing_framework :micronaut
   end
 
-  for_options '--minitest' do
+  for_options '--testing-framework', 'minitest' do
     should_have_testing_framework :minitest
   end
 
-  for_options '--rspec' do
+  for_options '--testing-framework', 'rspec' do
     should_have_testing_framework :rspec
   end
 
-  for_options '--shoulda' do
+  for_options '--testing-framework', 'shoulda' do
     should_have_testing_framework :shoulda
   end
 
-  for_options "--testunit" do
+  for_options '--testing-framework', 'testunit' do
     should_have_testing_framework :testunit
   end
 
-  for_options "--testspec" do
+  for_options '--testing-framework', 'testspec' do
     should_have_testing_framework :testspec
   end
 
