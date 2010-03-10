@@ -72,23 +72,10 @@ class Jeweler
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       begin
-
-
         testing_framework_class_name = self.testing_framework.to_s.capitalize
-
-        self.testing_framework_base = if TestingFrameworks.const_defined?(testing_framework_class_name)
-                                   TestingFrameworks.const_get(testing_framework_class_name).new(self)
-
-                                 else
-                                   generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
-                                   generator_mixin = self.class.const_get(generator_mixin_name)
-                                   extend generator_mixin
-                                   self
-                                 end
-
+        self.testing_framework_base = TestingFrameworks.const_get(testing_framework_class_name).new(self)
       rescue NameError => e
-        raise
-        #raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
+        raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
       end
 
       begin
