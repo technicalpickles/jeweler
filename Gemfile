@@ -19,4 +19,5 @@ group :development do
   gem "yard"
   gem "cucumber"
   gem "rcov"
+  gem "ruby-debug"
 end

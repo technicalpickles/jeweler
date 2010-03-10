@@ -51,6 +51,7 @@ class Jeweler
 
     require 'jeweler/generator/testing_frameworks/base'
     require 'jeweler/generator/testing_frameworks/shoulda'
+    require 'jeweler/generator/testing_frameworks/rspec'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -80,14 +81,14 @@ class Jeweler
 
         testing_framework_class_name = self.testing_framework.to_s.capitalize
 
-        testing_framework_base = if TestingFrameworks.const_defined?(testing_framework_class_name)
-                                   TestingFrameworks.const_get(testing_framework_class_name).new
+        self.testing_framework_base = if TestingFrameworks.const_defined?(testing_framework_class_name)
+                                   TestingFrameworks.const_get(testing_framework_class_name).new(self)
 
                                  else
+                                   extend generator_mixin
                                    self
                                  end
 
-        extend generator_mixin
       rescue NameError => e
         raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
       end
@@ -192,6 +193,10 @@ class Jeweler
       else
         testing_framework_base.send(sym, *args, &block)
       end
+    end
+
+    def respond_to?(sym, include_private = false)
+      super || testing_framework_base.respond_to?(sym, include_private)
     end
 
   private

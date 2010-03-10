@@ -1,14 +1,13 @@
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Shoulda < Base
-        include Jeweler::Generator::ShouldaMixin
+      class Rspec < Base
+        include Jeweler::Generator::RspecMixin
 
         def initialize(generator)
           super
-          Jeweler::Generator::ShouldaMixin.extended(self)
+          Jeweler::Generator::RspecMixin.extended(self)
         end
-
       end
     end
   end
