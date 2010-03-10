@@ -6,7 +6,6 @@ class Jeweler
 
         def initialize(generator)
           super
-          Jeweler::Generator::RspecMixin.extended(self)
         end
       end
     end

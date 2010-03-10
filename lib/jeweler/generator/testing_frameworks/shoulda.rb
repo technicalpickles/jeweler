@@ -6,7 +6,6 @@ class Jeweler
 
         def initialize(generator)
           super
-          Jeweler::Generator::ShouldaMixin.extended(self)
         end
 
       end

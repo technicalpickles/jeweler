@@ -90,7 +90,8 @@ class Jeweler
                                  end
 
       rescue NameError => e
-        raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
+        raise
+        #raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
       end
 
       begin
