@@ -49,10 +49,13 @@ class Jeweler
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
+    require 'jeweler/generator/testing_frameworks/base'
+    require 'jeweler/generator/testing_frameworks/shoulda'
+
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
-                  :testing_framework, :documentation_framework,
+                  :testing_framework, :testing_framework_base, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
@@ -72,7 +75,18 @@ class Jeweler
       self.documentation_framework = options[:documentation_framework]
       begin
         generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
+
         generator_mixin = self.class.const_get(generator_mixin_name)
+
+        testing_framework_class_name = self.testing_framework.to_s.capitalize
+
+        testing_framework_base = if TestingFrameworks.const_defined?(testing_framework_class_name)
+                                   TestingFrameworks.const_get(testing_framework_class_name).new
+
+                                 else
+                                   self
+                                 end
+
         extend generator_mixin
       rescue NameError => e
         raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
@@ -168,6 +182,15 @@ class Jeweler
 
       def features_steps_dir
         File.join(features_dir, 'step_definitions')
+      end
+    end
+
+    # HAX to refactor to testing_framework_base
+    def method_missing(sym, *args, &block)
+      if testing_framework_base.eql?(self)
+        super
+      else
+        testing_framework_base.send(sym, *args, &block)
       end
     end
 
