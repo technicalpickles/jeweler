@@ -54,6 +54,7 @@ class Jeweler
     require 'jeweler/generator/cucumber'
     require 'jeweler/generator/reek'
     require 'jeweler/generator/roodi'
+    require 'jeweler/generator/gemcutter'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -80,6 +81,9 @@ class Jeweler
       self.documentation_framework = options[:documentation_framework]
       self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
 
+
+      self.plugins << Gemcutter.new(self) if options[:gemcutter]
+
       testing_framework_class_name = self.testing_framework.to_s.capitalize
 
       if TestingFrameworks.const_defined?(testing_framework_class_name)
@@ -100,7 +104,6 @@ class Jeweler
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
-      self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
 
       development_dependencies << ["bundler", ">= 0.9.5"] # TODO make bundler optional?
