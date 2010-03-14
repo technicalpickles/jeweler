@@ -16,29 +16,13 @@ END
       end
 
       def run
-        template File.join(%w(features default.feature)), File.join('features', feature_filename)
-
-        template File.join(features_support_dir, 'env.rb')
-
-        create_file           File.join(features_steps_dir, steps_filename)
+        template "features/default.feature", "features/#{project_name}.feature"
+        template "features/support/env.rb"
+        create_file "features/step_definitions/#{project_name}_steps.rb"
       end
 
       def method_missing(meth, *args, &block)
         testing_framework.send(meth, *args, &block)
-      end
-
-      protected
-
-      def features_dir
-        'features'
-      end
-
-      def features_support_dir
-        File.join(features_dir, 'support')
-      end
-
-      def features_steps_dir
-        File.join(features_dir, 'step_definitions')
       end
     end
   end

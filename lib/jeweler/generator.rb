@@ -147,19 +147,6 @@ class Jeweler
       def file_name_prefix
         self.project_name.gsub('-', '_')
       end
-
-      def lib_dir
-        'lib'
-      end
-
-      def feature_filename
-        "#{project_name}.feature"
-      end
-
-      def steps_filename
-        "#{project_name}_steps.rb"
-      end
-
     end
 
   private
@@ -170,8 +157,7 @@ class Jeweler
       template 'LICENSE'
       template 'README.rdoc'
       template '.document'
-
-      create_file           File.join(lib_dir, lib_filename)
+      create_file "lib/#{lib_filename}"
 
       plugins.each do |plugin|
         plugin.run
@@ -184,6 +170,7 @@ class Jeweler
       # squish extraneous whitespace from some of the conditionals
       template.result(binding).gsub(/\n\n\n+/, "\n\n")
     end
+
     def render_template(source)
       template_contents = File.read(File.join(source_root, source))
       render_erb(template_contents)
