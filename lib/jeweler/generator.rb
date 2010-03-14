@@ -39,6 +39,8 @@ class Jeweler
     require 'jeweler/generator/rdoc_mixin'
     require 'jeweler/generator/yard_mixin'
 
+    require 'jeweler/generator/plugin'
+
     require 'jeweler/generator/testing_frameworks/base'
     require 'jeweler/generator/testing_frameworks/bacon'
     require 'jeweler/generator/testing_frameworks/micronaut'
@@ -49,6 +51,7 @@ class Jeweler
     require 'jeweler/generator/testing_frameworks/testunit'
     require 'jeweler/generator/testing_frameworks/riot'
     require 'jeweler/generator/testing_frameworks/shindo'
+    require 'jeweler/generator/cucumber'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -58,7 +61,8 @@ class Jeweler
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
                   :options,
-                  :git_remote
+                  :git_remote,
+                  :plugins
 
     def initialize(options = {})
       self.options = options
@@ -69,11 +73,13 @@ class Jeweler
       end
 
       self.development_dependencies = []
+      self.plugins = []
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       begin
         testing_framework_class_name = self.testing_framework.to_s.capitalize
         self.testing_framework_base = TestingFrameworks.const_get(testing_framework_class_name).new(self)
+        plugins << self.testing_framework_base
       rescue NameError => e
         raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
       end
@@ -105,6 +111,10 @@ class Jeweler
 
       development_dependencies << ["reek", ">= 0"] if should_use_reek
       development_dependencies << ["roodi", ">= 0"] if should_use_roodi
+
+      if should_use_cucumber
+        plugins << Cucumber.new(self)
+      end
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
@@ -195,16 +205,9 @@ class Jeweler
 
       create_file           File.join(lib_dir, lib_filename)
 
-      testing_framework_base.run
-
-      if should_use_cucumber
-        template File.join(%w(features default.feature)), File.join('features', feature_filename)
-
-        template File.join(features_support_dir, 'env.rb')
-
-        create_file           File.join(features_steps_dir, steps_filename)
+      plugins.each do |plugin|
+        plugin.run
       end
-
     end
 
     def render_erb(source)
