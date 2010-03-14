@@ -217,12 +217,15 @@ class Jeweler
 
     end
 
-    def render_template(source)
-      template_contents = File.read(File.join(source_root, source))
-      template          = ERB.new(template_contents, nil, '<>')
+    def render_erb(source)
+      template          = ERB.new(source, nil, '<>')
 
       # squish extraneous whitespace from some of the conditionals
       template.result(binding).gsub(/\n\n\n+/, "\n\n")
+    end
+    def render_template(source)
+      template_contents = File.read(File.join(source_root, source))
+      render_erb(template_contents)
     end
 
     def self.source_root

@@ -16,19 +16,39 @@ class Jeweler
           generator.require_name
         end
 
+        def self.rake_task(string = nil)
+          case string
+          when nil
+            @rake_task ||= <<-END
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = %Q{test/**/test_*.rb}
+  test.verbose = true
+end
+END
+          else
+            @rake_task = string
+          end
+        end
+
+        def rake_task
+          self.class.rake_task
+        end
+
         private
 
         # stolen from active_support
-      def constantize(camel_cased_word)
-        names = camel_cased_word.split('::')
-        names.shift if names.empty? || names.first.empty?
+        def constantize(camel_cased_word)
+          names = camel_cased_word.split('::')
+          names.shift if names.empty? || names.first.empty?
 
-        constant = ::Object
-        names.each do |name|
-          constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+          constant = ::Object
+          names.each do |name|
+            constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+          end
+          constant
         end
-        constant
-      end
         
       end
     end
