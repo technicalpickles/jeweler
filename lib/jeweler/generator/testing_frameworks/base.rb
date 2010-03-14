@@ -2,13 +2,13 @@ class Jeweler
   class Generator
     module TestingFrameworks
       class Base < Plugin
-        attr_accessor :development_dependencies, :generator
-
         def initialize(generator)
           super
 
           compat_mixin_name = "Jeweler::Generator::#{self.class.name.split('::').last}Mixin"
           extend constantize(compat_mixin_name)
+
+          rakefile_snippets << rake_task << rcov_rake_task
         end
 
         def self.rake_task(string = nil)
@@ -50,7 +50,6 @@ END
         def rcov_rake_task
           self.class.rcov_rake_task
         end
-
 
         def run
           testing_framework = self.class.name.split('::').last.downcase

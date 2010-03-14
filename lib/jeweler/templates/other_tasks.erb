@@ -1,9 +1,7 @@
-<%= testing_framework_base.rake_task %>
-<%= testing_framework_base.rcov_rake_task %>
-
-<% if should_use_cucumber %>
-require 'cucumber/rake/task'
-Cucumber::Rake::Task.new(:features)
+<% plugins.each do |plugin| %>
+<% plugin.rakefile_snippets.each do |snippet| %>
+<%= snippet %>
+<% end %>
 <% end %>
 
 <% if should_use_reek %>
