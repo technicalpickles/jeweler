@@ -55,6 +55,7 @@ class Jeweler
     require 'jeweler/generator/cucumber'
     require 'jeweler/generator/reek'
     require 'jeweler/generator/roodi'
+    require 'jeweler/generator/git_vcs'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -109,6 +110,8 @@ class Jeweler
       plugins << Reek.new(self) if options[:use_reek]
       plugins << Roodi.new(self) if options[:use_roodi]
 
+      plugins << GitVcs.new(self)
+
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
       self.homepage        = options[:homepage]
@@ -134,11 +137,6 @@ class Jeweler
         plugin.run
       end
 
-      git_init '.'
-      add_git_remote '.', 'origin', git_remote
-
-
-      $stdout.puts "Jeweler has prepared your gem in #{destination_root}"
       if options[:create_repo]
         github_repo :login => options[:github_username],
                     :token => options[:github_token],
