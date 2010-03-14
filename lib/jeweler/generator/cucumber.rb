@@ -11,6 +11,8 @@ class Jeweler
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features)
 END
+
+        development_dependencies << ["cucumber", ">= 0"]
       end
 
       def run
@@ -19,7 +21,6 @@ END
         template File.join(features_support_dir, 'env.rb')
 
         create_file           File.join(features_steps_dir, steps_filename)
-        
       end
 
       def method_missing(meth, *args, &block)

@@ -59,7 +59,7 @@ class Jeweler
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :testing_framework_base, :documentation_framework,
-                  :should_use_cucumber, :should_setup_gemcutter,
+                  :should_setup_gemcutter,
                   :should_setup_rubyforge,
                   :development_dependencies,
                   :options,
@@ -100,18 +100,14 @@ class Jeweler
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
-      self.should_use_cucumber    = options[:use_cucumber]
       self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
 
-      development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
-
-      # TODO make bundler optional?
-      development_dependencies << ["bundler", ">= 0.9.5"]
+      development_dependencies << ["bundler", ">= 0.9.5"] # TODO make bundler optional?
       development_dependencies << ["jeweler", ">= 1.4.0"]
       development_dependencies << ["rcov", ">= 0"]
       
-      plugins << Cucumber.new(self, testing_framework_base) if should_use_cucumber
+      plugins << Cucumber.new(self, testing_framework_base) if options[:use_cucumber]
       plugins << Reek.new(self) if options[:use_reek]
       plugins << Roodi.new(self) if options[:use_roodi]
 
