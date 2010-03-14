@@ -4,6 +4,13 @@ class Jeweler
     module TestingFrameworks
       class Rspec < Base
 
+        def run
+          super
+
+          template File.join('rspec', 'spec.opts'),
+            File.join(test_dir, 'spec.opts')
+        end
+
         rake_task <<-END
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|

@@ -56,6 +56,18 @@ END
           self.class.rcov_rake_task
         end
 
+        def method_missing(meth, *args, &block)
+          generator.send(meth, *args, &block)
+        end
+
+        def run
+          testing_framework = self.class.name.split('::').last.downcase
+          template File.join(testing_framework.to_s, 'helper.rb'),
+            File.join(test_dir, test_helper_filename)
+          template File.join(testing_framework.to_s, 'flunking.rb'),
+            File.join(test_dir, test_filename)
+        end
+
         private
 
         # stolen from active_support

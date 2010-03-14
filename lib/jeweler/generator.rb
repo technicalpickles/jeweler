@@ -195,17 +195,7 @@ class Jeweler
 
       create_file           File.join(lib_dir, lib_filename)
 
-      template File.join(testing_framework.to_s, 'helper.rb'),
-                                File.join(test_dir, test_helper_filename)
-      template File.join(testing_framework.to_s, 'flunking.rb'),
-                                File.join(test_dir, test_filename)
-
-
-      if testing_framework == :rspec
-        template File.join(testing_framework.to_s, 'spec.opts'),
-                                  File.join(test_dir, 'spec.opts')
-
-      end
+      testing_framework_base.run
 
       if should_use_cucumber
         template File.join(%w(features default.feature)), File.join('features', feature_filename)
