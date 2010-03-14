@@ -9,6 +9,7 @@ require 'pathname'
 
 require 'thor/actions/git_init'
 require 'thor/actions/git_remote'
+require 'thor/actions/github_repo'
 
 class Jeweler
   class NoGitUserName < StandardError
@@ -121,12 +122,28 @@ class Jeweler
     end
 
     def run
-      create_files
-      create_version_control
+      template '.gitignore'
+      template 'Rakefile'
+      template 'Gemfile'
+      template 'LICENSE'
+      template 'README.rdoc'
+      template '.document'
+      create_file "lib/#{project_name}.rb"
+
+      plugins.each do |plugin|
+        plugin.run
+      end
+
+      git_init '.'
+      add_git_remote '.', 'origin', git_remote
+
+
       $stdout.puts "Jeweler has prepared your gem in #{destination_root}"
-      if should_create_remote_repo
-        create_repo
-        $stdout.puts "Jeweler has pushed your repo to #{homepage}"
+      if options[:create_repo]
+        github_repo :login => options[:github_username],
+                    :token => options[:github_token],
+                    :description => options[:description],
+                    :name => options[:project_name]
       end
     end
 
@@ -134,10 +151,6 @@ class Jeweler
 
       def constant_name
         self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
-      end
-
-      def lib_filename
-        "#{project_name}.rb"
       end
 
       def require_name
@@ -150,19 +163,6 @@ class Jeweler
     end
 
   private
-    def create_files
-      template '.gitignore'
-      template 'Rakefile'
-      template 'Gemfile'
-      template 'LICENSE'
-      template 'README.rdoc'
-      template '.document'
-      create_file "lib/#{lib_filename}"
-
-      plugins.each do |plugin|
-        plugin.run
-      end
-    end
 
     def render_erb(source)
       template          = ERB.new(source, nil, '<>')
@@ -182,19 +182,6 @@ class Jeweler
 
     def source_root
       self.class.source_root
-    end
-
-    def create_version_control
-      git_init '.'
-      add_git_remote '.', 'origin', git_remote
-    end
-    
-    def create_repo
-      Net::HTTP.post_form URI.parse('http://github.com/api/v2/yaml/repos/create'),
-                                'login' => github_username,
-                                'token' => github_token,
-                                'description' => summary,
-                                'name' => project_name
     end
   end
 end

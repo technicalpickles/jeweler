@@ -55,10 +55,9 @@ END
 
         def run
           testing_framework = generator.testing_framework
-          template File.join(testing_framework.to_s, 'helper.rb'),
-            File.join(test_dir, test_helper_filename)
-          template File.join(testing_framework.to_s, 'flunking.rb'),
-            File.join(test_dir, test_filename)
+
+          template "#{testing_framework.to_s}/helper.rb", "#{test_dir}/#{test_helper_filename}"
+          template "#{testing_framework.to_s}/flunking.rb", "#{test_dir}/#{test_filename}"
         end
 
         private
