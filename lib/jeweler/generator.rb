@@ -56,12 +56,12 @@ class Jeweler
     require 'jeweler/generator/reek'
     require 'jeweler/generator/roodi'
     require 'jeweler/generator/git_vcs'
+    require 'jeweler/generator/rubyforge'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :testing_framework_base, :documentation_framework,
-                  :should_setup_rubyforge,
                   :development_dependencies,
                   :options,
                   :git_remote,
@@ -80,6 +80,10 @@ class Jeweler
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
+
+
+
+      plugins << Rubyforge.new(self) if options[:rubyforge]
 
       testing_framework_class_name = self.testing_framework.to_s.capitalize
 
@@ -101,7 +105,6 @@ class Jeweler
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
-      self.should_setup_rubyforge = options[:rubyforge]
 
       development_dependencies << ["bundler", ">= 0.9.5"] # TODO make bundler optional?
       development_dependencies << ["jeweler", ">= 1.4.0"]

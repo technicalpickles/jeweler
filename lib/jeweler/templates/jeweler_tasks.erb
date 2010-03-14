@@ -6,16 +6,10 @@ Jeweler::Tasks.new do |gem|
   gem.email = "<%= user_email %>"
   gem.homepage = "<%= homepage %>"
   gem.authors = ["<%= user_name %>"]
-<% if should_setup_rubyforge %>
-  gem.rubyforge_project = "<%= project_name %>"
+<% plugins.reject {|plugin| plugin.jeweler_task_snippet.nil? }.each do |plugin| %>
+<%=  plugin.jeweler_task_snippet %>
 <% end %>
   # Have dependencies? Add them to Gemfile
 
   # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 end
-
-<% if should_setup_rubyforge %>
-Jeweler::RubyforgeTasks.new do |rubyforge|
-  rubyforge.doc_task = "<%= doc_task %>"
-end
-<% end %>

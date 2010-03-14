@@ -4,7 +4,8 @@ class Jeweler
       include Thor::Base
       include Thor::Actions
 
-      attr_accessor :base, :generator, :development_dependencies, :rakefile_snippets
+      attr_accessor :base, :generator, :development_dependencies,
+        :rakefile_snippets, :jeweler_task_snippet
 
       def initialize(generator)
         self.generator = generator
