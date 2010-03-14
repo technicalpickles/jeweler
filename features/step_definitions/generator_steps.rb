@@ -234,7 +234,10 @@ end
 Then /^'(.*)' requires '(.*)'$/ do |file, lib|
   content = File.read(File.join(@working_dir, @name, file))
 
-  assert_match /require ['"]#{Regexp.escape(lib)}['"]/, content
+  message = "Expected #{file} to require #{lib}, but did not:\n#{content}"
+  assert_block message do
+    content =~ /require ['"]#{Regexp.escape(lib)}['"]/
+  end
 end
 
 Then /^'(.*)' does not require '(.*)'$/ do |file, lib|
