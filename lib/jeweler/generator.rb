@@ -54,13 +54,11 @@ class Jeweler
     require 'jeweler/generator/cucumber'
     require 'jeweler/generator/reek'
     require 'jeweler/generator/roodi'
-    require 'jeweler/generator/gemcutter'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :testing_framework_base, :documentation_framework,
-                  :should_setup_gemcutter,
                   :should_setup_rubyforge,
                   :development_dependencies,
                   :options,
@@ -80,9 +78,6 @@ class Jeweler
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
-
-
-      self.plugins << Gemcutter.new(self) if options[:gemcutter]
 
       testing_framework_class_name = self.testing_framework.to_s.capitalize
 
