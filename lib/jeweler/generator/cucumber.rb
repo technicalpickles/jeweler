@@ -6,7 +6,6 @@ class Jeweler
 
       def initialize(generator, testing_framework)
         super(generator)
-        self.inline_templates = {}
 
         use_inline_templates! __FILE__
 
@@ -27,28 +26,6 @@ class Jeweler
         testing_framework.send(meth, *args, &block)
       end
 
-      def use_inline_templates!(file)
-        begin
-          app, data =
-            ::IO.read(file).gsub("\r\n", "\n").split(/^__END__$/, 2)
-        rescue Errno::ENOENT
-          app, data = nil
-        end
-
-        if data
-          lines = app.count("\n") + 1
-          template = nil
-          data.each_line do |line|
-            lines += 1
-            if line =~ /^@@\s*(.*)/
-              template = ''
-              inline_templates[$1.to_sym] = { :filename => file, :line => lines, :template => template }
-            elsif template
-              template << line
-            end
-          end
-        end
-      end
     end
   end
 end

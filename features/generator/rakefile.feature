@@ -131,10 +131,6 @@ Feature: generated Rakefile
     And Rakefile instantiates a Shindo::Rake.new
     And Rakefile has "tests" as the default task
 
-  Scenario: shindo
-    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile instantiates a Jeweler::RubyforgeTasks
-
   #Scenario: in side an existing
   #  Given 'the-perfect-gem' is a git repository
   #  And there isn't an existing 'Rakefile'
