@@ -5,6 +5,8 @@ class Jeweler
         def initialize(generator)
           super
 
+          development_dependencies << ["rcov", ">= 0"]
+
           compat_mixin_name = "Jeweler::Generator::#{generator.testing_framework.to_s.capitalize}Mixin"
           extend constantize(compat_mixin_name)
 

@@ -103,7 +103,6 @@ class Jeweler
 
       development_dependencies << ["bundler", ">= 0.9.5"] # TODO make bundler optional?
       development_dependencies << ["jeweler", ">= 1.4.0"]
-      development_dependencies << ["rcov", ">= 0"]
       
       plugins << Cucumber.new(self, testing_framework_base) if options[:use_cucumber]
       plugins << Reek.new(self) if options[:use_reek]
