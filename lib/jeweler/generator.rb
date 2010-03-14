@@ -60,7 +60,7 @@ class Jeweler
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :testing_framework_base, :documentation_framework,
                   :should_use_cucumber, :should_setup_gemcutter,
-                  :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
+                  :should_setup_rubyforge,
                   :development_dependencies,
                   :options,
                   :git_remote,
@@ -78,12 +78,15 @@ class Jeweler
       self.plugins = []
       self.testing_framework  = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
-      begin
-        testing_framework_class_name = self.testing_framework.to_s.capitalize
+      self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
+
+      testing_framework_class_name = self.testing_framework.to_s.capitalize
+
+      if TestingFrameworks.const_defined?(testing_framework_class_name)
         self.testing_framework_base = TestingFrameworks.const_get(testing_framework_class_name).new(self)
         plugins << self.testing_framework_base
-      rescue NameError => e
-        raise ArgumentError, "Unsupported testing framework (#{testing_framework})"
+      else
+        raise ArgumentError, "Using #{testing_framework} requires a #{testing_framework_class_name} to be defined"
       end
 
       begin
@@ -94,13 +97,10 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
       self.should_use_cucumber    = options[:use_cucumber]
-      self.should_use_reek        = options[:use_reek]
-      self.should_use_roodi       = options[:use_roodi]
       self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
 
@@ -110,14 +110,10 @@ class Jeweler
       development_dependencies << ["bundler", ">= 0.9.5"]
       development_dependencies << ["jeweler", ">= 1.4.0"]
       development_dependencies << ["rcov", ">= 0"]
-
-      development_dependencies << ["reek", ">= 0"] if should_use_reek
-      development_dependencies << ["roodi", ">= 0"] if should_use_roodi
-
       
-      plugins << Cucumber.new(self) if should_use_cucumber
-      plugins << Reek.new(self) if should_use_reek
-      plugins << Roodi.new(self) if should_use_roodi
+      plugins << Cucumber.new(self, testing_framework_base) if should_use_cucumber
+      plugins << Reek.new(self) if options[:use_reek]
+      plugins << Roodi.new(self) if options[:use_roodi]
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
@@ -171,30 +167,6 @@ class Jeweler
         "#{project_name}_steps.rb"
       end
 
-      def features_dir
-        'features'
-      end
-
-      def features_support_dir
-        File.join(features_dir, 'support')
-      end
-
-      def features_steps_dir
-        File.join(features_dir, 'step_definitions')
-      end
-    end
-
-    # HAX to refactor to testing_framework_base
-    def method_missing(sym, *args, &block)
-      if testing_framework_base.eql?(self)
-        super
-      else
-        testing_framework_base.send(sym, *args, &block)
-      end
-    end
-
-    def respond_to?(sym, include_private = false)
-      super || testing_framework_base.respond_to?(sym, include_private)
     end
 
   private

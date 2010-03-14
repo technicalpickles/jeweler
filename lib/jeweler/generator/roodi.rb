@@ -12,6 +12,8 @@ RoodiTask.new do |t|
   t.verbose = false
 end
         END
+
+        development_dependencies <<  ["roodi", ">= 0"]
       end
     end
   end

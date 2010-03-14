@@ -5,7 +5,7 @@ class Jeweler
         def initialize(generator)
           super
 
-          compat_mixin_name = "Jeweler::Generator::#{self.class.name.split('::').last}Mixin"
+          compat_mixin_name = "Jeweler::Generator::#{generator.testing_framework.to_s.capitalize}Mixin"
           extend constantize(compat_mixin_name)
 
           rakefile_snippets << rake_task << rcov_rake_task
@@ -52,7 +52,7 @@ END
         end
 
         def run
-          testing_framework = self.class.name.split('::').last.downcase
+          testing_framework = generator.testing_framework
           template File.join(testing_framework.to_s, 'helper.rb'),
             File.join(test_dir, test_helper_filename)
           template File.join(testing_framework.to_s, 'flunking.rb'),

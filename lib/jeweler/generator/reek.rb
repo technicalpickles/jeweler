@@ -13,6 +13,8 @@ Reek::RakeTask.new do |t|
   t.source_files = 'lib/**/*.rb'
 end
 END
+
+development_dependencies << ["reek", ">= 0"] 
       end
     end
   end
