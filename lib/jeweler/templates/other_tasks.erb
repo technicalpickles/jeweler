@@ -4,23 +4,6 @@
 <% end %>
 <% end %>
 
-<% if should_use_reek %>
-require 'reek/adapters/rake_task'
-Reek::RakeTask.new do |t|
-  t.fail_on_error = true
-  t.verbose = false
-  t.source_files = 'lib/**/*.rb'
-end
-<% end %>
-
-<% if should_use_roodi %>
-require 'roodi'
-require 'roodi_task'
-RoodiTask.new do |t|
-  t.verbose = false
-end
-<% end %>
-
 task :default => :<%= default_task %>
 
 <% case documentation_framework %>

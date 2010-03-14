@@ -52,6 +52,8 @@ class Jeweler
     require 'jeweler/generator/testing_frameworks/riot'
     require 'jeweler/generator/testing_frameworks/shindo'
     require 'jeweler/generator/cucumber'
+    require 'jeweler/generator/reek'
+    require 'jeweler/generator/roodi'
 
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
@@ -112,9 +114,10 @@ class Jeweler
       development_dependencies << ["reek", ">= 0"] if should_use_reek
       development_dependencies << ["roodi", ">= 0"] if should_use_roodi
 
-      if should_use_cucumber
-        plugins << Cucumber.new(self)
-      end
+      
+      plugins << Cucumber.new(self) if should_use_cucumber
+      plugins << Reek.new(self) if should_use_reek
+      plugins << Roodi.new(self) if should_use_roodi
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
