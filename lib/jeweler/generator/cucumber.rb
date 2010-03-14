@@ -2,16 +2,17 @@ class Jeweler
   class Generator
     class Cucumber < Plugin
       attr_accessor :testing_framework
-      attr_accessor :templates
+      attr_accessor :inline_templates
 
       def initialize(generator, testing_framework)
         super(generator)
-        self.templates = {}
-        self.inline_templates = __FILE__
+        self.inline_templates = {}
+
+        use_inline_templates! __FILE__
 
         self.testing_framework = testing_framework
 
-        rakefile_snippets << templates[:rakefile_snippet]
+        rakefile_snippets << inline_templates[:rakefile_snippet]
 
         development_dependencies << ["cucumber", ">= 0"]
       end
@@ -26,9 +27,7 @@ class Jeweler
         testing_framework.send(meth, *args, &block)
       end
 
-      def inline_templates=(file=nil)
-        file = (file.nil? || file == true) ? caller_files.first : file
-
+      def use_inline_templates!(file)
         begin
           app, data =
             ::IO.read(file).gsub("\r\n", "\n").split(/^__END__$/, 2)
@@ -43,7 +42,7 @@ class Jeweler
             lines += 1
             if line =~ /^@@\s*(.*)/
               template = ''
-              templates[$1.to_sym] = { :filename => file, :line => lines, :template => template }
+              inline_templates[$1.to_sym] = { :filename => file, :line => lines, :template => template }
             elsif template
               template << line
             end
