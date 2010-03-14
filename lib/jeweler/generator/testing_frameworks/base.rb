@@ -28,12 +28,32 @@ Rake::TestTask.new(:test) do |test|
 end
 END
           else
-            @rake_task = string
+            @rcov_rake_task = string
           end
         end
 
         def rake_task
           self.class.rake_task
+        end
+
+        def self.rcov_rake_task(string = nil)
+          case string
+          when nil
+            @rcov_rake_task ||= <<-END
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |test|
+  test.libs << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
+end
+END
+          else
+            @rake_task = string
+          end
+        end
+
+        def rcov_rake_task
+          self.class.rcov_rake_task
         end
 
         private

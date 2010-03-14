@@ -11,7 +11,15 @@ Micronaut::RakeTask.new(:examples) do |examples|
   examples.pattern = 'examples/**/*_example.rb'
   examples.ruby_opts << '-Ilib -Iexamples'
 end
-        END
+END
+
+        rcov_rake_task <<-END
+Micronaut::RakeTask.new(:rcov) do |examples|
+  examples.pattern = '<%= test_pattern %>'
+  examples.rcov_opts = '-Ilib -I<%= test_dir %>'
+  examples.rcov = true
+end
+END
       end
     end
   end

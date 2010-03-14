@@ -12,6 +12,16 @@ Rake::TestTask.new(:spec) do |spec|
   spec.verbose = true
 end
 END
+
+        rcov_rake_task <<-END
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |spec|
+  spec.libs << 'spec'
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.verbose = true
+end
+END
+
       end
     end
   end
