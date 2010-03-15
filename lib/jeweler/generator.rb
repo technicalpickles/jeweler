@@ -130,6 +130,10 @@ class Jeweler
       plugins.select {|plugin| plugin.rakefile_head_snippet }
     end
 
+    def rakefile_snippet_plugins
+      plugins.reject {|plugin| plugin.rakefile_snippets.empty? }
+    end
+
   private
 
     def render_erb(source)

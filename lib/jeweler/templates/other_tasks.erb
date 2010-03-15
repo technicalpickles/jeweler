@@ -1,7 +1,0 @@
-<% plugins.each do |plugin| %>
-<% plugin.rakefile_snippets.each do |snippet| %>
-<%= snippet %>
-<% end %>
-<% end %>
-
-task :default => :<%= testing_framework_base.default_rake_task %>

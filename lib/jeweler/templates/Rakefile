@@ -4,6 +4,27 @@ require 'rubygems'
 <%= plugin.rakefile_head_snippet %>
 <% end %>
 
-<%= render_template 'jeweler_tasks.erb' %>
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name = "<%= project_name %>"
+  gem.summary = %Q{<%= summary %>}
+  gem.description = %Q{<%= description %>}
+  gem.email = "<%= user_email %>"
+  gem.homepage = "<%= homepage %>"
+  gem.authors = ["<%= user_name %>"]
+<% plugins.reject {|plugin| plugin.jeweler_task_snippet.nil? }.each do |plugin| %>
+<%=  plugin.jeweler_task_snippet %>
+<% end %>
+  # Have dependencies? Add them to Gemfile
 
-<%= render_template 'other_tasks.erb' %>
+  # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+end
+
+<% rakefile_snippet_plugins.each do |plugin| %>
+<% plugin.rakefile_snippets.each do |snippet| %>
+<% require 'ruby-debug';breakpoint %>
+<%= snippet %>
+<% end %>
+<% end %>
+
+task :default => :<%= testing_framework_base.default_rake_task %>
