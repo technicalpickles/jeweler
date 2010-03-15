@@ -42,6 +42,7 @@ class Jeweler
 
     require 'jeweler/generator/plugin'
 
+    require 'jeweler/generator/documentation_frameworks'
     require 'jeweler/generator/testing_frameworks'
     require 'jeweler/generator/cucumber'
     require 'jeweler/generator/reek'
@@ -68,6 +69,7 @@ class Jeweler
 
       self.development_dependencies = []
       self.plugins                  = []
+
       self.testing_framework        = options[:testing_framework]
       self.documentation_framework  = options[:documentation_framework]
       self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
@@ -77,14 +79,8 @@ class Jeweler
       self.testing_framework_base = TestingFramework.determine_class(testing_framework).new(self)
       plugins << self.testing_framework_base
 
-      begin
-        generator_mixin_name = "#{self.documentation_framework.to_s.capitalize}Mixin"
-        generator_mixin = self.class.const_get(generator_mixin_name)
-        extend generator_mixin
-      rescue NameError => e
-        raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
-      end
-
+      documentation_framework_base = DocumentationFrameworks.klass(documentation_framework).new(self)
+      plugins << documentation_framework_base
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'

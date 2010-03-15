@@ -5,19 +5,3 @@
 <% end %>
 
 task :default => :<%= testing_framework_base.default_rake_task %>
-
-<% case documentation_framework %>
-<% when :rdoc %>
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "<%= project_name %> #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-<% when :yard %>
-require 'yard'
-YARD::Rake::YardocTask.new
-<% end %>
