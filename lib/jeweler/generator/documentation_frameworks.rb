@@ -21,7 +21,7 @@ class Jeweler
       class Yard < Base
         def initialize(generator)
           super
-          rakefile_snippets << inline_templates[:yard_rakefile_snippet]
+          rakefile_snippets << lookup_inline_template(:yard_rakefile_snippet)
           development_dependencies << ['yard', '>= 0']
         end
       end
@@ -29,7 +29,7 @@ class Jeweler
       class Rdoc < Base
         def initialize(generator)
           super
-          rakefile_snippets << inline_templates[:rdoc_rakefile_snippet]
+          rakefile_snippets << lookup_inline_template(:rdoc_rakefile_snippet)
         end
       end
     end

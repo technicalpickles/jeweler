@@ -5,8 +5,9 @@ class Jeweler
         super
         use_inline_templates! __FILE__
 
-        self.rakefile_head_snippet = inline_templates[:rakefile_head_snippet]
+        self.rakefile_head_snippet = lookup_inline_template(:rakefile_head_snippet)
 
+        self.jeweler_task_snippet = lookup_inline_template(:jeweler_task_snippet)
         development_dependencies << ["bundler", ">= 0.9.5"] 
       end
 
@@ -26,4 +27,5 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'rake'
+@@ jeweler_task_snippet
+  # Have dependencies? Add them to Gemfile

@@ -6,12 +6,10 @@ class Jeweler
 
       def initialize(generator, testing_framework)
         super(generator)
-
-        use_inline_templates! __FILE__
-
         self.testing_framework = testing_framework
 
-        rakefile_snippets << inline_templates[:rakefile_snippet]
+        use_inline_templates! __FILE__
+        rakefile_snippets << lookup_inline_template(:rakefile_snippet)
 
         development_dependencies << ["cucumber", ">= 0"]
       end

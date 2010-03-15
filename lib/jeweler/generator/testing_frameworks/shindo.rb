@@ -6,7 +6,7 @@ class Jeweler
           super
           use_inline_templates! __FILE__
 
-          rakefile_snippets << inline_templates[:rakefile_snippet]
+          rakefile_snippets << lookup_inline_template(:rakefile_snippet)
           development_dependencies << ["shindo", ">= 0"]
         end
 

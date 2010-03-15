@@ -7,7 +7,7 @@ class Jeweler
 
           use_inline_templates! __FILE__
 
-          rakefile_snippets << inline_templates[:rakefile_snippet]
+          rakefile_snippets << lookup_inline_template(:rakefile_snippet)
           development_dependencies << ["rspec", ">= 1.3.0"]
         end
 

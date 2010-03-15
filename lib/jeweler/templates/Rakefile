@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'rake'
 
 <% rakefile_head_snippet_plugins.each do |plugin| %>
 <%= plugin.rakefile_head_snippet %>
@@ -12,17 +13,15 @@ Jeweler::Tasks.new do |gem|
   gem.email = "<%= user_email %>"
   gem.homepage = "<%= homepage %>"
   gem.authors = ["<%= user_name %>"]
-<% plugins.reject {|plugin| plugin.jeweler_task_snippet.nil? }.each do |plugin| %>
+<% jeweler_task_snippet_plugins.each do |plugin| %>
 <%=  plugin.jeweler_task_snippet %>
 <% end %>
-  # Have dependencies? Add them to Gemfile
 
   # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 end
 
 <% rakefile_snippet_plugins.each do |plugin| %>
 <% plugin.rakefile_snippets.each do |snippet| %>
-<% require 'ruby-debug';breakpoint %>
 <%= snippet %>
 <% end %>
 <% end %>

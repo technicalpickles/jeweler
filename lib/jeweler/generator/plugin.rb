@@ -55,6 +55,10 @@ class Jeweler
         end
       end
 
+      def lookup_inline_template(name)
+        inline_templates[name] && inline_templates[name][:template]
+      end
+
       def self.source_root
         Generator.source_root
       end
