@@ -9,10 +9,12 @@ class Jeweler
         end
 
         def run
-          testing_framework = generator.testing_framework
+          template "#{template_subdir}/helper.rb", "#{test_dir}/#{test_helper_filename}"
+          template "#{template_subdir}/flunking.rb", "#{test_dir}/#{test_filename}"
+        end
 
-          template "#{testing_framework.to_s}/helper.rb", "#{test_dir}/#{test_helper_filename}"
-          template "#{testing_framework.to_s}/flunking.rb", "#{test_dir}/#{test_filename}"
+        def template_subdir
+          self.class.name.split('::').last.downcase
         end
 
       end

@@ -53,7 +53,7 @@ class Jeweler
     attr_accessor :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
-                  :testing_framework, :testing_framework_base,
+                  :testing_framework_base,
                   :development_dependencies,
                   :options,
                   :git_remote,
@@ -70,12 +70,11 @@ class Jeweler
       self.development_dependencies = []
       self.plugins                  = []
 
-      self.testing_framework        = options[:testing_framework]
       self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
 
       plugins << Rubyforge.new(self) if options[:rubyforge]
 
-      self.testing_framework_base = TestingFramework.determine_class(testing_framework).new(self)
+      self.testing_framework_base = TestingFramework.determine_class(options[:testing_framework]).new(self)
       plugins << self.testing_framework_base
 
       documentation_framework_base = DocumentationFrameworks.klass(options[:documentation_framework]).new(self)
