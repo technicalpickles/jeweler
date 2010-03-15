@@ -13,8 +13,10 @@ require 'mocha'
 require 'output_catcher'
 
 require 'test/unit/assertions'
-
 World(Test::Unit::Assertions)
+
+require 'construct'
+World(Construct::Helpers)
 
 def yank_task_info(content, task)
   if content =~ /#{Regexp.escape(task)}.new(\(.*\))? do \|(.*?)\|(.*?)end/m

@@ -1,7 +1,9 @@
 Given 'a working directory' do
-  @working_dir = File.expand_path File.join(File.dirname(__FILE__), '..', '..', 'tmp')
-  FileUtils.rm_rf @working_dir
-  FileUtils.mkdir_p @working_dir
+  @working_dir = create_construct
+end
+
+After do
+  @working_dir.destroy! if @working_dir
 end
 
 Given /^I use the jeweler command to generate the "([^"]+)" project in the working directory$/ do |name|
