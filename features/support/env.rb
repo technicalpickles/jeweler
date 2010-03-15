@@ -18,6 +18,11 @@ World(Test::Unit::Assertions)
 require 'construct'
 World(Construct::Helpers)
 
+
+Pathname.class_eval do
+  alias_method :/, :+
+end
+
 def yank_task_info(content, task)
   if content =~ /#{Regexp.escape(task)}.new(\(.*\))? do \|(.*?)\|(.*?)end/m
     [$2, $3]

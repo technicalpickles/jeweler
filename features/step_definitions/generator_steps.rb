@@ -84,23 +84,22 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
     Jeweler::Generator::Application.run! *arguments
   end
 
-  @repo = Git.open(File.join(@working_dir, @name))
+  @repo = Git.open(@working_dir / @name)
 end
 
 Given /^'((?:\w|-|_)+)' is a git repository$/ do |path|
   @name = path
-  path = File.join(@working_dir, path)
-  FileUtils.mkdir_p path
+  @working_dir.directory(path)
   @repo = Git.init(path)
 end
 
 Given /^there isn't an existing 'Rakefile'$/ do
-  assert ! File.exist?(File.join(@working_dir, @name, 'Rakefile'))
+  assert ! (@working_dir / @name / 'Rakefile').exist?
 end
 
 Given /^there is an existing '(.*)'$/ do |path|
-  path = File.join(@working_dir, @name, path)
-  FileUtils.mkdir_p File.dirname(path)
+  path = (@working_dir / @name / path)
+  FileUtils.mkdir_p path.dirname
   File.open(path, 'w') do |f|
     f.write "# perfectness goes here"
   end
@@ -124,10 +123,10 @@ When /^I jewelerify it$/ do
 end
 
 Then /^a directory named '(.*)' is created$/ do |directory|
-  directory = File.join(@working_dir, directory)
+  directory = @working_dir / directory
 
-  assert File.exists?(directory), "#{directory} did not exist"
-  assert File.directory?(directory), "#{directory} is not a directory"
+  assert directory.exist?, "#{directory} did not exist"
+  assert directory.directory?, "#{directory} is not a directory"
 end
 
 Then "cucumber directories are created" do
@@ -138,16 +137,16 @@ end
 
 
 Then /^a file named '(.*)' is created$/ do |file|
-  file = File.join(@working_dir, file)
+  file = @working_dir + file
 
-  assert File.exists?(file), "#{file} expected to exist, but did not"
-  assert File.file?(file), "#{file} expected to be a file, but is not"
+  assert file.exist?, "#{file} expected to exist, but did not"
+  assert file.file?, "#{file} expected to be a file, but is not"
 end
 
 Then /^a file named '(.*)' is not created$/ do |file|
-  file = File.join(@working_dir, file)
+  file = @working_dir + file
 
-  assert ! File.exists?(file), "#{file} expected to not exist, but did"
+  assert ! file.exist?, "#{file} expected to not exist, but did"
 end
 
 Then /^a sane '.gitignore' is created$/ do
@@ -160,13 +159,13 @@ Then /^a sane '.gitignore' is created$/ do
 end
 
 Then /^'(.*)' is ignored by git$/ do |git_ignore|
-  @gitignore_content ||= File.read(File.join(@working_dir, @name, '.gitignore'))
+  @gitignore_content ||= (@working_dir / @name / '.gitignore').read
 
   assert_match git_ignore, @gitignore_content
 end
 
 Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  @rakefile_content ||= (@working_dir / @name / 'Rakefile').read
   block_variable, task_block = yank_task_info(@rakefile_content, task_class)
   #raise "Found in #{task_class}: #{block_variable.inspect}: #{task_block.inspect}"
 
@@ -177,7 +176,7 @@ Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
 end
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  @rakefile_content ||= (@working_dir / @name / 'Rakefile').read
   block_variable, task_block = yank_task_info(@rakefile_content, 'Rcov::RcovTask')
 
   assert_match "#{block_variable}.libs << '#{libs}'", @rakefile_content
@@ -185,12 +184,12 @@ end
 
 
 Then /^'(.*)' contains '(.*)'$/ do |file, expected_string|
-  contents = File.read(File.join(@working_dir, @name, file))
+  contents = (@working_dir / @name / file).read
   assert_match expected_string, contents
 end
 
 Then /^'(.*)' mentions copyright belonging to me in (\d{4})$/ do |file, year|
-  contents = File.read(File.join(@working_dir, @name, file))
+  contents = (@working_dir / @name / file).read
   assert_match "Copyright (c) #{year} #{@user_name}", contents
 end
 
@@ -203,7 +202,7 @@ end
 Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
   Then "a file named 'the-perfect-gem/LICENSE' is created"
 
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
+  @license_content ||= (@working_dir / @name / 'LICENSE').read
 
   assert_match copyright_holder, @license_content
 
@@ -211,31 +210,31 @@ Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyr
 end
 
 Then /^'(.*)' should define '(.*)' as a subclass of '(.*)'$/ do |file, class_name, superclass_name|
-  @test_content = File.read((File.join(@working_dir, @name, file)))
+  @test_content = (@working_dir / @name / file).read
 
   assert_match "class #{class_name} < #{superclass_name}", @test_content
 end
 
 Then /^'(.*)' should describe '(.*)'$/ do |file, describe_name|
-  @spec_content ||= File.read((File.join(@working_dir, @name, file)))
+  @spec_content ||= (@working_dir / @name / file).read
 
   assert_match %Q{describe "#{describe_name}" do}, @spec_content
 end
 
 Then /^'(.*)' should contextualize '(.*)'$/ do |file, describe_name|
-  @spec_content ||= File.read((File.join(@working_dir, @name, file)))
+  @spec_content ||= (@working_dir / @name / file).read
 
   assert_match %Q{context "#{describe_name}" do}, @spec_content
 end
 
 Then /^'(.*)' should have tests for '(.*)'$/ do |file, describe_name|
-  @tests_content ||= File.read((File.join(@working_dir, @name, file)))
+  @tests_content ||= (@working_dir / @name / file).read
 
   assert_match %Q{Shindo.tests("#{describe_name}") do}, @tests_content
 end
 
 Then /^'(.*)' requires '(.*)'$/ do |file, lib|
-  content = File.read(File.join(@working_dir, @name, file))
+  content = (@working_dir / @name / file).read
 
   message = "Expected #{file} to require #{lib}, but did not:\n#{content}"
   assert_block message do
@@ -244,7 +243,7 @@ Then /^'(.*)' requires '(.*)'$/ do |file, lib|
 end
 
 Then /^'(.*)' does not require '(.*)'$/ do |file, lib|
-  content = File.read(File.join(@working_dir, @name, file))
+  content = (@working_dir / @name / file).read
 
   assert_no_match /require ['"]#{Regexp.escape(lib)}['"]/, content
 end
@@ -258,24 +257,24 @@ Then /^Rakefile requires '(.*)'$/ do |file|
 end
 
 Then /^Rakefile does not instantiate a (.*)$/ do |task_name|
-  content = File.read(File.join(@working_dir, @name, 'Rakefile'))
+  content = (@working_dir / @name / 'Rakefile').read
   assert_no_match /#{task_name}/, content
 end
 
 Then /^Rakefile instantiates a (.*)$/ do |task_name|
-  content = File.read(File.join(@working_dir, @name, 'Rakefile'))
+  content = (@working_dir / @name / 'Rakefile').read
   assert_match /#{task_name}/, content
 end
 
 
 Then /^'(.+?)' should autorun tests$/ do |test_helper|
-  content = File.read(File.join(@working_dir, @name, test_helper))
+  content = (@working_dir / @name / test_helper).read
 
   assert_match "MiniTest::Unit.autorun", content
 end
 
 Then /^cucumber world extends "(.*)"$/ do |module_to_extend|
-  content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
+  content = (@working_dir / @name / 'features' / 'support' / 'env.rb').read
   assert_match "World(#{module_to_extend})", content
 end
 
@@ -285,7 +284,7 @@ Then /^'features\/support\/env\.rb' sets up features to use test\/unit assertion
 end
 
 Then /^'features\/support\/env\.rb' sets up features to use minitest assertions$/ do
-  content = File.read(File.join(@working_dir, @name, 'features', 'support', 'env.rb'))
+  content = (@working_dir / @name / 'features' / 'support' / 'env.rb').read
 
   assert_match "world.extend(Mini::Test::Assertions)", content
 end
@@ -303,7 +302,7 @@ Then /^git repository '(.*)' remote should be '(.*)'/ do |remote, remote_url|
 end
 
 Then /^Rakefile has "(.*)" as the default task$/ do |task|
-  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  @rakefile_content ||= (@working_dir / @name / 'Rakefile').read
   assert_match "task :default => :#{task}", @rakefile_content
 end
 
@@ -313,7 +312,7 @@ After do
 end
 
 Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
-  @gemfile_content ||= File.read(File.join(@working_dir, @name, 'Gemfile'))
+  @gemfile_content ||= (@working_dir / @name / 'Gemfile').read
 
   group_block = yank_group_info(@gemfile_content, group)
 

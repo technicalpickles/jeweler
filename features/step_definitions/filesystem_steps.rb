@@ -10,7 +10,7 @@ Given /^I use the jeweler command to generate the "([^"]+)" project in the worki
   @name = name
 
   return_to = Dir.pwd
-  path_to_jeweler = File.expand_path File.join(File.dirname(__FILE__), '..', '..', 'bin', 'jeweler')
+  path_to_jeweler = Pathname.new(__FILE__).dirname.join('..', '..', 'bin', 'jeweler').expand_path
 
   begin
     FileUtils.cd @working_dir
@@ -21,16 +21,16 @@ Given /^I use the jeweler command to generate the "([^"]+)" project in the worki
 end
 
 Given /^"([^"]+)" does not exist$/ do |file|
-  assert ! File.exists?(File.join(@working_dir, file))
+  assert ! (@working_dir / file).exist?
 end
 
 When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
-  full_path = File.join(@working_dir, directory)
+  full_path = (@working_dir / directory)
 
   lib_path = File.expand_path 'lib'
   command.gsub!(/^rake /, "rake --trace -I#{lib_path} ")
 
-  assert File.directory?(full_path), "#{full_path} is not a directory"
+  assert full_path.directory?, "#{full_path} is not a directory"
 
   @stdout = `cd #{full_path} && #{command}`
   @exited_cleanly = $?.exited?
@@ -58,13 +58,13 @@ Given /^I use the existing project "([^"]+)" as a template$/ do |fixture_project
 end
 
 Given /^"VERSION\.yml" contains hash "([^"]+)"$/ do |ruby_string|
-  version_hash = YAML.load(File.read(File.join(@working_dir, @name, 'VERSION.yml')))
+  version_hash = YAML.load((@working_dir / @name / 'VERSION.yml').read)
   evaled_hash = eval(ruby_string)
   assert_equal evaled_hash, version_hash
 end
 
 Given /^"VERSION" contains "([^\"]*)"$/ do |expected|
-  version = File.read(File.join(@working_dir, @name, 'VERSION')).chomp
+  version = (@working_dir / @name / 'VERSION').read.chomp
   assert_equal expected, version
 end
 
