@@ -3,29 +3,33 @@ class Jeweler
   class Generator
     module TestingFrameworks
       class Rspec < Base
+        def initialize(generator)
+          super
+
+          use_inline_templates! __FILE__
+
+          rakefile_snippets << inline_templates[:rakefile_snippet]
+        end
 
         def run
           super
 
-          template File.join('rspec', 'spec.opts'),
-            File.join(test_dir, 'spec.opts')
+          template 'rspec/spec.opts', 'spec/spec.opts'
         end
-
-        rake_task <<-END
+      end
+    end
+  end
+end
+__END__
+@@ rakefile_snippet
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
   spec.pattern = 'spec/**/*_spec.rb'
 end
-END
-        rcov_rake_task <<-END
+
 Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.libs << 'lib' << 'spec'
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
-end
-END
-      end
-    end
-  end
 end

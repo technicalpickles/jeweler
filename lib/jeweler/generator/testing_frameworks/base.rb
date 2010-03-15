@@ -9,48 +9,6 @@ class Jeweler
 
           compat_mixin_name = "Jeweler::Generator::#{generator.testing_framework.to_s.capitalize}Mixin"
           extend constantize(compat_mixin_name)
-
-          rakefile_snippets << rake_task << rcov_rake_task
-        end
-
-        def self.rake_task(string = nil)
-          case string
-          when nil
-            @rake_task ||= <<-END
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = %Q{test/**/test_*.rb}
-  test.verbose = true
-end
-END
-          else
-            @rcov_rake_task = string
-          end
-        end
-
-        def rake_task
-          self.class.rake_task
-        end
-
-        def self.rcov_rake_task(string = nil)
-          case string
-          when nil
-            @rcov_rake_task ||= <<-END
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-END
-          else
-            @rake_task = string
-          end
-        end
-
-        def rcov_rake_task
-          self.class.rcov_rake_task
         end
 
         def run

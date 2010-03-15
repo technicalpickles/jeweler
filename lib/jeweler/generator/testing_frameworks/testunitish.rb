@@ -1,15 +1,14 @@
-require 'jeweler/generator/bacon_mixin'
-
 class Jeweler
   class Generator
     module TestingFrameworks
-      class Bacon < Base
+      class Testunitish < Base
         def initialize(generator)
           super
           use_inline_templates! __FILE__
 
           rakefile_snippets << inline_templates[:rakefile_snippet]
         end
+        
       end
     end
   end
@@ -17,15 +16,15 @@ end
 __END__
 @@ rakefile_snippet
 require 'rake/testtask'
-Rake::TestTask.new(:spec) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.pattern = %Q{spec/**/*_spec.rb}
-  spec.verbose = true
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = %Q{test/**/test_*.rb}
+  test.verbose = true
 end
 
 require 'rcov/rcovtask'
-Rcov::RcovTask.new do |spec|
-  spec.libs << 'spec'
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.verbose = true
+Rcov::RcovTask.new do |test|
+  test.libs << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
 end

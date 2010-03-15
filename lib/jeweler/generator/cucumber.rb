@@ -29,7 +29,6 @@ class Jeweler
     end
   end
 end
-
 __END__
 @@ rakefile_snippet
 require 'cucumber/rake/task'

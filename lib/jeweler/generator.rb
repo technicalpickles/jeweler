@@ -43,6 +43,7 @@ class Jeweler
     require 'jeweler/generator/plugin'
 
     require 'jeweler/generator/testing_frameworks/base'
+    require 'jeweler/generator/testing_frameworks/testunitish'
     require 'jeweler/generator/testing_frameworks/bacon'
     require 'jeweler/generator/testing_frameworks/micronaut'
     require 'jeweler/generator/testing_frameworks/minitest'

@@ -170,7 +170,10 @@ Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
   block_variable, task_block = yank_task_info(@rakefile_content, task_class)
   #raise "Found in #{task_class}: #{block_variable.inspect}: #{task_block.inspect}"
 
-  assert_match /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/, task_block
+  message = "Expected #{block_variable}.#{field} to be #{value}, but was not:\n#{task_block}"
+  assert_block message do
+    task_block =~ /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/
+  end
 end
 
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
