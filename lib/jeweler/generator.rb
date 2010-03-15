@@ -42,17 +42,7 @@ class Jeweler
 
     require 'jeweler/generator/plugin'
 
-    require 'jeweler/generator/testing_frameworks/base'
-    require 'jeweler/generator/testing_frameworks/testunitish'
-    require 'jeweler/generator/testing_frameworks/bacon'
-    require 'jeweler/generator/testing_frameworks/micronaut'
-    require 'jeweler/generator/testing_frameworks/minitest'
-    require 'jeweler/generator/testing_frameworks/rspec'
-    require 'jeweler/generator/testing_frameworks/shoulda'
-    require 'jeweler/generator/testing_frameworks/testspec'
-    require 'jeweler/generator/testing_frameworks/testunit'
-    require 'jeweler/generator/testing_frameworks/riot'
-    require 'jeweler/generator/testing_frameworks/shindo'
+    require 'jeweler/generator/testing_frameworks'
     require 'jeweler/generator/cucumber'
     require 'jeweler/generator/reek'
     require 'jeweler/generator/roodi'
@@ -77,23 +67,15 @@ class Jeweler
       end
 
       self.development_dependencies = []
-      self.plugins = []
-      self.testing_framework  = options[:testing_framework]
-      self.documentation_framework = options[:documentation_framework]
-      self.destination_root             = Pathname.new(options[:directory] || self.project_name).expand_path
-
-
+      self.plugins                  = []
+      self.testing_framework        = options[:testing_framework]
+      self.documentation_framework  = options[:documentation_framework]
+      self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
 
       plugins << Rubyforge.new(self) if options[:rubyforge]
 
-      testing_framework_class_name = self.testing_framework.to_s.capitalize
-
-      if TestingFrameworks.const_defined?(testing_framework_class_name)
-        self.testing_framework_base = TestingFrameworks.const_get(testing_framework_class_name).new(self)
-        plugins << self.testing_framework_base
-      else
-        raise ArgumentError, "Using #{testing_framework} requires a #{testing_framework_class_name} to be defined"
-      end
+      self.testing_framework_base = TestingFramework.determine_class(testing_framework).new(self)
+      plugins << self.testing_framework_base
 
       begin
         generator_mixin_name = "#{self.documentation_framework.to_s.capitalize}Mixin"
