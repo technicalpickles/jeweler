@@ -56,7 +56,6 @@ class Jeweler
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework_base,
-                  :development_dependencies,
                   :options,
                   :git_remote,
                   :plugins
@@ -78,7 +77,6 @@ class Jeweler
       raise NoGitUserName unless self.user_name
       raise NoGitUserEmail unless self.user_email
 
-      self.development_dependencies = []
       self.plugins                  = []
       self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
 
@@ -136,6 +134,16 @@ class Jeweler
 
     def jeweler_task_snippet_plugins
       plugins.select {|plugin| plugin.jeweler_task_snippet }
+    end
+
+    def plugins_with_development_dependencies
+      plugins.reject {|plugin| plugin.development_dependencies.empty? }
+    end
+
+    def development_dependencies
+      plugins_with_development_dependencies.inject([]) do |acc, plugin|
+        acc.concat(plugin.development_dependencies)
+      end
     end
 
   private

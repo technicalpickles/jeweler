@@ -6,7 +6,7 @@ end
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-<% (development_dependencies + plugins.map {|plugin| plugin.development_dependencies }).flatten.each do |name, version| %>
+<% generator.development_dependencies.each do |(name, version)|%>
   gem "<%= name %>", "<%= version %>"
 <% end %>
 end
