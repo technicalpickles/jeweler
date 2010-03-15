@@ -318,5 +318,8 @@ Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
 
   group_block = yank_group_info(@gemfile_content, group)
 
-  assert_match name, group_block
+  message = "Expected #{name} to be a #{group} dependency, got:\n#{group_block}"
+  assert_block message do
+    group_block.include?(name)
+  end
 end

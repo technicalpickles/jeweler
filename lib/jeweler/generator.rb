@@ -42,6 +42,8 @@ class Jeweler
 
     require 'jeweler/generator/plugin'
 
+    require 'jeweler/generator/default'
+    require 'jeweler/generator/bundler'
     require 'jeweler/generator/documentation_frameworks'
     require 'jeweler/generator/testing_frameworks'
     require 'jeweler/generator/cucumber'
@@ -62,57 +64,41 @@ class Jeweler
     def initialize(options = {})
       self.options = options
 
-      self.project_name   = options[:project_name]
+      self.summary      = options[:summary] || 'TODO: one-line summary of your gem'
+      self.description  = options[:description] || 'TODO: longer description of your gem'
+      self.user_name    = options[:user_name]
+      self.user_email   = options[:user_email]
+      self.homepage     = options[:homepage]
+      self.git_remote   = options[:git_remote]
+      self.project_name = options[:project_name]
       if self.project_name.nil? || self.project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
       end
 
+      raise NoGitUserName unless self.user_name
+      raise NoGitUserEmail unless self.user_email
+
       self.development_dependencies = []
       self.plugins                  = []
-
       self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
 
-      plugins << Rubyforge.new(self) if options[:rubyforge]
-
       self.testing_framework_base = TestingFramework.determine_class(options[:testing_framework]).new(self)
-      plugins << self.testing_framework_base
-
       documentation_framework_base = DocumentationFrameworks.klass(options[:documentation_framework]).new(self)
+
+      plugins << Bundler.new(self)
+      plugins << Default.new(self)
+      plugins << Rubyforge.new(self) if options[:rubyforge]
+      plugins << self.testing_framework_base
       plugins << documentation_framework_base
-
-      self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
-      self.description            = options[:description] || 'TODO: longer description of your gem'
-
-      development_dependencies << ["bundler", ">= 0.9.5"] # TODO make bundler optional?
-      development_dependencies << ["jeweler", ">= 1.4.0"]
-      
       plugins << Cucumber.new(self, testing_framework_base) if options[:use_cucumber]
       plugins << Reek.new(self) if options[:use_reek]
       plugins << Roodi.new(self) if options[:use_roodi]
-
       plugins << GitVcs.new(self)
-
-      self.user_name       = options[:user_name]
-      self.user_email      = options[:user_email]
-      self.homepage        = options[:homepage]
-      
-      self.git_remote      = options[:git_remote]
-
-      raise NoGitUserName unless self.user_name
-      raise NoGitUserEmail unless self.user_email
 
       extend GithubMixin
     end
 
     def run
-      template '.gitignore'
-      template 'Rakefile'
-      template 'Gemfile'
-      template 'LICENSE'
-      template 'README.rdoc'
-      template '.document'
-      create_file "lib/#{project_name}.rb"
-
       plugins.each do |plugin|
         plugin.run
       end
@@ -138,6 +124,10 @@ class Jeweler
       def file_name_prefix
         self.project_name.gsub('-', '_')
       end
+    end
+
+    def rakefile_head_snippet_plugins
+      plugins.select {|plugin| plugin.rakefile_head_snippet }
     end
 
   private

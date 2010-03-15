@@ -6,7 +6,7 @@ class Jeweler
 
       attr_accessor :base, :generator, :development_dependencies,
         :rakefile_snippets, :jeweler_task_snippet,
-        :inline_templates
+        :inline_templates, :rakefile_head_snippet
 
       def initialize(generator)
         self.generator = generator
