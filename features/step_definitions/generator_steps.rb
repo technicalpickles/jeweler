@@ -284,7 +284,6 @@ end
 
 After do
   ENV['JEWELER_OPTS'] = nil
-  FileUtils.rm_rf @working_dir if @working_dir
 end
 
 Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|

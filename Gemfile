@@ -14,7 +14,7 @@ group :development do
   gem "rr"
   gem "mocha"
   gem "redgreen"
-  gem "devver-construct"
+  gem "test-construct"
   gem "yard"
   gem "cucumber"
   gem "rcov"
