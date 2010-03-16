@@ -1,5 +1,5 @@
 require 'git'
-require 'thor/actions/git_init'
+require 'thor/actions'
 
 class Thor
   module Actions

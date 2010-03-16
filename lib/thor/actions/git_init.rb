@@ -1,4 +1,4 @@
-require 'thor/actions/empty_directory'
+require 'thor/actions'
 require 'git'
 
 class Thor
