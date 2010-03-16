@@ -37,9 +37,6 @@ class Jeweler
 
     require 'jeweler/generator/github_mixin'
 
-    require 'jeweler/generator/rdoc_mixin'
-    require 'jeweler/generator/yard_mixin'
-
     require 'jeweler/generator/plugin'
 
     require 'jeweler/generator/default'
