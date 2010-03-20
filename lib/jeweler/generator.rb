@@ -84,7 +84,7 @@ class Jeweler
       plugins << Rubyforge.new(self) if options[:rubyforge]
       plugins << self.testing_framework_base
       plugins << documentation_framework_base
-      plugins << Cucumber.new(self, testing_framework_base) if options[:use_cucumber]
+      plugins << Cucumber.new(self, testing_framework_base) if options[:cucumber]
       plugins << Reek.new(self) if options[:use_reek]
       plugins << Roodi.new(self) if options[:use_roodi]
       plugins << GitVcs.new(self)

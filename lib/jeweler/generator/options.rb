@@ -70,7 +70,7 @@ class Jeweler
           o.separator ""
 
           o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do
-            self[:use_cucumber] = true
+            self[:cucumber] = true
           end
 
           o.separator ""
