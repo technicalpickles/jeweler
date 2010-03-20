@@ -93,18 +93,6 @@ class Jeweler
             self[:description] = description
           end
 
-          o.separator ""
-
-          o.on('--user-name [USER_NAME]', "the user's name, ie that is credited in the LICENSE") do |user_name|
-            self[:user_name] = user_name
-          end
-
-          o.on('--user-email [USER_EMAIL]', "the user's email, ie that is credited in the Gem specification") do |user_email|
-            self[:user_email] = user_email
-          end
-
-          o.separator ""
-
           o.on('--github-username [GITHUB_USERNAME]', "name of the user on GitHub to set the project up under") do |github_username|
             self[:github_username] = github_username
           end
@@ -143,7 +131,6 @@ class Jeweler
 
         begin
           @opts.parse!(args)
-          self[:project_name] = args.shift
         rescue OptionParser::InvalidOption => e
           self[:invalid_argument] = e.message
         end

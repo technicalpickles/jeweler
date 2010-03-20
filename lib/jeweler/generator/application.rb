@@ -19,13 +19,8 @@ class Jeweler
             return 1
           end
 
-          if options[:project_name].nil? || options[:project_name].squeeze.strip == ""
-            $stderr.puts options.opts
-            return 1
-          end
-
           begin
-            generator = Jeweler::Generator.new([], options, {})
+            generator = Jeweler::Generator.new(arguments, options, {})
             generator.run
             return 0
           rescue Jeweler::NoGitUserName

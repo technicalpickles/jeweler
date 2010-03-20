@@ -56,25 +56,26 @@ class Jeweler
                   :git_remote,
                   :plugins
 
+    argument :project_name, :required => true
+
+    class_option :user_name, :desc => "the user's name, credited in the LICENSE", :type => :string, :required => true
+    class_option :user_email, :desc => "the user's email, ie that is credited in the Gem specification", :required => true
+
     def initialize(args = [], opts = {}, config = {})
       super
 
+      self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
       self.summary      = options[:summary] || 'TODO: one-line summary of your gem'
       self.description  = options[:description] || 'TODO: longer description of your gem'
       self.user_name    = options[:user_name]
       self.user_email   = options[:user_email]
       self.homepage     = options[:homepage]
       self.git_remote   = options[:git_remote]
-      self.project_name = options[:project_name]
-      if self.project_name.nil? || self.project_name.squeeze.strip == ""
-        raise NoGitHubRepoNameGiven
-      end
 
       raise NoGitUserName unless self.user_name
       raise NoGitUserEmail unless self.user_email
 
       self.plugins                  = []
-      self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
 
       self.testing_framework_base = TestingFramework.determine_class(options[:testing_framework]).new(self)
       documentation_framework_base = DocumentationFrameworks.klass(options[:documentation_framework]).new(self)
