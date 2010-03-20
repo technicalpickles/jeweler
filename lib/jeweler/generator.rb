@@ -28,7 +28,7 @@ class Jeweler
   end    
 
   # Generator for creating a jeweler-enabled project
-  class Generator 
+  class Generator
     include Thor::Base
     include Thor::Actions
 
@@ -53,12 +53,11 @@ class Jeweler
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework_base,
-                  :options,
                   :git_remote,
                   :plugins
 
-    def initialize(options = {})
-      self.options = options
+    def initialize(args = [], opts = {}, config = {})
+      super
 
       self.summary      = options[:summary] || 'TODO: one-line summary of your gem'
       self.description  = options[:description] || 'TODO: longer description of your gem'

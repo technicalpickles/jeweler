@@ -25,7 +25,7 @@ class Jeweler
           end
 
           begin
-            generator = Jeweler::Generator.new(options)
+            generator = Jeweler::Generator.new([], options, {})
             generator.run
             return 0
           rescue Jeweler::NoGitUserName
