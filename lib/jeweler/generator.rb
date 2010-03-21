@@ -58,19 +58,34 @@ class Jeweler
 
     argument :directory, :required => true
 
-    class_option :summary, :type => :string, :default => 'TODO: one-line summary of your gem'
-    class_option :homepage, :type => :string, :desc => "the homepage for your project (defaults to the GitHub repo)"
-    class_option :description, :type => :string, :default => 'TODO: longer description of your gem' 
+    class_option :summary, :type => :string, :default => 'TODO: one-line summary of your gem',
+      :desc => 'one-line summary of your gem'
+    class_option :homepage, :type => :string,
+      :desc => "the homepage for your project (defaults to the GitHub repo)"
+    class_option :description, :type => :string, :default => 'TODO: longer description of your gem' ,
+      :desc => 'longer description of your gem'
 
-    class_option :user_name, :desc => "the user's name, credited in the LICENSE", :type => :string
-    class_option :user_email, :desc => "the user's email, ie that is credited in the Gem specification"
+    class_option :user_name, :type => :string,
+      :desc => "the user's name, credited in the LICENSE"
+    class_option :user_email, :type => :string,
+      :desc => "the user's email, ie that is credited in the Gem specification"
 
-    class_option :testing_framework, :type => :string, :default => 'shoulda', :desc => 'specify the testing framework to generate'
-    class_option :documentation_framework, :type => :string, :default => 'rdoc' 
+    class_option :testing_framework, :type => :string, :default => 'shoulda',
+      :desc => 'the testing framework to generate'
+    class_option :documentation_framework, :type => :string, :default => 'rdoc',
+      :desc => 'documentation framework to generate'
 
-    class_option :reek, :type => :boolean
-    class_option :roodi, :type => :boolean
-    class_option :cucumber, :type => :boolean
+    class_option :reek, :type => :boolean, :default => false,
+      :desc => 'generate rake task for reek'
+    class_option :roodi, :type => :boolean, :default => false,
+      :desc => 'generate rake task for roodi'
+    class_option :cucumber, :type => :boolean, :default => false,
+      :desc => 'generate cucumber stories in addition to other tests'
+
+    class_option :git_remote, :type => :string,
+      :desc => 'URI to use for git origin remote'
+    class_option :create_repo, :type => :boolean, :default => false,
+      :desc => 'create a repository on GitHub'
 
     def initialize(args = [], opts = {}, config = {})
       # next section yanked from Thor::Base, because apparently Thor::Group will pass in opts as an array
@@ -85,9 +100,6 @@ class Jeweler
       end
       opts = Thor::Options.parse(parse_options, array_options).dup
 
-      opts[:testing_framework]       ||= :shoulda
-      opts[:documentation_framework] ||= :rdoc
-
       git_config = Git.global_config
       opts[:user_name]       ||= git_config['user.name']
       opts[:user_email]      ||= git_config['user.email']
@@ -96,13 +108,11 @@ class Jeweler
 
       super
 
-
-
       self.destination_root         = Pathname.new(directory).expand_path
 
       self.project_name = Pathname.new(self.destination_root).basename.to_s
-      self.summary      = options[:summary] || 'TODO: one-line summary of your gem'
-      self.description  = options[:description] || 'TODO: longer description of your gem'
+      self.summary      = options[:summary] 
+      self.description  = options[:description]
       self.user_name    = options[:user_name]
       self.user_email   = options[:user_email]
       self.homepage     = options[:homepage]
@@ -177,8 +187,10 @@ class Jeweler
           acc.concat(plugin.development_dependencies)
         end
       end
+
     end
 
+  protected
 
   private
 
