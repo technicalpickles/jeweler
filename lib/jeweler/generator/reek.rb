@@ -2,6 +2,9 @@ class Jeweler
   class Generator
     class Reek < Plugin
 
+      class_option :reek, :type => :boolean, :default => false,
+        :desc => 'generate rake task for reek'
+
       def initialize(generator)
         super
 

@@ -75,13 +75,6 @@ class Jeweler
     class_option :documentation_framework, :type => :string, :default => 'rdoc',
       :desc => 'documentation framework to generate'
 
-    class_option :reek, :type => :boolean, :default => false,
-      :desc => 'generate rake task for reek'
-    class_option :roodi, :type => :boolean, :default => false,
-      :desc => 'generate rake task for roodi'
-    class_option :cucumber, :type => :boolean, :default => false,
-      :desc => 'generate cucumber stories in addition to other tests'
-
     class_option :git_remote, :type => :string,
       :desc => 'URI to use for git origin remote'
     class_option :create_repo, :type => :boolean, :default => false,

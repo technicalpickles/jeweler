@@ -2,6 +2,9 @@ class Jeweler
   class Generator
     class Roodi < Plugin
 
+      class_option :roodi, :type => :boolean, :default => false,
+        :desc => 'generate rake task for roodi'
+
       def initialize(generator)
         super
 

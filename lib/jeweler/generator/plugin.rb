@@ -62,6 +62,10 @@ class Jeweler
       def self.source_root
         Generator.source_root
       end
+
+      def self.class_option(name, options)
+        Generator.class_option(name, options)
+      end
     end
   end
 end

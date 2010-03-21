@@ -1,8 +1,11 @@
 class Jeweler
   class Generator
     class Cucumber < Plugin
+
+      class_option :cucumber, :type => :boolean, :default => false,
+        :desc => 'generate cucumber stories in addition to other tests'
+
       attr_accessor :testing_framework
-      attr_accessor :inline_templates
 
       def initialize(generator, testing_framework)
         super(generator)
