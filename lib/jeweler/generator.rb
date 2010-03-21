@@ -70,6 +70,10 @@ class Jeweler
     class_option :user_email, :type => :string,
       :desc => "the user's email, ie that is credited in the Gem specification"
 
+    class_option :github_username, :type => :string,
+      :desc => "name of the user on GitHub to set the project up under"
+    class_option :github_token, :type => :string,
+      :desc => "GitHub token to use for interacting with the GitHub API"
     class_option :git_remote, :type => :string,
       :desc => 'URI to use for git origin remote'
     class_option :create_repo, :type => :boolean, :default => false,
@@ -77,6 +81,7 @@ class Jeweler
 
     def initialize(args = [], opts = {}, config = {})
       # next section yanked from Thor::Base, because apparently Thor::Group will pass in opts as an array
+      # This is mostly a workaround so we can use `git config` as a default for some values
       parse_options = self.class.class_options
       array_options = hash_opts = nil
       if opts.is_a?(Array)
@@ -97,8 +102,8 @@ class Jeweler
       super
 
       self.destination_root         = Pathname.new(directory).expand_path
-
       self.project_name = Pathname.new(self.destination_root).basename.to_s
+
       self.summary      = options[:summary] 
       self.description  = options[:description]
       self.user_name    = options[:user_name]
