@@ -5,6 +5,7 @@ require 'net/http'
 require 'uri'
 
 require 'thor'
+require 'thor/group'
 require 'pathname'
 
 require 'thor/actions/git_init'
@@ -28,8 +29,7 @@ class Jeweler
   end    
 
   # Generator for creating a jeweler-enabled project
-  class Generator
-    include Thor::Base
+  class Generator < Thor::Group
     include Thor::Actions
 
     require 'jeweler/generator/options'
@@ -56,15 +56,51 @@ class Jeweler
                   :git_remote,
                   :plugins
 
-    argument :project_name, :required => true
+    argument :directory, :required => true
 
-    class_option :user_name, :desc => "the user's name, credited in the LICENSE", :type => :string, :required => true
-    class_option :user_email, :desc => "the user's email, ie that is credited in the Gem specification", :required => true
+    class_option :summary, :type => :string, :default => 'TODO: one-line summary of your gem'
+    class_option :homepage, :type => :string, :desc => "the homepage for your project (defaults to the GitHub repo)"
+    class_option :description, :type => :string, :default => 'TODO: longer description of your gem' 
+
+    class_option :user_name, :desc => "the user's name, credited in the LICENSE", :type => :string
+    class_option :user_email, :desc => "the user's email, ie that is credited in the Gem specification"
+
+    class_option :testing_framework, :type => :string, :default => 'shoulda', :desc => 'specify the testing framework to generate'
+    class_option :documentation_framework, :type => :string, :default => 'rdoc' 
+
+    class_option :reek, :type => :boolean
+    class_option :roodi, :type => :boolean
+    class_option :cucumber, :type => :boolean
 
     def initialize(args = [], opts = {}, config = {})
+      # next section yanked from Thor::Base, because apparently Thor::Group will pass in opts as an array
+      parse_options = self.class.class_options
+      array_options = hash_opts = nil
+      if opts.is_a?(Array)
+        task_options  = config.delete(:task_options) # hook for start
+        parse_options = parse_options.merge(task_options) if task_options
+        array_options, hash_options = opts, {}
+      else
+        array_options, hash_options = [], opts
+      end
+      opts = Thor::Options.parse(parse_options, array_options).dup
+
+      opts[:testing_framework]       ||= :shoulda
+      opts[:documentation_framework] ||= :rdoc
+
+      git_config = Git.global_config
+      opts[:user_name]       ||= git_config['user.name']
+      opts[:user_email]      ||= git_config['user.email']
+      opts[:github_username] ||= git_config['github.user']
+      opts[:github_token]    ||= git_config['github.token']
+
       super
 
-      self.destination_root         = Pathname.new(options[:directory] || self.project_name).expand_path
+
+
+      self.destination_root         = Pathname.new(directory).expand_path
+
+      self.project_name = Pathname.new(self.destination_root).basename.to_s
       self.summary      = options[:summary] || 'TODO: one-line summary of your gem'
       self.description  = options[:description] || 'TODO: longer description of your gem'
       self.user_name    = options[:user_name]
@@ -86,14 +122,14 @@ class Jeweler
       plugins << self.testing_framework_base
       plugins << documentation_framework_base
       plugins << Cucumber.new(self, testing_framework_base) if options[:cucumber]
-      plugins << Reek.new(self) if options[:use_reek]
-      plugins << Roodi.new(self) if options[:use_roodi]
+      plugins << Reek.new(self) if options[:reek]
+      plugins << Roodi.new(self) if options[:roodi]
       plugins << GitVcs.new(self)
 
       extend GithubMixin
     end
 
-    def run
+    def generate
       plugins.each do |plugin|
         plugin.run
       end
@@ -119,29 +155,30 @@ class Jeweler
       def file_name_prefix
         self.project_name.gsub('-', '_')
       end
-    end
 
-    def rakefile_head_snippet_plugins
-      plugins.select {|plugin| plugin.rakefile_head_snippet }
-    end
+      def rakefile_head_snippet_plugins
+        plugins.select {|plugin| plugin.rakefile_head_snippet }
+      end
 
-    def rakefile_snippet_plugins
-      plugins.reject {|plugin| plugin.rakefile_snippets.empty? }
-    end
+      def rakefile_snippet_plugins
+        plugins.reject {|plugin| plugin.rakefile_snippets.empty? }
+      end
 
-    def jeweler_task_snippet_plugins
-      plugins.select {|plugin| plugin.jeweler_task_snippet }
-    end
+      def jeweler_task_snippet_plugins
+        plugins.select {|plugin| plugin.jeweler_task_snippet }
+      end
 
-    def plugins_with_development_dependencies
-      plugins.reject {|plugin| plugin.development_dependencies.empty? }
-    end
+      def plugins_with_development_dependencies
+        plugins.reject {|plugin| plugin.development_dependencies.empty? }
+      end
 
-    def development_dependencies
-      plugins_with_development_dependencies.inject([]) do |acc, plugin|
-        acc.concat(plugin.development_dependencies)
+      def development_dependencies
+        plugins_with_development_dependencies.inject([]) do |acc, plugin|
+          acc.concat(plugin.development_dependencies)
+        end
       end
     end
+
 
   private
 

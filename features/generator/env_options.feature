@@ -4,6 +4,6 @@ Feature: Getting options from environment variable
 
   Scenario: Environment variable set
     Given a working directory
-    And I set JEWELER_OPTS env variable to "--rspec"
+    And I set JEWELER_OPTS env variable to "--testing-framework=rspec"
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'spec/the-perfect-gem_spec.rb' should describe 'ThePerfectGem'

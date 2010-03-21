@@ -69,7 +69,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
   end
 
 
-  arguments = ['--directory',
+  arguments = [
                "#{@working_dir}/#{@name}",
                '--summary', @summary,
                '--description', @description,
@@ -77,9 +77,10 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @testing_framework ? "--testing-framework=#{@testing_framework}" : nil,
                 @use_roodi ? '--roodi' : nil,
                 @use_reek ? '--reek' : nil,
-                @documentation_framework ? "--#{@documentation_framework}" : nil,
-                @name].compact
+                @documentation_framework ? "--documentation-framework=#{@documentation_framework}" : nil
+              ].compact
 
+              #puts "running jeweler #{arguments.join(' ')}"
   @stdout = OutputCatcher.catch_out do
     Jeweler::Generator::Application.run! *arguments
   end
