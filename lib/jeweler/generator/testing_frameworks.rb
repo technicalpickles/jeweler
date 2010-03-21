@@ -1,6 +1,9 @@
 class Jeweler
   class Generator
     module TestingFramework
+      Generator.class_option :testing_framework, :type => :string, :default => 'shoulda',
+        :desc => 'the testing framework to generate'
+
       require 'jeweler/generator/testing_frameworks/base'
       require 'jeweler/generator/testing_frameworks/testunitish'
       require 'jeweler/generator/testing_frameworks/bacon'

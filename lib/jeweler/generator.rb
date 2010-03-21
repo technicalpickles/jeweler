@@ -70,8 +70,6 @@ class Jeweler
     class_option :user_email, :type => :string,
       :desc => "the user's email, ie that is credited in the Gem specification"
 
-    class_option :testing_framework, :type => :string, :default => 'shoulda',
-      :desc => 'the testing framework to generate'
     class_option :documentation_framework, :type => :string, :default => 'rdoc',
       :desc => 'documentation framework to generate'
 
