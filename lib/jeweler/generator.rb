@@ -70,9 +70,6 @@ class Jeweler
     class_option :user_email, :type => :string,
       :desc => "the user's email, ie that is credited in the Gem specification"
 
-    class_option :documentation_framework, :type => :string, :default => 'rdoc',
-      :desc => 'documentation framework to generate'
-
     class_option :git_remote, :type => :string,
       :desc => 'URI to use for git origin remote'
     class_option :create_repo, :type => :boolean, :default => false,
@@ -114,7 +111,7 @@ class Jeweler
 
       self.plugins                  = []
 
-      self.testing_framework_base = TestingFramework.determine_class(options[:testing_framework]).new(self)
+      self.testing_framework_base = TestingFramework.klass(options[:testing_framework]).new(self)
       documentation_framework_base = DocumentationFrameworks.klass(options[:documentation_framework]).new(self)
 
       plugins << Bundler.new(self)

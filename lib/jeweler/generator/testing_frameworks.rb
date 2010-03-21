@@ -16,7 +16,7 @@ class Jeweler
       require 'jeweler/generator/testing_frameworks/riot'
       require 'jeweler/generator/testing_frameworks/shindo'
   
-      def self.determine_class(testing_framework)
+      def self.klass(testing_framework)
         testing_framework_class_name = testing_framework.to_s.capitalize
         if TestingFrameworks.const_defined?(testing_framework_class_name)
           TestingFrameworks.const_get(testing_framework_class_name)
