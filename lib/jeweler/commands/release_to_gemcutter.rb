@@ -21,7 +21,6 @@ class Jeweler
         command.output         = jeweler.output
         command
       end
-      
     end
   end
 end

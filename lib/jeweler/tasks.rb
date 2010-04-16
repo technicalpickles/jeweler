@@ -186,9 +186,7 @@ class Jeweler
         task :development do
           jeweler.check_dependencies(:development)
         end
-
       end
-      
     end
   end
 end

@@ -1,7 +1,5 @@
 class Jeweler
-
   class GemSpecHelper
-
     attr_accessor :spec, :base_dir
 
     def initialize(spec, base_dir = nil)
@@ -21,7 +19,6 @@ class Jeweler
     end
 
     def write
-
       File.open(path, 'w') do |f|
         f.write self.to_ruby
       end 
@@ -88,6 +85,5 @@ class Jeweler
     def has_version?
       !@spec.version.nil?
     end
-
   end
 end

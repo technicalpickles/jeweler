@@ -7,6 +7,5 @@ class Jeweler
     def initialize
       $stderr.puts "DEPRECATION: gemcutter tasks are now part of Jeweler::Tasks. Please remove Jeweler::GemcutterTasks at #{caller[1]}"
     end
-
   end
 end

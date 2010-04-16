@@ -9,7 +9,6 @@ class Jeweler
   # [extra_rdoc_files] a Rake::FileList including files like README*, ChangeLog*, and LICENSE*
   # [executables] uses anything found in the bin/ directory.
   module Specification
-
     def self.filelist_attribute(name)
       code = %{
         def #{name}
@@ -94,8 +93,7 @@ class Jeweler
       end
     end
 
-
-    private
+  private
 
     def blank?(value)
       value.nil? || value.empty?

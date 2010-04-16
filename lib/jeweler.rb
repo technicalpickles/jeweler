@@ -138,7 +138,7 @@ class Jeweler
   end
 
   def setup_rubyforge
-    # no-op...
+    # no-op
   end
 
   def check_dependencies(type = nil)
@@ -172,4 +172,3 @@ class Jeweler
   end
 
 end
-

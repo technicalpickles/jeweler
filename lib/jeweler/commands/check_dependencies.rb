@@ -27,7 +27,6 @@ class Jeweler
           
           abort "Run the specified gem commands before trying to run this again: #{$0} #{ARGV.join(' ')}"
         end
-        
       end
 
       def dependencies
@@ -37,7 +36,6 @@ class Jeweler
         else
           gemspec.dependencies
         end
-        
       end
 
       def self.build_for(jeweler)

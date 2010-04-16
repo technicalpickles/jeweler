@@ -132,6 +132,5 @@ class Jeweler
       absolute_path = File.expand_path(denormalized_path)
       absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
     end
-
   end
 end

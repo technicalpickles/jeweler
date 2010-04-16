@@ -162,6 +162,7 @@ class Jeweler
     end
 
   private
+
     def create_files
       unless File.exists?(target_dir) || File.directory?(target_dir)
         FileUtils.mkdir target_dir
@@ -203,7 +204,6 @@ class Jeweler
         mkdir_in_target           features_steps_dir
         touch_in_target           File.join(features_steps_dir, steps_filename)
       end
-
     end
 
     def render_template(source)

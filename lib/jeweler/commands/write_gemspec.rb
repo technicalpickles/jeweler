@@ -35,7 +35,6 @@ class Jeweler
 
         command
       end
-
     end
   end
 end

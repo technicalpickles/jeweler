@@ -29,7 +29,6 @@ class Jeweler
     attr_accessor :jeweler
 
     def initialize
-
       yield self if block_given?
 
       define
@@ -49,7 +48,6 @@ class Jeweler
 
     def define
       namespace :rubyforge do
-
         namespace :release do
           desc "Pretend to release the current gem version to RubyForge, but actually release to Gemcutter."
           task :gem => 'gemcutter:release'
@@ -75,7 +73,6 @@ class Jeweler
             end
           end
         end
-
 
         if publish_documentation?
           desc "Release RDoc documentation to RubyForge"
