@@ -187,6 +187,17 @@ class Jeweler
           jeweler.check_dependencies(:development)
         end
       end
+
+      desc "Start IRB with all runtime dependencies loaded"
+      task :console do
+        dirs = ['lib']
+        dirs.unshift('ext') if File.directory?('ext')
+
+        irb_args = dirs.map { |dir| "-I#{dir}" }
+
+        sh('bundle', 'exec', 'irb', *irb_args)
+      end
+      
     end
   end
 end
