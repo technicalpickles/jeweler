@@ -193,14 +193,14 @@ class Jeweler
         dirs = ['lib']
         dirs.unshift('ext') if File.directory?('ext')
 
-        args = dirs.map { |dir| "-I#{dir}" }
         cmd = if File.exist?('Gemfile')
                 ['bundle', 'exec', 'irb']
               else
                 ['irb']
               end
+        cmd += dirs.map { |dir| "-I#{dir}" }
 
-        sh(*cmd, *args)
+        sh(*cmd)
       end
       
     end
