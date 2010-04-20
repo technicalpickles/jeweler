@@ -63,9 +63,16 @@ class Jeweler
     def define
       task :version_required do
         if jeweler.expects_version_file? && !jeweler.version_file_exists?
-          abort "Expected VERSION or VERSION.yml to exist. See version:write to create an initial one."
+          abort "Expected VERSION or VERSION.yml to exist. Use 'rake version:write' to create an initial one."
         end
       end
+
+      task :gemspec_required do
+        if ! File.exist?(jeweler.gemspec_helper.path)
+          abort "Expected #{jeweler.gemspec_helper.path} to exist. See 'rake gemspec:write' to create it"
+        end
+      end
+      
 
       desc "Build gem"
       task :build do
@@ -82,7 +89,7 @@ class Jeweler
 
       namespace :gemspec do
         desc "Validates the gemspec"
-        task :validate => :version_required do
+        task :validate => :gemspec_required do
           jeweler.validate_gemspec
         end
 
