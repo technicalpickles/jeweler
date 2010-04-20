@@ -68,7 +68,6 @@ class Jeweler
         end
 
         self.has_rdoc = true
-        rdoc_options << '--charset=UTF-8'
 
         if blank?(extra_rdoc_files)
           self.extra_rdoc_files = FileList['README*', 'ChangeLog*', 'LICENSE*', 'TODO']
