@@ -29,7 +29,7 @@ class Jeweler
 
     def to_ruby
       normalize_files(:files)
-      normalize_files(:files)
+      normalize_files(:test_files)
       normalize_files(:extra_rdoc_files)
 
       gemspec_ruby = @spec.to_ruby
