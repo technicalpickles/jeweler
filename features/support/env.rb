@@ -11,6 +11,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'jeweler'
 require 'mocha'
 require 'output_catcher'
+require 'timecop'
 
 require 'test/unit/assertions'
 World(Test::Unit::Assertions)
@@ -32,4 +33,8 @@ end
 
 def fixture_dir
   File.expand_path File.join(File.dirname(__FILE__), '..', '..', 'test', 'fixtures')
+end
+
+After do
+  Timecop.return
 end

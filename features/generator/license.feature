@@ -3,9 +3,18 @@ Feature: generated license
   A user should be able to
   generate a default license
 
-  Scenario: copyright
+  Background:
     Given a working directory
+
+  Scenario: crediting user
+    Given I have configured git sanely
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+
+    Then LICENSE credits 'foo'
+
+  Scenario: copyright in the current year
+    Given it is the year 2005
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then LICENSE has the copyright as belonging to 'foo' in '2009'
+    Then LICENSE has a copyright in the year 2005

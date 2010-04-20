@@ -161,15 +161,24 @@ Then /^'(.*)' mentions copyright belonging to me in the current year$/ do |file|
 end
 
 
-Then /^LICENSE has the copyright as belonging to '(.*)' in '(\d{4})'$/ do |copyright_holder, year|
+Then /^LICENSE credits '(.*)'$/ do |copyright_holder|
   Then "a file named 'the-perfect-gem/LICENSE' is created"
-
   @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
-
   assert_match copyright_holder, @license_content
+end
 
+Given /^it is the year (\d+)$/ do |year|
+  time = Time.local(2005, 9, 1, 10, 5, 0)
+  Timecop.travel(time)
+end
+
+
+Then /^LICENSE has a copyright in the year (\d+)$/ do |year|
+  Then "a file named 'the-perfect-gem/LICENSE' is created"
+  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
   assert_match year, @license_content
 end
+
 
 Then /^'(.*)' should define '(.*)' as a subclass of '(.*)'$/ do |file, class_name, superclass_name|
   @test_content = File.read((File.join(@working_dir, @name, file)))

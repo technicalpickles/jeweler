@@ -18,4 +18,5 @@ group :development do
   gem "yard"
   gem "cucumber"
   gem "rcov"
+  gem "timecop"
 end
