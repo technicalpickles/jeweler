@@ -49,7 +49,7 @@ class Jeweler
     module PlaintextExtension
       def write
         File.open(plaintext_path, 'w') do |file|
-          file.puts to_s
+          file.write to_s
         end
       end
 
