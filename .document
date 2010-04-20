@@ -1,11 +1,14 @@
 # .document is used by rdoc and yard to know how to generate documentation 
 # for example, it can be used to control how rdoc gets built when you do `gem install foo`
 
-README.rdoc
-lib/**/*.rb
+lib/jeweler.rb
+lib/jeweler/*.rb
+lib/jeweler/commands/*.rb
+lib/jeweler/generator/*.rb
 bin/*
 
-# Files below this - are treated as 'extra files', and aren't parsed for ruby code
-- 
+# Files below the line with - are treated as 'extra files', and aren't parsed for ruby code
+-
+README.markdown
 features/**/*.feature
 LICENSE
