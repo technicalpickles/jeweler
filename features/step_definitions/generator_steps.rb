@@ -168,7 +168,7 @@ Then /^LICENSE credits '(.*)'$/ do |copyright_holder|
 end
 
 Given /^it is the year (\d+)$/ do |year|
-  time = Time.local(2005, 9, 1, 10, 5, 0)
+  time = Time.local(year.to_i, 9, 1, 10, 5, 0)
   Timecop.travel(time)
 end
 
