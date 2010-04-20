@@ -4,6 +4,7 @@ require 'erb'
 require 'net/http'
 require 'uri'
 
+require 'fileutils'
 
 class Jeweler
   class NoGitUserName < StandardError
