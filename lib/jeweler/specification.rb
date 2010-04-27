@@ -1,3 +1,4 @@
+
 require 'rubygems/specification'
 
 class Jeweler
@@ -48,7 +49,7 @@ class Jeweler
         if blank?(files) && repo
           base_dir_with_trailing_separator = File.join(base_dir, "")
 
-          self.files = (repo.ls_files(base_dir).keys - repo.lib.ignored_files).map do |file|
+          self.files = (repo.ls_files(base_dir).keys - repo.lib.ignored_files).compact.map do |file|
             File.expand_path(file).sub(base_dir_with_trailing_separator, "")
           end
         end
