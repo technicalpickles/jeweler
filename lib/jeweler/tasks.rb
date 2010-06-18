@@ -189,7 +189,7 @@ class Jeweler
       end
 
       desc "Start IRB with all runtime dependencies loaded"
-      task :console do
+      task :console, [:script], do |t,args|
         dirs = ['ext', 'lib']
         dirs.select! { |dir| File.directory?(dir) }
 
@@ -207,6 +207,9 @@ class Jeweler
         ARGV.clear
 
         require 'irb'
+
+        # set the optional script to run
+        IRB.conf[:SCRIPT] = args.script
         IRB.start
 
         # return the $LOAD_PATH to it's original state
