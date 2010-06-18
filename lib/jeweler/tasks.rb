@@ -190,17 +190,27 @@ class Jeweler
 
       desc "Start IRB with all runtime dependencies loaded"
       task :console do
-        dirs = ['lib']
-        dirs.unshift('ext') if File.directory?('ext')
+        dirs = ['ext', 'lib']
+        dirs.select! { |dir| File.directory?(dir) }
+
+        original_load_path = $LOAD_PATH
 
         cmd = if File.exist?('Gemfile')
-                ['bundle', 'exec', 'irb']
-              else
-                ['irb']
+                require 'bundler'
+                Bundler.setup(:runtime)
               end
-        cmd += dirs.map { |dir| "-I#{dir}" }
 
-        sh(*cmd)
+        # add the project code directories
+        $LOAD_PATH.unshift(*dirs)
+
+        # clear ARGV so IRB is not confused
+        ARGV.clear
+
+        require 'irb'
+        IRB.start
+
+        # return the $LOAD_PATH to it's original state
+        $LOAD_PATH.select! { |path| original_load_path.include?(path) }
       end
       
     end
