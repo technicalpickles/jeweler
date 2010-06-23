@@ -46,7 +46,7 @@ class Jeweler
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
-                  :should_use_cucumber, :should_setup_gemcutter,
+                  :should_use_cucumber,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
                   :options,
@@ -86,7 +86,6 @@ class Jeweler
       self.should_use_cucumber    = options[:use_cucumber]
       self.should_use_reek        = options[:use_reek]
       self.should_use_roodi       = options[:use_roodi]
-      self.should_setup_gemcutter = options[:gemcutter]
       self.should_setup_rubyforge = options[:rubyforge]
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber

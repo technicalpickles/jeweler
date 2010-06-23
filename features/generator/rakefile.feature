@@ -18,11 +18,10 @@ Feature: generated Rakefile
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
+    And Rakefile instantiates a Jeweler::GemcutterTasks
 
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
-
-
     Then 'Rakefile' requires 'rcov/rcovtask'
     And Rakefile has 'spec/**/*_spec.rb' for the Rake::TestTask pattern
     And Rakefile has 'spec/**/*_spec.rb' for the Rcov::RcovTask pattern
