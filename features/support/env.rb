@@ -12,7 +12,7 @@ require 'jeweler'
 require 'mocha'
 require 'output_catcher'
 require 'timecop'
-require 'activesupport'
+require 'active_support'
 
 require 'test/unit/assertions'
 World(Test::Unit::Assertions)
