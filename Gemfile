@@ -19,4 +19,5 @@ group :development do
   gem "cucumber"
   gem "rcov"
   gem "timecop"
+  gem "activesupport", "~> 2.3.5"
 end
