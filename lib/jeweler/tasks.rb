@@ -162,15 +162,6 @@ class Jeweler
 
       task :release => 'git:release'
 
-      namespace :gemcutter do
-        desc "Release gem to Gemcutter"
-        task :release => [:gemspec, :build] do
-          jeweler.release_gem_to_gemcutter
-        end
-      end
-
-      task :release => 'gemcutter:release'
-
       desc "Check that runtime and development dependencies are installed" 
       task :check_dependencies do
         jeweler.check_dependencies
