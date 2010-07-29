@@ -17,9 +17,11 @@ class Jeweler
     def initialize
       yield self if block_given?
 
-      self.jeweler = Rake.application.jeweler
-
       define
+    end
+
+    def jeweler
+      @jeweler ||= Rake.application.jeweler
     end
 
     def define
