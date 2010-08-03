@@ -1,9 +1,9 @@
 <% case testing_framework %>
 <% when :rspec %>
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:<%= test_task %>) do |<%= test_task %>|
-  <%= test_task %>.libs << 'lib' << '<%= test_dir %>'
-  <%= test_task %>.spec_files = FileList['<%= test_pattern %>']
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:<%= test_task %>) do |<%= test_task %>|
+  <%= test_task %>.pattern = FileList['<%= test_pattern %>']
 end
 <% when :micronaut %>
 require 'micronaut/rake_task'
@@ -25,8 +25,7 @@ end
 
 <% case testing_framework %>
 <% when :rspec %>
-Spec::Rake::SpecTask.new(:rcov) do |spec|
-  spec.libs << 'lib' << 'spec'
+RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.pattern = '<%= test_pattern %>'
   spec.rcov = true
 end

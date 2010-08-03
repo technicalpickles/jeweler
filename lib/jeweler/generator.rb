@@ -189,8 +189,8 @@ class Jeweler
 
 
       if testing_framework == :rspec
-        output_template_in_target File.join(testing_framework.to_s, 'spec.opts'),
-                                  File.join(test_dir, 'spec.opts')
+        output_template_in_target File.join(testing_framework.to_s, '.rspec'),
+                                  File.join(test_dir, '.rspec')
 
       end
 
