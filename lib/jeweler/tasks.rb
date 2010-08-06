@@ -189,7 +189,7 @@ class Jeweler
       end
 
       desc "Start IRB with all runtime dependencies loaded"
-      task :console, [:script], do |t,args|
+      task :console, [:script] do |t,args|
         dirs = ['ext', 'lib']
         dirs.select! { |dir| File.directory?(dir) }
 
