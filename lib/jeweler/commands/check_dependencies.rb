@@ -10,7 +10,7 @@ class Jeweler
       def run
         missing_dependencies = dependencies.select do |dependency|
           begin
-            Gem.activate dependency.name, dependency.version_requirements.to_s
+            Gem.activate dependency.name, dependency.requirements.to_s
             false
           rescue LoadError => e
             true
@@ -22,9 +22,9 @@ class Jeweler
         else
           puts "Missing some dependencies. Install them with the following commands:"
           missing_dependencies.each do |dependency|
-            puts %Q{\tgem install #{dependency.name} --version "#{dependency.version_requirements}"}
+            puts %Q{\tgem install #{dependency.name} --version "#{dependency.requirements.to_s}"}
           end
-          
+
           abort "Run the specified gem commands before trying to run this again: #{$0} #{ARGV.join(' ')}"
         end
       end
