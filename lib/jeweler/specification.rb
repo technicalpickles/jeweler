@@ -75,10 +75,10 @@ class Jeweler
           require 'bundler'
           bundler = Bundler.load
           bundler.dependencies_for(:runtime).each do |dependency|
-            self.add_dependency dependency.name, dependency.version_requirements.to_s
+            self.add_dependency dependency.name, dependency.requirement.to_s
           end
           bundler.dependencies_for(:development).each do |dependency|
-            self.add_development_dependency dependency.name, dependency.version_requirements.to_s
+            self.add_development_dependency dependency.name, dependency.requirement.to_s
           end
         end
       end
