@@ -12,6 +12,7 @@ require 'jeweler'
 require 'mocha'
 require 'output_catcher'
 require 'timecop'
+require 'ruby-debug'
 require 'active_support'
 
 require 'test/unit/assertions'

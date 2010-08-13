@@ -20,4 +20,5 @@ group :development do
   gem "rcov"
   gem "timecop"
   gem "activesupport", "~> 2.3.5"
+  gem "ruby-debug"
 end

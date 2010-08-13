@@ -103,6 +103,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @documentation_framework ? "--#{@documentation_framework}" : nil,
                 @name].compact
 
+
   @stdout = OutputCatcher.catch_out do
     Jeweler::Generator::Application.run! *arguments
   end

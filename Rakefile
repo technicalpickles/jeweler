@@ -44,7 +44,6 @@ namespace :test do
     gemspec = Rake.application.jeweler.gemspec
     dupped_gemspec = gemspec.dup
     cloned_gemspec = gemspec.clone
-    #require 'ruby-debug';breakpoint
     puts gemspec.to_ruby
     puts dupped_gemspec.to_ruby
   end

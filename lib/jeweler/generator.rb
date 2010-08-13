@@ -88,7 +88,6 @@ class Jeweler
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
       self.should_use_bundler     = options[:use_bundler]
-      #debugger
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
