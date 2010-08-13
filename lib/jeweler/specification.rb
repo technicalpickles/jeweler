@@ -41,10 +41,10 @@ class Jeweler
       can_git = git_base_dir && base_dir.include?(git_base_dir) && File.directory?(File.join(git_base_dir, '.git'))
 
       Dir.chdir(git_base_dir) do
-        if can_git
-          require 'git'
-          repo = Git.open(git_base_dir) if can_git
-        end
+        repo = if can_git
+                 require 'git'
+                 Git.open(git_base_dir)
+               end
 
         if blank?(files) && repo
           base_dir_with_trailing_separator = File.join(base_dir, "")
