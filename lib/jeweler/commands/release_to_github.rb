@@ -14,7 +14,10 @@ class Jeweler
       end
 
       def run
-        raise "Hey buddy, try committing them files first" unless clean_staging_area?
+        unless clean_staging_area?
+          system "git status"
+          raise "Unclean staging area! Be sure to commit or .gitignore everything first." 
+        end
 
         repo.checkout('master')
 
@@ -26,8 +29,8 @@ class Jeweler
       end
 
       def clean_staging_area?
-        status = repo.status
-        status.added.empty? && status.deleted.empty? && status.changed.empty?
+        # surprisingly simpler than ruby-git
+        `git ls-files --deleted --modified --others --exclude-standard` == ""
       end
 
       def commit_gemspec!
@@ -43,9 +46,8 @@ class Jeweler
       end
 
       def gemspec_changed?
-        `git status` # OMGHAX. status always ends up being 'M' unless this runs
-        status = repo.status[working_subdir.join(gemspec_helper.path).to_s]
-        ! status.type.nil?
+        # OMGHAX. ruby-git status always ends up being 'M', so let's do it a crazy way
+        system "git status -s #{working_subdir.join(gemspec_helper.path)} | grep  #{working_subdir.join(gemspec_helper.path)} > /dev/null 2>/dev/null"
       end
 
       def gemspec_helper

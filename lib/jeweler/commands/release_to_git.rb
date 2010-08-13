@@ -12,7 +12,10 @@ class Jeweler
       end
 
       def run
-        raise "Hey buddy, try committing them files first" unless clean_staging_area?
+        unless clean_staging_area?
+          system "git status"
+          raise "Unclean staging area! Be sure to commit or .gitignore everything first." 
+        end
 
         repo.checkout('master')
         repo.push
@@ -27,8 +30,7 @@ class Jeweler
       end
 
       def clean_staging_area?
-        status = repo.status
-        status.added.empty? && status.deleted.empty? && status.changed.empty?
+        `git ls-files --deleted --modified --others --exclude-standard` == ""
       end
 
       def release_tag
