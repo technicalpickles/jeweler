@@ -92,7 +92,7 @@ class Jeweler
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
       # TODO make bundler optional?
-      development_dependencies << ["bundler", ">= 0.9.5"]
+      development_dependencies << ["bundler", ">= 1.0.0.rc.5"]
       development_dependencies << ["jeweler", ">= 1.4.0"]
       development_dependencies << ["rcov", ">= 0"]
 

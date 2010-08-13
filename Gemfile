@@ -4,7 +4,7 @@ source 'http://gems.github.com'
 group :runtime do
   gem "rake"
   gem "git", ">= 1.2.5"
-  gem "bundler", ">= 0.9.5"
+  gem "bundler", ">= 1.0.0.rc.5"
 end
 
 group :development do
