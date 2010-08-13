@@ -46,7 +46,7 @@ class Jeweler
                   :description, :project_name, :github_username, :github_token,
                   :repo, :should_create_remote_repo, 
                   :testing_framework, :documentation_framework,
-                  :should_use_cucumber,
+                  :should_use_cucumber, :should_use_bundler,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
                   :options,
@@ -87,6 +87,8 @@ class Jeweler
       self.should_use_reek        = options[:use_reek]
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
+      self.should_use_bundler     = options[:use_bundler]
+      #debugger
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
@@ -172,7 +174,7 @@ class Jeweler
 
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
-      output_template_in_target 'Gemfile'
+      output_template_in_target 'Gemfile' if should_use_bundler
       output_template_in_target 'LICENSE'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'

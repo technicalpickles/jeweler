@@ -10,6 +10,7 @@ class Jeweler
         @orig_args = args.clone
         self[:testing_framework]       = :shoulda
         self[:documentation_framework] = :rdoc
+        self[:use_bundler]             = true
 
         git_config = Git.global_config
         self[:user_name]       = git_config['user.name']
@@ -64,6 +65,10 @@ class Jeweler
           end
 
           o.separator ""
+
+          o.on('--[no-]bundler', 'use bundler for managing dependencies') do |v|
+            self[:use_bundler] = v
+          end
 
           o.on('--cucumber', 'generate cucumber stories in addition to the other tests') do
             self[:use_cucumber] = true

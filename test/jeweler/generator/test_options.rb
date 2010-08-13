@@ -58,6 +58,10 @@ class TestOptions < Test::Unit::TestCase
     should "use user email from git config" do
       assert_equal @git_email, @options[:user_email]
     end
+
+    should "use bundler" do
+      assert @options[:use_bundler]
+    end
   end
 
   for_options "--bacon" do
@@ -189,6 +193,18 @@ class TestOptions < Test::Unit::TestCase
   for_options '--github-token', 'mygithubtoken' do
     should "set github token" do
       assert_equal 'mygithubtoken', @options[:github_token]
+    end
+  end
+
+  for_options '--bundler' do
+    should "use bundler" do
+      assert @options[:use_bundler]
+    end
+  end
+
+  for_options '--no-bundler' do
+    should "not use bundler" do
+      assert !@options[:use_bundler]
     end
   end
 

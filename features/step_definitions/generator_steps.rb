@@ -14,6 +14,15 @@ Given /^I want reek$/ do
   @use_reek = true
 end
 
+Given /^I do not want bundler$/ do
+  @use_bundler = false
+end
+
+
+Given /^I want bundler$/ do
+  @use_bundler = true
+end
+
 Given /^I do not want roodi$/ do
   @use_roodi = false
 end
@@ -86,6 +95,11 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @use_rubyforge ? '--rubyforge' : nil,
                 @use_roodi ? '--roodi' : nil,
                 @use_reek ? '--reek' : nil,
+                case @use_bundler
+                when true then '--bundler'
+                when false then '--no-bundler'
+                else nil
+                end,
                 @documentation_framework ? "--#{@documentation_framework}" : nil,
                 @name].compact
 
@@ -311,3 +325,4 @@ Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
 
   assert_match name, group_block
 end
+

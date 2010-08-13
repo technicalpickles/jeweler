@@ -7,9 +7,20 @@ Feature: generated Gemfiel
     Given a working directory
     And I have configured git sanely
 
+  Scenario: disabled
+    Given I do not want bundler
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    Then a file named 'Gemfile' is not created
+
+  Scenario: enabled
+    Given I want bundler
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    Then a file named 'Gemfile' is created
+
   Scenario: default
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'Gemfile' has a development dependency on 'bundler'
+    Then a file named 'Gemfile' is created
+    And 'Gemfile' has a development dependency on 'bundler'
     And 'Gemfile' has a development dependency on 'jeweler'
     And 'Gemfile' has a development dependency on 'rcov'
 
