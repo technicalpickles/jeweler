@@ -71,11 +71,6 @@ class Jeweler
         if blank?(extra_rdoc_files)
           self.extra_rdoc_files = FileList['README*', 'ChangeLog*', 'LICENSE*', 'TODO']
         end
-
-        if File.exist?('Gemfile')
-          require 'bundler'
-          self.add_bundler_dependencies
-        end
       end
     end
 
