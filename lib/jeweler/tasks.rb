@@ -181,8 +181,7 @@ class Jeweler
 
       desc "Start IRB with all runtime dependencies loaded"
       task :console, [:script] do |t,args|
-        dirs = ['ext', 'lib']
-        dirs.select! { |dir| File.directory?(dir) }
+        dirs = ['ext', 'lib'].select { |dir| File.directory?(dir) }
 
         original_load_path = $LOAD_PATH
 
@@ -204,7 +203,7 @@ class Jeweler
         IRB.start
 
         # return the $LOAD_PATH to it's original state
-        $LOAD_PATH.select! { |path| original_load_path.include?(path) }
+        $LOAD_PATH.reject! { |path| !(original_load_path.include?(path)) }
       end
       
     end
