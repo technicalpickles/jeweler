@@ -1,14 +1,5 @@
 require 'rubygems'
-<% if should_use_bundler %>
-require 'bundler'
-begin
-  Bundler.setup(:default, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
-<% end %>
+<%= render_template 'bundler_setup.erb' %>
 require 'rake'
 
 <%= render_template 'jeweler_tasks.erb' %>

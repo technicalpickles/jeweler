@@ -1,4 +1,5 @@
 require 'rubygems'
+<%= render_template 'bundler_setup.erb' %>
 require 'micronaut'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))

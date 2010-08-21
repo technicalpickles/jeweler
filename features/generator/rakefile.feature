@@ -11,6 +11,7 @@ Feature: generated Rakefile
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
 
     Then 'Rakefile' requires 'bundler'
+    And 'Rakefile' sets up bundler using the default and development groups
     And 'Rakefile' requires 'rubygems'
     And 'Rakefile' requires 'rake'
     And 'Rakefile' requires 'rake/rdoctask'
@@ -143,8 +144,10 @@ Feature: generated Rakefile
     Given I want bundler
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' requires 'bundler'
+    And 'Rakefile' sets up bundler using the default and development groups
 
   Scenario: no bundler
     Given I do not want bundler
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' does not require 'bundler'
+    And 'Rakefile' does not setup bundler

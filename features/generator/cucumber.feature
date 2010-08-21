@@ -25,7 +25,27 @@ Feature: generating cucumber stories
     And a file named 'the-perfect-gem/features/support/env.rb' is created
     And a file named 'the-perfect-gem/features/step_definitions/the-perfect-gem_steps.rb' is created
 
+    And 'features/support/env.rb' requires 'bundler'
+    And 'features/support/env.rb' sets up bundler using the default and development groups
     And 'features/support/env.rb' requires 'the-perfect-gem'
+
+  Scenario: bundler
+    Given a working directory
+    And I want bundler
+    And I have configured git sanely
+    And I want cucumber stories
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    And 'features/support/env.rb' requires 'bundler'
+    And 'features/support/env.rb' sets up bundler using the default and development groups
+
+  Scenario: no bundler
+    Given a working directory
+    And I have configured git sanely
+    And I do not want bundler
+    And I want cucumber stories
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
+    And 'features/support/env.rb' does not require 'bundler'
+    And 'features/support/env.rb' does not setup bundler
 
   Scenario: cucumber setup for bacon
     Given a working directory

@@ -1,13 +1,4 @@
-<% if should_use_bundler %>
-require 'bundler'
-begin
-  Bundler.setup(:runtime, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
-<% end %>
+<%= render_template 'bundler_setup.erb' %>
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require '<%= require_name %>'

@@ -327,3 +327,14 @@ Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
   assert_match name, group_block
 end
 
+Then /^'(.*)' sets up bundler using the default and development groups$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_match "Bundler.setup(:default, :development)", content
+end
+
+Then /^'(.*)' does not setup bundler$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_no_match /Bundler\.setup/, content
+end
