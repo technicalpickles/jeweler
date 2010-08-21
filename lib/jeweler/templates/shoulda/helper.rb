@@ -1,4 +1,5 @@
 require 'rubygems'
+<%= render_template 'bundler_setup.erb' %>
 require 'test/unit'
 require 'shoulda'
 
