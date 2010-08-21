@@ -141,7 +141,7 @@ class TestSpecification < Test::Unit::TestCase
         lib.file 'example.rb'
       end
 
-      repo = Git.init(@project)
+      repo = Git.init(@project.to_s)
       repo.add('.')
       repo.commit('Initial commit')
     end
@@ -181,7 +181,7 @@ class TestSpecification < Test::Unit::TestCase
         lib.file 'example.rb'
       end
 
-      repo = Git.init(@project)
+      repo = Git.init(@project.to_s)
       repo.add('.')
       repo.commit('Initial commit')
 
@@ -207,7 +207,7 @@ class TestSpecification < Test::Unit::TestCase
         end
       end
 
-      repo = Git.init(@project)
+      repo = Git.init(@project.to_s)
       repo.add('.')
       repo.commit('Initial commit')
 
