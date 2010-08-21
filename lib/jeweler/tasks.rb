@@ -187,7 +187,7 @@ class Jeweler
 
         cmd = if File.exist?('Gemfile')
                 require 'bundler'
-                Bundler.setup(:runtime)
+                Bundler.setup(:default)
               end
 
         # add the project code directories
