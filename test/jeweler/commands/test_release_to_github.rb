@@ -45,12 +45,18 @@ class Jeweler
         context "with an unclean staging area" do
           setup do
             stub(@command).clean_staging_area? { false }
+            stub(@command).system
           end
 
           should 'raise error' do
             assert_raises RuntimeError, /try commiting/i do
               @command.run
             end
+          end
+
+          should 'display git status' do
+            @command.run rescue nil
+            assert_received(@command) {|command| command.system("git status") }
           end
         end
 
