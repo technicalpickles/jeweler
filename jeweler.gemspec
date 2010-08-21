@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2010-02-15}
+  s.date = %q{2010-08-18}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
     "TODO"
   ]
   s.files = [
+    ".document",
     ".gitignore",
     "ChangeLog.markdown",
     "Gemfile",
@@ -104,9 +105,9 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/other_tasks.erb",
     "lib/jeweler/templates/riot/flunking.rb",
     "lib/jeweler/templates/riot/helper.rb",
+    "lib/jeweler/templates/rspec/.rspec",
     "lib/jeweler/templates/rspec/flunking.rb",
     "lib/jeweler/templates/rspec/helper.rb",
-    "lib/jeweler/templates/rspec/spec.opts",
     "lib/jeweler/templates/shindo/flunking.rb",
     "lib/jeweler/templates/shindo/helper.rb",
     "lib/jeweler/templates/shoulda/flunking.rb",
@@ -174,14 +175,12 @@ Gem::Specification.new do |s|
     "test/jeweler/test_version_helper.rb",
     "test/shoulda_macros/jeweler_macros.rb",
     "test/test_helper.rb",
-    "test/test_jeweler.rb",
-    "tmp/existing-project-with-version-plaintext/VERSION"
+    "test/test_jeweler.rb"
   ]
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
-  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
+  s.rubygems_version = %q{1.3.6}
+  s.summary = %q{Opinionated tool for creating and managing RubyGem projects}
   s.test_files = [
     "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
     "test/fixtures/existing-project-with-version-constant/lib/existing_project_with_version.rb",
@@ -226,46 +225,52 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<git>, [">= 1.2.5"])
-      s.add_runtime_dependency(%q<gemcutter>, [">= 0.1.0"])
-      s.add_runtime_dependency(%q<bundler>, [">= 0.9.5"])
+      s.add_runtime_dependency(%q<bundler>, [">= 1.0.0.rc.5"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_development_dependency(%q<rr>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<redgreen>, [">= 0"])
-      s.add_development_dependency(%q<devver-construct>, [">= 0"])
+      s.add_development_dependency(%q<test-construct>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<timecop>, [">= 0"])
+      s.add_development_dependency(%q<activesupport>, ["~> 2.3.5"])
+      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
     else
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<git>, [">= 1.2.5"])
-      s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
-      s.add_dependency(%q<bundler>, [">= 0.9.5"])
+      s.add_dependency(%q<bundler>, [">= 1.0.0.rc.5"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
       s.add_dependency(%q<rr>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<redgreen>, [">= 0"])
-      s.add_dependency(%q<devver-construct>, [">= 0"])
+      s.add_dependency(%q<test-construct>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<timecop>, [">= 0"])
+      s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
+      s.add_dependency(%q<ruby-debug>, [">= 0"])
     end
   else
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<git>, [">= 1.2.5"])
-    s.add_dependency(%q<gemcutter>, [">= 0.1.0"])
-    s.add_dependency(%q<bundler>, [">= 0.9.5"])
+    s.add_dependency(%q<bundler>, [">= 1.0.0.rc.5"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<mhennemeyer-output_catcher>, [">= 0"])
     s.add_dependency(%q<rr>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<redgreen>, [">= 0"])
-    s.add_dependency(%q<devver-construct>, [">= 0"])
+    s.add_dependency(%q<test-construct>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<timecop>, [">= 0"])
+    s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
+    s.add_dependency(%q<ruby-debug>, [">= 0"])
   end
 end
 
