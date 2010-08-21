@@ -10,7 +10,8 @@ Feature: generated Rakefile
   Scenario: shared
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
 
-    Then 'Rakefile' requires 'rubygems'
+    Then 'Rakefile' requires 'bundler'
+    And 'Rakefile' requires 'rubygems'
     And 'Rakefile' requires 'rake'
     And 'Rakefile' requires 'rake/rdoctask'
     And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
@@ -136,3 +137,14 @@ Feature: generated Rakefile
     And 'Rakefile' requires 'shindo/rake'
     And Rakefile instantiates a Shindo::Rake.new
     And Rakefile has "tests" as the default task
+
+
+  Scenario: bundler
+    Given I want bundler
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
+    Then 'Rakefile' requires 'bundler'
+
+  Scenario: no bundler
+    Given I do not want bundler
+    When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
+    Then 'Rakefile' does not require 'bundler'

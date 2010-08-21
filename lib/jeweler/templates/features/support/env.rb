@@ -1,3 +1,4 @@
+<% if should_use_bundler %>
 require 'bundler'
 begin
   Bundler.setup(:runtime, :development)
@@ -6,6 +7,7 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+<% end %>
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require '<%= require_name %>'
