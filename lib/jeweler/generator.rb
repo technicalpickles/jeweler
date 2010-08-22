@@ -99,8 +99,8 @@ class Jeweler
       development_dependencies << ["jeweler", "~> #{Jeweler::Version::STRING}"]
       development_dependencies << ["rcov", ">= 0"]
 
-      development_dependencies << ["reek", ">= 0"] if should_use_reek
-      development_dependencies << ["roodi", ">= 0"] if should_use_roodi
+      development_dependencies << ["reek", "~> 1.2.8"] if should_use_reek
+      development_dependencies << ["roodi", "~> 2.1.0"] if should_use_roodi
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]

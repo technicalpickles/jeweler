@@ -50,8 +50,8 @@ Cucumber::Rake::Task.new(:features)
 <% end %>
 
 <% if should_use_reek %>
-require 'reek/adapters/rake_task'
-Reek::RakeTask.new do |t|
+require 'reek/rake/task'
+Reek::Rake::Task.new do |t|
   t.fail_on_error = true
   t.verbose = false
   t.source_files = 'lib/**/*.rb'
