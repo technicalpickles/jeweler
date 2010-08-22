@@ -1,4 +1,3 @@
-
 class Jeweler
   class Generator
     class Options < Hash
@@ -12,7 +11,11 @@ class Jeweler
         self[:documentation_framework] = :rdoc
         self[:use_bundler]             = true
 
-        git_config = Git.global_config
+        git_config =  if Pathname.new("~/.gitconfig").expand_path.exist?
+                        Git.global_config
+                      else
+                        {}
+                      end
         self[:user_name]       = ENV['GIT_AUTHOR_NAME']  || ENV['GIT_COMMITTER_NAME']  || git_config['user.name']
         self[:user_email]      = ENV['GIT_AUTHOR_EMAIL'] || ENV['GIT_COMMITTER_EMAIL'] || git_config['user.email']
         self[:github_username] = git_config['github.user']
