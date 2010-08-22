@@ -98,8 +98,13 @@ class Jeweler
           jeweler.write_gemspec
         end
 
-        desc "Display the gemspec for debugging purposes"
+        desc "Display the gemspec for debugging purposes, as jeweler knows it (not from disk)"
         task :debug do
+          jeweler.gemspec_helper.spec.version ||= begin
+                                                    jeweler.version_helper.refresh
+                                                    jeweler.version_helper.to_s
+                                                  end
+          
           puts jeweler.gemspec_helper.to_ruby
         end
       end
