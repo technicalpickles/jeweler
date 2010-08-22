@@ -1,5 +1,6 @@
 require 'pathname'
 require 'date'
+require 'jeweler/version'
 
 # A Jeweler helps you craft the perfect Rubygem. Give him a gemspec, and he takes care of the rest.
 #
