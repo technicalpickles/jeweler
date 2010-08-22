@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.4.0"
+  s.version = "1.5.0.pre"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2010-08-18}
+  s.date = %q{2010-08-21}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README.markdown",
     "Rakefile",
-    "VERSION.yml",
+    "VERSION",
     "bin/jeweler",
     "features/generator/cucumber.feature",
     "features/generator/directory_layout.feature",
@@ -95,6 +95,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/Rakefile",
     "lib/jeweler/templates/bacon/flunking.rb",
     "lib/jeweler/templates/bacon/helper.rb",
+    "lib/jeweler/templates/bundler_setup.erb",
     "lib/jeweler/templates/features/default.feature",
     "lib/jeweler/templates/features/support/env.rb",
     "lib/jeweler/templates/jeweler_tasks.erb",

@@ -85,6 +85,9 @@ class TestSpecification < Test::Unit::TestCase
         bin.file 'burnination'
         bin.file 'trogdor'
       end
+      repo = Git.init(@project.to_s)
+      repo.add('bin/burnination')
+      repo.commit('Initial commit')
     end
 
     context "and there hasn't been any set on the gemspec" do
@@ -93,8 +96,8 @@ class TestSpecification < Test::Unit::TestCase
         @gemspec.set_jeweler_defaults(@project)
       end
 
-      should "have the executables in the gemspec" do
-        assert_equal %w(burnination trogdor), @gemspec.executables
+      should "have the executables under version control in the gemspec" do
+        assert_equal %w(burnination), @gemspec.executables
       end
     end
     context "and has been previously set executables" do
