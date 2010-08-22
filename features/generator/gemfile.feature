@@ -20,6 +20,7 @@ Feature: generated Gemfiel
   Scenario: default
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
     Then a file named 'the-perfect-gem/Gemfile' is created
+    And 'Gemfile' uses the gemcutter source
     And 'Gemfile' has a development dependency on 'bundler'
     And 'Gemfile' has a development dependency on 'jeweler'
     And 'Gemfile' has a development dependency on 'rcov'

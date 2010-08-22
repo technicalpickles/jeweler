@@ -338,3 +338,10 @@ Then /^'(.*)' does not setup bundler$/ do |file|
 
   assert_no_match /Bundler\.setup/, content
 end
+
+Then /^'Gemfile' uses the (.*) source$/ do |source|
+  content = File.read(File.join(@working_dir, @name, 'Gemfile'))
+
+  assert_match "source :#{source}", content
+end
+
