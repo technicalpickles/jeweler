@@ -22,7 +22,7 @@ Feature: generated Gemfiel
     Then a file named 'the-perfect-gem/Gemfile' is created
     And 'Gemfile' uses the gemcutter source
     And 'Gemfile' has a development dependency on 'bundler'
-    And 'Gemfile' has a development dependency on 'jeweler'
+    And 'Gemfile' has a development dependency on the current version of jeweler
     And 'Gemfile' has a development dependency on 'rcov'
 
   Scenario: bacon

@@ -327,6 +327,14 @@ Then /^'Gemfile' has a (\w+) dependency on '(.*)'$/ do |group, name|
   assert_match name, group_block
 end
 
+Then /^'Gemfile' has a development dependency on the current version of jeweler$/ do
+  @gemfile_content ||= File.read(File.join(@working_dir, @name, 'Gemfile'))
+  group_block = yank_group_info(@gemfile_content, 'development')
+  
+  assert_match %Q{gem "jeweler", "~> #{Jeweler::Version::STRING}"}, group_block
+end
+
+
 Then /^'(.*)' sets up bundler using the default and development groups$/ do |file|
   content = File.read(File.join(@working_dir, @name, file))
 

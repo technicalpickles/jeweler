@@ -7,6 +7,8 @@ require 'uri'
 require 'fileutils'
 require 'pathname'
 
+require 'jeweler/version'
+
 class Jeweler
   class NoGitUserName < StandardError
   end
@@ -94,7 +96,7 @@ class Jeweler
 
       # TODO make bundler optional?
       development_dependencies << ["bundler", ">= 1.0.0.rc.5"]
-      development_dependencies << ["jeweler", ">= 1.4.0"]
+      development_dependencies << ["jeweler", "~> #{Jeweler::Version::STRING}"]
       development_dependencies << ["rcov", ">= 0"]
 
       development_dependencies << ["reek", ">= 0"] if should_use_reek
