@@ -20,6 +20,7 @@ class Jeweler
   autoload :GemSpecHelper,  'jeweler/gemspec_helper'
 
   autoload :Tasks,          'jeweler/tasks'
+  autoload :RubygemsDotOrgTasks,  'jeweler/rubygems_dot_org_tasks'
   autoload :GemcutterTasks, 'jeweler/gemcutter_tasks'
   autoload :RubyforgeTasks, 'jeweler/rubyforge_tasks'
   autoload :Specification,  'jeweler/specification'
@@ -131,8 +132,8 @@ class Jeweler
     Jeweler::Commands::ReleaseToGit.build_for(self).run
   end
 
-  def release_gem_to_gemcutter
-    Jeweler::Commands::ReleaseToGemcutter.build_for(self).run
+  def release_gem_to_rubygems
+    Jeweler::Commands::ReleaseToRubygems.build_for(self).run
   end
 
   def release_gem_to_rubyforge

@@ -1,6 +1,6 @@
 class Jeweler
   module Commands
-    class ReleaseToGemcutter
+    class ReleaseToRubygems
       attr_accessor :gemspec, :version, :output, :gemspec_helper
 
       def initialize
