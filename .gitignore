@@ -1,3 +1,6 @@
+# bundler
+.bundle
+
 # rcov generated
 coverage
 

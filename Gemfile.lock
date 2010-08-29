@@ -1,0 +1,57 @@
+GEM
+  remote: http://gemcutter.org/
+  remote: http://gems.github.com/
+  specs:
+    activesupport (2.3.8)
+    builder (2.1.2)
+    columnize (0.3.1)
+    cucumber (0.8.5)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.1.4)
+      json_pure (~> 1.4.3)
+      term-ansicolor (~> 1.0.4)
+    diff-lcs (1.1.2)
+    gherkin (2.1.5)
+      trollop (~> 1.16.2)
+    git (1.2.5)
+    json_pure (1.4.6)
+    linecache (0.43)
+    mhennemeyer-output_catcher (1.0.1)
+    mocha (0.9.8)
+      rake
+    rake (0.8.7)
+    rcov (0.9.8)
+    redgreen (1.2.2)
+    rr (0.10.11)
+    ruby-debug (0.10.3)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
+      linecache (>= 0.3)
+    shoulda (2.11.3)
+    term-ansicolor (1.0.5)
+    test-construct (1.2.0)
+    timecop (0.3.5)
+    trollop (1.16.2)
+    yard (0.5.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport (~> 2.3.5)
+  bundler (>= 1.0.0.rc.5)
+  cucumber
+  git (>= 1.2.5)
+  mhennemeyer-output_catcher
+  mocha
+  rake
+  rcov
+  redgreen
+  rr
+  ruby-debug
+  shoulda
+  test-construct
+  timecop
+  yard
