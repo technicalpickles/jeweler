@@ -20,7 +20,7 @@ Feature: generated Rakefile
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
-    And Rakefile instantiates a Jeweler::GemcutterTasks
+    And Rakefile instantiates a Jeweler::RubygemsDotOrgsTasks
 
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
@@ -88,14 +88,14 @@ Feature: generated Rakefile
   Scenario: no reek
     Given I do not want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'reek/adapters/rake_task'
-    And Rakefile does not instantiate a Reek::RakeTask
+    Then Rakefile does not require 'reek/rake/task'
+    And Rakefile does not instantiate a Reek::Rake::Task
 
   Scenario: reek
     Given I want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'reek/adapters/rake_task'
-    And Rakefile instantiates a Reek::RakeTask
+    Then Rakefile requires 'reek/rake/task'
+    And Rakefile instantiates a Reek::Rake::Task
 
   Scenario: no roodi
     Given I do not want roodi
