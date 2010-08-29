@@ -1,9 +1,9 @@
-source 'http://gemcutter.org'
-source 'http://gems.github.com'
+source "http://rubygems.org"
+source "http://gems.github.com"
 
 gem "rake"
 gem "git", ">= 1.2.5"
-gem "bundler", ">= 1.0.0.rc.5"
+gem "bundler", "~> 1.0.0"
 
 group :development do
   gem "shoulda"

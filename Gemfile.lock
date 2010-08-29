@@ -41,7 +41,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (~> 2.3.5)
-  bundler (>= 1.0.0.rc.5)
+  bundler (~> 1.0.0)
   cucumber
   git (>= 1.2.5)
   mhennemeyer-output_catcher
