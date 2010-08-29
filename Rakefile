@@ -24,12 +24,7 @@ Jeweler::Tasks.new do |gem|
   # dependencies defined in Gemfile
 end
 
-Jeweler::GemcutterTasks.new
-
-Jeweler::RubyforgeTasks.new do |t|
-  t.doc_task = :yardoc
-end
-
+Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
