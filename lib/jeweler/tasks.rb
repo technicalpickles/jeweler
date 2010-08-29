@@ -107,6 +107,11 @@ class Jeweler
           
           puts jeweler.gemspec_helper.to_ruby
         end
+
+        desc "Release Gemspec"
+        task :release do
+          jeweler.release_gem_to_github
+        end
       end
 
       desc "Displays the current version"
@@ -149,14 +154,7 @@ class Jeweler
       task :release do
       end
 
-      namespace :github do
-        desc "Release Gem to GitHub"
-        task :release do
-          jeweler.release_gem_to_github
-        end
-      end
-
-      task :release => 'github:release'
+      task :release => 'gemspec:release'
 
       namespace :git do
         desc "Tag a release in Git"
