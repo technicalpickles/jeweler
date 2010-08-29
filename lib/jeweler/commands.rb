@@ -4,7 +4,7 @@ class Jeweler
     autoload :InstallGem, 'jeweler/commands/install_gem'
     autoload :CheckDependencies, 'jeweler/commands/check_dependencies'
     autoload :ReleaseToGit, 'jeweler/commands/release_to_git'
-    autoload :ReleaseToGithub, 'jeweler/commands/release_to_github'
+    autoload :ReleaseGemspec, 'jeweler/commands/release_gemspec'
     autoload :ReleaseToRubygems, 'jeweler/commands/release_to_rubygems'
     autoload :ValidateGemspec, 'jeweler/commands/validate_gemspec'
     autoload :WriteGemspec, 'jeweler/commands/write_gemspec'

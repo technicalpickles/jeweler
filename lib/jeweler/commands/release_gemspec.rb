@@ -2,7 +2,7 @@ require 'pathname'
 
 class Jeweler
   module Commands
-    class ReleaseToGithub
+    class ReleaseGemspec
       attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
 
       def initialize(attributes = {})

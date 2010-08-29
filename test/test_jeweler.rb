@@ -140,7 +140,7 @@ class TestJeweler < Test::Unit::TestCase
     command = Object.new
     mock(command).run
 
-    mock(Jeweler::Commands::ReleaseToGithub).build_for(jeweler) { command }
+    mock(Jeweler::Commands::ReleaseGemspec).build_for(jeweler) { command }
 
     jeweler.release_gemspec
   end
