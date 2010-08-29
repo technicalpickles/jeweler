@@ -134,7 +134,7 @@ class TestJeweler < Test::Unit::TestCase
     jeweler.write_version(1, 5, 2, 'a1')
   end
 
-  should "build and run release to github command when running release_gem_to_github" do
+  should "build and run release to github command when running release_gemspec" do
     jeweler = build_jeweler
 
     command = Object.new
@@ -142,7 +142,7 @@ class TestJeweler < Test::Unit::TestCase
 
     mock(Jeweler::Commands::ReleaseToGithub).build_for(jeweler) { command }
 
-    jeweler.release_gem_to_github
+    jeweler.release_gemspec
   end
 
   should "build and run release to git command when running release_to_git" do

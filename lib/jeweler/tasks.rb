@@ -110,7 +110,7 @@ class Jeweler
 
         desc "Release Gemspec"
         task :release do
-          jeweler.release_gem_to_github
+          jeweler.release_gemspec
         end
       end
 

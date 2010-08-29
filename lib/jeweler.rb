@@ -124,7 +124,7 @@ class Jeweler
     command.run
   end
 
-  def release_gem_to_github
+  def release_gemspec
     Jeweler::Commands::ReleaseToGithub.build_for(self).run
   end
 
