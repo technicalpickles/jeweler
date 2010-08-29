@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.5.0.pre"
+  s.version = "1.5.0.pre2"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2010-08-21}
+  s.date = %q{2010-08-29}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -17,18 +17,17 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "ChangeLog.markdown",
     "LICENSE",
-    "README.markdown",
-    "TODO"
+    "README.markdown"
   ]
   s.files = [
     ".document",
     ".gitignore",
     "ChangeLog.markdown",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE",
     "README.markdown",
     "Rakefile",
-    "VERSION",
     "bin/jeweler",
     "features/generator/cucumber.feature",
     "features/generator/directory_layout.feature",
@@ -56,9 +55,9 @@ Gem::Specification.new do |s|
     "lib/jeweler/commands/build_gem.rb",
     "lib/jeweler/commands/check_dependencies.rb",
     "lib/jeweler/commands/install_gem.rb",
-    "lib/jeweler/commands/release_to_gemcutter.rb",
     "lib/jeweler/commands/release_to_git.rb",
     "lib/jeweler/commands/release_to_github.rb",
+    "lib/jeweler/commands/release_to_rubygems.rb",
     "lib/jeweler/commands/validate_gemspec.rb",
     "lib/jeweler/commands/version/base.rb",
     "lib/jeweler/commands/version/bump_major.rb",
@@ -85,6 +84,8 @@ Gem::Specification.new do |s|
     "lib/jeweler/generator/testunit_mixin.rb",
     "lib/jeweler/generator/yard_mixin.rb",
     "lib/jeweler/rubyforge_tasks.rb",
+    "lib/jeweler/rubygems_dot_org_tasks.rb",
+    "lib/jeweler/rubygems_tasks.rb",
     "lib/jeweler/specification.rb",
     "lib/jeweler/tasks.rb",
     "lib/jeweler/templates/.document",
@@ -117,6 +118,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/testspec/helper.rb",
     "lib/jeweler/templates/testunit/flunking.rb",
     "lib/jeweler/templates/testunit/helper.rb",
+    "lib/jeweler/version.rb",
     "lib/jeweler/version_helper.rb",
     "test/fixtures/bar/VERSION.yml",
     "test/fixtures/bar/bin/foo_the_ultimate_bin",
