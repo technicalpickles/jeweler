@@ -15,18 +15,23 @@ end
 class Jeweler
   # Rake tasks for managing your gem.
   #
-  # Here's a basic example of using it:
+  # Here's a basic usage example:
   #
   #   Jeweler::Tasks.new do |gem|
   #     gem.name = "jeweler"
-  #     gem.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  #     gem.summary = "Simple and opinionated helper for creating RubyGem projects on GitHub"
   #     gem.email = "josh@technicalpickles.com"
   #     gem.homepage = "http://github.com/technicalpickles/jeweler"
-  #     gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  #     gem.description = "Simple and opinionated helper for creating RubyGem projects on GitHub"
   #     gem.authors = ["Josh Nichols"]
   #   end
   #
-  # The block variable gem is actually a Gem::Specification, so you can do anything you would normally do with a Gem::Specification. For more details, see the official gemspec reference: http://docs.rubygems.org/read/chapter/20 . In addition, it has a defaults set for you. See Jeweler::Specification for more details.
+  # The block variable gem is actually a Gem::Specification, so you can
+  # do anything you would normally do with a Gem::Specification.
+  # For more details, see the official gemspec reference:
+  # http://docs.rubygems.org/read/chapter/20
+  #
+  # In addition, it provides reasonable defaults for several values. See Jeweler::Specification for more details.
   class Tasks < ::Rake::TaskLib
     attr_accessor :gemspec, :jeweler, :gemspec_building_block
 
@@ -74,32 +79,42 @@ class Jeweler
       end
       
 
-      desc "Build gem"
+      desc "Build gem into pkg/"
       task :build do
         jeweler.build_gem
       end
 
-      desc "Install gem"
+      desc "Build and install gem using `gem install`"
       task :install => [:build] do
         jeweler.install_gem
       end
 
-      desc "Generate and validates gemspec"
+      desc "Displays the current version"
+      task :version => :version_required do
+        $stdout.puts "Current version: #{jeweler.version}"
+      end
+
+      desc "Release gem"
+      task :release do
+      end
+
+      desc "Generate and validate gemspec"
       task :gemspec => ['gemspec:generate', 'gemspec:validate']
 
       namespace :gemspec do
-        desc "Validates the gemspec"
+        desc "Validates the gemspec on the filesystem"
         task :validate => :gemspec_required do
           jeweler.validate_gemspec
         end
 
-        desc "Generates the gemspec, using version from VERSION"
+        desc "Regenreate the gemspec on the filesystem"
         task :generate => :version_required do
           jeweler.write_gemspec
         end
 
-        desc "Display the gemspec for debugging purposes, as jeweler knows it (not from disk)"
+        desc "Display the gemspec for debugging purposes, as jeweler knows it (not from the filesystem)"
         task :debug do
+          # TODO move to a command
           jeweler.gemspec_helper.spec.version ||= begin
                                                     jeweler.version_helper.refresh
                                                     jeweler.version_helper.to_s
@@ -108,16 +123,14 @@ class Jeweler
           puts jeweler.gemspec_helper.to_ruby
         end
 
-        desc "Release Gemspec"
+        desc "Regenerate and validate gemspec, and then commits and pushes to git"
         task :release do
           jeweler.release_gemspec
         end
       end
 
-      desc "Displays the current version"
-      task :version => :version_required do
-        $stdout.puts "Current version: #{jeweler.version}"
-      end
+      task :release => 'gemspec:release'
+
 
       unless yield_gemspec_set_version?
         namespace :version do
@@ -129,19 +142,19 @@ class Jeweler
           end
 
           namespace :bump do
-            desc "Bump the gemspec by a major version."
+            desc "Bump the major version by 1"
             task :major => [:version_required, :version] do
               jeweler.bump_major_version
               $stdout.puts "Updated version: #{jeweler.version}"
             end
 
-            desc "Bump the gemspec by a minor version."
+            desc "Bump the a minor version by 1"
             task :minor => [:version_required, :version] do
               jeweler.bump_minor_version
               $stdout.puts "Updated version: #{jeweler.version}"
             end
 
-            desc "Bump the gemspec by a patch version."
+            desc "Bump the patch version by 1"
             task :patch => [:version_required, :version] do
               jeweler.bump_patch_version
               $stdout.puts "Updated version: #{jeweler.version}"
@@ -150,14 +163,9 @@ class Jeweler
         end
       end
 
-      desc "Release gem"
-      task :release do
-      end
-
-      task :release => 'gemspec:release'
 
       namespace :git do
-        desc "Tag a release in Git"
+        desc "Tag and push release to git. (happens by default with `rake release`)"
         task :release do
           jeweler.release_to_git
         end
@@ -184,6 +192,7 @@ class Jeweler
 
       desc "Start IRB with all runtime dependencies loaded"
       task :console, [:script] do |t,args|
+        # TODO move to a command
         dirs = ['ext', 'lib'].select { |dir| File.directory?(dir) }
 
         original_load_path = $LOAD_PATH
