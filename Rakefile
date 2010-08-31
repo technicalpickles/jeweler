@@ -46,7 +46,7 @@ namespace :test do
 end
 
 require 'yard'
-YARD::Rake::YardocTask.new(:yardoc) do |t|
+YARD::Rake::YardocTask.new do |t|
   t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
 end
 

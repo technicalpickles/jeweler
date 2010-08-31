@@ -1,8 +1,9 @@
 GEM
-  remote: http://gemcutter.org/
+  remote: http://rubygems.org/
   remote: http://gems.github.com/
   specs:
     activesupport (2.3.8)
+    bluecloth (2.0.7)
     builder (2.1.2)
     columnize (0.3.1)
     cucumber (0.8.5)
@@ -34,13 +35,14 @@ GEM
     test-construct (1.2.0)
     timecop (0.3.5)
     trollop (1.16.2)
-    yard (0.5.8)
+    yard (0.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activesupport (~> 2.3.5)
+  bluecloth
   bundler (~> 1.0.0)
   cucumber
   git (>= 1.2.5)
@@ -54,4 +56,4 @@ DEPENDENCIES
   shoulda
   test-construct
   timecop
-  yard
+  yard (~> 0.6.0)
