@@ -350,6 +350,6 @@ end
 Then /^'Gemfile' uses the (.*) source$/ do |source|
   content = File.read(File.join(@working_dir, @name, 'Gemfile'))
 
-  assert_match "source :#{source}", content
+  assert_match %Q{source "http://rubygems.org"}, content
 end
 
