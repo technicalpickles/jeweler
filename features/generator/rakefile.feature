@@ -20,7 +20,7 @@ Feature: generated Rakefile
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
-    And Rakefile instantiates a Jeweler::RubygemsDotOrgsTasks
+    And Rakefile instantiates a Jeweler::RubygemsDotOrgTasks
 
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
