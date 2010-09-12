@@ -10,7 +10,7 @@ class Jeweler
       def run
         missing_dependencies = dependencies.select do |dependency|
           begin
-            Gem.activate dependency.name, dependency.requirements.to_s
+            Gem.activate dependency.name, *dependency.requirements.as_list
             false
           rescue LoadError => e
             true
