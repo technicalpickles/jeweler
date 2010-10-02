@@ -93,7 +93,7 @@ class TestGenerator < Test::Unit::TestCase
     should_have_generator_attribute :test_task, 'spec'
     should_have_generator_attribute :test_dir, 'spec'
     should_have_generator_attribute :default_task, 'spec'
-    should_have_generator_attribute :feature_support_require, 'spec/expectations'
+    should_have_generator_attribute :feature_support_require, 'rspec/expectations'
     should_have_generator_attribute :feature_support_extend, nil
     should_have_generator_attribute :test_pattern, 'spec/**/*_spec.rb'
     should_have_generator_attribute :test_filename, 'the-perfect-gem_spec.rb'

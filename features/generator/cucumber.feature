@@ -90,7 +90,7 @@ Feature: generating cucumber stories
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'features/support/env.rb' requires 'the-perfect-gem'
-    And 'features/support/env.rb' requires 'spec/expectations'
+    And 'features/support/env.rb' requires 'rspec/expectations'
 
   Scenario: cucumber setup for mirconaut
     Given a working directory
