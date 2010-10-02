@@ -10,7 +10,7 @@ class Jeweler
       end
 
       def feature_support_require
-        'spec/expectations'
+        'rspec/expectations'
       end
 
       def feature_support_extend
