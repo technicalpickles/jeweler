@@ -1,208 +1,215 @@
 # Jeweler: Craft the perfect RubyGem
 
-Jeweler provides two things:
+Jeweler provides the noble ruby developer with two main features:
 
- * Rake tasks for managing gems and versioning of a <a href="http://github.com">GitHub</a> project
- * A generator for creating/kickstarting a new project
+ * a library for managing and releasing RubyGem projects
+ * a scaffold generator for starting new RubyGem projects
 
-## Quick Links
+## Hello, world
 
- * [Wiki](http://wiki.github.com/technicalpickles/jeweler)
- * [Mailing List](http://groups.google.com/group/jeweler-rb)
- * [Bugs](http://github.com/technicalpickles/jeweler/issues)
- * [Donate](http://pledgie.org/campaigns/2604)
+Install the hell out of jeweler to get started using RubyGems:
 
-## Installing
+    $ gem install jeweler
 
-# Install the gem:
-    gem install jeweler
+Now that jeweler is installed, you can use the `jeweler` command to generate a new project. For basic use, just give it a name.
 
-## Using in an existing project
+    $ jeweler hello-gem
 
-It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler::Tasks`, and give it a block with details about your project.
+This requires some Git configuration (like name, email, GitHub account, etc), but `jeweler` will prompt along the way. 
 
-    begin
-      require 'jeweler'
-      Jeweler::Tasks.new do |gemspec|
-        gemspec.name = "the-perfect-gem"
-        gemspec.summary = "One line summary of your gem"
-        gemspec.description = "A different and possibly longer explanation of"
-        gemspec.email = "josh@technicalpickles.com"
-        gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-        gemspec.authors = ["Josh Nichols"]
-      end
-    rescue LoadError
-      puts "Jeweler not available. Install it with: gem install jeweler"
+Then, your new `hello-gem` gem is ready in the `hello-gem` directory. Take a peek, and you'll see several files and directories
+
+ * `Rakefile` setup for jeweler, running tests, generating documentation, and releasing to [rubygems.org](http://rubygems.org/)
+ * `README.rdoc` with contribution guidelines and copyright info crediting you
+ * `LICENSE` with the MIT licensed crediting you
+ * `Gemfile` with development dependencies filled in
+ * `lib/hello-gem.rb` waiting for you to code
+ * `test/` containing a (failing) shoulda test suite [shoulda](http://github.com/thoughtbot/shoulda)
+
+Beyond just editing, you'll be interacting with your gem with `rake`. To see all the tasks available with a brief description, you can run:
+
+    $ rake -T
+
+### More `jeweler` options
+
+As a side note, the `jeweler` command supports a lot of options. Mostly, they are for generating baked in support for this test framework, or that.
+
+Check out `jeweler --help` for the most up to date options.
+
+## Hello, rake tasks
+
+You'll need a version before you can start installing your gem locally. The easiest way is with the `version:write` Rake task. Let's imagine you start with 0.1.0
+
+    $ rake version:write MAJOR=0 MINOR=1 PATCH=0
+
+You can now go forth and develop having an initial version set. Eventually, you should install and test the gem:
+
+    $ rake install
+
+The `install` rake task builds the gem and `gem install`s it. You're all set if you're using [RVM](http://rvm.beginrescueend.com/), but you may need to run it with sudo if you have a system-installed ruby:
+
+    $ sudo rake install
+
+### Releasing
+
+At last, it's time to [ship it!](http://img.skitch.com/20100310-nrgxbwqm58tibiq2un6mujqmm5.png). Make sure you have everything committed and pushed, then go wild:
+
+    $ rake release
+
+This does the following automatically:
+
+ * Generates `hello-gem.gemspec` and commits it
+ * Uses `git` to tag `v0.1.0` and pushes it
+ * Builds `hello-gem-0.1.0.gem` and pushes it to [rubygems.org](http://rubygems.org/gems/)
+
+### Version bumping
+
+It feels good to release code. Do it, do it often. But before that, bump the version. Then release it. There's a few ways to update the version:
+
+    # version:write like before
+    $ rake version:write MAJOR=0 MINOR=3 PATCH=0
+
+    # bump just major, ie 0.1.0 -> 1.0.0
+    $ rake version:bump:major
+
+    # bump just minor, ie 0.1.0 -> 0.2.0
+    $ rake version:bump:minor
+
+    # bump just patch, ie 0.1.0 -> 0.1.1
+    $ rake version:bump:patch
+
+Then it's the same `release` we used before:
+
+    $ rake release
+
+## Customizing your gem
+
+If you've been following along so far, your gem is just a blank slate. You're going to need to make it colorful and full of metadata.
+
+You can customize your gem by updating your `Rakefile`. With a newly generated project, it will look something like this:
+
+    require 'jeweler'
+    Jeweler::Tasks.new do |gem|
+      # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+      gem.name = "whatwhatwhat"
+      gem.summary = %Q{TODO: one-line summary of your gem}
+      gem.description = %Q{TODO: longer description of your gem}
+      gem.email = "josh@technicalpickles.com"
+      gem.homepage = "http://github.com/technicalpickles/whatwhatwhat"
+      gem.authors = ["Joshua Nichols"]
     end
 
-The yield object here, `gemspec`, is a `Gem::Specification` object. See the [Customizing your project's gem specification](http://wiki.github.com/technicalpickles/jeweler/customizing-your-projects-gem-specification) for more details about how you can customize your gemspec.
+It's crucial to understand the `gem` object is just a Gem::Specification. As the comment references, you can read up about it at [docs.rubygems.org/read/chapter/20](http://docs.rubygems.org/read/chapter/20). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
 
-## Using to start a new project
+### Project information
 
-Jeweler provides a generator. It requires you to [setup your name and email for git](http://help.github.com/git-email-settings/) and [your username and token for GitHub](http://github.com/guides/local-github-config).
+    gem.name = "whatwhatwhat"
 
-    jeweler the-perfect-gem
+Every gem has a name. Among other things, the gem name is how you are able to `gem install` it. [Reference](http://docs.rubygems.org/read/chapter/20#name)
 
-This will prepare a project in the 'the-perfect-gem' directory, setup to use Jeweler.
+    gem.summary = %Q{TODO: longer description of your gem}
 
-It supports a number of options. Here's a taste, but `jeweler --help` will give you the most up-to-date listing:
+This is a one line summary of your gem. This is displayed, for example, when you use `gem list --details` or view it on [rubygems.org](http://rubygems.org/gems/).
 
- * --create-repo: in addition to preparing a project, it create an repo up on GitHub and enable RubyGem generation
- * --testunit: generate test_helper.rb and test ready for test/unit
- * --minitest: generate test_helper.rb and test ready for minitest
- * --shoulda: generate test_helper.rb and test ready for shoulda (this is the default)
- * --rspec: generate spec_helper.rb and spec ready for rspec
- * --bacon: generate spec_helper.rb and spec ready for bacon
- * --gemcutter: setup releasing to gemcutter
- * --rubyforge: setup releasing to rubyforge
+    gem.description = %Q{TODO: longer description of your gem}
 
-### Default options
+Description is a longer description. Scholars ascertain that knowledge of where the description is used was lost centuries ago.
 
-Jeweler respects the JEWELER_OPTS environment variable. Want to always use RSpec, and you're using bash? Add this to ~/.bashrc:
+    gem.email = "josh@technicalpickles.com"
 
-    export JEWELER_OPTS="--rspec"
+This should be a way to get a hold of you regarding the gem.
 
-## Gemspec
+    gem.homepage = "http://github.com/technicalpickles/whatwhatwhat"
 
-Jeweler handles generating a gemspec file for your project:
+The homepage should have more information about your gem. The jeweler generator guesses this based on the assumption your code lives on [GitHub](http://github.com/), using your Git configuration to find your GitHub username. This is displayed by `gem list --details` and on rubygems.org.
 
-    rake gemspec
+      gem.authors = ["Joshua Nichols"]
 
-This creates a gemspec for your project. It's based on the info you give `Jeweler::Tasks`, the current version of your project, and some defaults that Jeweler provides.
+Hey, this is you, the author (or me in this case). The `jeweler` generator also guesses this from your Git configuration. This is displayed by `gem list --details` and on rubygems.org.
 
-## Gem
+### Files
 
-Jeweler gives you tasks for building and installing your gem.
+The quickest way to add more files is to `git add` them. Jeweler uses your Git repository to populate your gem's files, including what's added or committed, and excluding what's `.gitignore`d. In most cases, this is reasonable.
 
-    rake install
+But, you may need to tweak the files. Jeweler populates `gem.files` as a `Rake::FileList`. It's like a normal array, except you can `include` and `exclude` file globs:
 
-To build the gem (which will end up in `pkg`), run:
+    gem.files.exclude 'tmp' # exclude temporary directory
+    gem.files.include 'lib/foo/bar.rb' # explicitly include lib/foo/bar.rb
 
-    rake build
+If that's not enough, you can just set `gem.files` outright
 
-To install the gem (and build if necessary), i.e. using gem install, run:
+    gem.files = Dir.glob('lib/**/*.rb')
 
-    rake install
+### Dependencies
 
-Note, this does not use `sudo` to install it, so if your ruby setup needs that, you should prefix it with sudo:
+Dependencies are the way you specify your gem needs another gem to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://docs.rubygems.org/read/chapter/20#dependencies)
 
-    sudo rake install
+   gem.add_dependency 'nokogiri'
 
-## Versioning
+This will ensure a version of `nokogiri` is installed, but it doesn't require anything more than that. You can provide extra args to be more specific:
 
-Jeweler tracks the version of your project. It assumes you will be using a version in the format `x.y.z`. `x` is the 'major' version, `y` is the 'minor' version, and `z` is the patch version.
+   gem.add_dependency 'nokogiri', '= 1.2.1' # exactly version 1.2.1
+   gem.add_dependency 'nokogiri', '>= 1.2.1' # greater than or equal to 1.2.1, ie, 1.2.1, 1.2.2, 1.3.0, 2.0.0, etc
+   gem.add_dependency 'nokogiri', '>= 1.2.1', '< 1.3.0' # greater than or equal to 1.2.1, but less than 1.3.0
+   gem.add_dependency 'nokogiri', '~> 1.2.1' # same thing, but more concise
 
-Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bumping the version:
+When specifying the version required, there's a bit of the condunrum. You want to allow the most versions possible, but you want to be sure they are compatible. Using `>= 1.2.1` is fine most of the time, except until the point that 2.0.0 comes out and totally breaks backwards the API. That's when it's good to use something like `~> 1.2.1`, which requires any version in the `1.2` family, starting with `1.2.1`.
 
-    rake version:bump:major
-    rake version:bump:minor
-    rake version:bump:patch
+### Executables
 
-You can also programmatically set the version if you wish. Typically, you use this to have a module with the version info so clients can access it. The only downside here is you no longer can use the version:bump tasks.
+Executables are how you install shell commands along with your gem. Just put any executable scripts in the `bin/` directory, make sure they are added using `git`, and Jeweler will take care of the rest.
 
-    require File.dirname(__FILE__) + "/lib/my_project/version.rb"
+When you need more finely grained control over it, you can set it yourself:
 
-    Jeweler::Tasks.new do |gemspec|
-       gemspec.version = MyProject::VERSION
-       # more stuff
+    gem.executables = ['foo'] # note, it's the file name relative to `bin/`, not the project root
+
+### Versioning
+
+We discussed earlier how to bump the version. The rake tasks are really just convience methods for manipulating the `VERSION` file. It just contains a version string, like `1.2.3`.
+
+`VERSION` is a convention used by Jeweler, and is used to populate `gem.version`. You can actually set this yourself, and Jeweler won't try to override it:
+
+    gem.version = '1.2.3'
+
+A common pattern is to have this in a version constant in your library. This is pretty convenient, because users of the library can know at runtime what version they are using easily.
+
+    # in lib/foo/version.rb
+    class Foo
+      module Version
+        MAJOR = 1
+        MINOR = 2
+        PATCH = 3
+        BUILD = 'pre3'
+    
+        STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
+      end
     end
 
-### Prerelease versioning
-
-Major, minor, and patch versions have a distant cousin: build. You can use this to add an arbitrary (or you know, regular type) version. This is particularly useful for prereleases.
-
-You have two ways of doing this:
-
- * Use `version:write` and specify `BUILD=pre1`
- * Edit VERSION by hand to add a fourth version segment
-
-Jeweler does not provide a `version:bump:build` because the build version can really be anything, so it's hard to know what should be the next bump.
-
-## Releasing
-
-Jeweler handles releasing your gem into the wild:
-
-    rake release
-
-It does the following for you:
-
- * Regenerate the gemspec to the latest version of your project
- * git pushes to origin/master branch
- * git tags the version and pushes to the origin remote
-
-As is though, it doesn't actually get your gem anywhere. To do that, you'll need to use rubyforge or gemcutter.
-
-### Releasing to Gemcutter
-
-Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There are a few steps you need to do before doing any Gemcutter releases with Jeweler:
-
- * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
- * Install the Gemcutter gem: gem install gemcutter
- * Run 'gem tumble' to set up RubyGems to use gemcutter as the default source if you haven't already
- * Update your Rakefile to make an instance of `Jeweler::GemcutterTasks`
-
-
-A Rakefile setup for gemcutter would include something like this:
-
-    begin
-      require 'jeweler'
-      Jeweler::Tasks.new do |gemspec|
-        # omitted for brevity
-      end
-      Jeweler::GemcutterTasks.new
-    rescue LoadError
-      puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+    # in Rakefile
+    require 'jeweler'
+    require './lib/foo/version.rb'
+    Jeweler::Tasks.new do |gem|
+      # snip
+      gem.version = Foo::Version::STRING
     end
 
 
-After you have configured this, `rake release` will now also release to Gemcutter.
+### Rake
 
-If you need to release it without the rest of the release task, you can run:
+Jeweler lives inside of Rake. As a result, they are dear friends. That friendship doesn't interfere with typical Rake operations.
 
-    $ rake gemcutter:release
+That means you can define your own namespaces, tasks, or use third party Rake libraries without cause for concern.
+    
+## Contributing to Jeweler
 
-### Releasing to RubyForge
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the [issue tracker](http://github.com/technicalpickles/jeweler/issues) to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-Jeweler can also handle releasing to [RubyForge](http://rubyforge.org). There are a few steps you need to do before doing any RubyForge releases with Jeweler:
+## Copyright
 
- * [Create an account on RubyForge](http://rubyforge.org/account/register.php)
- * Request a project on RubyForge.
- * Install the RubyForge gem: gem install rubyforge
- * Run 'rubyforge setup' and fill in your username and password for RubyForge
- * Run 'rubyforge config' to pull down information about your projects
- * Run 'rubyforge login' to make sure you are able to login
- * In Jeweler::Tasks, you must set `rubyforge_project` to the project you just created
- * Add Jeweler::RubyforgeTasks to bring in the appropriate tasks.
- * Note, using `jeweler --rubyforge` when generating the project does this for you automatically.
-
-A Rakefile setup for rubyforge would include something like this:
-
-    begin
-      require 'jeweler'
-      Jeweler::Tasks.new do |gemspec|
-        # ommitted for brevity
-        gemspec.rubyforge_project = 'the-perfect-gem' # This line would be new
-      end
-
-      Jeweler::RubyforgeTasks.new do |rubyforge|
-        rubyforge.doc_task = "rdoc"
-      end
-    rescue LoadError
-      puts "Jeweler, or a dependency, not available. Install it with: gem install jeweler"
-    end
-
-Now you must initially create a 'package' for your gem in your RubyForge 'project':
-
-    $ rake rubyforge:setup
-
-After you have configured this, `rake release` will now also release to RubyForge.
-
-If you need to release it without the rest of the release task, you can run:
-
-    $ rake rubyforge:release
-
-## Development and Release Workflow
-
- * Hack, commit, hack, commit, etc, etc
- * `rake version:bump:patch release` to do the actual version bump and release
- * Have a delicious beverage (I suggest scotch)
+Copyright (c) 2008-2010 Josh Nichols. See LICENSE for details.
