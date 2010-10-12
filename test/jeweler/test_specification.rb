@@ -193,8 +193,8 @@ class TestSpecification < Test::Unit::TestCase
       @gemspec.set_jeweler_defaults(@project, @project)
     end
 
-    should "populate files from git excluding ignored" do
-      assert_equal %w(.gitignore Rakefile lib/example.rb), @gemspec.files.sort
+    should "populate files from git excluding ignored and .gitignore" do
+      assert_equal %w(Rakefile lib/example.rb), @gemspec.files.sort
     end
   end
 
