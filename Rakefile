@@ -1,5 +1,6 @@
-require 'rake'
+require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -10,7 +11,9 @@ end
 
 $LOAD_PATH.unshift('lib')
 
+require 'rake'
 require 'jeweler'
+
 Jeweler::Tasks.new do |gem|
   gem.name = "jeweler"
   gem.version = Jeweler::Version::STRING
