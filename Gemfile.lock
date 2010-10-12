@@ -3,6 +3,7 @@ GEM
   remote: http://gems.github.com/
   specs:
     activesupport (2.3.8)
+    archive-tar-minitar (0.5.2)
     bluecloth (2.0.7)
     builder (2.1.2)
     columnize (0.3.1)
@@ -17,7 +18,8 @@ GEM
       trollop (~> 1.16.2)
     git (1.2.5)
     json_pure (1.4.6)
-    linecache (0.43)
+    linecache19 (0.5.11)
+      ruby_core_source (>= 0.1.4)
     mhennemeyer-output_catcher (1.0.1)
     mocha (0.9.8)
       rake
@@ -25,11 +27,16 @@ GEM
     rcov (0.9.8)
     redgreen (1.2.2)
     rr (0.10.11)
-    ruby-debug (0.10.3)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.3.0)
-    ruby-debug-base (0.10.3)
-      linecache (>= 0.3)
+    ruby-debug-base19 (0.11.24)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.4)
+      archive-tar-minitar (>= 0.5.2)
     shoulda (2.11.3)
     term-ansicolor (1.0.5)
     test-construct (1.2.0)
@@ -52,7 +59,7 @@ DEPENDENCIES
   rcov
   redgreen
   rr
-  ruby-debug
+  ruby-debug19
   shoulda
   test-construct
   timecop
