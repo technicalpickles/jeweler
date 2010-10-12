@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.executables = ["jeweler"]
   s.extra_rdoc_files = [
     "ChangeLog.markdown",
-    "LICENSE",
+    "LICENSE.txt",
     "README.markdown"
   ]
   s.files = [
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
     "ChangeLog.markdown",
     "Gemfile",
     "Gemfile.lock",
-    "LICENSE",
+    "LICENSE.txt",
     "README.markdown",
     "Rakefile",
     "bin/jeweler",
