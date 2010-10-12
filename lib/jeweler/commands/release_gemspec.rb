@@ -37,7 +37,7 @@ class Jeweler
         gemspec_gitpath = working_subdir.join(gemspec_helper.path)
         repo.add(gemspec_gitpath.to_s)
         output.puts "Committing #{gemspec_gitpath}"
-        repo.commit "Regenerated gemspec for version #{version}"
+        repo.commit "Regenerate gemspec for version #{version}"
       end
 
       def regenerate_gemspec!

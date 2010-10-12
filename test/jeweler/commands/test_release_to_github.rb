@@ -264,7 +264,7 @@ class Jeweler
         end
 
         should "commit with commit message including version" do
-          assert_received(@repo) {|repo| repo.commit("Regenerated gemspec for version 1.2.3") }
+          assert_received(@repo) {|repo| repo.commit("Regenerate gemspec for version 1.2.3") }
         end
 
       end
