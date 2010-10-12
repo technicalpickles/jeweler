@@ -1,23 +1,23 @@
 # Jeweler: Craft the perfect RubyGem
 
-Jeweler provides the noble ruby developer with two main features:
+Jeweler provides the noble ruby developer with two primary features:
 
  * a library for managing and releasing RubyGem projects
  * a scaffold generator for starting new RubyGem projects
 
 ## Hello, world
 
-Install the hell out of jeweler to get started using RubyGems:
+Use RubyGems to install the heck out of jeweler to get started: 
 
     $ gem install jeweler
 
-Now that jeweler is installed, you can use the `jeweler` command to generate a new project. For basic use, just give it a name.
+With jeweler installed, you can use the `jeweler` command to generate a new project. For the most basic use, just give it a name:
 
     $ jeweler hello-gem
 
-This requires some Git configuration (like name, email, GitHub account, etc), but `jeweler` will prompt along the way. 
+This requires some Git configuration (like name, email, GitHub account, etc), but `jeweler` will prompt along the way.
 
-Then, your new `hello-gem` gem is ready in the `hello-gem` directory. Take a peek, and you'll see several files and directories
+Your new `hello-gem` gem is ready in the `hello-gem` directory. Take a peek, and you'll see several files and directories
 
  * `Rakefile` setup for jeweler, running tests, generating documentation, and releasing to [rubygems.org](http://rubygems.org/)
  * `README.rdoc` with contribution guidelines and copyright info crediting you
@@ -26,23 +26,24 @@ Then, your new `hello-gem` gem is ready in the `hello-gem` directory. Take a pee
  * `lib/hello-gem.rb` waiting for you to code
  * `test/` containing a (failing) shoulda test suite [shoulda](http://github.com/thoughtbot/shoulda)
 
-Beyond just editing, you'll be interacting with your gem with `rake`. To see all the tasks available with a brief description, you can run:
-
-    $ rake -T
 
 ### More `jeweler` options
 
-As a side note, the `jeweler` command supports a lot of options. Mostly, they are for generating baked in support for this test framework, or that.
+The `jeweler` command supports a lot of options. Mostly, they are for generating baked in support for this test framework, or that.
 
 Check out `jeweler --help` for the most up to date options.
 
 ## Hello, rake tasks
 
+Beyond just editing source code, you'll be interacting with your gem using `rake` a lot. To see all the tasks available with a brief description, you can run:
+
+    $ rake -T
+
 You'll need a version before you can start installing your gem locally. The easiest way is with the `version:write` Rake task. Let's imagine you start with 0.1.0
 
     $ rake version:write MAJOR=0 MINOR=1 PATCH=0
 
-You can now go forth and develop having an initial version set. Eventually, you should install and test the gem:
+You can now go forth and develop, now that there's an initial version defined. Eventually, you should install and test the gem:
 
     $ rake install
 
@@ -52,15 +53,15 @@ The `install` rake task builds the gem and `gem install`s it. You're all set if 
 
 ### Releasing
 
-At last, it's time to [ship it!](http://img.skitch.com/20100310-nrgxbwqm58tibiq2un6mujqmm5.png). Make sure you have everything committed and pushed, then go wild:
+At last, it's time to [ship it](http://img.skitch.com/20100310-nrgxbwqm58tibiq2un6mujqmm5.png)! Make sure you have everything committed and pushed, then go wild:
 
     $ rake release
 
-This does the following automatically:
+This will automatically:
 
- * Generates `hello-gem.gemspec` and commits it
- * Uses `git` to tag `v0.1.0` and pushes it
- * Builds `hello-gem-0.1.0.gem` and pushes it to [rubygems.org](http://rubygems.org/gems/)
+ * Generate `hello-gem.gemspec` and commit it
+ * Use `git` to tag `v0.1.0` and push it
+ * Build `hello-gem-0.1.0.gem` and push it to [rubygems.org](http://rubygems.org/gems/)
 
 ### Version bumping
 
@@ -99,7 +100,7 @@ You can customize your gem by updating your `Rakefile`. With a newly generated p
       gem.authors = ["Joshua Nichols"]
     end
 
-It's crucial to understand the `gem` object is just a Gem::Specification. As the comment references, you can read up about it at [docs.rubygems.org/read/chapter/20](http://docs.rubygems.org/read/chapter/20). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
+It's crucial to understand the `gem` object is just a Gem::Specification. You can read up about it at [docs.rubygems.org/read/chapter/20](http://docs.rubygems.org/read/chapter/20). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
 
 ### Project information
 
@@ -123,15 +124,15 @@ This should be a way to get a hold of you regarding the gem.
 
 The homepage should have more information about your gem. The jeweler generator guesses this based on the assumption your code lives on [GitHub](http://github.com/), using your Git configuration to find your GitHub username. This is displayed by `gem list --details` and on rubygems.org.
 
-      gem.authors = ["Joshua Nichols"]
+    gem.authors = ["Joshua Nichols"]
 
 Hey, this is you, the author (or me in this case). The `jeweler` generator also guesses this from your Git configuration. This is displayed by `gem list --details` and on rubygems.org.
 
 ### Files
 
-The quickest way to add more files is to `git add` them. Jeweler uses your Git repository to populate your gem's files, including what's added or committed, and excluding what's `.gitignore`d. In most cases, this is reasonable.
+The quickest way to add more files is to `git add` them. Jeweler uses your Git repository to populate your gem's files by including added and committed and excluding `.gitignore`d. In most cases, this is reasonable enough.
 
-But, you may need to tweak the files. Jeweler populates `gem.files` as a `Rake::FileList`. It's like a normal array, except you can `include` and `exclude` file globs:
+If you need to tweak the files, that's cool. Jeweler populates `gem.files` as a `Rake::FileList`. It's like a normal array, except you can `include` and `exclude` file globs:
 
     gem.files.exclude 'tmp' # exclude temporary directory
     gem.files.include 'lib/foo/bar.rb' # explicitly include lib/foo/bar.rb
@@ -142,7 +143,7 @@ If that's not enough, you can just set `gem.files` outright
 
 ### Dependencies
 
-Dependencies are the way you specify your gem needs another gem to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://docs.rubygems.org/read/chapter/20#dependencies)
+Dependencies let you define other gems that your gem needs to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://docs.rubygems.org/read/chapter/20#dependencies)
 
    gem.add_dependency 'nokogiri'
 
@@ -153,11 +154,11 @@ This will ensure a version of `nokogiri` is installed, but it doesn't require an
    gem.add_dependency 'nokogiri', '>= 1.2.1', '< 1.3.0' # greater than or equal to 1.2.1, but less than 1.3.0
    gem.add_dependency 'nokogiri', '~> 1.2.1' # same thing, but more concise
 
-When specifying the version required, there's a bit of the condunrum. You want to allow the most versions possible, but you want to be sure they are compatible. Using `>= 1.2.1` is fine most of the time, except until the point that 2.0.0 comes out and totally breaks backwards the API. That's when it's good to use something like `~> 1.2.1`, which requires any version in the `1.2` family, starting with `1.2.1`.
+When specifying which version is required, there's a bit of the condunrum. You want to allow the most versions possible, but you want to be sure they are compatible. Using `>= 1.2.1` is fine most of the time, except until the point that 2.0.0 comes out and totally breaks backwards the API. That's when it's good to use `~> 1.2.1`, which requires any version in the `1.2` family, starting with `1.2.1`.
 
 ### Executables
 
-Executables are how you install shell commands along with your gem. Just put any executable scripts in the `bin/` directory, make sure they are added using `git`, and Jeweler will take care of the rest.
+Executables let your gem install shell commands. Just put any executable scripts in the `bin/` directory, make sure they are added using `git`, and Jeweler will take care of the rest.
 
 When you need more finely grained control over it, you can set it yourself:
 
@@ -171,7 +172,7 @@ We discussed earlier how to bump the version. The rake tasks are really just con
 
     gem.version = '1.2.3'
 
-A common pattern is to have this in a version constant in your library. This is pretty convenient, because users of the library can know at runtime what version they are using easily.
+A common pattern is to have this in a version constant in your library. This is convenient, because users of the library can query the version they are using at runtime.
 
     # in lib/foo/version.rb
     class Foo
@@ -193,10 +194,9 @@ A common pattern is to have this in a version constant in your library. This is 
       gem.version = Foo::Version::STRING
     end
 
+### Rake tasks
 
-### Rake
-
-Jeweler lives inside of Rake. As a result, they are dear friends. That friendship doesn't interfere with typical Rake operations.
+Jeweler lives inside of Rake. As a result, they are dear friends. But, that friendship doesn't interfere with typical Rake operations.
 
 That means you can define your own namespaces, tasks, or use third party Rake libraries without cause for concern.
     
@@ -207,8 +207,8 @@ That means you can define your own namespaces, tasks, or use third party Rake li
 * Fork the project
 * Start a feature/bugfix branch
 * Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+* Make sure to add tests for the feature/bugfix. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate it to its own commit so I can cherry-pick around it.
 
 ## Copyright
 
