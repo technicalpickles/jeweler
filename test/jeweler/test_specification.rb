@@ -113,12 +113,14 @@ class TestSpecification < Test::Unit::TestCase
     end
   end
 
-  context "there are mutiple extconf.rb in the project directory" do
+  context "there are mutiple extconf.rb and mkrf_conf.rb in the project directory" do
     setup do
       @project.directory('ext') do |ext|
         ext.file 'extconf.rb'
+        ext.file 'mkrf_conf.rb'
         ext.directory('trogdor_native') do |trogdor_native|
           trogdor_native.file 'extconf.rb'
+          trogdor_native.file 'mkrf_conf.rb'
         end
       end
     end
@@ -129,8 +131,8 @@ class TestSpecification < Test::Unit::TestCase
         @gemspec.set_jeweler_defaults(@project)
       end
 
-      should "have all the extconf.rb files in extensions" do
-        assert_equal %w(ext/extconf.rb ext/trogdor_native/extconf.rb), @gemspec.extensions
+      should "have all the extconf.rb and mkrf_config.rb files in extensions" do
+        assert_equal %w(ext/mkrf_conf.rb ext/trogdor_native/mkrf_conf.rb ext/extconf.rb ext/trogdor_native/extconf.rb).sort, @gemspec.extensions.sort
       end
 
     end

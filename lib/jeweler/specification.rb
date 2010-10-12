@@ -66,7 +66,7 @@ class Jeweler
         end
 
         if blank?(extensions)
-          self.extensions = FileList['ext/**/extconf.rb']
+          self.extensions = FileList['ext/**/{extconf,mkrf_conf}.rb']
         end
 
         self.has_rdoc = true
