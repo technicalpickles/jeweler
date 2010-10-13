@@ -4,6 +4,5 @@ lib/jeweler/commands/*.rb
 lib/jeweler/generator/*.rb
 bin/*
 -
-README.markdown
 features/**/*.feature
 LICENSE.txt
