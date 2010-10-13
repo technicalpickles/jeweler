@@ -69,6 +69,7 @@ class Jeweler
               local_dir = case self.doc_task.to_sym
                           when :rdoc then 'rdoc'
                           when :yardoc then 'doc'
+                          when 'doc:app'.to_sym then 'doc/app' 
                           else
                             raise "Unsure what to run to generate documentation. Please set doc_task and re-run."
                           end
