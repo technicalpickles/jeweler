@@ -7,8 +7,7 @@ Feature: generated .document
     Given a working directory
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
-    Then '.document' contains 'README.rdoc'
-    And '.document' contains 'lib/**/*.rb'
+    Then '.document' contains 'lib/**/*.rb'
     And '.document' contains 'bin/*'
     And '.document' contains 'features/**/*.feature'
-    And '.document' contains 'LICENSE'
+    And '.document' contains 'LICENSE.txt'
