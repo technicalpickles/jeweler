@@ -11,4 +11,4 @@ bin/*
 -
 README.markdown
 features/**/*.feature
-LICENSE
+LICENSE.txt
