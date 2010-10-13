@@ -78,7 +78,7 @@ class Jeweler
         if File.exist?('Gemfile')
           require 'bundler'
           bundler = Bundler.load
-          bundler.dependencies_for(:default).each do |dependency|
+          bundler.dependencies_for(:default, :runtime).each do |dependency|
             self.add_dependency dependency.name, dependency.requirement.to_s
           end
           bundler.dependencies_for(:development).each do |dependency|
