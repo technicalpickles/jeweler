@@ -42,7 +42,7 @@ GEM
     test-construct (1.2.0)
     timecop (0.3.5)
     trollop (1.16.2)
-    yard (0.6.0)
+    yard (0.6.1)
 
 PLATFORMS
   ruby
