@@ -1,11 +1,6 @@
-# .document is used by rdoc and yard to know how to generate documentation 
-# for example, it can be used to control how rdoc gets built when you do `gem install foo`
-
 README.rdoc
 lib/**/*.rb
 bin/*
-
-# Files below this - are treated as 'extra files', and aren't parsed for ruby code
 - 
 features/**/*.feature
 LICENSE.txt
