@@ -10,11 +10,11 @@ Feature: generated license
     Given I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then LICENSE credits 'foo'
+    Then LICENSE.txt credits 'foo'
 
   Scenario: copyright in the current year
     Given it is the year 2005
     And I have configured git sanely
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then LICENSE has a copyright in the year 2005
+    Then LICENSE.txt has a copyright in the year 2005

@@ -8,4 +8,4 @@ bin/*
 # Files below this - are treated as 'extra files', and aren't parsed for ruby code
 - 
 features/**/*.feature
-LICENSE
+LICENSE.txt

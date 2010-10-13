@@ -177,7 +177,7 @@ class Jeweler
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
       output_template_in_target 'Gemfile' if should_use_bundler
-      output_template_in_target 'LICENSE'
+      output_template_in_target 'LICENSE.txt'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'
 

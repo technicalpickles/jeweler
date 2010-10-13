@@ -26,7 +26,7 @@ Feature: git support
     Then a commit with the message 'Initial commit to the-perfect-gem.' is made
     And 'README.rdoc' was checked in
     And 'Rakefile' was checked in
-    And 'LICENSE' was checked in
+    And 'LICENSE.txt' was checked in
     And 'lib/the-perfect-gem.rb' was checked in
     And '.gitignore' was checked in
 

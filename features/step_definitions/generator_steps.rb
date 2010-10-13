@@ -185,9 +185,9 @@ Then /^'(.*)' mentions copyright belonging to me in the current year$/ do |file|
 end
 
 
-Then /^LICENSE credits '(.*)'$/ do |copyright_holder|
-  Then "a file named 'the-perfect-gem/LICENSE' is created"
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
+Then /^LICENSE\.txt credits '(.*)'$/ do |copyright_holder|
+  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match copyright_holder, @license_content
 end
 
@@ -197,9 +197,9 @@ Given /^it is the year (\d+)$/ do |year|
 end
 
 
-Then /^LICENSE has a copyright in the year (\d+)$/ do |year|
-  Then "a file named 'the-perfect-gem/LICENSE' is created"
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
+Then /^LICENSE\.txt has a copyright in the year (\d+)$/ do |year|
+  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match year, @license_content
 end
 
