@@ -73,6 +73,7 @@ Feature: generated Rakefile
     Then Rakefile has 'test/**/test_*.rb' for the Rake::TestTask pattern
     And Rakefile has 'test/**/test_*.rb' for the Rcov::RcovTask pattern
     And Rakefile has 'test' in the Rcov::RcovTask libs
+    And Rakefile has '--exclude "gems/*"' in the Rcov::RcovTask rcov_opts
     And Rakefile has "test" as the default task
 
   Scenario: no cucumber

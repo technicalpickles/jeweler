@@ -182,6 +182,13 @@ Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   assert_match "#{block_variable}.libs << '#{libs}'", @rakefile_content
 end
 
+Then /^Rakefile has '(.*)' in the Rcov::RcovTask rcov_opts$/ do |rcov_opts|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, 'Rcov::RcovTask')
+
+  assert_match "#{block_variable}.rcov_opts << '#{rcov_opts}'", @rakefile_content
+end
+
 
 Then /^'(.*)' contains '(.*)'$/ do |file, expected_string|
   contents = File.read(File.join(@working_dir, @name, file))
