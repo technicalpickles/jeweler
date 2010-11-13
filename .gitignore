@@ -13,6 +13,7 @@ doc
 
 # cucumber generated
 .cuke_*.log
+cuke_*.log
 
 # ctags generated
 tags
