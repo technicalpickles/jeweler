@@ -20,6 +20,7 @@ Feature: generated Rakefile
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
+    And Rakefile has 'MIT' for the Jeweler::Tasks license
     And Rakefile instantiates a Jeweler::RubygemsDotOrgTasks
 
   Scenario: bacon

@@ -17,11 +17,12 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   gem.name = "jeweler"
   gem.version = Jeweler::Version::STRING
-  gem.summary = "Opinionated tool for creating and managing RubyGem projects"
-  gem.email = "josh@technicalpickles.com"
   gem.homepage = "http://github.com/technicalpickles/jeweler"
+  gem.summary = "Opinionated tool for creating and managing RubyGem projects"
   gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  gem.license = "MIT"
   gem.authors = ["Josh Nichols"]
+  gem.email = "josh@technicalpickles.com"
   gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
 
   # dependencies defined in Gemfile
