@@ -146,9 +146,11 @@ Feature: generated Rakefile
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' requires 'bundler'
     And 'Rakefile' sets up bundler using the default and development groups
+    And Rakefile does not add 'jeweler' as a development dependency to Jeweler::Tasks
 
   Scenario: no bundler
     Given I do not want bundler
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' does not require 'bundler'
     And 'Rakefile' does not setup bundler
+    And Rakefile adds 'jeweler' as a development dependency to Jeweler::Tasks

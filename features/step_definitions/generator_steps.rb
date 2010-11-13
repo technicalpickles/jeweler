@@ -161,6 +161,20 @@ Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
   assert_match /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/, task_block
 end
 
+Then /^Rakefile adds '(.*)' as a development dependency to Jeweler::Tasks$/ do |dependency|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, "Jeweler::Tasks")
+
+  assert_match /#{block_variable}\.add_development_dependency "#{dependency}"/, task_block
+end
+
+Then /^Rakefile does not add '(.*)' as a development dependency to Jeweler::Tasks$/ do |dependency|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, "Jeweler::Tasks")
+
+  assert_no_match /#{block_variable}\.add_development_dependency "#{dependency}"/, task_block
+end
+
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
   block_variable, task_block = yank_task_info(@rakefile_content, 'Rcov::RcovTask')
