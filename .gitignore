@@ -11,6 +11,9 @@ pkg
 doc
 .yardoc
 
+# cucumber generated
+.cuke_*.log
+
 # ctags generated
 tags
 
