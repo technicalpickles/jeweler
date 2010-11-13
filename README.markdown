@@ -145,14 +145,14 @@ If that's not enough, you can just set `gem.files` outright
 
 Dependencies let you define other gems that your gem needs to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://docs.rubygems.org/read/chapter/20#dependencies)
 
-   gem.add_dependency 'nokogiri'
+    gem.add_dependency 'nokogiri'
 
 This will ensure a version of `nokogiri` is installed, but it doesn't require anything more than that. You can provide extra args to be more specific:
 
-   gem.add_dependency 'nokogiri', '= 1.2.1' # exactly version 1.2.1
-   gem.add_dependency 'nokogiri', '>= 1.2.1' # greater than or equal to 1.2.1, ie, 1.2.1, 1.2.2, 1.3.0, 2.0.0, etc
-   gem.add_dependency 'nokogiri', '>= 1.2.1', '< 1.3.0' # greater than or equal to 1.2.1, but less than 1.3.0
-   gem.add_dependency 'nokogiri', '~> 1.2.1' # same thing, but more concise
+    gem.add_dependency 'nokogiri', '= 1.2.1' # exactly version 1.2.1
+    gem.add_dependency 'nokogiri', '>= 1.2.1' # greater than or equal to 1.2.1, ie, 1.2.1, 1.2.2, 1.3.0, 2.0.0, etc
+    gem.add_dependency 'nokogiri', '>= 1.2.1', '< 1.3.0' # greater than or equal to 1.2.1, but less than 1.3.0
+    gem.add_dependency 'nokogiri', '~> 1.2.1' # same thing, but more concise
 
 When specifying which version is required, there's a bit of the condunrum. You want to allow the most versions possible, but you want to be sure they are compatible. Using `>= 1.2.1` is fine most of the time, except until the point that 2.0.0 comes out and totally breaks backwards the API. That's when it's good to use `~> 1.2.1`, which requires any version in the `1.2` family, starting with `1.2.1`.
 
