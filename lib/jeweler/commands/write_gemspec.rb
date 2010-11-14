@@ -13,7 +13,6 @@ class Jeweler
           version_helper.to_s
         end
 
-        gemspec_helper.spec.date    = Time.now
         gemspec_helper.write
 
         output.puts "Generated: #{gemspec_helper.path}"  
