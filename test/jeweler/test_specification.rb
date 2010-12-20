@@ -43,9 +43,6 @@ class TestSpecification < Test::Unit::TestCase
       assert_equal FileList, @gemspec.extra_rdoc_files.class
     end
 
-    should "enable rdoc" do
-      assert @gemspec.has_rdoc
-    end
   end
  
   context "there aren't any executables in the project directory" do
