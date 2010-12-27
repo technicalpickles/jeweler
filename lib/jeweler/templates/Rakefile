@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'rubygems'
 <%= render_template 'bundler_setup.erb' %>
 require 'rake'
