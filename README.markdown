@@ -108,7 +108,7 @@ It's crucial to understand the `gem` object is just a Gem::Specification. You ca
 
 Every gem has a name. Among other things, the gem name is how you are able to `gem install` it. [Reference](http://docs.rubygems.org/read/chapter/20#name)
 
-    gem.summary = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{TODO: one-line summary of your gem}
 
 This is a one line summary of your gem. This is displayed, for example, when you use `gem list --details` or view it on [rubygems.org](http://rubygems.org/gems/).
 
