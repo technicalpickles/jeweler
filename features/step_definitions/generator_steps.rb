@@ -367,3 +367,9 @@ Then /^'Gemfile' uses the (.*) source$/ do |source|
   assert_match %Q{source "http://rubygems.org"}, content
 end
 
+
+Then /^Rakefile has a magic comment for UTF\-(\d+)$/ do |arg1|
+  content = File.read(File.join(@working_dir, @name, 'Rakefile'))
+  assert_match "# encoding: utf-8", content
+end
+
