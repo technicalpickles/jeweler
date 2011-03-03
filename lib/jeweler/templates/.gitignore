@@ -40,3 +40,6 @@ pkg
 #
 # For vim:
 #*.swp
+
+# For redcar:
+#.redcar
