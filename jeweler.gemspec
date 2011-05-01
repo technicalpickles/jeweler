@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.5.2"
+  s.version = "1.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = %q{2010-12-20}
+  s.date = %q{2011-05-01}
   s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
@@ -182,47 +182,10 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.4.2}
   s.summary = %q{Opinionated tool for creating and managing RubyGem projects}
-  s.test_files = [
-    "test/fixtures/bar/lib/foo_the_ultimate_lib.rb",
-    "test/fixtures/existing-project-with-version-constant/lib/existing_project_with_version.rb",
-    "test/fixtures/existing-project-with-version-constant/test/existing_project_with_version_test.rb",
-    "test/fixtures/existing-project-with-version-constant/test/test_helper.rb",
-    "test/fixtures/existing-project-with-version-plaintext/lib/existing_project_with_version.rb",
-    "test/fixtures/existing-project-with-version-plaintext/test/existing_project_with_version_test.rb",
-    "test/fixtures/existing-project-with-version-plaintext/test/test_helper.rb",
-    "test/fixtures/existing-project-with-version-yaml/lib/existing_project_with_version.rb",
-    "test/fixtures/existing-project-with-version-yaml/test/existing_project_with_version_test.rb",
-    "test/fixtures/existing-project-with-version-yaml/test/test_helper.rb",
-    "test/jeweler/commands/test_build_gem.rb",
-    "test/jeweler/commands/test_install_gem.rb",
-    "test/jeweler/commands/test_release_to_gemcutter.rb",
-    "test/jeweler/commands/test_release_to_git.rb",
-    "test/jeweler/commands/test_release_to_github.rb",
-    "test/jeweler/commands/test_validate_gemspec.rb",
-    "test/jeweler/commands/test_write_gemspec.rb",
-    "test/jeweler/commands/version/test_base.rb",
-    "test/jeweler/commands/version/test_bump_major.rb",
-    "test/jeweler/commands/version/test_bump_minor.rb",
-    "test/jeweler/commands/version/test_bump_patch.rb",
-    "test/jeweler/commands/version/test_write.rb",
-    "test/jeweler/generator/test_application.rb",
-    "test/jeweler/generator/test_options.rb",
-    "test/jeweler/test_gemspec_helper.rb",
-    "test/jeweler/test_generator.rb",
-    "test/jeweler/test_generator_initialization.rb",
-    "test/jeweler/test_generator_mixins.rb",
-    "test/jeweler/test_specification.rb",
-    "test/jeweler/test_tasks.rb",
-    "test/jeweler/test_version_helper.rb",
-    "test/shoulda_macros/jeweler_macros.rb",
-    "test/test_helper.rb",
-    "test/test_jeweler.rb"
-  ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
