@@ -1,3 +1,21 @@
+# jeweler 1.6.0
+
+ * Fix generated RCov task to exclude gems
+ * Generated .gitignore includes example for rubinius and redcar
+ * Generated Rakefile includes magic utf-8 comment for better UTF-8 support #20
+ * Generated Jeweler::Tasks now correctly documents that dependencies are managed in the Gemfile
+ * Workaround issues with ruby 1.9.2 and psych #169
+ * No longer deals with `test_files` #178
+ * JEWELER_OPTS are overridden by command line flags #178
+
+# jeweler 1.5.1
+
+ * TODO
+
+# jeweler 1.5.0
+
+ * TODO
+
 # jeweler 1.4.0 2009-11-19
 
  * Generator now adds gemcutter support by default. Disable it with --no-gemcutter
