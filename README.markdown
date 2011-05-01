@@ -99,6 +99,7 @@ You can customize your gem by updating your `Rakefile`. With a newly generated p
       gem.homepage = "http://github.com/technicalpickles/whatwhatwhat"
       gem.authors = ["Joshua Nichols"]
     end
+    Jeweler::RubygemsDotOrgTasks.new
 
 It's crucial to understand the `gem` object is just a Gem::Specification. You can read up about it at [docs.rubygems.org/read/chapter/20](http://docs.rubygems.org/read/chapter/20). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
 
