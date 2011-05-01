@@ -6,7 +6,6 @@ class Jeweler
   # super-cow powers.
   #
   # [files] a Rake::FileList of anything that is in git and not gitignored. You can include/exclude this default set, or override it entirely
-  # [test_files] Similar to gem.files, except it's only things under the spec, test, or examples directory.
   # [extra_rdoc_files] a Rake::FileList including files like README*, ChangeLog*, and LICENSE*
   # [executables] uses anything found in the bin/ directory.
   module Specification
@@ -27,7 +26,6 @@ class Jeweler
     end
 
     filelist_attribute :files
-    filelist_attribute :test_files
     filelist_attribute :extra_rdoc_files
 
     # Assigns the Jeweler defaults to the Gem::Specification
@@ -53,10 +51,6 @@ class Jeweler
           self.files = (repo.ls_files(base_dir).keys - ignored_files).compact.map do |file|
             File.expand_path(file).sub(base_dir_with_trailing_separator, "")
           end
-        end
-
-        if blank?(test_files) && repo
-          self.test_files = FileList['{spec,test,examples}/**/*.rb'] - repo.lib.ignored_files
         end
 
         if blank?(executables) && repo
@@ -111,7 +105,6 @@ Gem::Specification.class_eval do
     super
 
     self.files = original.files.to_a
-    self.test_files = original.test_files.to_a
     self.extra_rdoc_files = original.extra_rdoc_files.to_a
   end
 end

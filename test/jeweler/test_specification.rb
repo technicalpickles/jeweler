@@ -35,10 +35,6 @@ class TestSpecification < Test::Unit::TestCase
       assert_equal FileList, @gemspec.files.class
     end
 
-    should "make test_files a FileList" do
-      assert_equal FileList, @gemspec.test_files.class
-    end
-
     should "make extra_rdoc_files a FileList" do
       assert_equal FileList, @gemspec.extra_rdoc_files.class
     end

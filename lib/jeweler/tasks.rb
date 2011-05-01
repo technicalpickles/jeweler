@@ -57,7 +57,6 @@ class Jeweler
       yielded_gemspec = @gemspec.dup
       yielded_gemspec.extend(Jeweler::Specification)
       yielded_gemspec.files = FileList[]
-      yielded_gemspec.test_files = FileList[]
       yielded_gemspec.extra_rdoc_files = FileList[]
 
       gemspec_building_block.call(yielded_gemspec) if gemspec_building_block
