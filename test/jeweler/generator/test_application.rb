@@ -25,10 +25,8 @@ class TestApplication < Test::Unit::TestCase
     result
   end
 
-  def stub_options(options)
+  def stub_options(options = {})
     stub(options).opts { 'Usage:' }
-
-    stub(Jeweler::Generator::Options).new { options }
 
     options
   end
@@ -41,7 +39,10 @@ class TestApplication < Test::Unit::TestCase
 
   context "when options indicate help usage" do
     setup do
-      stub_options :show_help => true
+      stub(Jeweler::Generator::Application).build_opts do
+        stub_options(:show_help => true)
+      end
+
       stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
 
       assert_nothing_raised do
@@ -62,7 +63,10 @@ class TestApplication < Test::Unit::TestCase
 
   context "when options indicate an invalid argument" do
     setup do
-      stub_options :invalid_argument => '--invalid-argument'
+      stub(Jeweler::Generator::Application).build_opts do
+        stub_options(:invalid_argument => '--invalid-argument')
+      end
+
       stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
 
       assert_nothing_raised do
@@ -88,10 +92,14 @@ class TestApplication < Test::Unit::TestCase
 
   context "when options are good" do
     setup do
-      @options   = stub_options :project_name => 'zomg'
       @generator = "generator"
       stub(@generator).run
       stub(Jeweler::Generator).new { @generator }
+
+      @jeweler_options = stub_options :project_name => 'zomg'
+      stub(Jeweler::Generator::Application).build_options do
+        @jeweler_options
+      end
 
       assert_nothing_raised do
         @result = run_application("zomg")
@@ -101,7 +109,7 @@ class TestApplication < Test::Unit::TestCase
     should_exit_with_code 0
 
     should "create generator with options" do
-      assert_received(Jeweler::Generator) {|subject| subject.new(@options) }
+      assert_received(Jeweler::Generator) {|subject| subject.new(@jeweler_options) }
     end
 
     should "run generator" do

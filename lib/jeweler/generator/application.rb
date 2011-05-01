@@ -1,13 +1,13 @@
+require 'shellwords'
+
 class Jeweler
   class Generator
     class Application
       class << self
+        include Shellwords
+
         def run!(*arguments)
-          env_opts = if ENV['JEWELER_OPTS']
-            Jeweler::Generator::Options.new(ENV['JEWELER_OPTS'].split(' '))
-          end
-          options = Jeweler::Generator::Options.new(arguments)
-          options = options.merge(env_opts) if env_opts
+          options = build_options(arguments)
 
           if options[:invalid_argument]
             $stderr.puts options[:invalid_argument]
@@ -45,6 +45,15 @@ class Jeweler
             return 1
           end
         end
+
+        def build_options(arguments)
+          env_opts_string = ENV['JEWELER_OPTS'] || ""
+          env_opts        = Jeweler::Generator::Options.new(shellwords(env_opts_string))
+          argument_opts   = Jeweler::Generator::Options.new(arguments)
+
+          env_opts.merge(argument_opts)
+        end
+
       end
 
     end
