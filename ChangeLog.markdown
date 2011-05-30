@@ -1,3 +1,7 @@
+# jeweler 1.6.1
+
+ * Fix "undefined method 'sh'" when using rake 0.9.0 #181, #182, #184
+
 # jeweler 1.6.0
 
  * Fix generated RCov task to exclude gems
