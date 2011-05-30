@@ -1,6 +1,8 @@
 class Jeweler
   module Commands
     class InstallGem
+      include FileUtils
+
       attr_accessor :gemspec_helper, :output
 
       def initialize
