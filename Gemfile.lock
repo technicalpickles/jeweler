@@ -43,7 +43,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 2.3.5)
   bluecloth
-  bundler (~> 1.0.0)
+  bundler (~> 1.0)
   cucumber
   git (>= 1.2.5)
   mhennemeyer-output_catcher
