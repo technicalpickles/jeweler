@@ -2,12 +2,14 @@ require 'test_helper'
 
 class TestGenerator < Test::Unit::TestCase
   def build_generator(testing_framework = :shoulda, options = {})
-    options = options.merge :project_name => 'the-perfect-gem',
-                            :user_name => 'John Doe',
-                            :user_email => 'john@example.com',
-                            :github_username => 'johndoe',
-                            :github_token => 'yyz',
-                            :documentation_framework => :rdoc
+    options = {
+      :project_name => 'the-perfect-gem',
+      :user_name => 'John Doe',
+      :user_email => 'john@example.com',
+      :github_username => 'johndoe',
+      :github_token => 'yyz',
+      :documentation_framework => :rdoc
+    }.merge(options)
 
     options[:testing_framework] = testing_framework
     Jeweler::Generator.new(options)
@@ -32,6 +34,18 @@ class TestGenerator < Test::Unit::TestCase
   should "have the correct git-remote" do
     assert_equal 'user@host:/path/to/repo', build_generator(:shoulda, {:git_remote => "user@host:/path/to/repo"}).git_remote
     assert_equal 'git@github.com:johndoe/the-perfect-gem.git', build_generator.git_remote 
+  end
+
+  should "extract project name from absolut path" do
+    assert_equal "my-project", build_generator(:shoulda, {:project_name => "/tmp/my-project"}).project_name
+  end
+
+  should "extract project name from relative path" do
+    assert_equal "my-project", build_generator(:shoulda, {:project_name => "../my-project"}).project_name
+  end
+
+  should "extract project name from direct path" do
+    assert_equal "my-project", build_generator(:shoulda, {:project_name => "my-project"}).project_name
   end
 
   def self.should_have_generator_attribute(attribute, value)

@@ -57,10 +57,18 @@ class Jeweler
 
     def initialize(options = {})
       self.options = options
+      extracted_directory = nil
 
       self.project_name   = options[:project_name]
       if self.project_name.nil? || self.project_name.squeeze.strip == ""
         raise NoGitHubRepoNameGiven
+      else
+        path = File.split(self.project_name)
+
+        if path.size > 1
+          extracted_directory = File.join(path[0..-1])
+          self.project_name = path.last
+        end
       end
 
       self.development_dependencies = []
@@ -82,7 +90,7 @@ class Jeweler
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.target_dir             = options[:directory] || self.project_name
+      self.target_dir             = options[:directory] || extracted_directory || self.project_name
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
