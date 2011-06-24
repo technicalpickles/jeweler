@@ -8,19 +8,7 @@ class Jeweler
       attr_accessor :gemspec, :type
 
       def run
-        missing_dependencies = dependencies.select do |dependency|
-          begin
-            spec = Gem::Specification.find_by_name(dependency.name, *dependency.requirement.as_list)
-            if spec
-              spec.activate
-              false
-            else
-              true
-            end
-          rescue LoadError => e
-            true
-          end
-        end
+        missing_dependencies = find_missing_dependencies
 
         if missing_dependencies.empty?
           puts "#{type || 'All'} dependencies seem to be installed."
@@ -31,6 +19,29 @@ class Jeweler
           end
 
           abort "Run the specified gem commands before trying to run this again: #{$0} #{ARGV.join(' ')}"
+        end
+      end
+
+      def find_missing_dependencies
+        if Gem::Specification.respond_to?(:find_by_name)
+          dependencies.select do |dependency|
+            begin
+              spec = Gem::Specification.find_by_name(dependency.name, *dependency.requirement.as_list)
+              spec.activate if spec
+              !spec
+            rescue LoadError => e
+              true
+            end
+          end
+        else
+          dependencies.select do |dependency|
+            begin
+              Gem.activate dependency.name, *dependency.requirement.as_list
+              false
+            rescue LoadError => e
+              true
+            end
+          end
         end
       end
 
