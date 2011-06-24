@@ -10,8 +10,13 @@ class Jeweler
       def run
         missing_dependencies = dependencies.select do |dependency|
           begin
-            Gem.activate dependency.name, *dependency.requirement.as_list
-            false
+            spec = Gem::Specification.find_by_name(dependency.name, *dependency.requirement.as_list)
+            if spec
+              spec.activate
+              false
+            else
+              true
+            end
           rescue LoadError => e
             true
           end
