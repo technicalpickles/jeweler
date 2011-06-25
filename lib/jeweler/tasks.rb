@@ -76,7 +76,7 @@ class Jeweler
           abort "Expected #{jeweler.gemspec_helper.path} to exist. See 'rake gemspec:write' to create it"
         end
       end
-      
+
 
       desc "Build gem into pkg/"
       task :build do
@@ -106,7 +106,7 @@ class Jeweler
           jeweler.validate_gemspec
         end
 
-        desc "Regenreate the gemspec on the filesystem"
+        desc "Regenerate the gemspec on the filesystem"
         task :generate => :version_required do
           jeweler.write_gemspec
         end
@@ -118,7 +118,7 @@ class Jeweler
                                                     jeweler.version_helper.refresh
                                                     jeweler.version_helper.to_s
                                                   end
-          
+
           puts jeweler.gemspec_helper.to_ruby
         end
 
@@ -173,7 +173,7 @@ class Jeweler
       task :release => 'git:release'
 
       unless File.exist?('Gemfile')
-        desc "Check that runtime and development dependencies are installed" 
+        desc "Check that runtime and development dependencies are installed"
         task :check_dependencies do
           jeweler.check_dependencies
         end
@@ -218,7 +218,7 @@ class Jeweler
         # return the $LOAD_PATH to it's original state
         $LOAD_PATH.reject! { |path| !(original_load_path.include?(path)) }
       end
-      
+
     end
   end
 end
