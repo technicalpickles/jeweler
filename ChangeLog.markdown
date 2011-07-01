@@ -1,6 +1,12 @@
+# jeweler 1.6.3
+
+ * Fix typo in Rake tasks
+ * Fix deprecation warnings for `Gem.activate`
+
 # jeweler 1.6.2
 
  * Loosen bundler dependency to work with 1.x #180
+
 # jeweler 1.6.1
 
  * Fix "undefined method 'sh'" when using rake 0.9.0 #181, #182, #184
