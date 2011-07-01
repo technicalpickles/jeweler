@@ -5,14 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jeweler}
-  s.version = "1.6.2"
+  s.version = "1.6.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Josh Nichols}]
-  s.date = %q{2011-06-01}
+  s.authors = ["Josh Nichols"]
+  s.date = %q{2011-07-01}
+  s.default_executable = %q{jeweler}
   s.description = %q{Simple and opinionated helper for creating Rubygem projects on GitHub}
   s.email = %q{josh@technicalpickles.com}
-  s.executables = [%q{jeweler}]
+  s.executables = ["jeweler"]
   s.extra_rdoc_files = [
     "ChangeLog.markdown",
     "LICENSE.txt",
@@ -179,12 +180,13 @@ Gem::Specification.new do |s|
     "test/test_jeweler.rb"
   ]
   s.homepage = %q{http://github.com/technicalpickles/jeweler}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.4}
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Opinionated tool for creating and managing RubyGem projects}
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
