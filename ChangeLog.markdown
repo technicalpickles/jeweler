@@ -1,7 +1,7 @@
 # jeweler 1.6.3
 
- * Fix typo in Rake tasks
- * Fix deprecation warnings for `Gem.activate`
+ * Fix typo in Rake tasks, thanks yehezkielbs! #193
+ * Fix deprecation warnings for `Gem.activate`, thanks tickmichaeledgar! #191
 
 # jeweler 1.6.2
 
