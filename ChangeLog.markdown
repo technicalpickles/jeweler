@@ -1,3 +1,8 @@
+# jeweler 1.6.4, 2011-07-07
+
+ * Generator can now take an path to generate into, rather than just the name of the directory, ie `jeweler /path/to/awesomeness', not `jeweler --directory /path/to awesomeness`. Thanks invadersmustdie! #187
+ * Generator's --directory is deprecated and will be removed for 2.0.0
+
 # jeweler 1.6.3
 
  * Fix typo in Rake tasks, thanks yehezkielbs! #193
