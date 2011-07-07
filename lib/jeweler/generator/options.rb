@@ -25,7 +25,8 @@ class Jeweler
         @opts = OptionParser.new do |o|
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
 
-          o.on('--directory [DIRECTORY]', 'specify the directory to generate into') do |directory|
+          o.on('--directory [DIRECTORY]', 'specify the directory to generate into (deprecated)') do |directory|
+            warn "--directory is deprecated and will be removed in 2.0.0. Please specify an absolute path to a directoy as the last argument instead" # DEPRECATE
             self[:directory] = directory
           end
 

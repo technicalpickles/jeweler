@@ -86,9 +86,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
   end
 
 
-  arguments = ['--directory',
-               "#{@working_dir}/#{@name}",
-               '--summary', @summary,
+  arguments = [ '--summary', @summary,
                '--description', @description,
                 @use_cucumber ? '--cucumber' : nil,
                 @testing_framework ? "--#{@testing_framework}" : nil,
@@ -101,7 +99,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 else nil
                 end,
                 @documentation_framework ? "--#{@documentation_framework}" : nil,
-                @name].compact
+                "#{@working_dir}/#{@name}"].compact
 
 
   @stdout = OutputCatcher.catch_out do
