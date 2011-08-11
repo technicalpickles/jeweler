@@ -204,6 +204,7 @@ That means you can define your own namespaces, tasks, or use third party Rake li
 ## Contributing to Jeweler
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Ask on the [mailing list](http://groups.google.com/group/jeweler-rb) for feedback on your proposal, to see if somebody else has done it.
 * Check out the [issue tracker](http://github.com/technicalpickles/jeweler/issues) to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
 * Start a feature/bugfix branch
