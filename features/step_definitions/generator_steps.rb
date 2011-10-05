@@ -139,6 +139,7 @@ end
 Then /^a sane '.gitignore' is created$/ do
   Then "a file named 'the-perfect-gem/.gitignore' is created"
   Then "'coverage' is ignored by git"
+  Then "'coverage.data' is ignored by git"
   Then "'*.swp' is ignored by git"
   Then "'.DS_Store' is ignored by git"
   Then "'rdoc' is ignored by git"
