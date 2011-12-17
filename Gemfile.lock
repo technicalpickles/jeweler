@@ -16,6 +16,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     git (1.2.5)
+    json (1.6.3)
     json_pure (1.4.6)
     linecache (0.43)
     mhennemeyer-output_catcher (1.0.1)
@@ -23,6 +24,8 @@ GEM
       rake
     rake (0.8.7)
     rcov (0.9.8)
+    rdoc (3.12)
+      json (~> 1.4)
     redgreen (1.2.2)
     rr (0.10.11)
     ruby-debug (0.10.3)
@@ -50,6 +53,7 @@ DEPENDENCIES
   mocha
   rake
   rcov
+  rdoc
   redgreen
   rr
   ruby-debug

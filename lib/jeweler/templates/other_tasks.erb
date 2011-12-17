@@ -71,7 +71,7 @@ task :default => :<%= default_task %>
 
 <% case documentation_framework %>
 <% when :rdoc %>
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 

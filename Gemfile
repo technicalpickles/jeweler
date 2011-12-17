@@ -4,6 +4,7 @@ source "http://gems.github.com"
 gem "rake"
 gem "git", ">= 1.2.5"
 gem "bundler", "~> 1.0"
+gem "rdoc"
 
 group :development do
   gem "shoulda"
