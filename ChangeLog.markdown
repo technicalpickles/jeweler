@@ -1,3 +1,10 @@
+# jeweler 1.7.0, 2012-01-23
+
+ * Better grammars in README!
+ * Generated Rakefile no longer uses deprecated rake/rdoctask
+ * Added `rake clean`
+ * `rake release` calls `rake clean` to avoid packaging built gems in pkg #216
+
 # jeweler 1.6.4, 2011-07-07
 
  * Generator can now take an path to generate into, rather than just the name of the directory, ie `jeweler /path/to/awesomeness', not `jeweler --directory /path/to awesomeness`. Thanks invadersmustdie! #187
