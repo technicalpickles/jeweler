@@ -14,6 +14,11 @@ class Jeweler
             options[:show_help] = true
           end
 
+          if options[:show_version]
+            $stderr.puts Jeweler::Version::STRING
+            return 1
+          end
+
           if options[:show_help]
             $stderr.puts options.opts
             return 1

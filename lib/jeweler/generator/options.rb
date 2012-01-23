@@ -140,6 +140,10 @@ class Jeweler
           o.on('--rdoc', 'use rdoc for documentation') do
             self[:documentation_framework] = :rdoc
           end
+          
+          o.on('-v', '--version', 'show version') do
+            self[:show_version] = true
+          end
 
           o.on_tail('-h', '--help', 'display this help and exit') do
             self[:show_help] = true
