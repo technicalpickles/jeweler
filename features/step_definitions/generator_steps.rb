@@ -72,7 +72,7 @@ Given /^I set JEWELER_OPTS env variable to "(.*)"$/ do |val|
 end
 
 When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)'$/ do |testing_framework, name, summary|
-  When "I generate a #{testing_framework}project named '#{name}' that is '#{summary}' and described as ''"
+  step "I generate a #{testing_framework}project named '#{name}' that is '#{summary}' and described as ''"
 end
 
 When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and described as '([^']*)'$/ do |testing_framework, name, summary, description|
@@ -117,9 +117,9 @@ Then /^a directory named '(.*)' is created$/ do |directory|
 end
 
 Then "cucumber directories are created" do
-  Then "a directory named 'the-perfect-gem/features' is created"
-  Then "a directory named 'the-perfect-gem/features/support' is created"
-  Then "a directory named 'the-perfect-gem/features/step_definitions' is created"
+  step "a directory named 'the-perfect-gem/features' is created"
+  step "a directory named 'the-perfect-gem/features/support' is created"
+  step "a directory named 'the-perfect-gem/features/step_definitions' is created"
 end
 
 
@@ -137,13 +137,13 @@ Then /^a file named '(.*)' is not created$/ do |file|
 end
 
 Then /^a sane '.gitignore' is created$/ do
-  Then "a file named 'the-perfect-gem/.gitignore' is created"
-  Then "'coverage' is ignored by git"
-  Then "'coverage.data' is ignored by git"
-  Then "'*.swp' is ignored by git"
-  Then "'.DS_Store' is ignored by git"
-  Then "'rdoc' is ignored by git"
-  Then "'pkg' is ignored by git"
+  step "a file named 'the-perfect-gem/.gitignore' is created"
+  step "'coverage' is ignored by git"
+  step "'coverage.data' is ignored by git"
+  step "'*.swp' is ignored by git"
+  step "'.DS_Store' is ignored by git"
+  step "'rdoc' is ignored by git"
+  step "'pkg' is ignored by git"
 end
 
 Then /^'(.*)' is ignored by git$/ do |git_ignore|
@@ -201,12 +201,12 @@ end
 
 Then /^'(.*)' mentions copyright belonging to me in the current year$/ do |file|
   current_year = Time.now.year
-  Then "'#{file}' mentions copyright belonging to me in #{current_year}"
+  step "'#{file}' mentions copyright belonging to me in #{current_year}"
 end
 
 
 Then /^LICENSE\.txt credits '(.*)'$/ do |copyright_holder|
-  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  step "a file named 'the-perfect-gem/LICENSE.txt' is created"
   @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match copyright_holder, @license_content
 end
@@ -218,7 +218,7 @@ end
 
 
 Then /^LICENSE\.txt has a copyright in the year (\d+)$/ do |year|
-  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  step "a file named 'the-perfect-gem/LICENSE.txt' is created"
   @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match year, @license_content
 end
@@ -261,11 +261,11 @@ Then /^'(.*)' does not require '(.*)'$/ do |file, lib|
 end
 
 Then /^Rakefile does not require '(.*)'$/ do |file|
-  Then "'Rakefile' does not require '#{file}'"
+  step "'Rakefile' does not require '#{file}'"
 end
 
 Then /^Rakefile requires '(.*)'$/ do |file|
-  Then "'Rakefile' requires '#{file}'"
+  step "'Rakefile' requires '#{file}'"
 end
 
 Then /^Rakefile does not instantiate a (.*)$/ do |task_name|

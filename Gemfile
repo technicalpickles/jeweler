@@ -15,7 +15,7 @@ group :development do
   gem "test-construct"
   gem "yard", "~> 0.6.0"
   gem "bluecloth"
-  gem "cucumber"
+  gem "cucumber", "~> 1.1.4"
   gem "rcov"
   gem "timecop"
   gem "activesupport", "~> 2.3.5"
