@@ -14,7 +14,7 @@ Feature: generated Rakefile
     And 'Rakefile' sets up bundler using the default and development groups
     And 'Rakefile' requires 'rubygems'
     And 'Rakefile' requires 'rake'
-    And 'Rakefile' requires 'rake/rdoctask'
+    And 'Rakefile' requires 'rdoc/task'
     And Rakefile has 'the-perfect-gem' for the Jeweler::Tasks name
     And Rakefile has 'bar@example.com' for the Jeweler::Tasks email
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
@@ -123,7 +123,7 @@ Feature: generated Rakefile
     Given I want to use yard instead of rdoc
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
-    Then 'Rakefile' does not require 'rake/rdoctask'
+    Then 'Rakefile' does not require 'rdoc/task'
     And 'Rakefile' requires 'yard'
     And Rakefile instantiates a YARD::Rake::YardocTask
 
@@ -132,7 +132,7 @@ Feature: generated Rakefile
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
 
     Then 'Rakefile' does not require 'yard'
-    And 'Rakefile' requires 'rake/rdoctask'
+    And 'Rakefile' requires 'rdoc/task'
     And Rakefile does not instantiate a YARD::Rake::YardocTask
     And Rakefile instantiates a Rake::RDocTask.new
 
