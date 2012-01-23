@@ -37,6 +37,28 @@ class TestApplication < Test::Unit::TestCase
     end
   end
 
+
+  context "when options indicate version" do
+    setup do
+      stub(Jeweler::Generator::Application).build_opts do
+        stub_options(:show_version => true)
+      end
+
+      stub(Jeweler::Generator).new { raise "Shouldn't have made this far"}
+
+      assert_nothing_raised do
+        @result = run_application("-v")
+      end
+    end
+    
+    should_exit_with_code 1
+    
+    should 'should puts option version' do
+      assert_match 'Version:', @stderr
+    end
+  end
+  
+
   context "when options indicate help usage" do
     setup do
       stub(Jeweler::Generator::Application).build_opts do

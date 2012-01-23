@@ -141,6 +141,18 @@ class TestOptions < Test::Unit::TestCase
       assert_equal 'foo', @options[:directory]
     end
   end
+  
+  for_options '--version' do
+    should 'show version' do
+      assert @options[:show_version]
+    end
+  end
+  
+  for_options '-v' do
+    should 'show version' do
+      assert @options[:show_version]
+    end
+  end
 
   for_options '--help' do
     should 'show help' do
