@@ -1,6 +1,10 @@
 require 'rake'
 require 'rake/tasklib'
 
+# Clean up after gem building
+require 'rake/clean'
+CLEAN.include('pkg/*.gem')
+
 class Rake::Application
   attr_accessor :jeweler_tasks
 
@@ -83,6 +87,8 @@ class Jeweler
         jeweler.build_gem
       end
 
+
+
       desc "Build and install gem using `gem install`"
       task :install => [:build] do
         jeweler.install_gem
@@ -94,7 +100,7 @@ class Jeweler
       end
 
       desc "Release gem"
-      task :release do
+      task :release => :clean do
       end
 
       desc "Generate and validate gemspec"
