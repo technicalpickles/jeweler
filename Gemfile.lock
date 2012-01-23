@@ -45,7 +45,7 @@ DEPENDENCIES
   activesupport (~> 2.3.5)
   bluecloth
   bundler (~> 1.0)
-  cucumber
+  cucumber (~> 1.1.4)
   git (>= 1.2.5)
   mhennemeyer-output_catcher
   mocha

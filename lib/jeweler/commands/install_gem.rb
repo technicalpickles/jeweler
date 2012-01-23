@@ -17,7 +17,7 @@ class Jeweler
       end
 
       def gem_command
-        "#{Config::CONFIG['RUBY_INSTALL_NAME']} -S gem"
+        "#{RbConfig::CONFIG['RUBY_INSTALL_NAME']} -S gem"
       end
 
       def self.build_for(jeweler)
