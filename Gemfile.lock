@@ -21,7 +21,7 @@ GEM
     mhennemeyer-output_catcher (1.0.1)
     mocha (0.9.8)
       rake
-    rake (0.8.7)
+    rake (0.9.2.2)
     rcov (0.9.8)
     redgreen (1.2.2)
     rr (0.10.11)
