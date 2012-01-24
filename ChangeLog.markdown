@@ -1,3 +1,7 @@
+# jeweler 1.8.1, 2012-01-24
+
+ * Generated projects using yard now use ~> 0.7.4 #219
+
 # jeweler 1.8.0, 2012-01-23
 
  * Generator now has a --version flag #217
