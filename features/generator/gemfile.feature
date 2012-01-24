@@ -24,6 +24,8 @@ Feature: generated Gemfiel
     And 'Gemfile' has a development dependency on 'bundler'
     And 'Gemfile' has a development dependency on the current version of jeweler
     And 'Gemfile' has a development dependency on 'rcov'
+    And 'Gemfile' has a development dependency on 'rdoc'
+    And 'Gemfile' does not have a development dependency on 'yard'
 
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
@@ -60,6 +62,12 @@ Feature: generated Gemfiel
     Given I want roodi
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'Gemfile' has a development dependency on 'roodi'
+
+  Scenario: rdoc
+    Given I want to use rdoc instead of yard
+    When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
+    Then 'Gemfile' has a development dependency on 'rdoc'
+    And 'Gemfile' does not have a development dependency on 'yard'
 
   Scenario: yard
     Given I want to use yard instead of rdoc
