@@ -36,7 +36,7 @@ GEM
     term-ansicolor (1.0.7)
     test-construct (1.2.0)
     timecop (0.3.5)
-    yard (0.6.1)
+    yard (0.7.4)
 
 PLATFORMS
   ruby
@@ -58,4 +58,4 @@ DEPENDENCIES
   shoulda
   test-construct
   timecop
-  yard (~> 0.6.0)
+  yard (~> 0.6)
