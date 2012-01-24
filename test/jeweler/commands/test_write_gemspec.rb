@@ -47,7 +47,7 @@ class Jeweler
 
         should "update gemspec date to the beginning of today" do
           @command.run
-          assert_equal Time.mktime(@now.year, @now.month, @now.day, 0, 0), @gemspec.date
+          assert_equal Time.gm(@now.year, @now.month, @now.day, 0, 0), @gemspec.date
         end
 
         should "write gemspec" do
