@@ -58,4 +58,4 @@ DEPENDENCIES
   shoulda
   test-construct
   timecop
-  yard (~> 0.6)
+  yard (~> 0.7.4)

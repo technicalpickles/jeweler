@@ -13,7 +13,7 @@ group :development do
   gem "mocha"
   gem "redgreen"
   gem "test-construct"
-  gem "yard", "~> 0.6"
+  gem "yard", "~> 0.7.4"
   gem "rdoc"
   gem "bluecloth"
   gem "cucumber", "~> 1.1.4"
