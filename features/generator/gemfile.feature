@@ -65,6 +65,7 @@ Feature: generated Gemfiel
     Given I want to use yard instead of rdoc
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
     Then 'Gemfile' has a development dependency on 'yard'
+    Then 'Gemfile' has a development dependency on 'rdoc'
 
   Scenario: shindo
     When I generate a shindo project named 'the-perfect-gem' that is 'zomg, so good'
