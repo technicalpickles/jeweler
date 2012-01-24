@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "jeweler"
-  s.version = "1.7.0"
+  s.version = "1.8.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = "2012-01-23"
+  s.date = "2012-01-24"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   s.email = "josh@technicalpickles.com"
   s.executables = ["jeweler"]
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".yardopts",
     "ChangeLog.markdown",
     "Gemfile",
     "Gemfile.lock",
@@ -198,7 +199,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<redgreen>, [">= 0"])
       s.add_development_dependency(%q<test-construct>, [">= 0"])
-      s.add_development_dependency(%q<yard>, ["~> 0.6.0"])
+      s.add_development_dependency(%q<yard>, ["~> 0.6"])
+      s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<bluecloth>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, ["~> 1.1.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
@@ -216,7 +218,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<redgreen>, [">= 0"])
       s.add_dependency(%q<test-construct>, [">= 0"])
-      s.add_dependency(%q<yard>, ["~> 0.6.0"])
+      s.add_dependency(%q<yard>, ["~> 0.6"])
+      s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<bluecloth>, [">= 0"])
       s.add_dependency(%q<cucumber>, ["~> 1.1.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
@@ -235,7 +238,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<redgreen>, [">= 0"])
     s.add_dependency(%q<test-construct>, [">= 0"])
-    s.add_dependency(%q<yard>, ["~> 0.6.0"])
+    s.add_dependency(%q<yard>, ["~> 0.6"])
+    s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<bluecloth>, [">= 0"])
     s.add_dependency(%q<cucumber>, ["~> 1.1.4"])
     s.add_dependency(%q<rcov>, [">= 0"])
