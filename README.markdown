@@ -5,6 +5,8 @@ Jeweler provides the noble ruby developer with two primary features:
  * a library for managing and releasing RubyGem projects
  * a scaffold generator for starting new RubyGem projects
 
+[![Build Status](https://secure.travis-ci.org/technicalpickles/jeweler.png)](http://travis-ci.org/technicalpickles/jeweler])
+
 ## Hello, world
 
 Use RubyGems to install the heck out of jeweler to get started: 
