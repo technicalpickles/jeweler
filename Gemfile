@@ -9,7 +9,7 @@ gem "rdoc"
 group :development do
   gem "shoulda"
   gem "mhennemeyer-output_catcher"
-  gem "rr"
+  gem "rr", "~> 1.0.4"
   gem "mocha"
   gem "redgreen"
   gem "test-construct"
