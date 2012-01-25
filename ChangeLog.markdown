@@ -1,5 +1,9 @@
 # jeweler 1.8.2, 2012-01-24
 
+ * Fixed jeweler's circular dependency on itself #224
+
+# jeweler 1.8.2, 2012-01-24
+
  * Standardize on invoking jeweler in development: bundle exec jeweler #220
  * Add travis-ci configuration and build status to README #222
  * Updated version of rspec used by generator to 2.8.0 #223
