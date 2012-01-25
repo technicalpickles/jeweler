@@ -1,14 +1,9 @@
 require 'test/unit'
 require 'rubygems'
 
-begin
-  require 'ruby-debug'
-rescue LoadError
-end
-
 require 'bundler'
 begin
-  Bundler.setup(:default, :test)
+  Bundler.setup(:default, :xzibit, :test)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
   $stderr.puts "Run `bundle install` to install missing gems"
@@ -23,7 +18,6 @@ require 'construct'
 require 'git'
 require 'time'
 
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require 'jeweler'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))

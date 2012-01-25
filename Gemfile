@@ -1,9 +1,6 @@
 source "http://rubygems.org"
 source "http://gems.github.com"
 
-# steal a page from bundler's gemspec:
-# add this directory as jeweler, in order to bundle exec jeweler and use the current working directory
-gem 'jeweler', :path => '.'
 
 gem "rake"
 gem "git", ">= 1.2.5"
@@ -29,6 +26,14 @@ group :test do
   gem "test-construct"
   gem "rake"
 end
+
+# yo dawg, i herd u lieked jeweler
+group :xzibit do
+  # steal a page from bundler's gemspec:
+  # add this directory as jeweler, in order to bundle exec jeweler and use the current working directory
+  gem 'jeweler', :path => '.'
+end
+
 
 group :debug do
   gem (RUBY_VERSION =~ /^1\.9/ ? "ruby-debug19" : "ruby-debug")
