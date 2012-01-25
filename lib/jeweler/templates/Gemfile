@@ -7,6 +7,6 @@ source "http://rubygems.org"
 # Include everything needed to run rake, tests, features, etc.
 group :development do
 <% development_dependencies.each do |name, version| %>
-  gem "<%= name %>", "<%= version %>"
+  <% if name =~ /RUBY_VERSION/ %>gem <%= name %>, "<%= version %>"<% else %>gem "<%= name %>", "<%= version %>"<% end %>
 <% end %>
 end
