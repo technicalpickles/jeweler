@@ -12,7 +12,7 @@ group :development do
   gem "rdoc"
   gem "bluecloth"
   gem "cucumber", "~> 1.1.4"
-  gem "rcov"
+  gem (RUBY_VERSION =~ /^1\.9/ ? "simplecov" : "rcov")
 end
 
 group :test do
