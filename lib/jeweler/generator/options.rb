@@ -11,11 +11,6 @@ class Jeweler
         self[:documentation_framework] = :rdoc
         self[:use_bundler]             = true
 
-        git_config =  if Pathname.new("~/.gitconfig").expand_path.exist?
-                        Git.global_config
-                      else
-                        {}
-                      end
         self[:user_name]       = ENV['GIT_AUTHOR_NAME']  || ENV['GIT_COMMITTER_NAME']  || git_config['user.name']
         self[:user_email]      = ENV['GIT_AUTHOR_EMAIL'] || ENV['GIT_COMMITTER_EMAIL'] || git_config['user.email']
         self[:github_username] = git_config['github.user']
@@ -160,6 +155,21 @@ class Jeweler
 
       def merge(other)
         self.class.new(@orig_args + other.orig_args)
+      end
+
+
+      # Expose git config here, so we can stub it out for test environments
+      def self.git_config
+        @git_config  ||=  if Pathname.new("~/.gitconfig").expand_path.exist?
+                           Git.global_config
+                         else
+                           {}
+                         end
+
+      end
+
+      def git_config
+        self.class.git_config
       end
 
     end

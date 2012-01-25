@@ -20,6 +20,7 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def setup_options(*arguments)
+    stub(Jeweler::Generator::Options).git_config { valid_git_config }
     @options = Jeweler::Generator::Options.new(["project_name"] + arguments)
   end
 
