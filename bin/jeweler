@@ -1,5 +1,8 @@
-#!/usr/bin/env ruby
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+# Don't try to run this binary directory. Instead:
+# * `bundle exec jeweler` if doing jeweler development
+# * `bundle exec jeweler` if part of a bundle
+# * `jeweler` if installed through rubygems, relying on the rubygem wrapper
+
 require 'jeweler/generator'
 
 exit Jeweler::Generator::Application.run!(*ARGV)

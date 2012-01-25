@@ -1,6 +1,10 @@
 source "http://rubygems.org"
 source "http://gems.github.com"
 
+# steal a page from bundler's gemspec:
+# add this directory as jeweler, in order to bundle exec jeweler and use the current working directory
+gem 'jeweler', :path => '.'
+
 gem "rake"
 gem "git", ">= 1.2.5"
 gem "bundler", "~> 1.0"
