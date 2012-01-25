@@ -2,7 +2,7 @@ class Jeweler
   class Generator
     module RspecMixin
       def self.extended(generator)
-        generator.development_dependencies << ["rspec", "~> 2.3.0"]
+        generator.development_dependencies << ["rspec", "~> 2.8.0"]
       end
 
       def default_task
