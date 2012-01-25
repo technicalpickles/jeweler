@@ -1,3 +1,9 @@
+# jeweler 1.8.2, 2012-01-24
+
+ * Standardize on invoking jeweler in development: bundle exec jeweler #220
+ * Add travis-ci configuration and build status to README #222
+ * Updated version of rspec used by generator to 2.8.0 #223
+
 # jeweler 1.8.1, 2012-01-24
 
  * Generated projects using yard now use ~> 0.7.4 #219
