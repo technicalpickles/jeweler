@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jeweler (1.8.2)
+    jeweler (1.8.3)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
