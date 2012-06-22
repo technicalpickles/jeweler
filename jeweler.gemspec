@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols"]
-  s.date = "2012-01-25"
+  s.date = "2012-06-22"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   s.email = "josh@technicalpickles.com"
   s.executables = ["jeweler"]
@@ -183,7 +183,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/technicalpickles/jeweler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Opinionated tool for creating and managing RubyGem projects"
 
   if s.respond_to? :specification_version then
