@@ -289,8 +289,8 @@ class Jeweler
       begin
         login = github_username
         password = ask("Password: ") { |q| q.echo = false }
-        github = Github.new(login: login.strip, password: password.strip)
-        github.repos.create(name: project_name, description: summary)
+        github = Github.new(:login => login.strip, :password => password.strip)
+        github.repos.create(:name => project_name, :description => summary)
       rescue Github::Error::Unauthorized
         puts "Wrong login/password! Please try again"
         retry
