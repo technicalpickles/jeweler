@@ -42,7 +42,7 @@ GEM
     json (1.6.3)
     jwt (0.1.5)
       multi_json (>= 1.0)
-    linecache19 (0.5.13)
+    linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     mhennemeyer-output_catcher (1.0.1)
     mocha (0.9.8)
