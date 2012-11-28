@@ -163,10 +163,9 @@ class Test::Unit::TestCase
     @git_name = 'foo'
     @git_email = 'bar@example.com'
     @github_user = 'technicalpickles'
-    @github_token = 'zomgtoken'
   end
 
   def valid_git_config
-    { 'user.name' => @git_name, 'user.email' => @git_email, 'github.user' => @github_user, 'github.token' => @github_token }
+    { 'user.name' => @git_name, 'user.email' => @git_email, 'github.user' => @github_user }
   end
 end

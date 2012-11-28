@@ -7,7 +7,6 @@ class TestGenerator < Test::Unit::TestCase
       :user_name => 'John Doe',
       :user_email => 'john@example.com',
       :github_username => 'johndoe',
-      :github_token => 'yyz',
       :documentation_framework => :rdoc
     }.merge(options)
 
