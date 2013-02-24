@@ -9,7 +9,7 @@ Jeweler provides the noble ruby developer with two primary features:
 
 ## Hello, world
 
-Use RubyGems to install the heck out of jeweler to get started: 
+Use RubyGems to install the heck out of jeweler to get started:
 
     $ gem install jeweler
 
@@ -55,7 +55,7 @@ The `install` rake task builds the gem and `gem install`s it. You're all set if 
 
 ### Releasing
 
-At last, it's time to [ship it](http://img.skitch.com/20100310-nrgxbwqm58tibiq2un6mujqmm5.png)! Make sure you have everything committed and pushed, then go wild:
+At last, it's time to [ship it](http://shipitsquirrel.github.com/)! Make sure you have everything committed and pushed, then go wild:
 
     $ rake release
 
@@ -184,7 +184,7 @@ A common pattern is to have this in a version constant in your library. This is 
         MINOR = 2
         PATCH = 3
         BUILD = 'pre3'
-    
+
         STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
       end
     end
@@ -202,7 +202,7 @@ A common pattern is to have this in a version constant in your library. This is 
 Jeweler lives inside of Rake. As a result, they are dear friends. But, that friendship doesn't interfere with typical Rake operations.
 
 That means you can define your own namespaces, tasks, or use third party Rake libraries without cause for concern.
-    
+
 ## Contributing to Jeweler
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
