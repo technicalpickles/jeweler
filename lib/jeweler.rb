@@ -11,6 +11,7 @@ require 'jeweler/version'
 class Jeweler
   require 'jeweler/errors'
   require 'rubygems/user_interaction'
+  require 'rubygems/package'
 
   autoload :Generator,      'jeweler/generator'
 

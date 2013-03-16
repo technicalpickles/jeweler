@@ -23,8 +23,7 @@ class Jeweler
         end
 
         should "build from parsed gemspec" do
-          assert_received(Gem::Builder) {|builder_class| builder_class.new(@gemspec) }
-          assert_received(@builder) {|builder| builder.build }
+          assert_received(Gem::Package) {|builder_class| builder_class.build(@gemspec) }
         end
 
         should 'make package directory' do
@@ -82,8 +81,7 @@ class Jeweler
         @version_helper = "Jeweler::VersionHelper"
 
         @builder = Object.new
-        stub(Gem::Builder).new { @builder }
-        stub(@builder).build { 'zomg-1.2.3.gem' }
+        stub(Gem::Package).build { 'zomg-1.2.3.gem' }
 
         @file_utils = Object.new
         stub(@file_utils).mkdir_p './pkg'
