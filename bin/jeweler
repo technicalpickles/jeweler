@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # Don't try to run this binary directory. Instead:
 # * `bundle exec jeweler` if doing jeweler development
 # * `bundle exec jeweler` if part of a bundle
