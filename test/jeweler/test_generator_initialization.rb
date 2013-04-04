@@ -52,25 +52,11 @@ class TestGeneratorInitialization < Test::Unit::TestCase
       end
     end
   end
-  
-  context "without github token set" do
-    setup do
-      stub_git_config
-    end
-
-    should 'raise NoGitHubToken if creating repo' do
-      assert_raise Jeweler::NoGitHubToken do
-        Jeweler::Generator.new(:project_name => @project_name, :user_name => @git_name, :user_email => @git_email, :github_username => @github_user, :create_repo => true, :testing_framework => :shoulda, :documentation_framework => :rdoc)
-      end
-    end
-  end
-
   def build_generator(options = {})
     defaults = { :project_name => @project_name,
                  :user_name => @git_name,
                  :user_email => @git_email,
                  :github_username => @github_user,
-                 :github_token => @github_token,
                  :testing_framework =>             :shoulda,
                  :documentation_framework =>       :rdoc }
 

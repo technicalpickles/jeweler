@@ -56,15 +56,13 @@ Given /^I have configured git sanely$/ do
   @user_email = 'bar@example.com'
   @user_name = 'foo'
   @github_user = 'technicalpickles'
-  @github_token = 'zomgtoken'
 
   require 'git'
   Git.stubs(:global_config).
         returns({
           'user.name' => @user_name,
           'user.email' => @user_email,
-          'github.user' => @github_user,
-          'github.token' => @github_token})
+          'github.user' => @github_user})
 end
 
 Given /^I set JEWELER_OPTS env variable to "(.*)"$/ do |val|

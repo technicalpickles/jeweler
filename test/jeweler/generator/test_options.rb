@@ -47,11 +47,6 @@ class TestOptions < Test::Unit::TestCase
     should "use github username from git config" do
       assert_equal @github_user, @options[:github_username]
     end
-
-    should "use github token from git config" do
-      assert_equal @github_token, @options[:github_token]
-    end
-
     should "use user name from git config" do
       assert_equal @git_name, @options[:user_name]
     end
@@ -200,12 +195,6 @@ class TestOptions < Test::Unit::TestCase
   for_options '--github-username', 'mygithub' do
     should "set github username" do
       assert_equal 'mygithub', @options[:github_username]
-    end
-  end
-
-  for_options '--github-token', 'mygithubtoken' do
-    should "set github token" do
-      assert_equal 'mygithubtoken', @options[:github_token]
     end
   end
 

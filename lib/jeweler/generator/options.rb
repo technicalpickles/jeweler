@@ -14,7 +14,6 @@ class Jeweler
         self[:user_name]       = ENV['GIT_AUTHOR_NAME']  || ENV['GIT_COMMITTER_NAME']  || git_config['user.name']
         self[:user_email]      = ENV['GIT_AUTHOR_EMAIL'] || ENV['GIT_COMMITTER_EMAIL'] || git_config['user.email']
         self[:github_username] = git_config['github.user']
-        self[:github_token]    = git_config['github.token']
 
         require 'optparse'
         @opts = OptionParser.new do |o|
@@ -107,10 +106,6 @@ class Jeweler
 
           o.on('--github-username [GITHUB_USERNAME]', "name of the user on GitHub to set the project up under") do |github_username|
             self[:github_username] = github_username
-          end
-
-          o.on('--github-token [GITHUB_TOKEN]', "GitHub token to use for interacting with the GitHub API") do |github_token|
-            self[:github_token] = github_token
           end
 
           o.on('--git-remote [GIT_REMOTE]', 'URI to set the git origin remote to') do |git_remote|
