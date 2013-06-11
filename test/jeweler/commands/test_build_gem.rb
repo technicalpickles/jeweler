@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'jeweler/commands/build_gem'
 
 class Jeweler
   module Commands
