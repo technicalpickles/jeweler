@@ -80,7 +80,7 @@ class TestSpecification < Test::Unit::TestCase
       end
       repo = Git.init(@project.to_s)
       repo.add('bin/burnination')
-      repo.commit('Initial commit')
+      repo.commit('Initial commit', {:author => "who <who@where.com>"})
     end
 
     context "and there hasn't been any set on the gemspec" do
