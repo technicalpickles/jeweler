@@ -79,8 +79,10 @@ class TestSpecification < Test::Unit::TestCase
         bin.file 'trogdor'
       end
       repo = Git.init(@project.to_s)
+      repo.config('user.name', 'who')
+      repo.config('user.email', 'who@where.com')
       repo.add('bin/burnination')
-      repo.commit('Initial commit', {:author => "who <who@where.com>"})
+      repo.commit('Initial commit')
     end
 
     context "and there hasn't been any set on the gemspec" do
