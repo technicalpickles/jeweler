@@ -73,7 +73,7 @@ GEM
     test-construct (1.2.0)
     timecop (0.6.1)
     tins (0.8.0)
-    yard (0.7.5)
+    yard (0.8.6.1)
 
 PLATFORMS
   ruby
@@ -97,4 +97,4 @@ DEPENDENCIES
   shoulda
   test-construct
   timecop
-  yard (~> 0.7.4)
+  yard (~> 0.8.5)

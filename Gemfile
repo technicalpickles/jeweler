@@ -11,7 +11,7 @@ gem "rdoc"
 gem "builder"
 
 group :development do
-  gem "yard", "~> 0.7.4"
+  gem "yard", "~> 0.8.5"
   gem "rdoc"
   gem "bluecloth"
   gem "cucumber", "~> 1.1.4"
