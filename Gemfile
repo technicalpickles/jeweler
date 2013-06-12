@@ -15,7 +15,6 @@ group :development do
   gem "rdoc"
   gem "bluecloth"
   gem "cucumber", "~> 1.1.4"
-  gem "rcov"
 end
 
 group :test do
@@ -39,5 +38,4 @@ end
 
 
 group :debug do
-  gem (RUBY_VERSION =~ /^1\.9/ ? "ruby-debug19" : "ruby-debug")
 end

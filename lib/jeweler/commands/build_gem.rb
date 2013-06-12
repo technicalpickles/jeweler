@@ -1,4 +1,3 @@
-require 'rubygems/builder'
 class Jeweler
   module Commands
     class BuildGem
