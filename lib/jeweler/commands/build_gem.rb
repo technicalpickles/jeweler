@@ -13,7 +13,7 @@ class Jeweler
 
         gemspec = gemspec_helper.parse
 
-        gem_file_name = Gem::Builder.new(gemspec).build
+        gem_file_name = Gem::Package.build(gemspec)
 
         pkg_dir = File.join(base_dir, 'pkg')
         file_utils.mkdir_p pkg_dir
