@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'jeweler/commands/build_gem'
 
 class Jeweler
   module Commands
@@ -23,8 +24,12 @@ class Jeweler
         end
 
         should "build from parsed gemspec" do
-          assert_received(Gem::Builder) {|builder_class| builder_class.new(@gemspec) }
-          assert_received(@builder) {|builder| builder.build }
+          if Gem::Version.new(`gem -v`) >= Gem::Version.new("2.0.0.a")
+            assert_received(Gem::Package) {|builder_class| builder_class.build(@gemspec) }
+          else
+            assert_received(Gem::Builder) {|builder_class| builder_class.new(@gemspec) }
+            assert_received(@builder) {|builder| builder.build }
+          end
         end
 
         should 'make package directory' do
@@ -82,8 +87,12 @@ class Jeweler
         @version_helper = "Jeweler::VersionHelper"
 
         @builder = Object.new
-        stub(Gem::Builder).new { @builder }
-        stub(@builder).build { 'zomg-1.2.3.gem' }
+        if Gem::Version.new(`gem -v`) >= Gem::Version.new("2.0.0.a")
+          stub(Gem::Package).build { 'zomg-1.2.3.gem' }
+        else
+          stub(Gem::Builder).new { @builder }
+          stub(@builder).build { 'zomg-1.2.3.gem' }
+        end
 
         @file_utils = Object.new
         stub(@file_utils).mkdir_p './pkg'

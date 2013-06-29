@@ -8,13 +8,13 @@ gem "github_api", ">= 0.8.1"
 gem "highline", ">= 1.6.15"
 gem "bundler", "~> 1.0"
 gem "rdoc"
+gem "builder"
 
 group :development do
-  gem "yard", "~> 0.7.4"
+  gem "yard", "~> 0.8.5"
   gem "rdoc"
   gem "bluecloth"
   gem "cucumber", "~> 1.1.4"
-  gem "rcov"
 end
 
 group :test do
@@ -38,5 +38,4 @@ end
 
 
 group :debug do
-  gem (RUBY_VERSION =~ /^1\.9/ ? "ruby-debug19" : "ruby-debug")
 end

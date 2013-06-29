@@ -79,6 +79,8 @@ class TestSpecification < Test::Unit::TestCase
         bin.file 'trogdor'
       end
       repo = Git.init(@project.to_s)
+      repo.config('user.name', 'who')
+      repo.config('user.email', 'who@where.com')
       repo.add('bin/burnination')
       repo.commit('Initial commit')
     end
@@ -140,6 +142,8 @@ class TestSpecification < Test::Unit::TestCase
       end
 
       repo = Git.init(@project.to_s)
+      repo.config('user.name', 'who')
+      repo.config('user.email', 'who@where.com')
       repo.add('.')
       repo.commit('Initial commit')
     end
@@ -180,6 +184,8 @@ class TestSpecification < Test::Unit::TestCase
       end
 
       repo = Git.init(@project.to_s)
+      repo.config('user.name', 'who')
+      repo.config('user.email', 'who@where.com')
       repo.add('.')
       repo.commit('Initial commit')
 
@@ -206,6 +212,8 @@ class TestSpecification < Test::Unit::TestCase
       end
 
       repo = Git.init(@project.to_s)
+      repo.config('user.name', 'who')
+      repo.config('user.email', 'who@where.com')
       repo.add('.')
       repo.commit('Initial commit')
 
