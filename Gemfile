@@ -4,6 +4,9 @@ source "http://gems.github.com"
 
 gem "rake"
 gem "git", ">= 1.2.5"
+if RUBY_VERSION < "1.9.2"
+  gem "nokogiri", "1.5.10" # newer nokogiri supports only ">= 1.9.2"
+end
 gem "github_api", ">= 0.8.1"
 gem "highline", ">= 1.6.15"
 gem "bundler", "~> 1.0"
