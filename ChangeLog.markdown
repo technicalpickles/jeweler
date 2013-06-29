@@ -1,3 +1,7 @@
+# jeweler 1.8.5, 2013-06-29
+
+ * Support rubygems 2.x #238
+
 # jeweler 1.8.2, 2012-01-24
 
  * Fixed jeweler's circular dependency on itself #224
