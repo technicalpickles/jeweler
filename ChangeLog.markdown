@@ -1,3 +1,7 @@
+# jeweler 1.8.6, 2013-07-04
+
+ * Fix dependency error when install #239
+
 # jeweler 1.8.5, 2013-06-29
 
  * Support rubygems 2.x #238
