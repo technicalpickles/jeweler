@@ -19,7 +19,7 @@ group :development do
 end
 
 group :test do
-  gem "timecop"
+  gem "timecop", "~> 0.6.2"
   gem "activesupport", "~> 2.3.5"
   gem "shoulda"
   gem "mhennemeyer-output_catcher"
