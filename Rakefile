@@ -16,7 +16,7 @@ require 'jeweler'
 
 Jeweler::Tasks.new do |gem|
   gem.name = "jeweler"
-  gem.version = "1.8.6"
+  gem.version = Jeweler::Version::STRING
   gem.homepage = "http://github.com/technicalpickles/jeweler"
   gem.summary = "Opinionated tool for creating and managing RubyGem projects"
   gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
