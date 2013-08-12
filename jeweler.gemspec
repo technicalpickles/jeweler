@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "jeweler"
-  s.version = "1.8.6"
+  s.version = "1.8.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols", "Yusuke Murata"]
-  s.date = "2013-07-04"
+  s.date = "2013-08-12"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   s.email = ["josh@technicalpickles.com", "info@muratayusuke.com"]
   s.executables = ["jeweler"]
@@ -182,11 +182,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/technicalpickles/jeweler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "2.0.3"
   s.summary = "Opinionated tool for creating and managing RubyGem projects"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rake>, [">= 0"])

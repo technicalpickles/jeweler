@@ -1,3 +1,9 @@
+# jeweler 1.8.7, 2013-08-12
+
+ * Lock timecop version to 0.6.1 to keep support of 1.8.7 #243
+ * Bump version in version.rb to reflect released gem version
+ * jeweler's Rakefile reads version from version.rb
+
 # jeweler 1.8.6, 2013-07-04
 
  * Fix dependency error when install #239
