@@ -1,13 +1,13 @@
 class Jeweler
   module Commands
-    autoload :BuildGem, 'jeweler/commands/build_gem'
-    autoload :InstallGem, 'jeweler/commands/install_gem'
+    autoload :BuildGem,          'jeweler/commands/build_gem'
+    autoload :InstallGem,        'jeweler/commands/install_gem'
     autoload :CheckDependencies, 'jeweler/commands/check_dependencies'
-    autoload :ReleaseToGit, 'jeweler/commands/release_to_git'
-    autoload :ReleaseGemspec, 'jeweler/commands/release_gemspec'
+    autoload :ReleaseToGit,      'jeweler/commands/release_to_git'
+    autoload :ReleaseGemspec,    'jeweler/commands/release_gemspec'
     autoload :ReleaseToRubygems, 'jeweler/commands/release_to_rubygems'
-    autoload :ValidateGemspec, 'jeweler/commands/validate_gemspec'
-    autoload :WriteGemspec, 'jeweler/commands/write_gemspec'
+    autoload :ValidateGemspec,   'jeweler/commands/validate_gemspec'
+    autoload :WriteGemspec,      'jeweler/commands/write_gemspec'
 
     module Version
       autoload :Base,      'jeweler/commands/version/base'
