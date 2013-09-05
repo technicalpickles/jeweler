@@ -22,7 +22,7 @@ class Jeweler
 
         def commit_version
           if self.repo
-            self.repo.add(working_subdir.join(version_helper.path))
+            self.repo.add(working_subdir.join(version_helper.path).to_s)
             self.repo.commit("Version bump to #{self.version_helper.to_s}")
           end
         end
