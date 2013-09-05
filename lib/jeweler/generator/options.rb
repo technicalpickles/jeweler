@@ -20,7 +20,7 @@ class Jeweler
           o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
 
           o.on('--directory [DIRECTORY]', 'specify the directory to generate into (deprecated)') do |directory|
-            warn "--directory is deprecated and will be removed in 2.0.0. Please specify an absolute path to a directoy as the last argument instead" # DEPRECATE
+            warn "--directory is deprecated and will be removed in 2.0.0. Please specify an absolute path to a directory as the last argument instead" # DEPRECATE
             self[:directory] = directory
           end
 
@@ -130,7 +130,7 @@ class Jeweler
           o.on('--rdoc', 'use rdoc for documentation') do
             self[:documentation_framework] = :rdoc
           end
-          
+
           o.on('-v', '--version', 'show version') do
             self[:show_version] = true
           end
