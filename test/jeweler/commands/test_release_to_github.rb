@@ -37,7 +37,43 @@ class Jeweler
           end
 
           should "push" do
-            assert_received(@repo) {|repo| repo.push }
+            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
+          end
+
+        end
+
+        context "happily with different remote, local branch and remote branch" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+
+            stub(@repo).checkout(anything)
+
+            stub(@command).regenerate_gemspec!
+
+            stub(@command).gemspec_changed? { true }
+            stub(@command).commit_gemspec! { true }
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+
+            @command.run({:remote => 'upstream', :local_branch => 'branch', :remote_branch => 'remote_branch'})
+          end
+
+          should "checkout local branch" do
+            assert_received(@repo) {|repo| repo.checkout('branch') }
+          end
+
+          should "regenerate gemspec" do
+            assert_received(@command) {|command| command.regenerate_gemspec! }
+          end
+
+          should "commit gemspec" do
+            assert_received(@command) {|command| command.commit_gemspec! }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push('upstream', 'branch:remote_branch') }
           end
 
         end
@@ -87,7 +123,7 @@ class Jeweler
           end
 
           should "push" do
-            assert_received(@repo) {|repo| repo.push }
+            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
           end
 
         end
@@ -123,7 +159,7 @@ class Jeweler
           end
 
           should "push" do
-            assert_received(@repo) {|repo| repo.push }
+            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
           end
 
         end

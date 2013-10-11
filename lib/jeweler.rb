@@ -125,12 +125,12 @@ class Jeweler
     command.run
   end
 
-  def release_gemspec
-    Jeweler::Commands::ReleaseGemspec.build_for(self).run
+  def release_gemspec(args)
+    Jeweler::Commands::ReleaseGemspec.build_for(self).run(args)
   end
 
-  def release_to_git
-    Jeweler::Commands::ReleaseToGit.build_for(self).run
+  def release_to_git(args)
+    Jeweler::Commands::ReleaseToGit.build_for(self).run(args)
   end
 
   def release_gem_to_rubygems

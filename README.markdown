@@ -65,6 +65,13 @@ This will automatically:
  * Use `git` to tag `v0.1.0` and push it
  * Build `hello-gem-0.1.0.gem` and push it to [rubygems.org](http://rubygems.org/gems/)
 
+`rake release` accepts remote(default: `origin`), local branch(default: `master`) and remote branch(default: `master`)as optional arguments.
+
+    $ rake release[upstream,critical-security-fix,v3]
+
+This will tag and push the commits on your local branch named `critical-security-fix` to branch named `v3` in remote named `upstream` (if you have commit rights
+on `upstream`) and release the gem.
+
 ### Version bumping
 
 It feels good to release code. Do it, do it often. But before that, bump the version. Then release it. There's a few ways to update the version:

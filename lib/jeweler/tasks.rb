@@ -129,12 +129,12 @@ class Jeweler
         end
 
         desc "Regenerate and validate gemspec, and then commits and pushes to git"
-        task :release do
-          jeweler.release_gemspec
+        task :release, :remote, :local_branch, :remote_branch do |task, args|
+          jeweler.release_gemspec(args)
         end
       end
 
-      task :release => 'gemspec:release'
+      task :release, [:remote, :local_branch, :remote_branch] => 'gemspec:release'
 
 
       unless yield_gemspec_set_version?
@@ -171,12 +171,12 @@ class Jeweler
 
       namespace :git do
         desc "Tag and push release to git. (happens by default with `rake release`)"
-        task :release do
-          jeweler.release_to_git
+        task :release, :remote, :local_branch, :remote_branch do |task, args|
+          jeweler.release_to_git(args)
         end
       end
 
-      task :release => 'git:release'
+      task :release, [:remote, :local_branch, :remote_branch] => 'git:release'
 
       unless File.exist?('Gemfile')
         desc "Check that runtime and development dependencies are installed"
