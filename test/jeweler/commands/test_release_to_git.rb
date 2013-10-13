@@ -64,6 +64,37 @@ class Jeweler
 
         end
 
+        context "happily with different branch" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+            stub(@command).release_tag { "v3.2.0" }
+
+            stub(@repo).checkout(anything)
+            stub(@repo) do
+              add_tag(anything)
+              push(anything, anything)
+            end
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+
+            @command.run({:branch => 'v3'})
+          end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('v3') }
+          end
+
+          should "tag version" do
+            assert_received(@repo) {|repo| repo.add_tag('v3.2.0') }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push('origin', 'v3:v3') }
+          end
+        end
+
         context "with an unclean staging area" do
           setup do
             stub(@command).clean_staging_area? { false }

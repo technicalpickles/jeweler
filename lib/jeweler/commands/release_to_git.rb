@@ -12,9 +12,10 @@ class Jeweler
       end
 
       def run(args = {})
-        local_branch = args[:local_branch] || 'master'
-        remote_branch = args[:remote_branch] || 'master'
         remote = args[:remote] || 'origin'
+        branch = args[:branch] || 'master'
+        local_branch = args[:local_branch] || branch
+        remote_branch = args[:remote_branch] || branch
 
         unless clean_staging_area?
           system "git status"

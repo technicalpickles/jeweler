@@ -68,6 +68,15 @@ class Jeweler
       ! yielded_gemspec.version.nil?
     end
 
+    def release_args
+      args = {}
+      args[:remote] = ENV['REMOTE']
+      args[:branch] = ENV['BRANCH']
+      args[:local_branch] = ENV['LOCAL_BRANCH']
+      args[:remote_branch] = ENV['REMOTE_BRANCH']
+      return args
+    end
+
     def define
       task :version_required do
         if jeweler.expects_version_file? && !jeweler.version_file_exists?
@@ -129,12 +138,12 @@ class Jeweler
         end
 
         desc "Regenerate and validate gemspec, and then commits and pushes to git"
-        task :release, :remote, :local_branch, :remote_branch do |task, args|
-          jeweler.release_gemspec(args)
+        task :release do
+          jeweler.release_gemspec(release_args)
         end
       end
 
-      task :release, [:remote, :local_branch, :remote_branch] => 'gemspec:release'
+      task :release => 'gemspec:release'
 
 
       unless yield_gemspec_set_version?
@@ -171,12 +180,12 @@ class Jeweler
 
       namespace :git do
         desc "Tag and push release to git. (happens by default with `rake release`)"
-        task :release, :remote, :local_branch, :remote_branch do |task, args|
-          jeweler.release_to_git(args)
+        task :release do
+          jeweler.release_to_git(release_args)
         end
       end
 
-      task :release, [:remote, :local_branch, :remote_branch] => 'git:release'
+      task :release => 'git:release'
 
       unless File.exist?('Gemfile')
         desc "Check that runtime and development dependencies are installed"

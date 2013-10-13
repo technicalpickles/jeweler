@@ -65,12 +65,18 @@ This will automatically:
  * Use `git` to tag `v0.1.0` and push it
  * Build `hello-gem-0.1.0.gem` and push it to [rubygems.org](http://rubygems.org/gems/)
 
-`rake release` accepts remote(default: `origin`), local branch(default: `master`) and remote branch(default: `master`)as optional arguments.
+`rake release` accepts REMOTE(default: `origin`), LOCAL_BRANCH(default: `master`), REMOTE_BRANCH(default: `master`) and BRANCH(default: master)as options.
 
-    $ rake release[upstream,critical-security-fix,v3]
+    $ rake release REMOTE=upstream LOCAL_BRANCH=critical-security-fix REMOTE_BRANCH=v3
 
 This will tag and push the commits on your local branch named `critical-security-fix` to branch named `v3` in remote named `upstream` (if you have commit rights
 on `upstream`) and release the gem.
+
+    $ rake release BRANCH=v3
+
+If both remote and local branches are the same, use `BRANCH` option to simplify.
+This will tag and push the commits on your local branch named `v3` to branch named `v3` in remote named `origin` (if you have commit rights
+on `origin`) and release the gem.
 
 ### Version bumping
 
