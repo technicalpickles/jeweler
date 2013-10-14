@@ -136,24 +136,26 @@ class TestJeweler < Test::Unit::TestCase
 
   should "build and run release to github command when running release_gemspec" do
     jeweler = build_jeweler
+    args = {}
 
     command = Object.new
-    mock(command).run
+    mock(command).run(args)
 
     mock(Jeweler::Commands::ReleaseGemspec).build_for(jeweler) { command }
 
-    jeweler.release_gemspec
+    jeweler.release_gemspec(args)
   end
 
   should "build and run release to git command when running release_to_git" do
     jeweler = build_jeweler
+    args = {}
 
     command = Object.new
-    mock(command).run
+    mock(command).run(args)
 
     mock(Jeweler::Commands::ReleaseToGit).build_for(jeweler) { command }
 
-    jeweler.release_to_git
+    jeweler.release_to_git(args)
   end
 
   should "respond to gemspec_helper" do

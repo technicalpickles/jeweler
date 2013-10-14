@@ -27,9 +27,72 @@ class Jeweler
           end
 
           should "push" do
-            assert_received(@repo) {|repo| repo.push }
+            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
           end
 
+        end
+
+        context "happily with different remote, local branch and remote branch" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+            stub(@command).release_tag { "v1.2.0" }
+
+            stub(@repo).checkout(anything)
+            stub(@repo) do
+              add_tag(anything)
+              push(anything, anything)
+            end
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+
+            @command.run({:remote => 'upstream', :local_branch => 'feature', :remote_branch => 'v1'})
+          end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('feature') }
+          end
+
+          should "tag version" do
+            assert_received(@repo) {|repo| repo.add_tag('v1.2.0') }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push('upstream', 'feature:v1') }
+          end
+
+        end
+
+        context "happily with different branch" do
+          setup do
+            stub(@command).clean_staging_area? { true }
+            stub(@command).release_tag { "v3.2.0" }
+
+            stub(@repo).checkout(anything)
+            stub(@repo) do
+              add_tag(anything)
+              push(anything, anything)
+            end
+
+            stub(@repo).push
+
+            stub(@command).release_not_tagged? { true }
+
+            @command.run({:branch => 'v3'})
+          end
+
+          should "checkout master" do
+            assert_received(@repo) {|repo| repo.checkout('v3') }
+          end
+
+          should "tag version" do
+            assert_received(@repo) {|repo| repo.add_tag('v3.2.0') }
+          end
+
+          should "push" do
+            assert_received(@repo) {|repo| repo.push('origin', 'v3:v3') }
+          end
         end
 
         context "with an unclean staging area" do
@@ -68,7 +131,7 @@ class Jeweler
           end
 
           should "push" do
-            assert_received(@repo) {|repo| repo.push }
+            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
           end
 
         end

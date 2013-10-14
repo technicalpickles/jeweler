@@ -13,19 +13,24 @@ class Jeweler
         end
       end
 
-      def run
+      def run(args = {})
+        remote = args[:remote] || 'origin'
+        branch = args[:branch] || 'master'
+        local_branch = args[:local_branch] || branch
+        remote_branch = args[:remote_branch] || branch
+
         unless clean_staging_area?
           system "git status"
           raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
         end
 
-        repo.checkout('master')
+        repo.checkout(local_branch)
 
         regenerate_gemspec!
         commit_gemspec! if gemspec_changed?
 
-        output.puts "Pushing master to origin"
-        repo.push
+        output.puts "Pushing #{local_branch} to #{remote}"
+        repo.push(remote, "#{local_branch}:#{remote_branch}")
       end
 
       def clean_staging_area?

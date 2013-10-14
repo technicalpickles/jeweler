@@ -11,21 +11,26 @@ class Jeweler
         end
       end
 
-      def run
+      def run(args = {})
+        remote = args[:remote] || 'origin'
+        branch = args[:branch] || 'master'
+        local_branch = args[:local_branch] || branch
+        remote_branch = args[:remote_branch] || branch
+
         unless clean_staging_area?
           system "git status"
           raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
         end
 
-        repo.checkout('master')
-        repo.push
-        
+        repo.checkout(local_branch)
+        repo.push(remote, "#{local_branch}:#{remote_branch}")
+
         if release_not_tagged?
           output.puts "Tagging #{release_tag}"
           repo.add_tag(release_tag)
 
-          output.puts "Pushing #{release_tag} to origin"
-          repo.push('origin', release_tag)
+          output.puts "Pushing #{release_tag} to #{remote}"
+          repo.push(remote, release_tag)
         end
       end
 
