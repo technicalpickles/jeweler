@@ -6,6 +6,7 @@ Jeweler provides the noble ruby developer with two primary features:
  * a scaffold generator for starting new RubyGem projects
 
 [![Build Status](https://travis-ci.org/technicalpickles/jeweler.png)](https://travis-ci.org/technicalpickles/jeweler)
+[![Coverage Status](https://coveralls.io/repos/muratayusuke/jeweler/badge.png)](https://coveralls.io/r/muratayusuke/jeweler)
 
 ## Hello, world
 
