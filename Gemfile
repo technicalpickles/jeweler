@@ -28,6 +28,7 @@ group :test do
   gem "redgreen"
   gem "test-construct"
   gem "rake"
+  gem 'coveralls', require: false
 end
 
 # yo dawg, i herd u lieked jeweler

@@ -2,6 +2,9 @@ require 'test/unit'
 require 'rubygems'
 
 require 'bundler'
+require 'coveralls'
+Coveralls.wear!
+
 begin
   Bundler.setup(:default, :xzibit, :test)
 rescue Bundler::BundlerError => e
