@@ -4,7 +4,7 @@ source "http://gems.github.com"
 
 gem "rake"
 gem "git", ">= 1.2.5"
-gem "nokogiri", "1.5.10"
+gem "nokogiri", "~> 1.5.10"
 gem "github_api", "0.10.1"
 gem "highline", ">= 1.6.15"
 gem "bundler", "~> 1.0"
