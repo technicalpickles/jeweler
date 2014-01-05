@@ -1,3 +1,8 @@
+# jeweler 2.0.0, 2014-01-05
+
+ * Ruby 1.8 is not supported anymore.
+ * rake release accepts remote and branches #249
+
 # jeweler 1.8.7, 2013-08-12
 
  * Lock timecop version to 0.6.1 to keep support of 1.8.7 #243
