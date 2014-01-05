@@ -13,7 +13,6 @@ gem "builder"
 
 group :development do
   gem "yard", ">= 0.8.5"
-  gem "rdoc"
   gem "bluecloth"
   gem "cucumber", ">= 1.1.4"
 end
@@ -27,7 +26,6 @@ group :test do
   gem "mocha"
   gem "redgreen"
   gem "test-construct"
-  gem "rake"
   gem 'coveralls', :require => false
 end
 
