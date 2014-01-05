@@ -24,4 +24,7 @@ test/jeweler/version_tmp
 test/version_tmp
 tmp
 
+# rbenv settings
+.ruby-version
+
 Gemfile.lock
