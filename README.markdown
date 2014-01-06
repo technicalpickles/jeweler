@@ -7,6 +7,7 @@ Jeweler provides the noble ruby developer with two primary features:
 
 [![Build Status](https://travis-ci.org/technicalpickles/jeweler.png)](https://travis-ci.org/technicalpickles/jeweler)
 [![Coverage Status](https://coveralls.io/repos/technicalpickles/jeweler/badge.png)](https://coveralls.io/r/technicalpickles/jeweler)
+[![Dependency Status](https://www.versioneye.com/ruby/jeweler/2.0.0/badge.png)](https://www.versioneye.com/ruby/jeweler/2.0.0)
 
 ## Hello, world
 
