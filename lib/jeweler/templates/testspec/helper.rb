@@ -1,4 +1,4 @@
-
+<%= render_template 'simplecov.erb' %>
 require 'rubygems'
 require 'test/spec'
 
