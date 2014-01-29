@@ -1,3 +1,4 @@
+<%= render_template 'simplecov.erb' %>
 <%= render_template 'bundler_setup.erb' %>
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')

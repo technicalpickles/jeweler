@@ -107,7 +107,7 @@ class Jeweler
       # TODO make bundler optional?
       development_dependencies << ["bundler", "~> 1.0"]
       development_dependencies << ["jeweler", "~> #{Jeweler::Version::STRING}"]
-      development_dependencies << ["rcov", ">= 0"]
+      development_dependencies << ["simplecov", ">= 0"]
 
       development_dependencies << ["reek", "~> 1.2.8"] if should_use_reek
       development_dependencies << ["roodi", "~> 2.1.0"] if should_use_roodi

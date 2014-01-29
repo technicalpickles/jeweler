@@ -1,3 +1,4 @@
+<%= render_template 'simplecov.erb' %>
 require 'rubygems'
 <%= render_template 'bundler_setup.erb' %>
 require 'micronaut'

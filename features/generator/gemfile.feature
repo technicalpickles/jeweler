@@ -23,6 +23,7 @@ Feature: generated Gemfiel
     And 'Gemfile' uses the gemcutter source
     And 'Gemfile' has a development dependency on 'bundler'
     And 'Gemfile' has a development dependency on the current version of jeweler
+    And 'Gemfile' has a development dependency on 'simplecov'
     And 'Gemfile' has a development dependency on 'rcov'
     And 'Gemfile' has a development dependency on 'rdoc'
     And 'Gemfile' does not have a development dependency on 'yard'
