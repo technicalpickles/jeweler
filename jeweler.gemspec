@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "jeweler"
-  s.version = "2.0.0"
+  s.version = "2.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Nichols", "Yusuke Murata"]
-  s.date = "2014-01-05"
+  s.date = "2014-01-29"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   s.email = ["josh@technicalpickles.com", "info@muratayusuke.com"]
   s.executables = ["jeweler"]
@@ -114,6 +114,7 @@ Gem::Specification.new do |s|
     "lib/jeweler/templates/shindo/helper.rb",
     "lib/jeweler/templates/shoulda/flunking.rb",
     "lib/jeweler/templates/shoulda/helper.rb",
+    "lib/jeweler/templates/simplecov.erb",
     "lib/jeweler/templates/testspec/flunking.rb",
     "lib/jeweler/templates/testspec/helper.rb",
     "lib/jeweler/templates/testunit/flunking.rb",
@@ -183,11 +184,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/technicalpickles/jeweler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.23"
+  s.rubygems_version = "2.0.3"
   s.summary = "Opinionated tool for creating and managing RubyGem projects"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rake>, [">= 0"])
@@ -201,6 +202,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<yard>, [">= 0.8.5"])
       s.add_development_dependency(%q<bluecloth>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 1.1.4"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<git>, [">= 1.2.5"])
@@ -213,6 +215,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<yard>, [">= 0.8.5"])
       s.add_dependency(%q<bluecloth>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 1.1.4"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
     end
   else
     s.add_dependency(%q<rake>, [">= 0"])
@@ -226,6 +229,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<yard>, [">= 0.8.5"])
     s.add_dependency(%q<bluecloth>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 1.1.4"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
   end
 end
 
