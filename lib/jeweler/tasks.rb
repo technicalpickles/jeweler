@@ -33,7 +33,7 @@ class Jeweler
   # The block variable gem is actually a Gem::Specification, so you can
   # do anything you would normally do with a Gem::Specification.
   # For more details, see the official gemspec reference:
-  # http://docs.rubygems.org/read/chapter/20
+  # http://guides.rubygems.org/specification-reference
   #
   # In addition, it provides reasonable defaults for several values. See Jeweler::Specification for more details.
   class Tasks < ::Rake::TaskLib

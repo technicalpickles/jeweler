@@ -108,7 +108,7 @@ You can customize your gem by updating your `Rakefile`. With a newly generated p
 
     require 'jeweler'
     Jeweler::Tasks.new do |gem|
-      # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+      # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
       gem.name = "whatwhatwhat"
       gem.summary = %Q{TODO: one-line summary of your gem}
       gem.description = %Q{TODO: longer description of your gem}
@@ -118,13 +118,13 @@ You can customize your gem by updating your `Rakefile`. With a newly generated p
     end
     Jeweler::RubygemsDotOrgTasks.new
 
-It's crucial to understand the `gem` object is just a Gem::Specification. You can read up about it at [docs.rubygems.org/read/chapter/20](http://docs.rubygems.org/read/chapter/20). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
+It's crucial to understand the `gem` object is just a Gem::Specification. You can read up about it at [guides.rubygems.org/specification-reference](http://guides.rubygems.org/specification-reference/). This is the most basic way of specifying a gem, Jeweler-managed or not. Jeweler just exposes this to you, in addition to providing some reasonable defaults, which we'll explore now.
 
 ### Project information
 
     gem.name = "whatwhatwhat"
 
-Every gem has a name. Among other things, the gem name is how you are able to `gem install` it. [Reference](http://docs.rubygems.org/read/chapter/20#name)
+Every gem has a name. Among other things, the gem name is how you are able to `gem install` it. [Reference](http://guides.rubygems.org/specification-reference/#name)
 
     gem.summary = %Q{TODO: one-line summary of your gem}
 
@@ -161,7 +161,7 @@ If that's not enough, you can just set `gem.files` outright
 
 ### Dependencies
 
-Dependencies let you define other gems that your gem needs to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://docs.rubygems.org/read/chapter/20#dependencies)
+Dependencies let you define other gems that your gem needs to function. `gem install your-gem` will install your-gem's dependencies along with it, and when you use your-gem in an application, the dependencies will be made available. Use `gem.add_dependency` to register them. [Reference](http://guides.rubygems.org/specification-reference/#add_development_dependency)
 
     gem.add_dependency 'nokogiri'
 
