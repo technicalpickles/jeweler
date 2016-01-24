@@ -48,7 +48,7 @@ class Jeweler
     def parse
       data = self.to_ruby
       parsed_gemspec = nil
-      Thread.new { parsed_gemspec = eval("$SAFE = 3\n#{data}", binding, path) }.join
+      Thread.new { parsed_gemspec = eval("$SAFE = 1\n#{data}", binding, path) }.join
       parsed_gemspec
     end
 
