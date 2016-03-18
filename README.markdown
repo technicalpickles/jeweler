@@ -1,3 +1,5 @@
+*Jeweler is currently unmaintained*. Still using it and interested in the future of jeweler? See https://github.com/technicalpickles/jeweler/issues/283
+
 # Jeweler: Craft the perfect RubyGem
 
 Jeweler provides the noble ruby developer with two primary features:
