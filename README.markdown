@@ -2,6 +2,8 @@
 
 # Jeweler: Craft the perfect RubyGem
 
+[![Join the chat at https://gitter.im/technicalpickles/jeweler](https://badges.gitter.im/technicalpickles/jeweler.svg)](https://gitter.im/technicalpickles/jeweler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Jeweler provides the noble ruby developer with two primary features:
 
  * a library for managing and releasing RubyGem projects
