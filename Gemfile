@@ -1,6 +1,4 @@
 source "http://rubygems.org"
-source "http://gems.github.com"
-
 
 gem "rake"
 gem "git", ">= 1.2.5"
@@ -10,6 +8,7 @@ gem "highline", ">= 1.6.15"
 gem "bundler", ">= 1.0"
 gem "rdoc"
 gem "builder"
+gem "semver"
 
 group :development do
   gem "yard", ">= 0.8.5"
@@ -36,7 +35,6 @@ group :xzibit do
   # add this directory as jeweler, in order to bundle exec jeweler and use the current working directory
   gem 'jeweler', :path => '.'
 end
-
 
 group :debug do
 end
