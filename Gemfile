@@ -37,4 +37,5 @@ group :xzibit do
 end
 
 group :debug do
+  gem 'test-unit'
 end

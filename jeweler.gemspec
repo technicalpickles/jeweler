@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".coveralls.yml",
     ".document",
+    ".semver",
     ".travis.yml",
     ".yardopts",
     "ChangeLog.markdown",
