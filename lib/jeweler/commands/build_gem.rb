@@ -12,10 +12,10 @@ class Jeweler
 
         gemspec = gemspec_helper.parse
 
-        if Gem::Version.new(`gem -v`) >= Gem::Version.new("2.0.0.a")
+        if Gem::Version.new(`gem -v`) >= Gem::Version.new('2.0.0.a')
           gem_file_name = Gem::Package.build(gemspec)
         else
-          require "rubygems/builder"
+          require 'rubygems/builder'
           gem_file_name = Gem::Builder.new(gemspec).build
         end
 

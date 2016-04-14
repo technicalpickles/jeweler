@@ -4,8 +4,7 @@ class Jeweler
   module Commands
     module Version
       class TestWrite < Test::Unit::TestCase
-
-        should "call write_version on version_helper in update_version" do
+        should 'call write_version on version_helper in update_version' do
           mock(version_helper = Object.new).update_to 1, 2, 3, nil
 
           command = Jeweler::Commands::Version::Write.new
@@ -19,4 +18,3 @@ class Jeweler
     end
   end
 end
-

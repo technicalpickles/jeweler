@@ -4,8 +4,7 @@ class Jeweler
   module Commands
     module Version
       class TestBumpPatch < Test::Unit::TestCase
-
-        should "call bump_patch on version_helper in update_version" do
+        should 'call bump_patch on version_helper in update_version' do
           mock(version_helper = Object.new).bump_patch
 
           command = Jeweler::Commands::Version::BumpPatch.new
@@ -17,4 +16,3 @@ class Jeweler
     end
   end
 end
-

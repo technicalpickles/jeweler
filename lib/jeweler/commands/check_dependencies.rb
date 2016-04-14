@@ -13,12 +13,12 @@ class Jeweler
         if missing_dependencies.empty?
           puts "#{type || 'All'} dependencies seem to be installed."
         else
-          puts "Missing some dependencies. Install them with the following commands:"
+          puts 'Missing some dependencies. Install them with the following commands:'
           missing_dependencies.each do |dependency|
-            puts %Q{\tgem install #{dependency.name} --version "#{dependency.requirement.to_s}"}
+            puts %(\tgem install #{dependency.name} --version "#{dependency.requirement}")
           end
 
-          abort "Run the specified gem commands before trying to run this again: #{$0} #{ARGV.join(' ')}"
+          abort "Run the specified gem commands before trying to run this again: {$PROGRAM_NAME} #{ARGV.join(' ')}"
         end
       end
 

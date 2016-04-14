@@ -21,7 +21,7 @@ Given /^I use the jeweler command to generate the "([^"]+)" project in the worki
 end
 
 Given /^"([^"]+)" does not exist$/ do |file|
-  assert ! File.exists?(File.join(@working_dir, file))
+  assert !File.exist?(File.join(@working_dir, file))
 end
 
 When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
@@ -33,7 +33,7 @@ When /^I run "([^"]+)" in "([^"]+)"$/ do |command, directory|
   assert File.directory?(full_path), "#{full_path} is not a directory"
 
   @stdout = `cd #{full_path} && #{command}`
-  @exited_cleanly = $?.exited?
+  @exited_cleanly = $CHILD_STATUS.exited?
 end
 
 Then /^the updated version, (.*), is displayed$/ do |version|
@@ -67,4 +67,3 @@ Given /^"VERSION" contains "([^\"]*)"$/ do |expected|
   version = File.read(File.join(@working_dir, @name, 'VERSION')).chomp
   assert_equal expected, version
 end
-

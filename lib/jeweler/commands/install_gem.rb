@@ -13,7 +13,7 @@ class Jeweler
         command = "#{gem_command} install #{gemspec_helper.gem_path}"
         output.puts "Executing #{command.inspect}:"
 
-        sh command # TODO where does sh actually come from!? - rake, apparently
+        sh command # TODO: where does sh actually come from!? - rake, apparently
       end
 
       def gem_command

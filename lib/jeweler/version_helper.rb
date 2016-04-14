@@ -13,16 +13,16 @@ class Jeweler
     module YamlExtension
       def write
         File.open(yaml_path, 'w+') do |f|
-          YAML.dump(self.to_hash, f)
+          YAML.dump(to_hash, f)
         end
       end
 
       def to_hash
         {
-          :major => major,
-          :minor => minor,
-          :patch => patch,
-          :build => build
+          major: major,
+          minor: minor,
+          patch: patch,
+          build: build
         }
       end
 
@@ -39,7 +39,7 @@ class Jeweler
       end
 
       def read_yaml
-        if File.exists?(yaml_path)
+        if File.exist?(yaml_path)
           YAML.load_file(yaml_path)
         else
           raise VersionYmlError, "#{yaml_path} does not exist!"
@@ -86,14 +86,12 @@ class Jeweler
     def initialize(base_dir)
       self.base_dir = base_dir
 
-      if File.exists?(yaml_path)
+      if File.exist?(yaml_path)
         extend YamlExtension
         parse_yaml
       else
         extend PlaintextExtension
-        if File.exists?(plaintext_path)
-          parse_plaintext
-        end
+        parse_plaintext if File.exist?(plaintext_path)
       end
     end
 
@@ -115,7 +113,7 @@ class Jeweler
       @build = nil
     end
 
-    def update_to(major, minor, patch, build=nil)
+    def update_to(major, minor, patch, build = nil)
       @major = major
       @minor = minor
       @patch = patch

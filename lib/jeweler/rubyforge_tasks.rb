@@ -11,7 +11,7 @@ class Jeweler
   #     Jeweler::RubyforgeTasks.new
   #
   # Easy enough, right?
-  # 
+  #
   # There are a few options you can tweak:
   #
   #  * project: the rubyforge project to operate on. This defaults to whatever you specified in your gemspec. Defaults to your gem name.
@@ -31,7 +31,7 @@ class Jeweler
     def initialize
       yield self if block_given?
 
-      $stderr.puts "Releasing gems to Rubyforge is deprecated. See details at http://wiki.github.com/technicalpickles/jeweler/migrating-from-releasing-gems-to-rubyforge"
+      $stderr.puts 'Releasing gems to Rubyforge is deprecated. See details at http://wiki.github.com/technicalpickles/jeweler/migrating-from-releasing-gems-to-rubyforge'
 
       define
     end
@@ -51,14 +51,14 @@ class Jeweler
     def define
       namespace :rubyforge do
         namespace :release do
-          desc "Release the current gem version to RubyForge."
+          desc 'Release the current gem version to RubyForge.'
           task :gem do
-            $stderr.puts "DEPRECATION: Releasing gems to RubyForge is deprecated. You should see about releasing to Gemcutter instead: http://wiki.github.com/technicalpickles/jeweler/gemcutter"
+            $stderr.puts 'DEPRECATION: Releasing gems to RubyForge is deprecated. You should see about releasing to Gemcutter instead: http://wiki.github.com/technicalpickles/jeweler/gemcutter'
           end
 
           if publish_documentation?
-            desc "Publish docs to RubyForge."
-            task :docs => doc_task do
+            desc 'Publish docs to RubyForge.'
+            task docs: doc_task do
               config = YAML.load(
                 File.read(File.expand_path('~/.rubyforge/user-config.yml'))
               )
@@ -66,26 +66,26 @@ class Jeweler
               host = "#{config['username']}@rubyforge.org"
               remote_dir = "/var/www/gforge-projects/#{project}/#{remote_doc_path}"
 
-              local_dir = case self.doc_task.to_sym
+              local_dir = case doc_task.to_sym
                           when :rdoc then 'rdoc'
                           when :yardoc then 'doc'
-                          when 'doc:app'.to_sym then 'doc/app' 
+                          when 'doc:app'.to_sym then 'doc/app'
                           else
-                            raise "Unsure what to run to generate documentation. Please set doc_task and re-run."
+                            raise 'Unsure what to run to generate documentation. Please set doc_task and re-run.'
                           end
 
-              sh %{rsync --archive --verbose --delete #{local_dir}/ #{host}:#{remote_dir}}
+              sh %(rsync --archive --verbose --delete #{local_dir}/ #{host}:#{remote_dir})
             end
           end
         end
 
         if publish_documentation?
-          desc "Release RDoc documentation to RubyForge"
-          task :release => "rubyforge:release:docs"
+          desc 'Release RDoc documentation to RubyForge'
+          task release: 'rubyforge:release:docs'
         end
       end
 
-      task :release => 'rubyforge:release'
+      task release: 'rubyforge:release'
     end
 
     def publish_documentation?

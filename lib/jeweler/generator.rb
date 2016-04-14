@@ -23,12 +23,12 @@ class Jeweler
   class NoGitHubUser < StandardError
   end
   class GitInitFailed < StandardError
-  end    
+  end
   class GitRepoCreationFailed < StandardError
   end
 
   # Generator for creating a jeweler-enabled project
-  class Generator    
+  class Generator
     require 'jeweler/generator/options'
     require 'jeweler/generator/application'
 
@@ -49,7 +49,7 @@ class Jeweler
 
     attr_accessor :target_dir, :user_name, :user_email, :summary, :homepage,
                   :description, :project_name, :github_username,
-                  :repo, :should_create_remote_repo, 
+                  :repo, :should_create_remote_repo,
                   :testing_framework, :documentation_framework,
                   :should_use_cucumber, :should_use_bundler,
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
@@ -62,10 +62,10 @@ class Jeweler
       extracted_directory = nil
 
       self.project_name   = options[:project_name]
-      if self.project_name.nil? || self.project_name.squeeze.strip == ""
+      if project_name.nil? || project_name.squeeze.strip == ''
         raise NoGitHubRepoNameGiven
       else
-        path = File.split(self.project_name)
+        path = File.split(project_name)
 
         if path.size > 1
           extracted_directory = File.join(path[0..-1])
@@ -74,10 +74,10 @@ class Jeweler
       end
 
       self.development_dependencies = []
-      self.testing_framework  = options[:testing_framework]
+      self.testing_framework = options[:testing_framework]
       self.documentation_framework = options[:documentation_framework]
       begin
-        generator_mixin_name = "#{self.testing_framework.to_s.capitalize}Mixin"
+        generator_mixin_name = "#{testing_framework.to_s.capitalize}Mixin"
         generator_mixin = self.class.const_get(generator_mixin_name)
         extend generator_mixin
       rescue NameError => e
@@ -85,14 +85,14 @@ class Jeweler
       end
 
       begin
-        generator_mixin_name = "#{self.documentation_framework.to_s.capitalize}Mixin"
+        generator_mixin_name = "#{documentation_framework.to_s.capitalize}Mixin"
         generator_mixin = self.class.const_get(generator_mixin_name)
         extend generator_mixin
       rescue NameError => e
         raise ArgumentError, "Unsupported documentation framework (#{documentation_framework})"
       end
 
-      self.target_dir             = options[:directory] || extracted_directory || self.project_name
+      self.target_dir             = options[:directory] || extracted_directory || project_name
 
       self.summary                = options[:summary] || 'TODO: one-line summary of your gem'
       self.description            = options[:description] || 'TODO: longer description of your gem'
@@ -102,24 +102,24 @@ class Jeweler
       self.should_setup_rubyforge = options[:rubyforge]
       self.should_use_bundler     = options[:use_bundler]
 
-      development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
+      development_dependencies << ['cucumber', '>= 0'] if should_use_cucumber
 
-      # TODO make bundler optional?
-      development_dependencies << ["bundler", "~> 1.0"]
-      development_dependencies << ["jeweler", "~> #{Jeweler::Version::STRING}"]
-      development_dependencies << ["simplecov", ">= 0"]
+      # TODO: make bundler optional?
+      development_dependencies << ['bundler', '~> 1.0']
+      development_dependencies << ['jeweler', "~> #{Jeweler::Version::STRING}"]
+      development_dependencies << ['simplecov', '>= 0']
 
-      development_dependencies << ["reek", "~> 1.2.8"] if should_use_reek
-      development_dependencies << ["roodi", "~> 2.1.0"] if should_use_roodi
+      development_dependencies << ['reek', '~> 1.2.8'] if should_use_reek
+      development_dependencies << ['roodi', '~> 2.1.0'] if should_use_roodi
 
       self.user_name       = options[:user_name]
       self.user_email      = options[:user_email]
       self.homepage        = options[:homepage]
-      
+
       self.git_remote      = options[:git_remote]
 
-      raise NoGitUserName unless self.user_name
-      raise NoGitUserEmail unless self.user_email
+      raise NoGitUserName unless user_name
+      raise NoGitUserEmail unless user_email
 
       extend GithubMixin
     end
@@ -135,7 +135,7 @@ class Jeweler
     end
 
     def constant_name
-      self.project_name.split(/[-_]/).collect{|each| each.capitalize }.join
+      project_name.split(/[-_]/).collect(&:capitalize).join
     end
 
     def lib_filename
@@ -143,11 +143,11 @@ class Jeweler
     end
 
     def require_name
-      self.project_name
+      project_name
     end
 
     def file_name_prefix
-      self.project_name.gsub('-', '_')
+      project_name.tr('-', '_')
     end
 
     def lib_dir
@@ -174,15 +174,14 @@ class Jeweler
       File.join(features_dir, 'step_definitions')
     end
 
-  private
+    private
 
     def create_files
-      unless File.exists?(target_dir) || File.directory?(target_dir)
-        FileUtils.mkdir target_dir
-      else
+      if File.exist?(target_dir) || File.directory?(target_dir)
         raise FileInTheWay, "The directory #{target_dir} already exists, aborting. Maybe move it out of the way before continuing?"
+      else
+        FileUtils.mkdir target_dir
       end
-
 
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
@@ -199,7 +198,6 @@ class Jeweler
                                 File.join(test_dir, test_helper_filename)
       output_template_in_target File.join(testing_framework.to_s, 'flunking.rb'),
                                 File.join(test_dir, test_filename)
-
 
       if testing_framework == :rspec
         output_template_in_target File.join(testing_framework.to_s, '.rspec'),
@@ -231,7 +229,7 @@ class Jeweler
       final_destination = File.join(target_dir, destination)
       template_result   = render_template(source)
 
-      File.open(final_destination, 'w') {|file| file.write(template_result)}
+      File.open(final_destination, 'w') { |file| file.write(template_result) }
 
       $stdout.puts "\tcreate\t#{destination}"
     end
@@ -250,22 +248,22 @@ class Jeweler
 
     def touch_in_target(destination)
       final_destination = File.join(target_dir, destination)
-      FileUtils.touch  final_destination
+      FileUtils.touch final_destination
       $stdout.puts "\tcreate\t#{destination}"
     end
 
     def create_version_control
       Dir.chdir(target_dir) do
         begin
-          @repo = Git.init()
+          @repo = Git.init
         rescue Git::GitExecuteError => e
-          raise GitInitFailed, "Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?"
+          raise GitInitFailed, 'Encountered an error during gitification. Maybe the repo already exists, or has already been pushed to?'
         end
 
         begin
           @repo.add('.')
         rescue Git::GitExecuteError => e
-          #raise GitAddFailed, "There was some problem adding this directory to the git changeset"
+          # raise GitAddFailed, "There was some problem adding this directory to the git changeset"
           raise
         end
 
@@ -278,26 +276,26 @@ class Jeweler
         begin
           @repo.add_remote('origin', git_remote)
         rescue Git::GitExecuteError => e
-          puts "Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?"
+          puts 'Encountered an error while adding origin remote. Maybe you have some weird settings in ~/.gitconfig?'
           raise
         end
       end
     end
-    
+
     def create_and_push_repo
-      puts "Please provide your Github password to create the Github repository"
+      puts 'Please provide your Github password to create the Github repository'
       begin
         login = github_username
-        password = ask("Password: ") { |q| q.echo = false }
-        github = Github.new(:login => login.strip, :password => password.strip)
-        github.repos.create(:name => project_name, :description => summary)
+        password = ask('Password: ') { |q| q.echo = false }
+        github = Github.new(login: login.strip, password: password.strip)
+        github.repos.create(name: project_name, description: summary)
       rescue Github::Error::Unauthorized
-        puts "Wrong login/password! Please try again"
+        puts 'Wrong login/password! Please try again'
         retry
       rescue Github::Error::UnprocessableEntity
         raise GitRepoCreationFailed, "Can't create that repo. Does it already exist?"
       end
-      # TODO do a HEAD request to see when it's ready?
+      # TODO: do a HEAD request to see when it's ready?
       @repo.push('origin')
     end
   end

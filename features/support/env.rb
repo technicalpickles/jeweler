@@ -1,24 +1,40 @@
+ENV.delete_if { |name, _| name.start_with?('GIT') }
 require 'bundler'
 begin
   Bundler.setup(:default, :xzibit, :test)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  $stderr.puts 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 
 require 'jeweler'
 require 'mocha'
+require 'mocha/api'
+World(Mocha::API)
+
+Before do
+  mocha_setup
+end
+
+After do
+  begin
+    mocha_verify
+  ensure
+    mocha_teardown
+  end
+end
+
 require 'output_catcher'
 require 'timecop'
-require 'ruby-debug'
 require 'active_support'
+require 'active_support/core_ext/object/blank'
 
 require 'test/unit/assertions'
 World(Test::Unit::Assertions)
 
-require 'construct'
-World(Construct::Helpers)
+require 'test_construct'
+World(TestConstruct::Helpers)
 
 def yank_task_info(content, task)
   if content =~ /#{Regexp.escape(task)}.new(\(.*\))? do \|(.*?)\|(.*?)^end$/m
@@ -27,9 +43,7 @@ def yank_task_info(content, task)
 end
 
 def yank_group_info(content, group)
-  if content =~ /group :#{group} do(.*?)end/m
-    $1
-  end
+  $1 if content =~ /group :#{group} do(.*?)end/m
 end
 
 def fixture_dir

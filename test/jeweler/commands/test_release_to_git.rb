@@ -3,9 +3,8 @@ require 'test_helper'
 class Jeweler
   module Commands
     class TestReleaseToGit < Test::Unit::TestCase
-
-      rubyforge_command_context "running" do
-        context "happily" do
+      rubyforge_command_context 'running' do
+        context 'happily' do
           setup do
             stub(@command).clean_staging_area? { true }
 
@@ -22,20 +21,19 @@ class Jeweler
             @command.run
           end
 
-          should "checkout master" do
-            assert_received(@repo) {|repo| repo.checkout('master') }
+          should 'checkout master' do
+            assert_received(@repo) { |repo| repo.checkout('master') }
           end
 
-          should "push" do
-            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
+          should 'push' do
+            assert_received(@repo) { |repo| repo.push('origin', 'master:master') }
           end
-
         end
 
-        context "happily with different remote, local branch and remote branch" do
+        context 'happily with different remote, local branch and remote branch' do
           setup do
             stub(@command).clean_staging_area? { true }
-            stub(@command).release_tag { "v1.2.0" }
+            stub(@command).release_tag { 'v1.2.0' }
 
             stub(@repo).checkout(anything)
             stub(@repo) do
@@ -47,27 +45,26 @@ class Jeweler
 
             stub(@command).release_not_tagged? { true }
 
-            @command.run({:remote => 'upstream', :local_branch => 'feature', :remote_branch => 'v1'})
+            @command.run(remote: 'upstream', local_branch: 'feature', remote_branch: 'v1')
           end
 
-          should "checkout master" do
-            assert_received(@repo) {|repo| repo.checkout('feature') }
+          should 'checkout master' do
+            assert_received(@repo) { |repo| repo.checkout('feature') }
           end
 
-          should "tag version" do
-            assert_received(@repo) {|repo| repo.add_tag('v1.2.0') }
+          should 'tag version' do
+            assert_received(@repo) { |repo| repo.add_tag('v1.2.0') }
           end
 
-          should "push" do
-            assert_received(@repo) {|repo| repo.push('upstream', 'feature:v1') }
+          should 'push' do
+            assert_received(@repo) { |repo| repo.push('upstream', 'feature:v1') }
           end
-
         end
 
-        context "happily with different branch" do
+        context 'happily with different branch' do
           setup do
             stub(@command).clean_staging_area? { true }
-            stub(@command).release_tag { "v3.2.0" }
+            stub(@command).release_tag { 'v3.2.0' }
 
             stub(@repo).checkout(anything)
             stub(@repo) do
@@ -79,41 +76,45 @@ class Jeweler
 
             stub(@command).release_not_tagged? { true }
 
-            @command.run({:branch => 'v3'})
+            @command.run(branch: 'v3')
           end
 
-          should "checkout master" do
-            assert_received(@repo) {|repo| repo.checkout('v3') }
+          should 'checkout master' do
+            assert_received(@repo) { |repo| repo.checkout('v3') }
           end
 
-          should "tag version" do
-            assert_received(@repo) {|repo| repo.add_tag('v3.2.0') }
+          should 'tag version' do
+            assert_received(@repo) { |repo| repo.add_tag('v3.2.0') }
           end
 
-          should "push" do
-            assert_received(@repo) {|repo| repo.push('origin', 'v3:v3') }
+          should 'push' do
+            assert_received(@repo) { |repo| repo.push('origin', 'v3:v3') }
           end
         end
 
-        context "with an unclean staging area" do
+        context 'with an unclean staging area' do
           setup do
             stub(@command).clean_staging_area? { false }
             stub(@command).system
           end
 
           should 'raise error' do
-            assert_raises RuntimeError, /try commiting/i do
+            assert_raises RuntimeError, 'Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above.' do
               @command.run
             end
           end
 
           should 'display git status' do
-            @command.run rescue nil
-            assert_received(@command) {|command| command.system("git status") }
+            begin
+              @command.run
+            rescue
+              nil
+            end
+            assert_received(@command) { |command| command.system('git status') }
           end
         end
 
-        context "with a release already tagged" do
+        context 'with a release already tagged' do
           setup do
             stub(@command).clean_staging_area? { true }
 
@@ -126,51 +127,48 @@ class Jeweler
             @command.run
           end
 
-          should "checkout master" do
-            assert_received(@repo) {|repo| repo.checkout('master') }
+          should 'checkout master' do
+            assert_received(@repo) { |repo| repo.checkout('master') }
           end
 
-          should "push" do
-            assert_received(@repo) {|repo| repo.push('origin', 'master:master') }
+          should 'push' do
+            assert_received(@repo) { |repo| repo.push('origin', 'master:master') }
           end
-
         end
-
       end
 
-
-      build_command_context "building from jeweler" do
+      build_command_context 'building from jeweler' do
         setup do
           @command = Jeweler::Commands::ReleaseToGit.build_for(@jeweler)
         end
 
-        should "assign gemspec" do
+        should 'assign gemspec' do
           assert_same @gemspec, @command.gemspec
         end
 
-        should "assign version" do
+        should 'assign version' do
           assert_same @version, @command.version
         end
 
-        should "assign repo" do
+        should 'assign repo' do
           assert_same @repo, @command.repo
         end
 
-        should "assign output" do
+        should 'assign output' do
           assert_same @output, @command.output
         end
 
-        should "assign gemspec_helper" do
+        should 'assign gemspec_helper' do
           assert_same @gemspec_helper, @command.gemspec_helper
         end
 
-        should "assign base_dir" do
+        should 'assign base_dir' do
           assert_same @base_dir, @command.base_dir
         end
       end
 
-      # FIXME this code had its ruby-git stuff replaced with `` and system, which is much harder to test, so re-enable these someday
-      #context "clean_staging_area?" do
+      # FIXME: this code had its ruby-git stuff replaced with `` and system, which is much harder to test, so re-enable these someday
+      # context "clean_staging_area?" do
 
       #  should "be false if there added files" do
       #    repo = build_repo :added => %w(README)
@@ -206,9 +204,9 @@ class Jeweler
 
       #    assert command.clean_staging_area?
       #  end
-      #end
+      # end
 
-      context "release_tagged? when no tag exists" do
+      context 'release_tagged? when no tag exists' do
         setup do
           @repo = Object.new
           stub(@repo).tag('v1.2.3') { raise Git::GitTagNameDoesNotExist, tag }
@@ -221,13 +219,12 @@ class Jeweler
           @command.version        = '1.2.3'
         end
 
-        should_eventually "be true" do
+        should_eventually 'be true' do
           assert @command.release_not_tagged?
         end
-
       end
 
-      context "release_tagged? when tag exists" do
+      context 'release_tagged? when tag exists' do
         setup do
           @repo = Object.new
           stub(@repo) do
@@ -242,10 +239,9 @@ class Jeweler
           @command.version        = '1.2.3'
         end
 
-        should_eventually "be false" do
+        should_eventually 'be false' do
           assert @command.release_not_tagged?
         end
-
       end
 
       def build_repo(options = {})
@@ -256,7 +252,7 @@ class Jeweler
       end
 
       def build_status(options = {})
-        options = {:added => [], :deleted => [], :changed => []}.merge(options)
+        options = { added: [], deleted: [], changed: [] }.merge(options)
 
         status = Object.new
         stub(status) do
@@ -264,7 +260,6 @@ class Jeweler
           deleted { options[:deleted] }
           changed { options[:changed] }
         end
-        
       end
     end
   end

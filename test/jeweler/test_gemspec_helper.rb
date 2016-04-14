@@ -2,10 +2,10 @@ require 'test_helper'
 
 class TestGemspecHelper < Test::Unit::TestCase
   def setup
-    Rake.application.instance_variable_set(:@rakefile, "Rakefile")
+    Rake.application.instance_variable_set(:@rakefile, 'Rakefile')
   end
 
-  context "given a gemspec" do
+  context 'given a gemspec' do
     setup do
       @spec = build_spec
       @helper = Jeweler::GemSpecHelper.new(@spec, File.dirname(__FILE__))
@@ -16,7 +16,7 @@ class TestGemspecHelper < Test::Unit::TestCase
     end
   end
 
-  context "#write" do
+  context '#write' do
     setup do
       @spec = build_spec
       @helper = Jeweler::GemSpecHelper.new(@spec, File.dirname(__FILE__))
@@ -29,15 +29,15 @@ class TestGemspecHelper < Test::Unit::TestCase
       FileUtils.rm_f(@helper.path)
     end
 
-    should "create gemspec file" do
-      assert File.exists?(@helper.path)
+    should 'create gemspec file' do
+      assert File.exist?(@helper.path)
     end
 
-    should "make valid spec" do
+    should 'make valid spec' do
       assert @helper.valid?
     end
 
-    should "parse" do
+    should 'parse' do
       @helper.parse
     end
   end

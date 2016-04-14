@@ -2,7 +2,7 @@ class Jeweler
   class Generator
     module RiotMixin
       def self.extended(generator)
-        generator.development_dependencies << ["riot", ">= 0"]
+        generator.development_dependencies << ['riot', '>= 0']
       end
 
       def default_task
@@ -34,9 +34,8 @@ class Jeweler
       end
 
       def test_helper_filename
-        "teststrap.rb"
+        'teststrap.rb'
       end
-
     end
   end
 end

@@ -18,8 +18,8 @@ class Jeweler
         remote_branch = args[:remote_branch] || branch
 
         unless clean_staging_area?
-          system "git status"
-          raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
+          system 'git status'
+          raise 'Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above.'
         end
 
         repo.checkout(local_branch)
@@ -35,7 +35,7 @@ class Jeweler
       end
 
       def clean_staging_area?
-        `git ls-files --deleted --modified --others --exclude-standard` == ""
+        `git ls-files --deleted --modified --others --exclude-standard` == ''
       end
 
       def release_tag
@@ -43,12 +43,16 @@ class Jeweler
       end
 
       def release_not_tagged?
-        tag = repo.tag(release_tag) rescue nil
+        tag = begin
+                repo.tag(release_tag)
+              rescue
+                nil
+              end
         tag.nil?
       end
 
       def self.build_for(jeweler)
-        command = self.new
+        command = new
 
         command.base_dir = jeweler.base_dir
         command.gemspec = jeweler.gemspec

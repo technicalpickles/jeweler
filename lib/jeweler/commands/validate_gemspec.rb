@@ -8,13 +8,11 @@ class Jeweler
       end
 
       def run
-        begin
-          gemspec_helper.parse
-          output.puts "#{gemspec_helper.path} is valid."
-        rescue Exception => e
-          output.puts "#{gemspec_helper.path} is invalid. See the backtrace for more details."
-          raise
-        end
+        gemspec_helper.parse
+        output.puts "#{gemspec_helper.path} is valid."
+      rescue Exception => _e
+        output.puts "#{gemspec_helper.path} is invalid. See the backtrace for more details."
+        raise
       end
 
       def self.build_for(jeweler)

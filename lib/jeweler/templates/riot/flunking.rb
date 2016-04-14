@@ -1,6 +1,6 @@
 require 'teststrap'
 
-context "<%= require_name %>" do
+context '<%= require_name %>' do
   setup do
     false
   end

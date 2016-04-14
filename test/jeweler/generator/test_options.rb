@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class TestOptions < Test::Unit::TestCase
-
   def setup
     set_default_git_config
     stub_git_config valid_git_config
@@ -21,17 +20,17 @@ class TestOptions < Test::Unit::TestCase
 
   def setup_options(*arguments)
     stub(Jeweler::Generator::Options).git_config { valid_git_config }
-    @options = Jeweler::Generator::Options.new(["project_name"] + arguments)
+    @options = Jeweler::Generator::Options.new(['project_name'] + arguments)
   end
 
   def self.for_options(*options)
     context options.join(' ') do
-      setup { setup_options *options }
+      setup { setup_options(*options) }
       yield
     end
   end
 
-  context "default options" do
+  context 'default options' do
     setup { setup_options }
     should_have_testing_framework :shoulda
     should_have_docmentation_framework :rdoc
@@ -40,27 +39,27 @@ class TestOptions < Test::Unit::TestCase
       assert ! @options[:create_repo]
     end
 
-    should "have project name" do
-      assert_equal "project_name", @options[:project_name]
+    should 'have project name' do
+      assert_equal 'project_name', @options[:project_name]
     end
 
-    should "use github username from git config" do
+    should 'use github username from git config' do
       assert_equal @github_user, @options[:github_username]
     end
-    should "use user name from git config" do
+    should 'use user name from git config' do
       assert_equal @git_name, @options[:user_name]
     end
 
-    should "use user email from git config" do
+    should 'use user email from git config' do
       assert_equal @git_email, @options[:user_email]
     end
 
-    should "use bundler" do
+    should 'use bundler' do
       assert @options[:use_bundler]
     end
   end
 
-  for_options "--bacon" do
+  for_options '--bacon' do
     should_have_testing_framework :bacon
   end
 
@@ -80,11 +79,11 @@ class TestOptions < Test::Unit::TestCase
     should_have_testing_framework :shoulda
   end
 
-  for_options "--testunit" do
+  for_options '--testunit' do
     should_have_testing_framework :testunit
   end
 
-  for_options "--testspec" do
+  for_options '--testspec' do
     should_have_testing_framework :testspec
   end
 
@@ -137,13 +136,13 @@ class TestOptions < Test::Unit::TestCase
       assert_equal 'foo', @options[:directory]
     end
   end
-  
+
   for_options '--version' do
     should 'show version' do
       assert @options[:show_version]
     end
   end
-  
+
   for_options '-v' do
     should 'show version' do
       assert @options[:show_version]
@@ -169,13 +168,13 @@ class TestOptions < Test::Unit::TestCase
   end
 
   for_options '--user-name', 'myname' do
-    should "set user name" do
+    should 'set user name' do
       assert_equal 'myname', @options[:user_name]
     end
   end
 
   for_options '--user-email', 'myname@mydomain.com' do
-    should "set user email" do
+    should 'set user email' do
       assert_equal 'myname@mydomain.com', @options[:user_email]
     end
   end
@@ -193,34 +192,34 @@ class TestOptions < Test::Unit::TestCase
   end
 
   for_options '--github-username', 'mygithub' do
-    should "set github username" do
+    should 'set github username' do
       assert_equal 'mygithub', @options[:github_username]
     end
   end
 
   for_options '--bundler' do
-    should "use bundler" do
+    should 'use bundler' do
       assert @options[:use_bundler]
     end
   end
 
   for_options '--no-bundler' do
-    should "not use bundler" do
+    should 'not use bundler' do
       assert !@options[:use_bundler]
     end
   end
 
-  context "merging options" do
-    should "take options from each" do
-      options = Jeweler::Generator::Options.new(["--rspec"]).
-        merge Jeweler::Generator::Options.new(["--create-repo"])
+  context 'merging options' do
+    should 'take options from each' do
+      options = Jeweler::Generator::Options.new(['--rspec'])
+                                           .merge Jeweler::Generator::Options.new(['--create-repo'])
       assert_equal :rspec, options[:testing_framework]
       assert options[:create_repo]
     end
 
-    should "shadow options" do
-      options = Jeweler::Generator::Options.new(["--bacon"]).
-        merge Jeweler::Generator::Options.new(["--rspec"])
+    should 'shadow options' do
+      options = Jeweler::Generator::Options.new(['--bacon'])
+                                           .merge Jeweler::Generator::Options.new(['--rspec'])
       assert_equal :rspec, options[:testing_framework]
     end
   end

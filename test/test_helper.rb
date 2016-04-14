@@ -1,23 +1,24 @@
-require 'test/unit'
 require 'rubygems'
 
 require 'bundler'
-require 'coveralls'
-Coveralls.wear!
-
 begin
   Bundler.setup(:default, :xzibit, :test)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  $stderr.puts 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
+require 'test/unit/rr'
+require 'coveralls'
+Coveralls.wear!
+
+# prevent GIT_* environment leakage from affecting tests
+ENV.delete_if { |name, _| name.start_with?('GIT') }
 
 require 'rake'
 require 'shoulda'
-require 'rr'
-#require 'redgreen'
-require 'construct'
+# require 'redgreen'
+require 'test_construct'
 require 'git'
 require 'time'
 
@@ -26,7 +27,7 @@ require 'jeweler'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'shoulda_macros/jeweler_macros'
 
-TMP_DIR = '/tmp/jeweler_test'
+TMP_DIR = '/tmp/jeweler_test'.freeze
 FIXTURE_DIR = File.expand_path('../fixtures', __FILE__)
 
 class RubyForgeStub
@@ -38,8 +39,7 @@ class RubyForgeStub
 end
 
 class Test::Unit::TestCase
-  include RR::Adapters::TestUnit unless include?(RR::Adapters::TestUnit)
-  include Construct::Helpers
+  include TestConstruct::Helpers
 
   def tmp_dir
     TMP_DIR
@@ -59,12 +59,12 @@ class Test::Unit::TestCase
 
   def build_spec(*files)
     Gem::Specification.new do |s|
-      s.name = "bar"
-      s.summary = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-      s.email = "josh@technicalpickles.com"
-      s.homepage = "http://github.com/technicalpickles/jeweler"
-      s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
-      s.authors = ["Josh Nichols"]
+      s.name = 'bar'
+      s.summary = 'Simple and opinionated helper for creating Rubygem projects on GitHub'
+      s.email = 'josh@technicalpickles.com'
+      s.homepage = 'http://github.com/technicalpickles/jeweler'
+      s.description = 'Simple and opinionated helper for creating Rubygem projects on GitHub'
+      s.authors = ['Josh Nichols']
       s.files = FileList[*files] unless files.empty?
       s.version = '0.1.1'
     end
@@ -86,7 +86,7 @@ class Test::Unit::TestCase
         end
       end
 
-      context "", &block
+      context '', &block
     end
   end
 
@@ -117,18 +117,17 @@ class Test::Unit::TestCase
 
         if @command.respond_to? :repo
           @repo = Object.new
-          @command.repo = @repo 
+          @command.repo = @repo
         end
       end
 
-      context "", &block
+      context '', &block
     end
   end
 
   def self.build_command_context(description, &block)
     context description do
       setup do
-
         @repo           = Object.new
         @version_helper = Object.new
         @gemspec        = Object.new
@@ -149,16 +148,15 @@ class Test::Unit::TestCase
         stub(@jeweler).output         { @output }
         stub(@jeweler).gemspec_helper { @gemspec_helper }
         stub(@jeweler).base_dir       { @base_dir }
-        stub(@jeweler).rubyforge    { @rubyforge }
+        stub(@jeweler).rubyforge { @rubyforge }
       end
 
-      context "", &block
+      context '', &block
     end
-
   end
 
   def stub_git_config(options = {})
-    stub(Git).global_config() { options }
+    stub(Git).global_config { options }
   end
 
   def set_default_git_config

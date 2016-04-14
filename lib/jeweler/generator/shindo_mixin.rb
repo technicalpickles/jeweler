@@ -2,7 +2,7 @@ class Jeweler
   class Generator
     module ShindoMixin
       def self.extended(generator)
-        generator.development_dependencies << ["shindo", ">= 0"]
+        generator.development_dependencies << ['shindo', '>= 0']
       end
 
       def default_task
@@ -36,9 +36,8 @@ class Jeweler
       end
 
       def test_helper_filename
-        "tests_helper.rb"
+        'tests_helper.rb'
       end
-
     end
   end
 end

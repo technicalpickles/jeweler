@@ -45,11 +45,11 @@ class Jeweler
                end
 
         if blank?(files) && repo
-          base_dir_with_trailing_separator = File.join(base_dir, "")
+          base_dir_with_trailing_separator = File.join(base_dir, '')
 
-          ignored_files = repo.lib.ignored_files + [".gitignore"]
+          ignored_files = repo.lib.ignored_files + ['.gitignore']
           self.files = (repo.ls_files(base_dir).keys - ignored_files).compact.map do |file|
-            File.expand_path(file).sub(base_dir_with_trailing_separator, "")
+            File.expand_path(file).sub(base_dir_with_trailing_separator, '')
           end
         end
 
@@ -71,13 +71,12 @@ class Jeweler
           require 'bundler'
           bundler = Bundler.load
           bundler.dependencies_for(:default, :runtime).each do |dependency|
-            self.add_dependency dependency.name, *dependency.requirement.as_list
+            add_dependency dependency.name, *dependency.requirement.as_list
           end
           bundler.dependencies_for(:development).each do |dependency|
-            self.add_development_dependency dependency.name, *dependency.requirement.as_list
+            add_development_dependency dependency.name, *dependency.requirement.as_list
           end
         end
-        
       end
     end
 
@@ -89,7 +88,7 @@ class Jeweler
       end
     end
 
-  private
+    private
 
     def blank?(value)
       value.nil? || value.empty?
@@ -97,10 +96,10 @@ class Jeweler
   end
 end
 
-
 # Workaround for cloning/duping a Gem::Specification
 # documented in http://github.com/technicalpickles/jeweler/issues#issue/73
 Gem::Specification.class_eval do
+  # TODO: fix 'warning: method redefined; discarding old initialize_copy'
   def initialize_copy(original)
     super
 

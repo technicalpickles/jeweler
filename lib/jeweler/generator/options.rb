@@ -17,14 +17,14 @@ class Jeweler
 
         require 'optparse'
         @opts = OptionParser.new do |o|
-          o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
+          o.banner = "Usage: #{File.basename($PROGRAM_NAME)} [options] reponame\ne.g. #{File.basename($PROGRAM_NAME)} the-perfect-gem"
 
           o.on('--directory [DIRECTORY]', 'specify the directory to generate into (deprecated)') do |directory|
-            warn "--directory is deprecated and will be removed in 2.0.0. Please specify an absolute path to a directory as the last argument instead" # DEPRECATE
+            warn '--directory is deprecated and will be removed in 2.0.0. Please specify an absolute path to a directory as the last argument instead' # DEPRECATE
             self[:directory] = directory
           end
 
-          o.separator ""
+          o.separator ''
 
           o.on('--rspec', 'generate rspec code examples') do
             self[:testing_framework] = :rspec
@@ -62,7 +62,7 @@ class Jeweler
             self[:testing_framework] = :shindo
           end
 
-          o.separator ""
+          o.separator ''
 
           o.on('--[no-]bundler', 'use bundler for managing dependencies') do |v|
             self[:use_bundler] = v
@@ -72,7 +72,7 @@ class Jeweler
             self[:use_cucumber] = true
           end
 
-          o.separator ""
+          o.separator ''
 
           o.on('--reek', 'generate rake task for reek') do
             self[:use_reek] = true
@@ -82,7 +82,7 @@ class Jeweler
             self[:use_roodi] = true
           end
 
-          o.separator ""
+          o.separator ''
 
           o.on('--summary [SUMMARY]', 'specify the summary of the project') do |summary|
             self[:summary] = summary
@@ -92,7 +92,7 @@ class Jeweler
             self[:description] = description
           end
 
-          o.separator ""
+          o.separator ''
 
           o.on('--user-name [USER_NAME]', "the user's name, ie that is credited in the LICENSE") do |user_name|
             self[:user_name] = user_name
@@ -102,9 +102,9 @@ class Jeweler
             self[:user_email] = user_email
           end
 
-          o.separator ""
+          o.separator ''
 
-          o.on('--github-username [GITHUB_USERNAME]', "name of the user on GitHub to set the project up under") do |github_username|
+          o.on('--github-username [GITHUB_USERNAME]', 'name of the user on GitHub to set the project up under') do |github_username|
             self[:github_username] = github_username
           end
 
@@ -112,7 +112,7 @@ class Jeweler
             self[:git_remote] = git_remote
           end
 
-          o.on('--homepage [HOMEPAGE]', "the homepage for your project (defaults to the GitHub repo)") do |homepage|
+          o.on('--homepage [HOMEPAGE]', 'the homepage for your project (defaults to the GitHub repo)') do |homepage|
             self[:homepage] = homepage
           end
 
@@ -120,8 +120,7 @@ class Jeweler
             self[:create_repo] = true
           end
 
-
-          o.separator ""
+          o.separator ''
 
           o.on('--yard', 'use yard for documentation') do
             self[:documentation_framework] = :yard
@@ -152,21 +151,18 @@ class Jeweler
         self.class.new(@orig_args + other.orig_args)
       end
 
-
       # Expose git config here, so we can stub it out for test environments
       def self.git_config
-        @git_config  ||=  if Pathname.new("~/.gitconfig").expand_path.exist?
-                           Git.global_config
-                         else
-                           {}
+        @git_config ||= if Pathname.new('~/.gitconfig').expand_path.exist?
+                          Git.global_config
+                        else
+                          {}
                          end
-
       end
 
       def git_config
         self.class.git_config
       end
-
     end
   end
 end

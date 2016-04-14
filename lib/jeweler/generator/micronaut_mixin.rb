@@ -2,9 +2,9 @@ class Jeweler
   class Generator
     module MicronautMixin
       def self.extended(generator)
-        generator.development_dependencies << ["spicycode-micronaut", ">= 0"]
+        generator.development_dependencies << ['spicycode-micronaut', '>= 0']
       end
-      
+
       def default_task
         'examples'
       end
@@ -34,7 +34,7 @@ class Jeweler
       end
 
       def test_helper_filename
-        "example_helper.rb"
+        'example_helper.rb'
       end
     end
   end
