@@ -125,15 +125,20 @@ class Jeweler
     end
 
     def yaml_path
-      denormalized_path = File.join(@base_dir, 'VERSION.yml')
+      path_to_version_file('VERSION.yml')
+    end
+
+    def plaintext_path
+      path_to_version_file('VERSION')
+    end
+
+  private
+
+    def path_to_version_file(filename)
+      denormalized_path = File.join(@base_dir, filename)
       absolute_path = File.expand_path(denormalized_path)
       absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
     end
 
-    def plaintext_path
-      denormalized_path = File.join(@base_dir, 'VERSION')
-      absolute_path = File.expand_path(denormalized_path)
-      absolute_path.gsub(Dir.getwd + File::SEPARATOR, '')
-    end
   end
 end

@@ -2,6 +2,8 @@
 
 # Jeweler: Craft the perfect RubyGem
 
+[![Join the chat at https://gitter.im/technicalpickles/jeweler](https://badges.gitter.im/technicalpickles/jeweler.svg)](https://gitter.im/technicalpickles/jeweler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Jeweler provides the noble ruby developer with two primary features:
 
  * a library for managing and releasing RubyGem projects
@@ -15,6 +17,7 @@ are dealt with.
 [![Build Status](https://travis-ci.org/technicalpickles/jeweler.png)](https://travis-ci.org/technicalpickles/jeweler)
 [![Coverage Status](https://coveralls.io/repos/technicalpickles/jeweler/badge.png)](https://coveralls.io/r/technicalpickles/jeweler)
 [![Dependency Status](https://www.versioneye.com/ruby/jeweler/2.0.0/badge.png)](https://www.versioneye.com/ruby/jeweler/2.0.0)
+[![Code Climate](https://codeclimate.com/github/technicalpickles/jeweler/badges/gpa.svg)](https://codeclimate.com/github/technicalpickles/jeweler)
 
 ## Hello, world
 
