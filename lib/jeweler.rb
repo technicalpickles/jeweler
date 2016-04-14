@@ -16,12 +16,12 @@ class Jeweler
   autoload :Generator,      'jeweler/generator'
 
   autoload :Commands,       'jeweler/commands'
-  
+
   autoload :VersionHelper,  'jeweler/version_helper'
   autoload :GemSpecHelper,  'jeweler/gemspec_helper'
 
   autoload :Tasks,          'jeweler/tasks'
-  autoload :RubygemsDotOrgTasks,  'jeweler/rubygems_dot_org_tasks'
+  autoload :RubygemsDotOrgTasks, 'jeweler/rubygems_dot_org_tasks'
   autoload :GemcutterTasks, 'jeweler/gemcutter_tasks'
   autoload :RubyforgeTasks, 'jeweler/rubyforge_tasks'
   autoload :Specification,  'jeweler/specification'
@@ -72,7 +72,7 @@ class Jeweler
     Jeweler::Commands::WriteGemspec.build_for(self).run
   end
 
-  # Validates the project's gemspec from disk in an environment similar to how 
+  # Validates the project's gemspec from disk in an environment similar to how
   # GitHub would build from it. See http://gist.github.com/16215
   def validate_gemspec
     Jeweler::Commands::ValidateGemspec.build_for(self).run
@@ -96,26 +96,26 @@ class Jeweler
   # Bumps the patch version.
   #
   # 1.5.1 -> 1.5.2
-  def bump_patch_version()
+  def bump_patch_version
     Jeweler::Commands::Version::BumpPatch.build_for(self).run
   end
 
   # Bumps the minor version.
   #
   # 1.5.1 -> 1.6.0
-  def bump_minor_version()
+  def bump_minor_version
     Jeweler::Commands::Version::BumpMinor.build_for(self).run
   end
 
   # Bumps the major version.
   #
   # 1.5.1 -> 2.0.0
-  def bump_major_version()
+  def bump_major_version
     Jeweler::Commands::Version::BumpMajor.build_for(self).run
   end
 
   # Bumps the version, to the specific major/minor/patch version, writing out the appropriate version.rb, and then reloads it.
-  def write_version(major, minor, patch, build, options = {})
+  def write_version(major, minor, patch, build, _options = {})
     command = Jeweler::Commands::Version::Write.build_for(self)
     command.major = major
     command.minor = minor
@@ -153,26 +153,25 @@ class Jeweler
   end
 
   def git_base_dir(base_dir = nil)
-    if base_dir
-      base_dir = File.dirname(base_dir)
-    else
-      base_dir = File.expand_path(self.base_dir || ".")
-    end
-    return nil if base_dir==File.dirname("/")
-    return base_dir if File.exists?(File.join(base_dir, '.git'))
-    return git_base_dir(base_dir)
-  end    
+    base_dir = if base_dir
+                 File.dirname(base_dir)
+               else
+                 File.expand_path(self.base_dir || '.')
+               end
+    return nil if base_dir == File.dirname('/')
+    return base_dir if File.exist?(File.join(base_dir, '.git'))
+    git_base_dir(base_dir)
+  end
 
   def in_git_repo?
     git_base_dir
   end
 
-  def version_file_exists?
-    File.exists?(@version_helper.plaintext_path) || File.exists?(@version_helper.yaml_path)
+  def version_file_exist?
+    File.exist?(@version_helper.plaintext_path) || File.exist?(@version_helper.yaml_path)
   end
 
   def expects_version_file?
     gemspec.version.nil?
   end
-
 end

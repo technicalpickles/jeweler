@@ -3,7 +3,8 @@ require 'pathname'
 class Jeweler
   module Commands
     class ReleaseGemspec
-      attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
+      attr_accessor :gemspec, :version, :repo, :output, :base_dir
+      attr_writer :gemspec_helper
 
       def initialize(attributes = {})
         self.output = $stdout
@@ -20,8 +21,8 @@ class Jeweler
         remote_branch = args[:remote_branch] || branch
 
         unless clean_staging_area?
-          system "git status"
-          raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
+          system 'git status'
+          raise 'Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above.'
         end
 
         repo.checkout(local_branch)
@@ -35,7 +36,7 @@ class Jeweler
 
       def clean_staging_area?
         # surprisingly simpler than ruby-git
-        `git ls-files --deleted --modified --others --exclude-standard` == ""
+        `git ls-files --deleted --modified --others --exclude-standard` == ''
       end
 
       def commit_gemspec!
@@ -56,14 +57,11 @@ class Jeweler
       end
 
       def gemspec_helper
-        @gemspec_helper ||= Jeweler::GemSpecHelper.new(self.gemspec, self.base_dir)
+        @gemspec_helper ||= Jeweler::GemSpecHelper.new(gemspec, base_dir)
       end
 
       def working_subdir
-        return @working_subdir if @working_subdir
-        cwd = base_dir_path
-        @working_subdir = cwd.relative_path_from(Pathname.new(repo.dir.path))
-        @working_subdir
+        @working_subdir ||= base_dir_path.relative_path_from(Pathname.new(repo.dir.path))
       end
 
       def base_dir_path
@@ -71,7 +69,7 @@ class Jeweler
       end
 
       def self.build_for(jeweler)
-        command = self.new
+        command = new
 
         command.base_dir = jeweler.base_dir
         command.gemspec = jeweler.gemspec

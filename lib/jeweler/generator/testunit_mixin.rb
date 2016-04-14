@@ -1,7 +1,6 @@
 class Jeweler
   class Generator
     module TestunitMixin
-
       def default_task
         'test'
       end
@@ -31,9 +30,8 @@ class Jeweler
       end
 
       def test_helper_filename
-        "helper.rb"
+        'helper.rb'
       end
-
     end
   end
 end

@@ -5,9 +5,7 @@ class Jeweler
         generator.github_username           = generator.options[:github_username]
         generator.should_create_remote_repo = generator.options[:create_repo]
 
-        unless generator.github_username
-          raise NoGitHubUser
-        end
+        raise NoGitHubUser unless generator.github_username
       end
 
       def git_remote

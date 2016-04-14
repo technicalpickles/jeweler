@@ -4,28 +4,28 @@ class Jeweler
   module Commands
     module Version
       class TestBase < Test::Unit::TestCase
-        build_command_context "build for jeweler" do
+        build_command_context 'build for jeweler' do
           setup do
             @command = Jeweler::Commands::Version::Base.build_for(@jeweler)
           end
 
-          should "assign repo" do
+          should 'assign repo' do
             assert_equal @repo, @command.repo
           end
 
-          should "assign version_helper" do
+          should 'assign version_helper' do
             assert_equal @version_helper, @command.version_helper
           end
 
-          should "assign gemspec" do
+          should 'assign gemspec' do
             assert_equal @gemspec, @command.gemspec
           end
 
-          should "assign commit" do
+          should 'assign commit' do
             assert_equal @commit, @command.commit
           end
 
-          context "commit_version" do
+          context 'commit_version' do
             setup do
               @dir = Object.new
               stub(@repo).dir { @dir }
@@ -40,9 +40,9 @@ class Jeweler
               @command.commit_version
             end
 
-            should "add VERSION" do
-              assert_received(@repo) {|repo| repo.add('VERSION')}
-              assert_received(@repo) {|repo| repo.commit('Version bump to 1.0.0')}
+            should 'add VERSION' do
+              assert_received(@repo) { |repo| repo.add('VERSION') }
+              assert_received(@repo) { |repo| repo.commit('Version bump to 1.0.0') }
             end
           end
         end
@@ -50,4 +50,3 @@ class Jeweler
     end
   end
 end
-

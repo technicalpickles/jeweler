@@ -26,13 +26,13 @@ class Jeweler
 
     def define
       namespace :rubygems do
-        desc "Release gem to Gemcutter"
-        task :release => [:gemspec, :build] do
+        desc 'Release gem to Gemcutter'
+        task release: [:gemspec, :build] do
           jeweler.release_gem_to_rubygems
         end
       end
 
-      task :release => 'rubygems:release'
+      task release: 'rubygems:release'
     end
   end
 end

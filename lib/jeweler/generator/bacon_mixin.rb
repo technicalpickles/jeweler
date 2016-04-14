@@ -1,9 +1,8 @@
 class Jeweler
   class Generator
     module BaconMixin
-
       def self.extended(generator)
-        generator.development_dependencies << ["bacon", ">= 0"]
+        generator.development_dependencies << ['bacon', '>= 0']
       end
 
       def default_task
@@ -35,9 +34,8 @@ class Jeweler
       end
 
       def test_helper_filename
-        "spec_helper.rb"
+        'spec_helper.rb'
       end
-
     end
   end
 end
