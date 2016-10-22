@@ -1,3 +1,7 @@
+# jeweler 2.1.2, 2016-10-22
+  * Merged pull requests to support breaking changes to the Bundler API (thanks julik)
+  * Updated gem dependencies		
+				
 # jeweler 2.0.0, 2014-01-05
 
  * Ruby 1.8 is not supported anymore.
