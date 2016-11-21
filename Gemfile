@@ -9,6 +9,7 @@ gem 'bundler', '>= 1.0'
 gem 'rdoc'
 gem 'builder'
 gem "semver"
+gem "psych", "~> 2.2"
 
 group :development do
   gem 'yard', '>= 0.8.5'

@@ -1,13 +1,14 @@
 PATH
   remote: .
   specs:
-    jeweler (2.1.2)
+    jeweler (2.2.1)
       builder
       bundler (>= 1.0)
       git (>= 1.2.5)
       github_api (~> 0.11.0)
       highline (>= 1.6.15)
       nokogiri (>= 1.5.10)
+      psych (~> 2.2)
       rake
       rdoc
       semver
@@ -18,7 +19,8 @@ GEM
     activesupport (3.2.22.5)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     bluecloth (2.2.0)
     builder (3.2.2)
     coveralls (0.8.15)
@@ -57,7 +59,7 @@ GEM
     hashie (3.4.6)
     highline (1.7.8)
     i18n (0.7.0)
-    json (1.8.3)
+    json (2.0.2)
     jwt (1.5.6)
     metaclass (0.0.4)
     mhennemeyer-output_catcher (1.0.1)
@@ -77,17 +79,18 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     power_assert (0.3.1)
+    psych (2.2.0)
+    public_suffix (2.0.4)
     rack (2.0.1)
     rake (11.3.0)
-    rdoc (4.2.2)
-      json (~> 1.4)
+    rdoc (5.0.0)
     redgreen (1.2.2)
     rr (1.2.0)
     semver (1.0.1)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (>= 1.4.1, < 3.0)
-    shoulda-context (1.2.1)
+    shoulda-context (1.2.2)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     simplecov (0.12.0)
@@ -97,7 +100,7 @@ GEM
     simplecov-html (0.10.0)
     term-ansicolor (1.4.0)
       tins (~> 1.0)
-    test-unit (3.2.1)
+    test-unit (3.2.2)
       power_assert
     test-unit-rr (1.0.5)
       rr (>= 1.1.1)
@@ -126,6 +129,7 @@ DEPENDENCIES
   mhennemeyer-output_catcher
   mocha
   nokogiri (>= 1.5.10)
+  psych (~> 2.2)
   rake
   rdoc
   redgreen
@@ -139,4 +143,4 @@ DEPENDENCIES
   yard (>= 0.8.5)
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

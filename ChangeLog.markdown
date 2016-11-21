@@ -1,3 +1,6 @@
+# jeweler 2.2.1
+	* Added a patch for a potential psych problem that hit juwelier.
+				
 # jeweler 2.1.2, 2016-10-22
   * Merged pull requests to support breaking changes to the Bundler API (thanks julik)
   * Updated gem dependencies		
