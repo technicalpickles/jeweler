@@ -74,7 +74,6 @@ Gem::Specification.new do |s|
     "lib/jeweler/errors.rb",
     "lib/jeweler/gemcutter_tasks.rb",
     "lib/jeweler/gemspec_helper.rb",
-    "lib/jeweler/gemspec_helper.rb.orig",
     "lib/jeweler/generator.rb",
     "lib/jeweler/generator/application.rb",
     "lib/jeweler/generator/bacon_mixin.rb",
