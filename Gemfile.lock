@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jeweler (2.3.0)
+    jeweler (2.3.1)
       builder
       bundler (>= 1.0)
       git (>= 1.2.5)
@@ -79,7 +79,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     power_assert (0.4.1)
-    psych (2.2.1)
+    psych (2.2.2)
     public_suffix (2.0.4)
     rack (2.0.1)
     rake (12.0.0)
