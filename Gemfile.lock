@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jeweler (2.3.1)
+    jeweler (2.3.2)
       builder
       bundler (>= 1.0)
       git (>= 1.2.5)
@@ -11,7 +11,7 @@ PATH
       psych (~> 2.2)
       rake
       rdoc
-      semver
+      semver2
 
 GEM
   remote: https://rubygems.org/
@@ -86,7 +86,6 @@ GEM
     rdoc (5.0.0)
     redgreen (1.2.2)
     rr (1.2.0)
-    semver (1.0.1)
     semver2 (3.4.2)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
