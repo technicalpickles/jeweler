@@ -8,7 +8,7 @@ gem 'highline', '>= 1.6.15'
 gem 'bundler', '>= 1.0'
 gem 'rdoc'
 gem 'builder'
-gem "semver"
+gem "semver2"
 gem "psych", "~> 2.2"
 
 group :development do

@@ -87,6 +87,7 @@ GEM
     redgreen (1.2.2)
     rr (1.2.0)
     semver (1.0.1)
+    semver2 (3.4.2)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (>= 1.4.1, < 3.0)
@@ -133,7 +134,7 @@ DEPENDENCIES
   rake
   rdoc
   redgreen
-  semver
+  semver2
   shoulda
   simplecov
   test-unit
