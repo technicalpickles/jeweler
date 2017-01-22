@@ -25,7 +25,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = 'http://github.com/technicalpickles/jeweler'
   gem.summary = 'Opinionated tool for creating and managing RubyGem projects'
   gem.description = 'Simple and opinionated helper for creating Rubygem projects on GitHub'
-  gem.required_ruby_version = '>= 2.2.2'
+  gem.required_ruby_version = '>= 2.2.0'
   gem.license = 'MIT'
   gem.authors = ["Fred Mitchell", "Josh Nichols", "Yusuke Murata"]
   gem.email = ["fred.mitchell@gmx.de", "fred.mitchell@gmx.com", "info@muratayusuke.com"]

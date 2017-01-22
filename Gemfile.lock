@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jeweler (2.3.2)
+    jeweler (2.3.3)
       builder
       bundler (>= 1.0)
       git (>= 1.2.5)
