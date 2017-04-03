@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Fred Mitchell".freeze, "Josh Nichols".freeze, "Yusuke Murata".freeze]
-  s.date = "2017-02-10"
+  s.date = "2017-04-03"
   s.description = "Simple and opinionated helper for creating Rubygem projects on GitHub".freeze
   s.email = ["fred.mitchell@gmx.de".freeze, "fred.mitchell@gmx.com".freeze, "info@muratayusuke.com".freeze]
   s.executables = ["jeweler".freeze]
@@ -200,7 +200,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rake>.freeze, [">= 0"])
       s.add_runtime_dependency(%q<git>.freeze, [">= 1.2.5"])
       s.add_runtime_dependency(%q<nokogiri>.freeze, [">= 1.5.10"])
-      s.add_runtime_dependency(%q<github_api>.freeze, ["~> 0.11.0"])
+      s.add_runtime_dependency(%q<github_api>.freeze, ["~> 0.16.0"])
       s.add_runtime_dependency(%q<highline>.freeze, [">= 1.6.15"])
       s.add_runtime_dependency(%q<bundler>.freeze, [">= 1.0"])
       s.add_runtime_dependency(%q<rdoc>.freeze, [">= 0"])
@@ -215,7 +215,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>.freeze, [">= 0"])
       s.add_dependency(%q<git>.freeze, [">= 1.2.5"])
       s.add_dependency(%q<nokogiri>.freeze, [">= 1.5.10"])
-      s.add_dependency(%q<github_api>.freeze, ["~> 0.11.0"])
+      s.add_dependency(%q<github_api>.freeze, ["~> 0.16.0"])
       s.add_dependency(%q<highline>.freeze, [">= 1.6.15"])
       s.add_dependency(%q<bundler>.freeze, [">= 1.0"])
       s.add_dependency(%q<rdoc>.freeze, [">= 0"])
@@ -231,7 +231,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>.freeze, [">= 0"])
     s.add_dependency(%q<git>.freeze, [">= 1.2.5"])
     s.add_dependency(%q<nokogiri>.freeze, [">= 1.5.10"])
-    s.add_dependency(%q<github_api>.freeze, ["~> 0.11.0"])
+    s.add_dependency(%q<github_api>.freeze, ["~> 0.16.0"])
     s.add_dependency(%q<highline>.freeze, [">= 1.6.15"])
     s.add_dependency(%q<bundler>.freeze, [">= 1.0"])
     s.add_dependency(%q<rdoc>.freeze, [">= 0"])
