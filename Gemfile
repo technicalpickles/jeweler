@@ -5,7 +5,7 @@ gem 'git', '>= 1.2.5'
 gem 'nokogiri', '>= 1.5.10'
 gem 'github_api', '~> 0.16.0'
 gem 'highline', '>= 1.6.15'
-gem 'bundler', '>= 1.0'
+gem 'bundler', '>= 1'
 gem 'rdoc'
 gem 'builder'
 gem "semver2"
