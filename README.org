@@ -13,8 +13,7 @@ Jeweler provides the noble ruby developer with two primary features:
 -  a scaffold generator for starting new RubyGem projects
 
 PLEASE NOTE that if you are starting afresh, please use the successor
-[[https://github.com/flajann2/juwelier][Juwelier]] I (Fred Mitchell,
-flajann2) will be maintaining both Jeweler and Juwelier, but will be
+[[https://github.com/flajann2/juwelier][Juwelier]] I (Fred Mitchell, flajann2) will be maintaining both Jeweler and Juwelier, but will be
 adding new features to Juwelier, and eventually "merge" this one into
 Juwelier after some namespace issues are dealt with.
 
