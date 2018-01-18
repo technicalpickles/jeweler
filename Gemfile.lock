@@ -3,7 +3,7 @@ PATH
   specs:
     jeweler (2.3.9)
       builder
-      bundler (>= 1)
+      bundler
       git (>= 1.2.5)
       github_api (~> 0.16.0)
       highline (>= 1.6.15)
