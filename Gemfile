@@ -5,11 +5,11 @@ gem 'git', '>= 1.2.5'
 gem 'nokogiri', '>= 1.5.10'
 gem 'github_api', '~> 0.16.0'
 gem 'highline', '>= 1.6.15'
-gem 'bundler', '>= 1'
+gem 'bundler'
 gem 'rdoc'
 gem 'builder'
 gem "semver2"
-gem "psych" #, "~> 3"
+gem "psych"
 
 group :development do
   gem 'yard', '>= 0.8.5'

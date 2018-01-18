@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    jeweler (2.3.7)
+    jeweler (2.3.9)
       builder
       bundler (>= 1)
       git (>= 1.2.5)
       github_api (~> 0.16.0)
       highline (>= 1.6.15)
       nokogiri (>= 1.5.10)
-      psych (~> 2.2)
+      psych
       rake
       rdoc
       semver2
@@ -86,7 +86,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     power_assert (1.1.1)
-    psych (2.2.4)
+    psych (3.0.2)
     rack (2.0.3)
     rake (12.3.0)
     rdoc (6.0.1)
@@ -125,7 +125,7 @@ DEPENDENCIES
   activesupport (~> 3.2.16)
   bluecloth
   builder
-  bundler (>= 1)
+  bundler
   coveralls
   cucumber (>= 1.1.4)
   git (>= 1.2.5)
