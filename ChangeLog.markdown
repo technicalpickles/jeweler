@@ -43,7 +43,7 @@
  * Generator now has a --version flag #217
  * Generated Gemfile now includes rdoc gem when using rdoc
  * Fixed jeweler's yardoc task #216
- * Updated version of yard used for new projects, and include rdoc compatability
+ * Updated version of yard used for new projects, and include rdoc compatibility
 
 # jeweler 1.7.0, 2012-01-23
 
